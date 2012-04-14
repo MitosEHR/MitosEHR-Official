@@ -1031,6 +1031,7 @@ Ext.define('App.view.administration.Layout', {
 				'name',
 				'width',
 				'value',
+				'layout',
 				'emptyText',
 				'fieldLabel',
 				'labelWidth',

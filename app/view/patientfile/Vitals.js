@@ -25,7 +25,7 @@ Ext.define('App.view.patientfile.Vitals', {
     selectedItemCls  : 'vitals-column-selected',
     loadMask         : true,
     singleSelect     : true,
-
+	emptyText        : '<span style="color: #cbcbcb; font-size: 70px;">No Vitals to Display</span>',
 	requires         : [
 		'App.store.patientfile.Vitals'
 	],

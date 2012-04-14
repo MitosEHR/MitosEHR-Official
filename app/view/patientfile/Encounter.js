@@ -371,11 +371,11 @@ Ext.define('App.view.patientfile.Encounter', {
             items:[
                 {
                     xtype:'form',
-                    width:325,
-	                margin:'20 0 0 0',
+                    width:330,
+	                margin:0,
                     border:false,
                     layout:'anchor',
-                    fieldDefaults:{ msgTarget:'side' }
+                    fieldDefaults:{ msgTarget:'side', labelAlign:'right' }
                 },
                 {
                     xtype:'vitalsdataview',

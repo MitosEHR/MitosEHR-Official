@@ -35,7 +35,7 @@ Ext.define('App.classes.form.fields.DateTime', {
 	 * @cfg {String} timeFormat
 	 * The default is 'H:i:s'
 	 */
-	timeFormat    : 'g:i a',
+	timeFormat    : 'g:i:s a',
 	/**
 	 * @cfg {String} dateTimeFormat
 	 * The format used when submitting the combined value.
@@ -102,6 +102,8 @@ Ext.define('App.classes.form.fields.DateTime', {
 				me.fireEvent('specialkey', field, event);
 			});
 		}
+
+		if(me.layout == 'vbox') me.height = 44;
 
 		me.callParent();
 

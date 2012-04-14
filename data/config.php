@@ -109,6 +109,9 @@ $API = array(
             ),
             'getEncountersByPayment'=>array(
                'len'=>1
+            ),
+            'getEncountersByPayment'=>array(
+               'len'=>1
             )
         ),
 

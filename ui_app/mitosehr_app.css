@@ -43,12 +43,13 @@
 	background-color: #DFE8F6 !important;
 }
 .vitals-column-caution tr td {
-	background-color: #f6f392 !important;
+	background-color: #fffccc !important;
 }
 
 
 .x-grid-table-vitals-date {
-    padding: 0 !important;
+	padding: 2px !important;
+	font-weight:bold!important;
 	border-bottom: 1px solid #cccccc!important;
 }
 .x-grid-table-vitals tr first {
