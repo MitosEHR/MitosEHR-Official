@@ -122,7 +122,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/PatientImmunization.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Allergies.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Dental.js"></script>
-        <script type="text/javascript" src="app/store/patientfile/MedicalIssue.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Medications.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
