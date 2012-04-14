@@ -55,7 +55,6 @@ class Documents {
 	 */
 
 	public function createSuperBillDoc(stdClass $params){
-
 		/**
 		 * estoy printeando los params para que veas lo que hay en el objeto @params..
 		 *
@@ -104,6 +103,34 @@ class Documents {
 		 * y el doc = va a ser un array con la metadata de documento. (name, type, created by, created date, last updated... etc etc)
 		 */
 		return array('success' => true, 'doc' => array('document_info'));
+	}
+
+
+	/**
+	 * @param stdClass $params
+	 * @return mixed
+	 */
+	public function createOrder(stdClass $params){
+
+		return;
+	}
+
+	/**
+	 * @param stdClass $params
+	 * @return mixed
+	 */
+	public function createReferral(stdClass $params){
+
+		return;
+	}
+
+	/**
+	 * @param stdClass $params
+	 * @return mixed
+	 */
+	public function createDrNotes(stdClass $params){
+
+		return;
 	}
 
 
