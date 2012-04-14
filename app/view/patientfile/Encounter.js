@@ -363,7 +363,7 @@ Ext.define('App.view.patientfile.Encounter', {
             action:'encounter',
             cls:'vitals-panel',
             bodyPadding:'5 10',
-            overflowX:true,
+	        overflowY: 'auto',
             layout:{
                 type:'hbox',
                 stretch:true
