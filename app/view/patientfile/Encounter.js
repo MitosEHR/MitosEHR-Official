@@ -363,23 +363,28 @@ Ext.define('App.view.patientfile.Encounter', {
             action:'encounter',
             cls:'vitals-panel',
             bodyPadding:'5 10',
-            autoScroll:true,
+            overflowX:true,
             layout:{
-                type:'table',
-                columns:2
+                type:'hbox',
+                stretch:true
             },
             items:[
                 {
                     xtype:'form',
-                    columnWidth:325,
                     width:325,
+	                margin:'20 0 0 0',
                     border:false,
-                    url:'',
                     layout:'anchor',
                     fieldDefaults:{ msgTarget:'side' }
                 },
                 {
-                    xtype:'vitalsdataview'
+                    xtype:'vitalsdataview',
+	                flex:1,
+	                autoScroll:true,
+	                listeners:{
+		                scope:me,
+		                itemdblclick:me.onVitalsClick
+	                }
                 }
             ],
             dockedItems:{
@@ -803,7 +808,7 @@ Ext.define('App.view.patientfile.Encounter', {
                         me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
                     }
                 }
-
+	            me.reSetVitalsForm();
                 vitals.store = record[0].vitalsStore;
                 vitals.refresh();
                 //noinspection JSUnresolvedFunction
@@ -893,6 +898,16 @@ Ext.define('App.view.patientfile.Encounter', {
     },
 
 
+	onVitalsClick:function(view, record){
+		var me = this,
+			form = me.vitalsPanel.down('form').getForm();
+		form.loadRecord(record);
+		say(record);
+	},
+
+	reSetVitalsForm:function(){
+		this.vitalsPanel.down('form').getForm().reset();
+	},
 
 
 

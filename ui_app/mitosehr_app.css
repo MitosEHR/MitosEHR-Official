@@ -34,17 +34,38 @@
 .x-livesearch-match {
     background-color: yellow;
 }
-.vitals-data .column {
-    margin-right: 5px
+
+
+.vitals-column-over tr td {
+	background-color: #ededed !important;
 }
-.vitals-data .row, .general-data .row {
-    font-size       : 12px;
-    height          : 22px;
-    background-color: rgb(247, 247, 247);
-    padding         : 2px 5px 0px;
-    margin-bottom   : 5px;
-    text-align      : center;
+.vitals-column-selected tr td {
+	background-color: #DFE8F6 !important;
 }
+.vitals-column-caution tr td {
+	background-color: #f6f392 !important;
+}
+
+
+.x-grid-table-vitals-date {
+    padding: 0 !important;
+	border-bottom: 1px solid #cccccc!important;
+}
+.x-grid-table-vitals tr first {
+	padding: 0 0!important;
+}
+.x-grid-table-vitals tr td {
+    border-left: 1px solid #cccccc!important;
+    padding: 2px 0 0 0;
+    text-align: center !important;
+}
+.x-grid-table-vitals tr td .x-grid-cell-inner {
+    margin: 2px 0 3px;
+}
+
+
+
+
 .vitals-data .header, .general-data .header {
     text-align      : left;
     white-space: nowrap;
