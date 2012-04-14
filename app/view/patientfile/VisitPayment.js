@@ -26,25 +26,26 @@ Ext.define('App.view.patientfile.VisitPayment', {
         });
 
         me.pageBody = Ext.create('Ext.form.Panel', {
+
             title:'Visit Payment',
             defaults:{
-                bodyStyle:'padding:15px',
-                bodyBorder:true,
-                labelWidth:110
+                bodyStyle : 'padding:15px',
+                bodyBorder: true,
+                labelWidth: 110
             },
             items:[
                 {
-                    xtype:'container',
+                    xtype :'container',
                     layout:{
-                        type:'hbox',
-                        align:'stretch'
+                        type : 'hbox',
+                        align: 'stretch'
                     },
-                    height:400,
+                    height: 400,
                     items:[
                         {
-                            xtype:'fieldset',
-                            margin:5,
-                            flex:2,
+                            xtype : 'fieldset',
+                            margin: 5,
+                            flex  : 2,
                             items: [
 	                            {
 	                                xtype:'container',
@@ -52,16 +53,16 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                         {
                                             fieldLabel: 'Date',
                                             xtype     : 'datefield',
-                                            style:'float:left',
-                                            anchor:'37.9%',
-                                            labelWidth: 108
+                                            style     : 'float:left',
+                                            labelWidth: 108,
+                                            width     : 288
                                         },
 	                                    {
 	                                        fieldLabel: 'No',
 	                                        xtype     : 'textfield',
+                                            style     : 'float:right',
 	                                        labelWidth: 60,
-	                                        width: 235,
-		                                    style:'float:right'
+	                                        width     : 240
 	                                    }
 
                                     ]
@@ -70,26 +71,25 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                     fieldLabel: 'Facility',
                                     xtype     : 'mitos.facilitiescombo',
                                     labelWidth: 108,
-                                    anchor: '37.9%',
-                                    margin:'0 0 40 0'
+                                    width     : 288,
+                                    margin    : '7 0 40 0'
                                 },
                                 {
-                                    xtype:'fieldcontainer',
+                                    xtype :'fieldcontainer',
                                     layout:'hbox',
                                     items:[
                                         {
-                                            xtype: 'textfield',
                                             fieldLabel: 'Received From',
-                                            margin:'0 25 0 0',
+                                            xtype     : 'textfield',
                                             labelWidth: 108,
-                                            flex:1,
-                                            anchor:'100%'
+                                            margin      : '0 25 0 0',
+                                            anchor    : '100%',
+                                            flex      : 1
                                         },
                                         {
-                                            xtype: 'mitos.currency',
                                             fieldLabel: 'Amount',
-                                            labelWidth: 60,
-                                            anchor:'37.9%'
+                                            xtype     : 'mitos.currency',
+                                            labelWidth: 60
                                         }
 
                                     ]
@@ -99,67 +99,85 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                     layout:'hbox',
                                     items:[
                                         {
-                                            xtype:'combobox',
-                                            fieldLabel:'For Payment of',
-                                            labelWidth:108,
-                                            margin:'0 25 0 0',
-                                            store:paymentDescription,
-                                            queryMode: 'local',
-                                            displayField: 'name',
-                                            flex:1,
-                                            anchor:'100%'
+                                            fieldLabel  : 'For Payment of',
+                                            xtype       : 'combobox',
+                                            labelWidth  : 108,
+                                            margin      : '0 25 10 0',
+                                            anchor      : '100%',
+                                            flex        : 1,
+                                            store       : paymentDescription,
+                                            queryMode   : 'local',
+                                            displayField: 'name'
+
                                         },
 
                                         {
                                             fieldLabel: 'Paid by',
-                                            xtype: 'mitos.paymentmethodcombo',
-                                            labelWidth:60
+                                            xtype     : 'mitos.paymentmethodcombo',
+                                            labelWidth: 60
                                         }
                                     ]
                                 },
                                 {
-                                    xtype:'textfield',
-                                    fieldLabel:'Description',
-                                    labelWidth:108,
-                                    anchor:'100%'
+                                    fieldLabel: 'Description',
+                                    xtype     : 'textfield',
+                                    labelWidth: 108,
+                                    anchor    : '100%'
                                 },
                                 {
-                                    xtype:'textfield',
-                                    fieldLabel:'Next Appointment',
-                                    labelWidth:108,
-                                    margin:'40 0 0 0'
-                                },
+                                    xtype:'container',
+                                    items:[
+                                        {
+                                            fieldLabel: 'Next Appointment',
+                                            xtype     : 'textfield',
+                                            style     : 'float:left',
+                                            labelWidth: 108,
+                                            width     : 288,
+                                            margin    : '104 0 0 0'
+                                        },
+                                        {
+                                            xtype:'container',
+                                            style      : 'float:right',
+                                            items:[
+                                                {
+                                                    fieldLabel: 'Accounted Amount',
+                                                    xtype     : 'textfield',
+                                                    labelWidth: 108,
+                                                    width     : 288,
+                                                    margin    : '40 0 5 0'
+                                                },
+                                                {
+                                                    fieldLabel: 'Payment Amount',
+                                                    xtype     : 'textfield',
+                                                    labelWidth: 108,
+                                                    width     : 288,
+                                                    margin    : '10 0 10 0'
+                                                },
+                                                {
 
-                                {
-                                    xtype: 'textfield',
-                                    fieldLabel: 'Accounted Amount',
-                                    labelWidth:108,
-                                    margin:'25 0 5 0'
-                                },
-                                {
-                                    xtype:'textfield',
-                                    fieldLabel:'Payment Amount',
-                                    labelWidth:108,
-                                },
-                                {
-                                    xtype:'textfield',
-                                    fieldLabel:'Balance Due',
-                                    labelWidth:108,
+                                                    fieldLabel: 'Balance Due',
+                                                    xtype     : 'textfield',
+                                                    labelWidth: 108,
+                                                    width     : 288
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
                             ]
                         },
                         {
-                            xtype:'grid',
-                            title:'Orders',
-                            margin:'8 4 5 5',
-                            flex:1,
+                            xtype  : 'grid',
+                            title  : 'Orders',
+                            margin : '8 4 5 5',
+                            flex   : 1,
                             columns:[
                                 {
                                     header:'Code'
                                 },
                                 {
-                                    header:'Description',
-                                    flex:1
+                                    header: 'Description',
+                                    flex  : 1
                                 }
                             ]
                         }
@@ -183,30 +201,30 @@ Ext.define('App.view.patientfile.VisitPayment', {
                             },
                             items:[
                                 {
-                                    fieldLabel:'Time',
-                                    xtype:'textfield'
+                                    fieldLabel: 'Time',
+                                    xtype     : 'textfield'
                                 },
                                 {
-                                    fieldLabel:'Facility',
-                                    xtype:'mitos.facilitiescombo'
+                                    fieldLabel: 'Facility',
+                                    xtype     : 'mitos.facilitiescombo'
                                 }
                             ]
                         },
                         {
-                            xtype:'fieldset',
-                            title:'Notes and Alerts',
-                            defaults:{ anchor:'100%'},
+                            xtype: 'fieldset',
+                            title: 'Notes and Alerts',
+                            defaults: { anchor:'100%'},
                             items:[
                                 {
-                                    xtype:'textfield',
-                                    name:'note',
-                                    fieldLabel:'Note'
+                                    xtype     : 'textfield',
+                                    name      : 'note',
+                                    fieldLabel: 'Note'
                                 },
                                 {
-                                    xtype:'textareafield',
-                                    grow:true,
-                                    name:'reminder',
-                                    fieldLabel:'Alert'
+                                    xtype     : 'textareafield',
+                                    grow      : true,
+                                    name      : 'reminder',
+                                    fieldLabel: 'Alert'
                                 }
                             ]
                         }
@@ -219,38 +237,60 @@ Ext.define('App.view.patientfile.VisitPayment', {
                 },
                 '-',
                 {
-                    text:'Cancel'
+                    text:'Cancel',
+                    handler:me.cancelReceipt
                 },
                 '-',
                 {
-                    text:'Print'
+                    text:'Print',
+                    handler:me.onPrintClick
                 }
             ]
         });
 
-        me.window = Ext.create('Ext.window.Window', {
-            title:'Printing Options',
-            closeAction:'hide',
-            modal:true,
+        me.printWindow = Ext.create('Ext.window.Window', {
+
+            title      : 'Printing Options',
+            closeAction: 'hide',
+            modal      : true,
             items:[
                 {
-                    xtype:'form',
-                    height:300,
-                    width:300,
-                    defaults:{ margin:5 },
-                    border:false,
+                    xtype   :'form',
+                    height  : 300,
+                    width   : 300,
+                    defaults: { margin:5 },
+                    border  : false,
                     items:[
  	                    {
-
+                            title:'Printing Options',
+                            columnWidth:.5,
+                            margin:'5 1 5 5',
+                            items:[
+                                {
+                                    xtype:'checkboxgroup',
+                                    defaults:{
+                                        xtype:'checkboxfield'
+                                    },
+                                    items:[
+                                        {
+                                            boxLabel: 'Receipt'
+                                        },
+                                        {
+                                            boxLabel: 'Orders'
+                                        }
+                                    ]
+                                }
+                            ]
  	                    }
  	                ],
  	                bbar:[
  	                    {
  	                        text:'Print'
- 	                    },
+                        },
  	                    '-',
  	                    {
- 	                        text:'Cancel'
+ 	                        text:'Cancel',
+                            handler:me.cancelPrint
  	                    }
  	                ]
  	            }
@@ -258,6 +298,25 @@ Ext.define('App.view.patientfile.VisitPayment', {
          });
 
         me.callParent(arguments);
+    },
+
+    //dudas
+    onPrintClick:function () {
+        var me = this, win = me.printWindow;
+        win.show();
+    },
+
+    //dudas
+    cancelPrint:function (btn) {
+        var win = btn.up('window');
+        win.close();
+    },
+
+
+    //dudas
+    cancelReceipt:function (btn) {
+        var win = btn.up('form'), form = win.down('container').down('fieldset').getForm();
+        form.reset();
     },
 
     /**
