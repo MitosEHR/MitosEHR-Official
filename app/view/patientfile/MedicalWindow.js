@@ -848,10 +848,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         xtype: 'container',
                                         items: [
                                             {
-                                                fieldLabel     : 'Type',
-                                                name           : 'type',
-                                                allowBlank     : false,
-                                                xtype          : 'mitos.medicalissuescombo',
+	                                            xtype:'medicationlivetsearch',
+	                                            fieldLabel:'Type',
+	                                            hideLabel: false,
                                                 itemId         : 'medication',
                                                 enableKeyEvents: true,
                                                 listeners      : {
