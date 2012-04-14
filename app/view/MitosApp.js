@@ -76,6 +76,7 @@ Ext.define('App.view.MitosApp', {
 	],
 
     minWidthToFullMode: 1680,
+	currency: '$',
 
 	initComponent: function() {
 
@@ -112,6 +113,17 @@ Ext.define('App.view.MitosApp', {
 		 * This store will handle the patient pool area
 		 */
 		me.patientPoolStore = Ext.create('App.store.poolarea.PoolArea');
+
+
+		if(me.currency == '$'){
+			me.icoMoney = 'icoDollar';
+		}else if(me.currency == '€'){
+			me.icoMoney = 'icoEuro';
+		}else if(me.currency == '£'){
+			me.icoMoney = 'icoLibra';
+		}else if(me.currency == '¥'){
+			me.icoMoney = 'icoYen';
+		}
 
 		/**
 		 * MitosEHR Support Page
@@ -242,7 +254,7 @@ Ext.define('App.view.MitosApp', {
 					cls    : 'headerLargeBtn',
 					padding: 0,
 					itemId : 'patientCharge',
-					iconCls: 'icoMoney',
+					iconCls: me.icoMoney,
 					scope  : me,
 					handler: me.chargePatient,
 					tooltip: 'Charge Patient'
@@ -797,6 +809,7 @@ Ext.define('App.view.MitosApp', {
 			patientOpenVisitsBtn = me.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = me.Header.getComponent('patientCreateEncounter'),
 			patientCloseCurrEncounterBtn = me.Header.getComponent('patientCloseCurrEncounter'),
+			patientChargeBtn = me.Header.getComponent('patientCharge'),
 			patientCheckOutBtn = me.Header.getComponent('patientCheckOut');
 
         Patient.currPatientSet({ pid:pid }, function(){
@@ -809,6 +822,7 @@ Ext.define('App.view.MitosApp', {
             patientOpenVisitsBtn.enable();
             patientCreateEncounterBtn.enable();
             patientCloseCurrEncounterBtn.enable();
+	        patientChargeBtn.enable();
             patientCheckOutBtn.enable();
             if(typeof callback == 'function') {
                 callback(true);
@@ -822,6 +836,7 @@ Ext.define('App.view.MitosApp', {
 			patientOpenVisitsBtn = me.Header.getComponent('patientOpenVisits'),
 			patientCreateEncounterBtn = me.Header.getComponent('patientCreateEncounter'),
 			patientCloseCurrEncounterBtn = me.Header.getComponent('patientCloseCurrEncounter'),
+			patientChargeBtn = me.Header.getComponent('patientCharge'),
 			patientCheckOutBtn = me.Header.getComponent('patientCheckOut');
 		/**
 		 * Ext.direct function
@@ -832,6 +847,7 @@ Ext.define('App.view.MitosApp', {
 			patientCreateEncounterBtn.disable();
 			patientOpenVisitsBtn.disable();
 			patientCloseCurrEncounterBtn.disable();
+			patientChargeBtn.disable();
 			patientCheckOutBtn.disable();
             patientBtn.disable();
 			patientBtn.update({ pid:'record number', name:'No Patient Selected'});
