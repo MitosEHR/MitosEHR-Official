@@ -205,6 +205,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/administration/Practice.js"></script>
         <script type="text/javascript" src="app/view/administration/Roles.js"></script>
         <script type="text/javascript" src="app/view/administration/Services.js"></script>
+        <script type="text/javascript" src="app/view/administration/Medications.js"></script>
         <script type="text/javascript" src="app/view/administration/Users.js"></script>
         <script type="text/javascript" src="app/view/messages/Messages.js"></script>
         <script type="text/javascript" src="app/view/search/PatientSearch.js"></script>
