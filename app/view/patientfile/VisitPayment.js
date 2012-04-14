@@ -22,7 +22,6 @@ Ext.define('App.view.patientfile.VisitPayment', {
                 { "name":"General Visit" },
                 { "name":"Special Visit" },
                 { "name":"Other" }
-                //...
             ]
         });
 
@@ -40,48 +39,32 @@ Ext.define('App.view.patientfile.VisitPayment', {
                         type:'hbox',
                         align:'stretch'
                     },
-                    height:360,
+                    height:400,
                     items:[
                         {
                             xtype:'fieldset',
                             margin:5,
                             flex:2,
-                            defaults: { labelWidth:110 },
                             items: [
                                 {
-                                    xtype:'container',
-                                    layout:'hbox',
-                                    margin:'0 0 20 0',
-                                    items:[
-                                        /*{
-                                            fieldLabel: 'Facility',
-                                            xtype     : 'mitos.facilitiescombo',
-                                            labelWidth: 108
-                                        },*/
-                                        {
-                                            fieldLabel: 'Date',
-                                            xtype     : 'datefield',
-                                            margin:'0 245 0 0',
-                                            labelWidth: 108,
-                                            anchor:'35%'
-
-                                        },
-                                        {
-                                            fieldLabel: 'No',
-                                            xtype     : 'textfield',
-                                            labelWidth: 60,
-                                            anchor:'35%'
-                                        }
-                                    ],
-                                    bbar:[
-                                        {
-                                            text:'Save & Print'
-                                        },
-                                        '-',
-                                        {
-                                            text:'Cancel'
-                                        }
-                                    ]
+                                    fieldLabel: 'No',
+                                    xtype     : 'textfield',
+                                    labelWidth: 60,
+                                    width: 235,
+                                    margin:'0 0 0 515'
+                                },
+                                {
+                                    fieldLabel: 'Date',
+                                    xtype     : 'datefield',
+                                    anchor:'37.9%',
+                                    labelWidth: 108
+                                },
+                                {
+                                    fieldLabel: 'Facility',
+                                    xtype     : 'mitos.facilitiescombo',
+                                    labelWidth: 108,
+                                    anchor: '37.9%',
+                                    margin:'0 0 40 0'
                                 },
                                 {
                                     xtype:'container',
@@ -92,7 +75,8 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                             fieldLabel: 'Received From',
                                             margin:'0 25 0 0',
                                             labelWidth: 108,
-                                            width:491
+                                            flex:1,
+                                            anchor:'100%'
                                         },
                                         {
                                             xtype: 'mitos.currency',
@@ -115,8 +99,8 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                             store:paymentDescription,
                                             queryMode: 'local',
                                             displayField: 'name',
+                                            flex:1,
                                             anchor:'100%'
-                                            //width:491
                                         },
 
                                         {
@@ -137,14 +121,15 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                     fieldLabel:'Next Appointment',
                                     labelWidth:108,
                                     anchor:'37.9%',
-                                    margin:'50 0 0 0'
+                                    margin:'40 0 0 0'
                                 },
+
                                 {
                                     xtype: 'textfield',
                                     fieldLabel: 'Accounted Amount',
                                     labelWidth:108,
                                     anchor:'37.9%',
-                                    margin:'20 0 5 0'
+                                    margin:'25 0 5 0'
                                 },
                                 {
                                     xtype:'textfield',
@@ -224,8 +209,50 @@ Ext.define('App.view.patientfile.VisitPayment', {
                         }
                     ]
                 }
+            ],
+            buttons:[
+                {
+                    text:'Save'
+                },
+                '-',
+                {
+                    text:'Cancel'
+                },
+                '-',
+                {
+                    text:'Print'
+                }
             ]
         });
+
+        me.window = Ext.create('Ext.window.Window', {
+            title:'Printing Options',
+            closeAction:'hide',
+            modal:true,
+            items:[
+                {
+                    xtype:'form',
+                    height:300,
+                    width:300,
+                    defaults:{ margin:5 },
+                    border:false,
+                    items:[
+ 	                    {
+
+ 	                    }
+ 	                ],
+ 	                bbar:[
+ 	                    {
+ 	                        text:'Print'
+ 	                    },
+ 	                    '-',
+ 	                    {
+ 	                        text:'Cancel'
+ 	                    }
+ 	                ]
+ 	            }
+            ]
+         });
 
         me.callParent(arguments);
     },
