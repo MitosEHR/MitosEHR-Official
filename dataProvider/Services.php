@@ -363,6 +363,20 @@ class Services {
 
 		return $params;
 	}
+    public function getMedications(stdClass $params){
+
+		return $params;
+	}
+
+	public function addMedications(stdClass $params){
+
+		return $params;
+	}
+
+	public function removeMedications(stdClass $params){
+
+		return $params;
+	}
 
 }
 

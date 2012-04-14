@@ -13,11 +13,8 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 	title      : 'Vector Chart',
 	layout     : 'card',
 	closeAction: 'hide',
-	width      : '70%',
-	height     : '70%',
-	minHeight  : 400,
-	minWidth   : 550,
-	modal      : true,
+	width      : 900,
+	height     : 800,
 	maximizable: true,
 	maximized  : true,
 	initComponent: function() {
@@ -26,9 +23,16 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 		me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
 
 		me.tbar = ['->', {
+			text        : 'BP/Pulse/Temp',
+			action      : 'bpPulseTemp',
+			pressed     : true,
+			enableToggle: true,
+			toggleGroup : 'charts',
+			scope       : me,
+			handler     : me.onChartSwitch
+		}, '-', {
 			text        : 'Growth Chart',
 			action      : 'growChart',
-			pressed     : true,
 			enableToggle: true,
 			toggleGroup : 'charts',
 			scope       : me,
@@ -69,6 +73,11 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 
 
 		me.items = [
+
+			Ext.create('App.view.patientfile.charts.BPPulseTemp',{
+				store:me.vitalsStore
+			}),
+
 			{
 				xtype  : 'chart',
 				style  : 'background:#fff',
@@ -416,14 +425,16 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 	onChartSwitch: function(btn) {
 		var layout = this.getLayout();
 
-		if(btn.action == 'growChart') {
+		if(btn.action == 'bpPulseTemp') {
 			layout.setActiveItem(0);
-		} else if(btn.action == 'headCirChart') {
+		} else if(btn.action == 'growChart') {
 			layout.setActiveItem(1);
-		} else if(btn.action == 'weightAge') {
+		} else if(btn.action == 'headCirChart') {
 			layout.setActiveItem(2);
-		} else if(btn.action == 'heightAge') {
+		} else if(btn.action == 'weightAge') {
 			layout.setActiveItem(3);
+		} else if(btn.action == 'heightAge') {
+			layout.setActiveItem(4);
 		}
 	}
 });

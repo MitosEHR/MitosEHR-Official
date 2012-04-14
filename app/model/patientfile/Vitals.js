@@ -12,6 +12,7 @@ Ext.define('App.model.patientfile.Vitals', {
 		{name: 'pid', type: 'int'},
 		{name: 'eid', type: 'int'},
 		{name: 'uid', type: 'int'},
+		{name: 'auth_uid', type: 'int'},
 		{name: 'date', type: 'date', dateFormat:'Y-m-d H:i:s' },
 		{name: 'weight_lbs', type: 'int', useNull:true},
 		{name: 'weight_kg', type: 'int', useNull:true},
