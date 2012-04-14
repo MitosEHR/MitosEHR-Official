@@ -4,6 +4,9 @@
  * File:
  * Date: 2/18/12
  * Time: 11:09 PM
+ *
+ * @namespace Fees.EncountersPayment
+ *
  */
 
 Ext.define('App.model.fees.EncountersPayments', {
