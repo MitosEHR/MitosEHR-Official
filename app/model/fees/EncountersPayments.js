@@ -23,7 +23,7 @@ Ext.define('App.model.fees.EncountersPayments', {
     proxy : {
         type: 'direct',
         api : {
-            read  : Fees.EncountersPayment
+            read  : fees.EncountersPayments
         },
         reader     : {
             type: 'json'

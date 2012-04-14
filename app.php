@@ -103,6 +103,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/model/patientfile/EventHistory.js"></script>
         <script type="text/javascript" src="app/model/patientfile/QRCptCodes.js"></script>
+<!--    <script type="text/javascript" src="app/model/patientfile/VisitPayment.js"></script>-->
         <script type="text/javascript" src="app/model/patientfile/CptCodes.js"></script>
         <script type="text/javascript" src="app/model/fees/Billing.js"></script>
         <script type="text/javascript" src="app/model/fees/EncountersPayments.js"></script>

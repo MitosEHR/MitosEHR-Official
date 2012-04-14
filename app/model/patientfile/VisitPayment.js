@@ -30,7 +30,6 @@ Ext.define('App.model.fees.EncountersPayments', {
         },
         reader     : {
             type: 'json'
-
         }
     }
 });
