@@ -16,8 +16,8 @@ include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Encounter.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
-class Documents
-{
+
+class Documents {
 
 	/**
 	 * @var dbHelper
@@ -57,14 +57,14 @@ class Documents
 	public function createSuperBillDoc(stdClass $params){
 
 		/**
-		 * estoy printiando los params para que veas lo que hay en el objeto @params..
+		 * estoy printeando los params para que veas lo que hay en el objeto @params..
 		 *
-		 * By The Way... print_r() es para printiar Arrays/Objects
+		 * By The Way... print_r() es para printear Arrays/Objects
 		 */
 		print_r($params);
 
 		/**
-		 * Aqui printe los valores individuales para que veas como usarlos
+		 * Aqui printeo los valores individuales para que veas como usarlos
 		 *
 		 * los <br> con para crear una linea nueva en HTML...  picheale...
 		 */
@@ -91,7 +91,7 @@ class Documents
 
 		/**
 		 * Ejemplo de como usar los valores en SQLs
-		 * y printiar la info
+		 * y printear la info
 		 */
 		$this->db->setSQL( "SELECT * FROM form_data_demographics WHERE pid = '$params->pid'" );
 		$patient = $this->db->fetchRecord();
@@ -123,7 +123,7 @@ print '<pre>';
  */
 $params = new stdClass();
 /**
- * Estos son las propiedates vas a nececitar para crear el Super Bill del paciente.
+ * Estos son las propiedades vas a necesitar para crear el Super Bill del paciente.
  *
  * $params->pid = Patient ID
  * $params->start_date = Fecha del comienzo del reporte
