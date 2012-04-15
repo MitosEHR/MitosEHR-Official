@@ -244,7 +244,7 @@ Ext.define('App.view.MitosApp', {
 					itemId : 'patientCheckOut',
 					iconCls: 'icoCheck',
 					scope  : me,
-					handler: me.checkOutPatient,
+					handler: me.chargePatient,
 					tooltip: 'Check Out Patient'
 				},
                 {
@@ -257,8 +257,8 @@ Ext.define('App.view.MitosApp', {
 					itemId : 'patientCharge',
 					iconCls: me.icoMoney,
 					scope  : me,
-					handler: me.chargePatient,
-					tooltip: 'Charge Patient'
+					handler: me.PaymentEntryWindow,
+					tooltip: 'Payment Entry'
 				},
 				{
 					xtype      : 'panel',
@@ -620,6 +620,8 @@ Ext.define('App.view.MitosApp', {
 
 		me.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow');
 		me.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
+        me.PaymentEntryWindow = Ext.create('App.view.patientfile.PaymentEntryWindow');
+
 
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
@@ -641,6 +643,10 @@ Ext.define('App.view.MitosApp', {
 
 	onChartsWin: function() {
 		this.ChartsWindow.show();
+	},
+
+    PaymentEntryWindow: function() {
+		this.PaymentEntryWindow.show();
 	},
 
 	newPatient: function() {

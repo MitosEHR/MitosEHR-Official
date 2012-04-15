@@ -28,6 +28,7 @@ Ext.define('App.view.patientfile.VisitPayment', {
         me.pageBody = Ext.create('Ext.form.Panel', {
 
             title:'Visit Payment',
+            itemId:'visitpayment',
             defaults:{
                 bodyStyle : 'padding:15px',
                 bodyBorder: true,
@@ -44,6 +45,7 @@ Ext.define('App.view.patientfile.VisitPayment', {
                     items:[
                         {
                             xtype : 'fieldset',
+                            itemId: 'receipt',
                             margin: 5,
                             flex  : 2,
                             items: [
@@ -108,7 +110,6 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                             store       : paymentDescription,
                                             queryMode   : 'local',
                                             displayField: 'name'
-
                                         },
 
                                         {
@@ -238,11 +239,13 @@ Ext.define('App.view.patientfile.VisitPayment', {
                 '-',
                 {
                     text:'Cancel',
+                    scope:me,
                     handler:me.cancelReceipt
                 },
                 '-',
                 {
                     text:'Print',
+                    scope:me,
                     handler:me.onPrintClick
                 }
             ]
@@ -252,71 +255,65 @@ Ext.define('App.view.patientfile.VisitPayment', {
 
             title      : 'Printing Options',
             closeAction: 'hide',
+            closable   : false,
             modal      : true,
             items:[
                 {
                     xtype   :'form',
-                    height  : 300,
+                    height  : 200,
                     width   : 300,
                     defaults: { margin:5 },
+                    columnWidth:.5,
                     border  : false,
                     items:[
  	                    {
-                            title:'Printing Options',
-                            columnWidth:.5,
-                            margin:'5 1 5 5',
+                            xtype   :'checkboxgroup',
+                            width   : 200,
+                            height  : 40,
+                            defaults:{
+                                xtype:'checkboxfield'
+                            },
                             items:[
                                 {
-                                    xtype:'checkboxgroup',
-                                    defaults:{
-                                        xtype:'checkboxfield'
-                                    },
-                                    items:[
-                                        {
-                                            boxLabel: 'Receipt'
-                                        },
-                                        {
-                                            boxLabel: 'Orders'
-                                        }
-                                    ]
+                                    boxLabel: 'Receipt'
+                                },
+                                {
+                                    boxLabel: 'Orders'
                                 }
                             ]
  	                    }
  	                ],
- 	                bbar:[
+ 	                buttons:[
+                        '->',
  	                    {
  	                        text:'Print'
                         },
  	                    '-',
  	                    {
  	                        text:'Cancel',
+                            scope:me,
                             handler:me.cancelPrint
  	                    }
  	                ]
  	            }
             ]
-         });
+        });
 
         me.callParent(arguments);
     },
 
-    //dudas
     onPrintClick:function () {
-        var me = this, win = me.printWindow;
-        win.show();
+        this.printWindow.show();
     },
 
-    //dudas
     cancelPrint:function (btn) {
         var win = btn.up('window');
         win.close();
     },
 
-
-    //dudas
     cancelReceipt:function (btn) {
-        var win = btn.up('form'), form = win.down('container').down('fieldset').getForm();
-        form.reset();
+        var win = btn.up('panel');
+        win.pageBody.down('receipt').getForm().reset();
     },
 
     /**

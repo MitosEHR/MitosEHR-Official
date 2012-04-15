@@ -56,13 +56,6 @@ class Documents
 		return;
 	}
 
-	/**
-	 * COMIANZA A LEER EN LA LINEA 114!!!!!!!!!!
-	 *
-	 *
-	 * @param stdClass $params
-	 * @return array
-	 */
 	public function createSuperBillDoc(stdClass $params)
 	{
 		$this->pdf->AddPage();
@@ -71,6 +64,7 @@ class Documents
 		$this->pdf->SetFillColor(100, 220, 255);
 		$this->pdf->Cell(0, 6, $this->facility->getFacilityInfo($params->fid), 0, 1, 'L', true);
 		$this->pdf->Ln(4);
+
 		$txt = file_get_contents('information.txt');
 		$this->pdf->SetFont('Times', '', 12);
 		$this->pdf->MultiCell(0, 5, $txt);
