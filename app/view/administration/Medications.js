@@ -64,17 +64,169 @@ Ext.define('App.view.administration.Medications', {
                             }
             			],
             plugins: Ext.create('App.classes.grid.RowFormEditing', {
+	            autoCancel  : false,
+	            errorSummary: false,
+	            clicksToEdit: 1,
+	            formItems   : [
+		            {
+
+			            title : 'general',
+			            xtype : 'container',
+			            padding:10,
+			            layout:'vbox',
+			            items : [
+				            {
+					            /**
+					             * line One
+					             */
+					            xtype   : 'fieldcontainer',
+					            layout:'hbox',
+					            defaults:{ margin:'0 10 5 0' },
+					            items   : [
+						            {
+
+							            xtype     : 'textfield',
+							            fieldLabel: 'Immunization Name',
+							            name      : 'code_text',
+							            labelWidth:130,
+							            width:747
+						            },
+						            {
+							            xtype     : 'mitos.sexcombo',
+							            fieldLabel: 'Sex',
+							            name      : 'sex',
+							            width     : 100,
+							            labelWidth: 30
+
+						            }
+
+
+
+					            ]
+				            },
+				            {
+					            /**
+					             * Line two
+					             */
+					            xtype   : 'fieldcontainer',
+					            layout:'hbox',
+					            defaults:{ margin:'0 10 5 0' },
+					            items   : [
+						            {
+							            xtype     : 'mitos.codestypescombo',
+							            fieldLabel: 'Coding System',
+							            labelWidth:130,
+							            value     : 'CVX',
+							            name      : 'code_type',
+							            readOnly:true
+
+						            },
+						            {
+							            xtype     : 'numberfield',
+							            fieldLabel: 'Frequency',
+							            margin:'0 0 5 0',
+							            value     : 0,
+							            minValue  : 0,
+							            width:150,
+							            name      : 'frequency'
+
+						            },
+						            {
+							            xtype: 'mitos.timecombo',
+							            name : 'frequency',
+							            width:100
+
+						            },
+						            {
+							            xtype     : 'numberfield',
+							            fieldLabel: 'Age Start',
+							            labelWidth: 75,
+							            width:140,
+							            value     : 0,
+							            minValue  : 0
+
+						            },
+						            {
+							            fieldLabel: 'Must be pregnant',
+							            xtype   : 'checkboxfield',
+							            labelWidth:105,
+							            name    : 'pregnant'
+
+
+						            }
+					            ]
+
+				            },
+				            {
+					            /**
+					             * Line three
+					             */
+					            xtype   : 'fieldcontainer',
+					            layout:'hbox',
+					            defaults:{ margin:'0 10 5 0' },
+					            items   : [
+						            {
+							            xtype     : 'textfield',
+							            fieldLabel: 'Code',
+							            name      : 'code',
+							            labelWidth:130
+
+						            },
+						            {
+							            xtype     : 'numberfield',
+							            fieldLabel: 'Times to Perform',
+							            width     : 250,
+							            value     : 0,
+							            minValue  : 0,
+							            name      : 'times',
+							            tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
+
+						            },
+						            {
+
+							            xtype     : 'numberfield',
+							            fieldLabel: 'Age End',
+							            labelWidth: 75,
+							            width:140,
+							            value     : 0,
+							            minValue  : 0
+
+
+						            },
+
+						            {
+							            fieldLabel: 'perform only once',
+							            xtype   : 'checkboxfield',
+							            labelWidth:105,
+							            //margin  : '5 0 0 10',
+							            name    : 'perform'
+						            }
+
+
+
+					            ]
+
+				            }
+
+			            ]
+
+
+		            }
+		            ]
 
 
 
 
 
-            })
+            }),
             tbar: Ext.create('Ext.PagingToolbar', {
             				store      : me.storeMedications,
             				displayInfo: true,
             				emptyMsg   : "No Office Notes to display",
-            				plugins    : Ext.create('Ext.ux.SlidingPager', {}),
+            				plugins    : Ext.create('Ext.ux.SlidingPager', {
+
+
+				            })
 
             			})
         })
@@ -91,9 +243,8 @@ Ext.define('App.view.administration.Medications', {
 	 * place inside this function all the functions you want
 	 * to call every this panel becomes active
 	 */
-	onActive: function
-        this.storeMedications.load();(callback) {
+	onActive: function(){
+        this.storeMedications.load();
 
-		callback(true);
 	}
 }); //ens servicesPage class
