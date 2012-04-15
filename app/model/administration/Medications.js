@@ -10,8 +10,27 @@
 Ext.define('App.model.administration.Medications', {
 	extend: 'Ext.data.Model',
 	fields: [
+
+		{name: 'PRODUCTNDC' },
 		{name: 'PROPRIETARYNAME' },
-		{name: 'PRODUCTNDC' }
-	]
+		{name: 'NONPROPRIETARYNAME' },
+		{name: 'DOSAGEFORMNAME' },
+		{name: 'ROUTENAME' },
+		{name: 'ACTIVE_NUMERATOR_STRENGTH' },
+		{name: 'ACTIVE_INGRED_UNIT' }
+	],
+    proxy: {
+    		type       : 'direct',
+    		api        : {
+    			read  : Services.getMedications,
+    			create: Services.addMedications,
+    			destroy: Services.removeMedications
+    		},
+    		reader     : {
+    			totalProperty: 'totals',
+    			root         : 'rows'
+    		}
+    	},
+
 
 });

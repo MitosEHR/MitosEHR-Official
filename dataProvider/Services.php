@@ -364,8 +364,16 @@ class Services {
 		return $params;
 	}
     public function getMedications(stdClass $params){
+        $this->db->setSQL("SELECT *
+                           FROM medications");
+        $records = $this->db->fetchRecords(PDO::FETCH_CLASS);
+        $totals = count($records);
+        $records = array_slice($records,$params->start,$params->limit);
 
-		return $params;
+        return array('totals'=>$totals,'rows'=>$records);
+
+
+
 	}
 
 	public function addMedications(stdClass $params){

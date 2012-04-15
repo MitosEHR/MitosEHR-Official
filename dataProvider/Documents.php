@@ -16,9 +16,10 @@ include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Encounter.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
-
-class Documents {
-
+include_once($_SESSION['site']['root'] . '/dataProvider/Facilities.php');
+include_once($_SESSION['site']['root'] . '/classes/PDF.php');
+class Documents
+{
 	/**
 	 * @var dbHelper
 	 */
@@ -35,7 +36,14 @@ class Documents {
 	 * @var Services
 	 */
 	private $services;
-
+	/**
+	 * @var Facilities
+	 */
+	private $facility;
+	/**
+	 * @var PDF
+	 */
+	private $pdf;
 
 	function __construct()
 	{
@@ -43,6 +51,8 @@ class Documents {
 		$this->user     = new User();
 		$this->patient  = new Patient();
 		$this->services = new Services();
+		$this->facility = new Facilities();
+		$this->pdf      = new PDF();
 		return;
 	}
 
@@ -53,65 +63,30 @@ class Documents {
 	 * @param stdClass $params
 	 * @return array
 	 */
+	public function createSuperBillDoc(stdClass $params)
+	{
+		$this->pdf->AddPage();
+		$this->pdf->SetFont('Arial', 'B', 16);
+		$this->pdf->SetFont('Arial', '', 12);
+		$this->pdf->SetFillColor(100, 220, 255);
+		$this->pdf->Cell(0, 6, $this->facility->getFacilityInfo($params->fid), 0, 1, 'L', true);
+		$this->pdf->Ln(4);
+		$txt = file_get_contents('information.txt');
+		$this->pdf->SetFont('Times', '', 12);
+		$this->pdf->MultiCell(0, 5, $txt);
+		$this->pdf->Ln();
+		$this->pdf->SetFont('', 'I');
+		$this->pdf->Cell(0, 5, 'End of bill statement');
+		$this->pdf->Output('hello.pdf', 'F');
 
-	public function createSuperBillDoc(stdClass $params){
-		/**
-		 * estoy printeando los params para que veas lo que hay en el objeto @params..
-		 *
-		 * By The Way... print_r() es para printear Arrays/Objects
-		 */
-		print_r($params);
-
-		/**
-		 * Aqui printeo los valores individuales para que veas como usarlos
-		 *
-		 * los <br> con para crear una linea nueva en HTML...  picheale...
-		 */
-		print '<br>';
-		print 'Patient ID: ' . $params->pid;
-		print '<br>';
-		print 'Start Date: ' . $params->start_date;
-		print '<br>';
-		print 'Stop Date: ' .  $params->stop_date;
-		print '<br>';
-
-		/**
-		 * Ejemplo como usar una funcion de otra classe
-		 * que este definida en __construct()
-		 */
-		$currentUser = $this->user->getCurrentUserTitleLastName();
-		print 'Current User Name :' . $currentUser;
-
-		print '<br>';
-		$patientName = $this->patient->getPatientFullNameByPid($params->pid);
-		print 'Patient FullName :' . $patientName;
-		print '<br>';
-
-
-		/**
-		 * Ejemplo de como usar los valores en SQLs
-		 * y printear la info
-		 */
-		$this->db->setSQL( "SELECT * FROM form_data_demographics WHERE pid = '$params->pid'" );
-		$patient = $this->db->fetchRecord();
-		print 'Patient Info Array :';
-		print_r($patient);
-
-		/**
-		 * este return es para sencha...
-		 * el success = true, es para decirle a sencha que el documento se creo
-		 * y el doc = va a ser un array con la metadata de documento. (name, type, created by, created date, last updated... etc etc)
-		 */
-		return array('success' => true, 'doc' => array('document_info'));
 	}
-
 
 	/**
 	 * @param stdClass $params
 	 * @return mixed
 	 */
-	public function createOrder(stdClass $params){
-
+	public function createOrder(stdClass $params)
+	{
 		return;
 	}
 
@@ -119,8 +94,8 @@ class Documents {
 	 * @param stdClass $params
 	 * @return mixed
 	 */
-	public function createReferral(stdClass $params){
-
+	public function createReferral(stdClass $params)
+	{
 		return;
 	}
 
@@ -128,43 +103,22 @@ class Documents {
 	 * @param stdClass $params
 	 * @return mixed
 	 */
-	public function createDrNotes(stdClass $params){
-
+	public function createDrNotes(stdClass $params)
+	{
 		return;
 	}
-
 
 }
 
-
-/**
- * el <pre> y los <br> son HTML tags...  picheale a esto.
- */
-print '<pre>';
-/**
- * PARA QUE ESTE EJEMPLO FUNCIONE TIENES QUE LOGIADO EN MITOS!!!!!!!!!!!
- *
- * Eto es lo que sencha te va a enviar...
- * Sencha envia un Objeto stdClass con propiedades.
- *
- */
-$params = new stdClass();
-/**
- * Estos son las propiedades vas a necesitar para crear el Super Bill del paciente.
- *
- * $params->pid = Patient ID
- * $params->start_date = Fecha del comienzo del reporte
- * $params->stop_date = Fecha del final del reporte
- */
-$params->pid = 1;
+$params             = new stdClass();
+$params->pid        = 1;
+$params->fid        = 6;
 $params->start_date = '2012-01-01';
-$params->stop_date = '2012-03-01';
-
-/**
- * Aqui creo una instancia de la classe Document
- */
-$docs = new Documents();
-/**
- * Aqui llamo la funcion createSuperBillDoc() con los parametros
- */
+$params->stop_date  = '2012-03-01';
+$docs               = new Documents();
 $docs->createSuperBillDoc($params);
+
+
+
+
+

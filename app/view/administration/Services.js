@@ -107,7 +107,7 @@ Ext.define('App.view.administration.Services', {
 												fieldLabel: 'Immunization Name',
 												name      : 'code_text',
 												labelWidth:130,
-												width:640
+												width:747
 											},
 											{
 												xtype     : 'mitos.sexcombo',
@@ -117,6 +117,7 @@ Ext.define('App.view.administration.Services', {
 												labelWidth: 30
 
 											}
+
 
 
 										]
@@ -155,13 +156,22 @@ Ext.define('App.view.administration.Services', {
 
 											},
 											{
-												fieldLabel: 'Must be pregnant',
-												xtype   : 'checkboxfield',
-												labelWidth:105,
-												name    : 'pregnant'
+                                                xtype     : 'numberfield',
+                                                fieldLabel: 'Age Start',
+                                                labelWidth: 75,
+                                                width:140,
+                                                value     : 0,
+                                                minValue  : 0
 
-											}
+											},
+                                            {
+                                                fieldLabel: 'Must be pregnant',
+                                                xtype   : 'checkboxfield',
+                                                labelWidth:105,
+                                                name    : 'pregnant'
 
+
+                                            }
 										]
 
 									},
@@ -191,13 +201,24 @@ Ext.define('App.view.administration.Services', {
 
 											},
 											{
-												fieldLabel: 'perform only once',
-												xtype   : 'checkboxfield',
-												labelWidth:105,
-												//margin  : '5 0 0 10',
-												name    : 'perform'
 
-											}
+                                                xtype     : 'numberfield',
+                                                fieldLabel: 'Age End',
+                                                labelWidth: 75,
+                                                width:140,
+                                                value     : 0,
+                                                minValue  : 0
+
+
+											},
+
+                                            {
+                                                fieldLabel: 'perform only once',
+                                                xtype   : 'checkboxfield',
+                                                labelWidth:105,
+                                                //margin  : '5 0 0 10',
+                                                name    : 'perform'
+                                            }
 
 
 

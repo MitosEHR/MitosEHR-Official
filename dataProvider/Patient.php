@@ -182,6 +182,13 @@ class Patient extends Person {
         $filename = $PNG_TEMP_DIR. '/patientDataQrCode.png';
         QRcode::png($data, $filename, 'Q', 2, 2);
     }
+
+	public function getPatientAddressById($pid){
+		$this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
+		$p = $this->db->fetchRecord();
+		$address = $p['address'] . ' <br>' .  $p['city'] . ',  ' . $p['state'] . ' ' . $p['country'];
+		return $address;
+	}
 }
 //$p = new Patient();
 //echo '<pre>';
