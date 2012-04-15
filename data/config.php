@@ -356,6 +356,15 @@ $API = array(
             ),
             'removeActiveProblems'=>array(
                'len'=>1
+            ),
+            'getMedications'=>array(
+               'len'=>1
+            ),
+            'addMedications'=>array(
+               'len'=>1
+            ),
+            'removeMedications'=>array(
+               'len'=>1
             )
         )
     ),    /**
