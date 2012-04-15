@@ -90,8 +90,8 @@ Ext.define('App.view.administration.Medications', {
 										fieldLabel: 'Name',
 										width     : 150,
 										labelWidth: 50,
-										name      : 'PROPRIETARYNAME',
-										readOnly  : true
+										name      : 'PROPRIETARYNAME'
+
 
 									},
 									{
