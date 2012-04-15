@@ -107,7 +107,7 @@ Ext.define('App.view.administration.Services', {
 												fieldLabel: 'Immunization Name',
 												name      : 'code_text',
 												labelWidth:130,
-												width:747
+												width:703
 											},
 											{
 												xtype     : 'mitos.sexcombo',
