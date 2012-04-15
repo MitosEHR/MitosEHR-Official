@@ -11,218 +11,230 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp',{
 		type:'vbox',
 		align:'stretch'
 	},
-	defaults:{ flex:1 },
+	style:'background-color:#fff',
+	defaults:{
+		xtype:'panel',
+		layout:'fit',
+		frame:true,
+		flex:1
+	},
 	initComponent:function(){
 		var me = this;
 
 		me.items = [
 			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : me.store,
-				animate: true,
-				shadow : true,
-				axes   : [
+				title:'Blood Pressure',
+				margin:5,
+				items:[
 					{
-						title         : 'Blood Pressure',
-						type          : 'Numeric',
-						position      : 'left',
-						fields        : ['bp_systolic'],
-						majorTickSteps: 10,
-						minorTickSteps: 2,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								stroke        : '#bbb',
-								'stroke-width': 0.5
+						xtype  : 'chart',
+						style  : 'background:#fff',
+						store  : me.store,
+						frame:true,
+						animate: true,
+						shadow : true,
+						axes   : [
+							{
+								title         : 'Blood Pressure',
+								type          : 'Numeric',
+								position      : 'left',
+								fields        : ['bp_systolic'],
+								majorTickSteps: 10,
+								minorTickSteps: 2,
+								grid          : {
+									odd: {
+										opacity       : 1,
+										stroke        : '#bbb',
+										'stroke-width': 0.5
+									}
+								}
+							},
+							{
+								title         : 'Date',
+								type          : 'Time',
+								dateFormat    : 'Y-m-d h:i:s a',
+								position      : 'bottom',
+								fields        : ['date']
 							}
-						}
-					},
-					{
-						title         : 'Date',
-						type          : 'Time',
-						dateFormat    : 'Y-m-d h:i:s a',
-						position      : 'bottom',
-						fields        : ['date']
-					}
-				],
-				series : [
-					{
-						title       : 'Systolic',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'date',
-						yField      : 'bp_systolic',
-						smooth      : true,
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Diastolic',
-						type     : 'line',
-						axis     : 'left',
-						xField   : 'date',
-						yField   : 'bp_diastolic',
-						smooth   : true,
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						markerConfig: {
-							type          : 'cross',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
+						],
+						series : [
+							{
+								title       : 'Systolic',
+								type        : 'line',
+								axis        : 'left',
+								xField      : 'date',
+								yField      : 'bp_systolic',
+								smooth      : true,
+								highlight   : {
+									size  : 10,
+									radius: 10
+								},
+								markerConfig: {
+									type          : 'circle',
+									size          : 5,
+									radius        : 5,
+									'stroke-width': 0
+								},
+								tips: {
+									trackMouse: true,
+									renderer: function(storeItem, item) {
+										this.update('Date: ' + Ext.Date.format(storeItem.get('date'), 'Y-m-d h:i:s a') + '<br>Systolic: ' + storeItem.get('bp_systolic'));
+									}
+				                }
+							},
+							{
+								title    : 'Diastolic',
+								type     : 'line',
+								axis     : 'left',
+								xField   : 'date',
+								yField   : 'bp_diastolic',
+								smooth   : true,
+								highlight: {
+									size  : 5,
+									radius: 5
+								},
+								markerConfig: {
+									type          : 'cross',
+									size          : 5,
+									radius        : 5,
+									'stroke-width': 0
+								},
+								tips: {
+									trackMouse: true,
+									renderer: function(storeItem, item) {
+										this.update('Date: ' + Ext.Date.format(storeItem.get('date'), 'Y-m-d h:i:s a') + '<br>Diastolic: ' + storeItem.get('bp_diastolic'));
+									}
+				                }
 
+							}
+						]
 					}
 				]
 			},{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : me.store,
-				animate: true,
-				shadow : true,
-				axes   : [
+				title:'Pulse',
+				margin:'0 5 5 5',
+				items:[
 					{
-						title         : 'Blood Pressure',
-						type          : 'Numeric',
-						position      : 'left',
-						fields        : ['bp_systolic'],
-						majorTickSteps: 10,
-						minorTickSteps: 2,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								stroke        : '#bbb',
-								'stroke-width': 0.5
+						xtype  : 'chart',
+						style  : 'background:#fff',
+						store  : me.store,
+						animate: true,
+						shadow : true,
+						axes   : [
+							{
+								title         : 'Pulse (per min)',
+								type          : 'Numeric',
+								position      : 'left',
+								fields        : ['pulse'],
+								majorTickSteps: 10,
+								minorTickSteps: 2,
+								grid          : {
+									odd: {
+										opacity       : 1,
+										stroke        : '#bbb',
+										'stroke-width': 0.5
+									}
+								}
+							},
+							{
+								title         : 'Date',
+								type          : 'Time',
+								dateFormat    : 'Y-m-d h:i:s a',
+								position      : 'bottom',
+								fields        : ['date']
+
 							}
-						}
-					},
-					{
-						title         : 'Date',
-						type          : 'Time',
-						dateFormat    : 'Y-m-d h:i:s a',
-						position      : 'bottom',
-						fields        : ['date']
-
-					}
-				],
-				series : [
-					{
-						title       : 'Systolic',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'date',
-						yField      : 'bp_systolic',
-						smooth      : true,
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Diastolic',
-						type     : 'line',
-						axis     : 'left',
-						xField   : 'date',
-						yField   : 'bp_diastolic',
-						smooth   : true,
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						markerConfig: {
-							type          : 'cross',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-
+						],
+						series : [
+							{
+								title       : 'Pulse',
+								type        : 'line',
+								axis        : 'left',
+								xField      : 'date',
+								yField      : 'pulse',
+								smooth      : true,
+								highlight   : {
+									size  : 10,
+									radius: 10
+								},
+								markerConfig: {
+									type          : 'circle',
+									size          : 5,
+									radius        : 5,
+									'stroke-width': 0
+								},
+								tips: {
+									trackMouse: true,
+									renderer: function(storeItem, item) {
+										this.update('Date: ' + Ext.Date.format(storeItem.get('date'), 'Y-m-d h:i:s a') + '<br>Pulse (per min): ' + storeItem.get('pulse'));
+									}
+				                }
+							}
+						]
 					}
 				]
 			},{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : me.store,
-				animate: true,
-				shadow : true,
-				axes   : [
+				title:'Temperature',
+				margin:'0 5 5 5',
+				items:[
 					{
-						title         : 'Blood Pressure',
-						type          : 'Numeric',
-						position      : 'left',
-						fields        : ['bp_systolic'],
-						majorTickSteps: 10,
-						minorTickSteps: 2,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								stroke        : '#bbb',
-								'stroke-width': 0.5
+
+						xtype  : 'chart',
+						style  : 'background:#fff',
+						store  : me.store,
+						animate: true,
+						shadow : true,
+						axes   : [
+							{
+								title         : 'Temp Fahrenheits',
+								type          : 'Numeric',
+								position      : 'left',
+								fields        : ['temp_f'],
+								majorTickSteps: 10,
+								minorTickSteps: 2,
+								grid          : {
+									odd: {
+										opacity       : 1,
+										stroke        : '#bbb',
+										'stroke-width': 0.5
+									}
+								}
+							},
+							{
+								title         : 'Date',
+								type          : 'Time',
+								dateFormat    : 'Y-m-d h:i:s a',
+								position      : 'bottom',
+								fields        : ['date']
+
 							}
-						}
-					},
-					{
-						title         : 'Date',
-						type          : 'Time',
-						dateFormat    : 'Y-m-d h:i:s a',
-						position      : 'bottom',
-						fields        : ['date']
-
-					}
-				],
-				series : [
-					{
-						title       : 'Systolic',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'date',
-						yField      : 'bp_systolic',
-						smooth      : true,
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Diastolic',
-						type     : 'line',
-						axis     : 'left',
-						xField   : 'date',
-						yField   : 'bp_diastolic',
-						smooth   : true,
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						markerConfig: {
-							type          : 'cross',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-
+						],
+						series : [
+							{
+								title       : 'Temp (Fahrenheits)',
+								type        : 'line',
+								axis        : 'left',
+								xField      : 'date',
+								yField      : 'temp_f',
+								smooth      : true,
+								highlight   : {
+									size  : 10,
+									radius: 10
+								},
+								markerConfig: {
+									type          : 'circle',
+									size          : 5,
+									radius        : 5,
+									'stroke-width': 0
+								},
+								tips: {
+									trackMouse: true,
+									renderer: function(storeItem, item) {
+										this.update('Date: ' + Ext.Date.format(storeItem.get('date'), 'Y-m-d h:i:s a') + '<br>Temp (Fahrenheits): ' + storeItem.get('temp_f'));
+									}
+				                }
+							}
+						]
 					}
 				]
 			}
