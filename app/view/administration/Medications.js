@@ -19,6 +19,7 @@ Ext.define('App.view.administration.Medications', {
 
 	initComponent: function() {
 		var me = this;
+		me.query = '';
 
 		me.storeMedications = Ext.create('App.store.administration.Medications');
 
@@ -168,14 +169,27 @@ Ext.define('App.view.administration.Medications', {
 				emptyMsg   : "No Office Notes to display",
 				plugins    : Ext.create('Ext.ux.SlidingPager', {}),
 				items:[
+					'-',
 					{
-					text:'add',
+					text:'Add New',
 					scope:me,
 					handler:me.onAddMedication
+					},'-',
+					{
+					xtype          : 'textfield',
+					emptyText      : 'Search',
+					enableKeyEvents: true,
+					itemId         : 'query',
+					listeners      : {
+						scope : me,
+						keyup : me.onSearchMedications,
+						buffer: 500
+								}
 					}
 				]
-
 			})
+
+
 		});
 		me.pageBody = [ me.medicationsGrid ];
 		me.callParent(arguments);
@@ -184,10 +198,19 @@ Ext.define('App.view.administration.Medications', {
 
 	onAddMedication: function() {
 		this.medicationsGrid.editingPlugin.cancelEdit();
-		say(this.medicationsGrid);
+
 		this.storeMedications.insert(0,{});
 		this.medicationsGrid.editingPlugin.startEdit(0,0);
 
+	},
+	onSearchMedications: function(field) {
+		var me = this,
+			store = me.storeMedications;
+
+		me.query = field.getValue();
+
+		store.proxy.extraParams = {query: me.query};
+		store.load();
 	},
 
 
@@ -200,6 +223,8 @@ Ext.define('App.view.administration.Medications', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function() {
+		this.medicationsGrid.down('toolbar').getComponent('query').reset();
+		this.storeMedications.proxy.extraParams = {};
 		this.storeMedications.load();
 
 	}

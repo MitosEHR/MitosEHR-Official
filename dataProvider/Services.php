@@ -364,8 +364,14 @@ class Services {
 		return $params;
 	}
     public function getMedications(stdClass $params){
+
+
         $this->db->setSQL("SELECT *
-                           FROM medications");
+                           FROM medications
+                           WHERE (PRODUCTNDC      LIKE '%$params->query%'
+                                   OR PROPRIETARYNAME LIKE '%$params->query%'
+                                   OR NONPROPRIETARYNAME            LIKE '$params->query%')
+                             ORDER BY PRODUCTNDC ASC");
         $records = $this->db->fetchRecords(PDO::FETCH_CLASS);
         $totals = count($records);
         $records = array_slice($records,$params->start,$params->limit);
