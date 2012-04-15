@@ -184,12 +184,9 @@ class Patient extends Person {
     }
 
 	public function getPatientAddressById($pid){
-
 		$this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
 		$p = $this->db->fetchRecord();
-
 		$address = $p['address'] . ' <br>' .  $p['city'] . ',  ' . $p['state'] . ' ' . $p['country'];
-
 		return $address;
 	}
 }
