@@ -687,12 +687,13 @@ Ext.define('App.view.administration.Services', {
 
 
 		this.activeProblemsStore.add(model[0]);
-
+		field.reset();
 	},
 	addMedications:function(field, model){
 
 
 		this.medicationsStore.add(model[0]);
+		field.reset();
 
 	},
 

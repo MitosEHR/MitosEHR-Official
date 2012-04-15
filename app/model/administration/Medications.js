@@ -10,7 +10,7 @@
 Ext.define('App.model.administration.Medications', {
 	extend: 'Ext.data.Model',
 	fields: [
-
+		{name: 'id', type: 'int'},
 		{name: 'PRODUCTNDC' },
 		{name: 'PROPRIETARYNAME' },
 		{name: 'NONPROPRIETARYNAME' },
@@ -24,7 +24,8 @@ Ext.define('App.model.administration.Medications', {
     		api        : {
     			read  : Services.getMedications,
     			create: Services.addMedications,
-    			destroy: Services.removeMedications
+    			destroy: Services.removeMedications,
+			    update: Services.updateMedications
     		},
     		reader     : {
     			totalProperty: 'totals',

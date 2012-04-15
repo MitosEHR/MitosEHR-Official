@@ -375,6 +375,18 @@ class Services {
 
 
 	}
+    public function updateMedications(stdClass $params){
+
+
+        $data = get_object_vars($params);
+        $id = $data['id'];
+        unset($data['id']);
+        $sql = $this->db->sqlBind($data, "medications", "U", "id='$id'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+        return $params;
+
+	}
 
 	public function addMedications(stdClass $params){
 

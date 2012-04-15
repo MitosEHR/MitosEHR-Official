@@ -365,6 +365,9 @@ $API = array(
             ),
             'removeMedications'=>array(
                'len'=>1
+            ),
+            'updateMedications'=>array(
+               'len'=>1
             )
         )
     ),    /**
