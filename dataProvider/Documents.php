@@ -16,6 +16,8 @@ include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Encounter.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Facilities.php');
+include_once($_SESSION['site']['root'] . '/lib/fpdf17/fpdf.php');
 
 class Documents {
 
@@ -35,6 +37,10 @@ class Documents {
 	 * @var Services
 	 */
 	private $services;
+    /**
+     * @var Facilities
+     */
+    private $facility;
 
 
 	function __construct()
@@ -43,6 +49,7 @@ class Documents {
 		$this->user     = new User();
 		$this->patient  = new Patient();
 		$this->services = new Services();
+        $this->facility = new Facilities();
 		return;
 	}
 
@@ -81,8 +88,8 @@ class Documents {
 		 */
 		$currentUser = $this->user->getCurrentUserTitleLastName();
 		print 'Current User Name :' . $currentUser;
-
 		print '<br>';
+
 		$patientName = $this->patient->getPatientFullNameByPid($params->pid);
 		print 'Patient FullName :' . $patientName;
 		print '<br>';
@@ -103,6 +110,7 @@ class Documents {
 		 * y el doc = va a ser un array con la metadata de documento. (name, type, created by, created date, last updated... etc etc)
 		 */
 		return array('success' => true, 'doc' => array('document_info'));
+
 	}
 
 
@@ -132,14 +140,80 @@ class Documents {
 
 		return;
 	}
+}
+
+class PDF extends FPDF
+{
+
+    private $facility;
+
+    function __construct()
+    {
+        $this->facility = new Facilities();
+    }
+// Page header
+    function Header()
+    {
+        // Logo
+        $this->Image('MitosEHRLogo.png',10,6,30);
+        // Arial bold 15
+        $this->SetFont('Arial','B',15);
+        // Move to the right
+        $this->Cell(80);
+        // Title
+        $this->SetFillColor(200,220,255);
+        $this->Cell(40,10,'Bill Statement',1,0,'C');
+        // Line break
+        $this->Ln(30);
+    }
+
+    // Page footer
+    function Footer()
+    {
+        // Position at 1.5 cm from bottom
+        $this->SetY(-15);
+        // Arial italic 8
+        $this->SetFont('Arial','I',8);
+        // Page number
+        $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,1,'C');
+        // Arial Bold 6
+        $this->SetFont('Arial','B',6);
+        $this->SetTextColor(128);
+        //MitosEHR Signature
+        $this->Cell(0,0,'MitosEHR Bill Statement',0,1,'C');
+    }
+
+    function ChapterTitle($label)
+    {
+        // Arial 12
+        $this->SetFont('Arial','',12);
+        // Background color
+        $this->SetFillColor(100,220,255);
+        // Title
+        $this->Cell(0,6,"$label",0,1,'L',true);
+        // Line break
+        $this->Ln(4);
+    }
+
+    function ChapterBody($file)
+    {
+        // Read text file
+        $txt = file_get_contents($file);
+        // Times 12
+        $this->SetFont('Times','',12);
+        // Output justified text
+        $this->MultiCell(0,5,$txt);
+        // Line break
+        $this->Ln();
+        // Mention in italics
+        $this->SetFont('','I');
+        $this->Cell(0,5,'End of bill statement');
+    }
 
 
 }
 
 
-/**
- * el <pre> y los <br> son HTML tags...  picheale a esto.
- */
 print '<pre>';
 /**
  * PARA QUE ESTE EJEMPLO FUNCIONE TIENES QUE LOGIADO EN MITOS!!!!!!!!!!!
@@ -149,22 +223,29 @@ print '<pre>';
  *
  */
 $params = new stdClass();
-/**
- * Estos son las propiedades vas a necesitar para crear el Super Bill del paciente.
- *
- * $params->pid = Patient ID
- * $params->start_date = Fecha del comienzo del reporte
- * $params->stop_date = Fecha del final del reporte
- */
 $params->pid = 1;
+$params->fid = 6;
 $params->start_date = '2012-01-01';
 $params->stop_date = '2012-03-01';
 
-/**
- * Aqui creo una instancia de la classe Document
- */
-$docs = new Documents();
-/**
- * Aqui llamo la funcion createSuperBillDoc() con los parametros
- */
-$docs->createSuperBillDoc($params);
+
+//$docs = new Documents();
+
+//$docs->createSuperBillDoc($params);
+
+
+//Generate the PDF Bill statement
+
+
+$pdf = new PDF();
+$pdf->AliasNbPages();
+$pdf->AddPage();
+$pdf->SetFont('Times','',12);
+$pdf->ChapterTitle('hdsbvksdbvasdasdf');
+$pdf->ChapterBody('Information.txt');
+//$pdf->Output();
+$pdf->Output('hello.pdf', 'F');
+
+
+
+

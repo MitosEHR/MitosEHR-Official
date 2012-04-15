@@ -109,4 +109,21 @@ class Facilities {
 
         return $params;
     }
+
+    public function getFacilityInfo ($params){
+
+        $sql = "SELECT fname, phone, street, city, state, postal_code
+                FROM facility
+                WHERE id='$params->pid'";
+
+        $this->db->setSQL($sql);
+        $i = $this->db->fetchRecord();
+
+        $facilityInfo = $i["fname"].'<br>'.$i['phone'].'<br>'.$i['street'].'<br>'.$i['city'].' '.$i['state'].' '.$i['postal_code'];
+
+        return $facilityInfo;
+
+    }
+
+
 }
