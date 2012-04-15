@@ -74,7 +74,7 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 
 		me.items = [
 
-			Ext.create('App.view.patientfile.charts.BPPulseTemp',{
+			me.BPPulseTemp = Ext.create('App.view.patientfile.charts.BPPulseTemp',{
 				store:me.vitalsStore
 			}),
 
@@ -419,7 +419,16 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 			}
 		];
 
+		me.listeners = {
+			scope:me,
+			show:me.onWinShow
+		};
+
 		me.callParent(arguments);
+	},
+
+	onWinShow:function(){
+		this.vitalsStore.load();
 	},
 
 	onChartSwitch: function(btn) {
@@ -427,6 +436,7 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 
 		if(btn.action == 'bpPulseTemp') {
 			layout.setActiveItem(0);
+			say(this.BPPulseTemp);
 		} else if(btn.action == 'growChart') {
 			layout.setActiveItem(1);
 		} else if(btn.action == 'headCirChart') {
