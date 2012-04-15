@@ -113,6 +113,12 @@ class Documents {
 
 	}
 
+    public function getInfoFromFacilities($params){
+
+        $facilityInfo = $this->facility->getFacilityInfo($params);
+        return ($facilityInfo);
+    }
+
 
 	/**
 	 * @param stdClass $params
@@ -145,12 +151,6 @@ class Documents {
 class PDF extends FPDF
 {
 
-    private $facility;
-
-    function __construct()
-    {
-        $this->facility = new Facilities();
-    }
 // Page header
     function Header()
     {
@@ -229,9 +229,9 @@ $params->start_date = '2012-01-01';
 $params->stop_date = '2012-03-01';
 
 
-//$docs = new Documents();
-
+$docs = new Documents();
 //$docs->createSuperBillDoc($params);
+$label = $docs->getInfoFromFacilities($params);
 
 
 //Generate the PDF Bill statement
@@ -241,7 +241,7 @@ $pdf = new PDF();
 $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->SetFont('Times','',12);
-$pdf->ChapterTitle('hdsbvksdbvasdasdf');
+$pdf->ChapterTitle($label);
 $pdf->ChapterBody('Information.txt');
 //$pdf->Output();
 $pdf->Output('hello.pdf', 'F');
