@@ -10,6 +10,7 @@
 Ext.define('App.store.administration.Medications', {
 	model: 'App.model.administration.Medications',
 	extend: 'Ext.data.Store',
-    autoLoad  : false
+    autoLoad  : false,
+	autoSync  : true
 
 });

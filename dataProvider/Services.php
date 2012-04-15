@@ -389,11 +389,20 @@ class Services {
 	}
 
 	public function addMedications(stdClass $params){
-
-		return $params;
+        $data = get_object_vars($params);
+        unset($data['id']);
+        $sql = $this->db->sqlBind($data, "medications", "I");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return $params;
 	}
 
 	public function removeMedications(stdClass $params){
+
+            $this->db->setSQL("DELETE FROM medications WHERE id ='$params->id'");
+            $this->db->execLog();
+
 
 		return $params;
 	}

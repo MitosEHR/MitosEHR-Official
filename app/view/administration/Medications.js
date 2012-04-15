@@ -67,6 +67,7 @@ Ext.define('App.view.administration.Medications', {
 				autoCancel  : false,
 				errorSummary: false,
 				clicksToEdit: 1,
+				enableRemove:true,
 				formItems   : [
 					{
 
@@ -165,16 +166,29 @@ Ext.define('App.view.administration.Medications', {
 				store      : me.storeMedications,
 				displayInfo: true,
 				emptyMsg   : "No Office Notes to display",
-				plugins    : Ext.create('Ext.ux.SlidingPager', {
-
-
-				})
+				plugins    : Ext.create('Ext.ux.SlidingPager', {}),
+				items:[
+					{
+					text:'add',
+					scope:me,
+					handler:me.onAddMedication
+					}
+				]
 
 			})
-		})
+		});
 		me.pageBody = [ me.medicationsGrid ];
 		me.callParent(arguments);
 	}, // end of initComponent
+
+
+	onAddMedication: function() {
+		this.medicationsGrid.editingPlugin.cancelEdit();
+		say(this.medicationsGrid);
+		this.storeMedications.insert(0,{});
+		this.medicationsGrid.editingPlugin.startEdit(0,0);
+
+	},
 
 
 

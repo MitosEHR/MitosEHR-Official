@@ -31,7 +31,7 @@ Ext.define('App.model.administration.Medications', {
     			totalProperty: 'totals',
     			root         : 'rows'
     		}
-    	},
+    	}
 
 
 });
