@@ -117,7 +117,7 @@ class Facilities {
                 WHERE id='$params->fid'";
 
         $this->db->setSQL($sql);
-        $i = $this->db->fetchRecord();
+        $i = $this->db->fetchRecord(PDO::FETCH_CLASS);
         $facilityInfo = $i["fname"].'<br>'.$i['phone'].'<br>'.$i['street'].'<br>'.$i['city'].' '.$i['state'].' '.$i['postal_code'];
 
 
