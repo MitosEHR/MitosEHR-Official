@@ -14,7 +14,6 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
     closeAction:'hide',
     modal:true,
 
-
     initComponent:function () {
 
         var me = this;
@@ -22,12 +21,12 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
         me.items = [
             {
                 xtype:'form',
-                //height:190,
+                height:123,
                 defaults:{ margin:5 },
+                closable:false,
                 border:false,
                 items:[
                     {
-
                         xtype:'fieldcontainer',
                         layout:'hbox',
                         items:[
@@ -58,7 +57,6 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 margin:'0 0 0 25',
                                 fieldStyle:'text-align: right;'
                             }
-
                         ]
                     },
                     {
@@ -123,7 +121,5 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
         ];
         me.callParent(arguments);
     }
-
-
 })
 ; //end Checkout class
