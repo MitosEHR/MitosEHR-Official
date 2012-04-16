@@ -10,17 +10,20 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 	requires:[
 		'App.store.patientfile.Vitals'
 	],
-	title      : 'Vector Chart',
+	title      : 'Vector Charts',
 	layout     : 'card',
 	closeAction: 'hide',
-	width      : 900,
-	height     : 800,
+	modal      : true,
+	width      : window.innerWidth - 200,
+	height     : window.innerHeight - 200,
 	maximizable: true,
-	maximized  : true,
+	//maximized  : true,
 	initComponent: function() {
 		var me = this;
 
 		me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
+
+        me.graphStore = Ext.create('App.store.patientfile.VectorGraph');
 
 		me.tbar = ['->', {
 			text        : 'BP/Pulse/Temp',
@@ -78,345 +81,21 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 				store:me.vitalsStore
 			}),
 
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : me.vitalsStore,
-				itemId : 'growChart',
-				animate: true,
-				shadow : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Height (inches)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Height (centimeters)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+            me.Growth = Ext.create('App.view.patientfile.charts.Growth',{
+                store:me.graphStore
+            }),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			},
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : this.vitalsStore,
-				itemId : 'headCirChart',
-				animate: true,
-				shadow : true,
-				hidden : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Head Circumference (inches)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Head Circumference (centimeters)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+            me.HeadCircumference = Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                store:me.graphStore
+            }),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			},
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : this.vitalsStore,
-				itemId : 'weightAge',
-				animate: true,
-				shadow : true,
-				hidden : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Weight (lbs)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Weight (kg)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+			me.weightForAge = Ext.create('App.view.patientfile.charts.WeightForAge',{
+				store:me.graphStore
+			}),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			},
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : this.vitalsStore,
-				itemId : 'heightAge',
-				animate: true,
-				shadow : true,
-				hidden : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Height (inches)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Height (centimeters)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
-
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			}
+			me.headForAge = Ext.create('App.view.patientfile.charts.HeightForAge',{
+				store:me.graphStore
+			})
 		];
 
 		me.listeners = {
@@ -428,7 +107,11 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 	},
 
 	onWinShow:function(){
+        var layout = this.getLayout();
+        layout.setActiveItem(0);
+
 		this.vitalsStore.load();
+
 	},
 
 	onChartSwitch: function(btn) {
@@ -436,14 +119,37 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 
 		if(btn.action == 'bpPulseTemp') {
 			layout.setActiveItem(0);
-			say(this.BPPulseTemp);
 		} else if(btn.action == 'growChart') {
+            this.graphStore.load({
+                params:{
+                    type:1,
+                    pid:app.currPatient.pid
+                }
+            });
 			layout.setActiveItem(1);
 		} else if(btn.action == 'headCirChart') {
+            this.graphStore.load({
+                params:{
+                    type:4,
+                    pid:app.currPatient.pid
+                }
+            });
 			layout.setActiveItem(2);
 		} else if(btn.action == 'weightAge') {
+            this.graphStore.load({
+                params:{
+                    type:3,
+                    pid:app.currPatient.pid
+                }
+            });
 			layout.setActiveItem(3);
 		} else if(btn.action == 'heightAge') {
+            this.graphStore.load({
+                params:{
+                    type:4,
+                    pid:app.currPatient.pid
+                }
+            });
 			layout.setActiveItem(4);
 		}
 	}

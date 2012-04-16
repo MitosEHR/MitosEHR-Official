@@ -55,6 +55,13 @@ $API = array(
             )
         )
     ),
+	'VectorGraph'=>array(
+		'methods'=>array(
+			'getGraphData'=>array(
+				'len'=>1
+			)
+		)
+	),
     /**
     * Calendar Functions
     */
@@ -105,9 +112,6 @@ $API = array(
     'Fees'=>array(
         'methods'=>array(
             'getFilterEncountersBillingData'=>array(
-               'len'=>1
-            ),
-            'getEncountersByPayment'=>array(
                'len'=>1
             ),
             'getEncountersByPayment'=>array(
