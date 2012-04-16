@@ -40,7 +40,7 @@ class VectorGraph
 
 	private function getGraphCurves($type, $sex)
 	{
-		$this->db->setSQL("SELECT * FROM vector_charts WHERE type = '$type' AND sex = '$sex'");
+		$this->db->setSQL("SELECT * FROM vector_graphs WHERE type = '$type' AND sex = '$sex'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
 			unset($row['type'],$row['sex'],$row['L'],$row['M'],$row['S']);
