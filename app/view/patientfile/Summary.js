@@ -56,49 +56,201 @@ Ext.define('App.view.patientfile.Summary', {
 
 					{
 						title: 'Medications',
-						html : 'Panel content!',
-						itemId:'MedicationsPanel'
+						itemId:'MedicationsPanel',
+
+						xtype:'grid',
+
+						columns: [
+							{
+								width    : 70,
+								header   : 'Name',
+								dataIndex: '',
+								sortable : true
+							}
+
+						]
+
+
 
 					},
 					{
 						title: 'Immunizations',
-						html : 'Panel content!',
-						itemId:'ImmuPanel'
+
+						itemId:'ImmuPanel',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 					{
 						title: 'Allergies',
-						html : 'Panel content!',
-						itemId:'AllergiesPanel'
+						itemId:'AllergiesPanel',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 					{
 						title: 'Issues',
-						html : 'Panel content!',
-						itemId:'IssuesPanel'
+						itemId:'IssuesPanel',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 
 					{
 						title: 'Dental',
-						html : 'Panel content!',
-						itemId:'DentalPanel'
+						itemId:'DentalPanel',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 
 					{
 						title: 'Surgery',
-						html : 'Panel content!',
-						itemId:'SurgeryPanel'
+						itemId:'SurgeryPanel',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 					{
 						title: 'Clinical Reminders',
-						html : 'Panel content!'
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 					{
 						title: 'Appointments',
-						html : 'Panel content!'
+						html : 'Panel content!',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					},
 
 					{
 						title: 'Prescriptions',
-						html : 'Panel content!'
+						html : 'Panel content!',
+						items:[
+							{
+								xtype:'grid',
+								//store  :
+								region : 'center',
+								columns: [
+									{
+										width    : 70,
+										header   : 'Name',
+										dataIndex: '',
+										sortable : true
+									}
+
+								]
+
+							}
+
+						]
 					}
 				]
 			},
