@@ -10,17 +10,30 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 	requires:[
 		'App.store.patientfile.Vitals'
 	],
-	title      : 'Vector Chart',
+	title      : 'Vector Charts',
 	layout     : 'card',
 	closeAction: 'hide',
-	width      : 900,
-	height     : 800,
+	modal      : true,
+	width      : window.innerWidth - 200,
+	height     : window.innerHeight - 200,
 	maximizable: true,
-	maximized  : true,
+	//maximized  : true,
 	initComponent: function() {
 		var me = this;
 
 		me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
+        me.graphStore = Ext.create('App.store.patientfile.VectorGraph');
+
+        me.WeightForAgeInfStore = Ext.create('App.store.patientfile.charts.WeightForAgeInf');
+        me.LengthForAgeInfStore = Ext.create('App.store.patientfile.charts.LengthForAgeInf');
+        me.WeightForRecumbentInfStore = Ext.create('App.store.patientfile.charts.WeightForRecumbentInf');
+        me.HeadCircumferenceInfStore = Ext.create('App.store.patientfile.charts.HeadCircumferenceInf');
+        me.WeightForStatureStore = Ext.create('App.store.patientfile.charts.WeightForStature');
+        me.WeightForAgeStore = Ext.create('App.store.patientfile.charts.WeightForAge');
+        me.StatureForAgeStore = Ext.create('App.store.patientfile.charts.StatureForAge');
+        me.BMIForAgeStore = Ext.create('App.store.patientfile.charts.BMIForAge');
+
+
 
 		me.tbar = ['->', {
 			text        : 'BP/Pulse/Temp',
@@ -30,30 +43,58 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 			toggleGroup : 'charts',
 			scope       : me,
 			handler     : me.onChartSwitch
-		}, '-', {
-			text        : 'Growth Chart',
-			action      : 'growChart',
+        }, '-', {
+            text        : 'Weight for Age',
+            action      : 'WeightForAgeInf',
+            enableToggle: true,
+            toggleGroup : 'charts',
+            scope       : me,
+            handler     : me.onChartSwitch
+        }, '-', {
+			text        : 'Length for Age',
+			action      : 'LengthForAgeInf',
+			enableToggle: true,
+			toggleGroup : 'charts',
+			scope       : me,
+			handler     : me.onChartSwitch
+        }, '-', {
+			text        : 'Weight for Recumbent',
+			action      : 'WeightForRecumbentInf',
+			enableToggle: true,
+			toggleGroup : 'charts',
+			scope       : me,
+			handler     : me.onChartSwitch
+        }, '-', {
+			text        : 'Head Circumference',
+			action      : 'HeadCircumferenceInf',
 			enableToggle: true,
 			toggleGroup : 'charts',
 			scope       : me,
 			handler     : me.onChartSwitch
 		}, '-', {
-			text        : 'Head Circumference Chart',
-			action      : 'headCirChart',
+			text        : 'Weight for Stature',
+			action      : 'WeightForStature',
 			enableToggle: true,
 			toggleGroup : 'charts',
 			scope       : me,
 			handler     : me.onChartSwitch
 		}, '-', {
 			text        : 'Weight for Age',
-			action      : 'weightAge',
+			action      : 'WeightForAge',
 			enableToggle: true,
 			toggleGroup : 'charts',
 			scope       : me,
 			handler     : me.onChartSwitch
 		}, '-', {
-			text        : 'Height for Age',
-			action      : 'heightAge',
+			text        : 'Stature for Age',
+			action      : 'StatureForAge',
+			enableToggle: true,
+			toggleGroup : 'charts',
+			scope       : me,
+			handler     : me.onChartSwitch
+		}, '-', {
+			text        : 'BMI for Age',
+			action      : 'BMIForAge',
 			enableToggle: true,
 			toggleGroup : 'charts',
 			scope       : me,
@@ -70,353 +111,93 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 			}
 		];
 
-
-
 		me.items = [
 
-			me.BPPulseTemp = Ext.create('App.view.patientfile.charts.BPPulseTemp',{
+			Ext.create('App.view.patientfile.charts.BPPulseTemp',{
 				store:me.vitalsStore
 			}),
 
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : me.vitalsStore,
-				itemId : 'growChart',
-				animate: true,
-				shadow : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Height (inches)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Height (centimeters)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'Weight For Age ( 0 - 3 mos )',
+                xTitle:'Weight (kg)',
+                yTitle:'Age (months)',
+                xMinimum:1,
+                xMaximum:19,
+                yMinimum:0,
+                yMaximum:36,
+                store:me.WeightForAgeInfStore
+            }),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			},
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : this.vitalsStore,
-				itemId : 'headCirChart',
-				animate: true,
-				shadow : true,
-				hidden : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Head Circumference (inches)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Head Circumference (centimeters)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'Length For Age ( 0 - 3 mos )',
+                xTitle:'Length (cm)',
+                yTitle:'Age (months)',
+                xMinimum : 40,
+                xMaximum : 110,
+                yMinimum : 0,
+                yMaximum : 36,
+                store:me.LengthForAgeInfStore
+            }),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			},
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : this.vitalsStore,
-				itemId : 'weightAge',
-				animate: true,
-				shadow : true,
-				hidden : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Weight (lbs)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Weight (kg)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'Weight For Recumbent ( 0 - 3 mos )',
+                xTitle:'Weight (kg)',
+                yTitle:'Age (months)',
+                xMinimum : 40,
+                xMaximum : 110,
+                yMinimum : 0,
+                yMaximum : 36,
+                store:me.WeightForRecumbentInfStore
+            }),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			},
-			{
-				xtype  : 'chart',
-				style  : 'background:#fff',
-				store  : this.vitalsStore,
-				itemId : 'heightAge',
-				animate: true,
-				shadow : true,
-				hidden : true,
-				theme  : 'Category1',
-				legend : {
-					position: 'right'
-				},
-				axes   : [
-					{
-						title         : 'Height (inches)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 100,
-						position      : 'left',
-						fields        : ['height_in'],
-						majorTickSteps: 100,
-						minorTickSteps: 1,
-						grid          : {
-							odd: {
-								opacity       : 1,
-								fill          : '#ddd',
-								stroke        : '#bbb',
-								'stroke-width': 0.5
-							}
-						}
-					},
-					{
-						title         : 'Height (centimeters)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 250,
-						position      : 'right',
-						majorTickSteps: 125,
-						minorTickSteps: 1
-					},
-					{
-						title         : 'Age (Years)',
-						type          : 'Numeric',
-						minimum       : 0,
-						maximum       : 20,
-						position      : 'bottom',
-						fields        : ['years'],
-						majorTickSteps: 18,
-						minorTickSteps: 2
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'Head Circumference ( 0 - 3 mos )',
+                xTitle:'Circumference (cm)',
+                yTitle:'Age (months)',
+                xMinimum : 30,
+                xMaximum : 55,
+                yMinimum : 0,
+                yMaximum : 36,
+                store:me.HeadCircumferenceInfStore
+            }),
 
-					}
-				],
-				series : [
-					{
-						title       : 'Actual Growth',
-						type        : 'line',
-						axis        : 'left',
-						xField      : 'years',
-						yField      : 'hight_in',
-						highlight   : {
-							size  : 10,
-							radius: 10
-						},
-						markerConfig: {
-							type          : 'circle',
-							size          : 5,
-							radius        : 5,
-							'stroke-width': 0
-						}
-					},
-					{
-						title    : 'Normal Growth',
-						type     : 'line',
-						highlight: {
-							size  : 5,
-							radius: 5
-						},
-						axis     : 'left',
-						xField   : 'years',
-						yField   : 'hight_in',
-						smooth   : true,
-						fill     : true
-					}
-				]
-			}
+            Ext.create('App.view.patientfile.charts.HeightForStature',{
+                store:me.WeightForStatureStore
+            }),
+
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'Weight For Age ( 2 - 20 years )',
+                xTitle:'Weight (kg)',
+                yTitle:'Age (years)',
+                xMinimum : 10,
+                xMaximum : 110,
+                yMinimum : 24,
+                yMaximum : 240,
+                store:me.WeightForAgeStore
+            }),
+
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'Stature For Age ( 2 - 20 years )',
+                xTitle:'Stature (cm)',
+                yTitle:'Age (years)',
+                xMinimum : 60,
+                xMaximum : 200,
+                yMinimum : 24,
+                yMaximum : 240,
+                store:me.StatureForAgeStore
+            }),
+
+            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+                title:'BMI For Age ( 2 - 20 years )',
+                xTitle:'BMI (kg)',
+                yTitle:'Age (years)',
+                xMinimum : 10,
+                xMaximum : 35,
+                yMinimum : 24,
+                yMaximum : 240,
+                store:me.BMIForAgeStore
+            })
+
 		];
 
 		me.listeners = {
@@ -428,23 +209,47 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 	},
 
 	onWinShow:function(){
-		this.vitalsStore.load();
+        var me = this,
+            layout = me.getLayout();
+        layout.setActiveItem(0);
+
+        me.vitalsStore.load();
+
+        me.WeightForAgeInfStore.load({params:{pid:app.currPatient.pid}});
+        me.LengthForAgeInfStore.load({params:{pid:app.currPatient.pid}});
+        me.WeightForRecumbentInfStore.load({params:{pid:app.currPatient.pid}});
+        me.HeadCircumferenceInfStore.load({params:{pid:app.currPatient.pid}});
+        me.WeightForStatureStore.load({params:{pid:app.currPatient.pid}});
+        me.WeightForAgeStore.load({params:{pid:app.currPatient.pid}});
+        me.StatureForAgeStore.load({params:{pid:app.currPatient.pid}});
+        me.BMIForAgeStore.load({params:{pid:app.currPatient.pid}});
+
 	},
 
 	onChartSwitch: function(btn) {
-		var layout = this.getLayout();
+		var layout = this.getLayout(), card, chart, x, y;
 
 		if(btn.action == 'bpPulseTemp') {
 			layout.setActiveItem(0);
-			say(this.BPPulseTemp);
-		} else if(btn.action == 'growChart') {
-			layout.setActiveItem(1);
-		} else if(btn.action == 'headCirChart') {
-			layout.setActiveItem(2);
-		} else if(btn.action == 'weightAge') {
-			layout.setActiveItem(3);
-		} else if(btn.action == 'heightAge') {
-			layout.setActiveItem(4);
+
+        } else if(btn.action == 'WeightForAgeInf') {
+            layout.setActiveItem(1);
+        } else if(btn.action == 'LengthForAgeInf') {
+            layout.setActiveItem(2);
+        } else if(btn.action == 'WeightForRecumbentInf') {
+            layout.setActiveItem(3);
+        } else if(btn.action == 'HeadCircumferenceInf') {
+            layout.setActiveItem(4);
+		} else if(btn.action == 'WeightForStature') {
+            layout.setActiveItem(5);
+		} else if(btn.action == 'WeightForAge') {
+            layout.setActiveItem(6);
+		} else if(btn.action == 'StatureForAge') {
+            layout.setActiveItem(7);
+		} else if(btn.action == 'BMIForAge') {
+            layout.setActiveItem(8);
 		}
+
+        //say(layout.getActiveItem().down('chart'))
 	}
 });

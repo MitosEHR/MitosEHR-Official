@@ -243,6 +243,7 @@ class Encounter {
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
             $row['administer'] = $this->user->getUserNameById($row['uid']);
+
             array_push($rows, $row);
         }
         return $rows;
@@ -259,6 +260,7 @@ class Encounter {
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
             $row['administer'] = $this->user->getUserNameById($row['uid']);
+
             array_push($rows, $row);
         }
         return $rows;

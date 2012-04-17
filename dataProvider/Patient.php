@@ -91,6 +91,13 @@ class Patient extends Person {
         $p = $this->db->fetchRecord();
         return $this->fullname($p['fname'],$p['mname'],$p['lname']);
     }
+
+	public function getPatientSexIntByPid($pid){
+        $this->db->setSQL("SELECT sex FROM form_data_demographics WHERE pid = '$pid'");
+        $p = $this->db->fetchRecord();
+		$sex = (strtolower($p['sex']) == strtolower('FEMALE')) ? 1 : 2;
+        return $sex;
+    }
     /**
      * @param \stdClass $params
      * @internal param $search
