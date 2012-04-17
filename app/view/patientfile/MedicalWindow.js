@@ -49,12 +49,17 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		});
 		me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications',{
 
+			listeners   :{
+				scope     : me,
+				beforesync:me.setDefaults
+			},
 			autoSync:true
 		});
 
 		me.items = [
 			{
 				xtype   : 'grid',
+				action  : 'patientImmuListGrid',
 				itemId  : 'patientImmuListGrid',
 				store   : me.patientImmuListStore,
 				features: Ext.create('Ext.grid.feature.Grouping', {
@@ -104,6 +109,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					autoCancel  : false,
 					errorSummary: false,
 					clicksToEdit: 1,
+
 					formItems   : [
 						{
 							xtype     : 'container',
@@ -249,7 +255,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 
 				xtype  : 'grid',
-				itemId : 'patientAllergiesListGrid',
+				action : 'patientAllergiesListGrid',
 				store  : me.patientAllergiesListStore,
 				columns: [
 					{
@@ -307,6 +313,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					autoCancel  : false,
 					errorSummary: false,
 					clicksToEdit: 1,
+
 					formItems   : [
 						{
 							xtype        : 'container',
@@ -396,7 +403,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 
 				xtype  : 'grid',
-				itemId : 'patientMedicalListGrid',
+				action : 'patientMedicalListGrid',
 				store  : me.patientMedicalIssuesStore,
 				columns: [
 					{
@@ -449,6 +456,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					autoCancel  : false,
 					errorSummary: false,
 					clicksToEdit: 1,
+
 					formItems   : [
 						{
 							xtype        : 'container',
@@ -534,7 +542,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 
 				xtype  : 'grid',
-				itemId : 'patientSurgeryListGrid',
+				action : 'patientSurgeryListGrid',
 				store  : me.patientSurgeryStore,
 				columns: [
 					{
@@ -668,7 +676,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 				 */
 
 				xtype  : 'grid',
-				itemId : 'patientDentalListGrid',
+				action : 'patientDentalListGrid',
 				store  : me.patientDentalStore,
 				columns: [
 					{
@@ -789,7 +797,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                      */
 
                     xtype  : 'grid',
-                    itemId : 'patientMedicationsListGrid',
+	                action : 'patientMedicationsListGrid',
                     store  : me.patientMedicationsStore,
                     columns: [
                         {
@@ -837,6 +845,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         autoCancel  : false,
                         errorSummary: false,
                         clicksToEdit: 1,
+
                         formItems   : [
                             {
                                 xtype        : 'container',
@@ -984,10 +993,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					},
 					'->',
 					{
-						text        : 'Add',
+						text        : 'Add New',
 						action      : 'AddRecord',
-						scope       : me,
-						handler     : me.addRecord
+						scope:me,
+						handler:me.onAddItem
 					}
 				]
 			}
@@ -995,7 +1004,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 		me.listeners = {
 			scope: me,
-			//afterrender: me.onAfterRender,
+
 			show : me.onMedicalWinShow
 		};
 
@@ -1003,154 +1012,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		me.callParent(arguments);
 	},
 
-	addRecord:function(){
 
-	},
-
-	onSave: function(btn) {
-		var form = this.getLayout().getActiveItem().down('form').getForm(),
-			record = form.getRecord(),
-			values = form.getValues(),
-			store, storeIndex;
-
-		values.eid = app.currEncounterId;
-
-		if(btn.itemId == 'SaveImmunization') {
-			store = this.patientImmuListStore;
-		}
-		else if(btn.itemId == 'SaveAllergies') {
-			store = this.patientAllergiesListStore;
-		}
-		else if(btn.itemId == 'SaveMedicalIssues') {
-			store = this.patientMedicalIssuesStore;
-		}
-		else if(btn.itemId == 'SaveSurgery') {
-			store = this.patientSurgeryStore;
-		}
-		else if(btn.itemId == 'SaveDental') {
-			store = this.patientDentalStore;
-		}
-
-		storeIndex = store.indexOf(record);
-
-		if(storeIndex == -1) {
-			values.created_uid = app.user.id;
-			values.create_date = new Date();
-			record.set(values);
-			store.add(record);
-		} else {
-			values.updated_uid = app.user.id;
-			record.set(values);
-		}
-		store.sync();
-
-
-	},
-	/*
-	 onAfterRender: function() {
-	 var me = this,
-	 ImmuHeader = this.getComponent(0).getDockedItems()[0],
-	 AllergyHeader = this.getComponent(1).getDockedItems()[0],
-	 MedicalIssue = this.getComponent(2).getDockedItems()[0],
-	 Surgery = this.getComponent(3).getDockedItems()[0],
-	 Dental = this.getComponent(4).getDockedItems()[0];
-
-	 ImmuHeader.add({
-	 xtype  : 'button',
-	 text   : 'Add Immunization',
-	 iconCls: 'icoAddRecord',
-	 itemId : 'addiImunization',
-	 scope  : me,
-	 handler: me.onAddNew
-	 });
-	 AllergyHeader.add({
-	 xtype  : 'button',
-	 text   : 'Add Allergies',
-	 iconCls: 'icoAddRecord',
-	 itemId : 'addiAllergy',
-	 scope  : me,
-	 handler: me.onAddNew
-
-	 });
-	 MedicalIssue.add({
-	 xtype  : 'button',
-	 text   : 'Add Medical Issue',
-	 iconCls: 'icoAddRecord',
-	 itemId : 'addiIssue',
-	 scope  : me,
-	 handler: me.onAddNew
-
-	 });
-	 Surgery.add({
-	 xtype  : 'button',
-	 text   : 'Add Surgery',
-	 iconCls: 'icoAddRecord',
-	 itemId : 'addiSurgery',
-	 scope  : me,
-	 handler: me.onAddNew
-
-	 });
-	 Dental.add({
-	 xtype  : 'button',
-	 text   : 'Add Dental',
-	 iconCls: 'icoAddRecord',
-	 itemId : 'addiDental',
-	 scope  : me,
-	 handler: me.onAddNew
-
-	 });
-
-	 me.doLayout();
-	 },
-	 */
-//
-//    onAddNew:function (btn) {
-//        var me = this, panel, form, model;
-//
-//        if (btn.itemId == 'addiImunization') {
-//            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-//            model = Ext.ModelManager.getModel('App.model.patientfile.PatientImmunization');
-//            model = Ext.ModelManager.create({
-//                pid:app.currPatient.pid,
-//                administered_uid:user.id,
-//                administered_date:new Date(),
-//                education_date:new Date(),
-//                vis_date:new Date()
-//            }, model);
-//            form = panel.down('form').getForm();
-//        } else {
-//            panel = me.getLayout().getActiveItem().down('form');
-//            if (btn.itemId == 'addiAllergy') {
-//
-//                model = Ext.ModelManager.getModel('App.model.patientfile.Allergies');
-//
-//            } else if (btn.itemId == 'addiIssue') {
-//
-//                model = Ext.ModelManager.getModel('App.model.patientfile.MedicalIssues');
-//
-//            } else if (btn.itemId == 'addiSurgery') {
-//
-//                model = Ext.ModelManager.getModel('App.model.patientfile.Surgery');
-//
-//            } else if (btn.itemId == 'addiDental') {
-//
-//                model = Ext.ModelManager.getModel('App.model.patientfile.Dental');
-//
-//                form = panel.getForm();
-//            }
-//            model = Ext.ModelManager.create({
-//                pid:app.currPatient.pid,
-//                begin_date:new Date()
-//            }, model);
-//            form = panel.getForm();
-//        }
-//
-//        form.reset();
-//        form.loadRecord(model);
-//        panel.show();
-//        panel.expand(true);
-//
-//    },
 
 	onCancel: function(btn) {
 		var me = this, panel, form;
@@ -1167,12 +1029,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		panel.hide();
 		form.reset();
 	},
-
-	onGridResized: function() {
-		this.doLayout();
-	},
-
-
 
 	closeImmunizationGrid: function() {
         var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
@@ -1206,27 +1062,67 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	},
 
+	onAddItem: function() {
+
+		var grid = this.getLayout().getActiveItem(),
+			store= grid.store, data;
+
+
+		grid.editingPlugin.cancelEdit();
+		store.insert(0,{
+			created_uid: app.user.id,
+			pid: app.currPatient.pid,
+			create_date: new Date(),
+			eid: app.currEncounterId,
+			begin_date: new Date()
+
+		});
+		grid.editingPlugin.startEdit(0,0);
+
+
+
+	},
+
+	setDefaults: function(options,context) {
+
+		var data;
+
+		if(options.update){
+			data = options.update[0].data;
+			data.updated_uid = app.user.id;
+		}else if(options.create) {
+
+		}
+
+	},
+
 	cardSwitch: function(btn) {
 		var layout = this.getLayout(), title;
 
 		if(btn.action == 'immunization') {
 			layout.setActiveItem(0);
 			title = 'Immunizations';
+
 		} else if(btn.action == 'allergies') {
 			layout.setActiveItem(1);
 			title = 'Allergies';
+
 		} else if(btn.action == 'issues') {
 			layout.setActiveItem(2);
 			title = 'Medical Issues';
+
 		} else if(btn.action == 'surgery') {
 			layout.setActiveItem(3);
 			title = 'Surgeries';
+
 		} else if(btn.action == 'dental') {
 			layout.setActiveItem(4);
 			title = 'Dentals';
+
 		} else if(btn.action == 'medications') {
 			layout.setActiveItem(5);
 			title = 'Medications';
+
 		}
 
 		this.setTitle(app.currPatient.name + ' - Medical Window ( ' + title + ' )');
