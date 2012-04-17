@@ -5,10 +5,12 @@
  * Time: 3:38 PM
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('App.view.patientfile.charts.HeadCircumference',{
+Ext.define('App.view.patientfile.charts.WeightForAgeInf',{
     extend:'Ext.panel.Panel',
    	layout:'fit',
    	margin:5,
+    title:'Weight For Age ( 0 - 36 mos )',
+
 	initComponent:function(){
 		var me = this;
 
@@ -16,37 +18,35 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
 			{
                 xtype  : 'chart',
                 store  : me.store,
-                animate: false,
+                animate: true,
                 shadow : true,
-                theme  :'Sky',
+                theme:'Sky',
                 axes   : [
                     {
-                        title         : me.xTitle,
+                        title         : 'Weight (kg)',
                         type          : 'Numeric',
                         position      : 'left',
                         fields        : ['PP','P3','P5','P10','P25','P50','P75','P90','P95','P97'],
+                        minimum: 1,
+                        maximum: 19,
                         grid          : {
                             odd: {
                                 opacity       : 1,
                                 stroke        : '#bbb',
                                 'stroke-width': 0.5
                             }
-                        },
-                        minimum       : me.xMinimum,
-                        maximum       : me.xMaximum
+                        }
                     },
                     {
-                        title         : me.yTitle,
+                        title         : 'Age (Mos)',
                         type          : 'Numeric',
                         position      : 'bottom',
-                        fields        : ['age_mos'],
-                        minimum       : me.yMinimum,
-                        maximum       : me.yMaximum
+                        fields        : ['age_mos']
                     }
                 ],
                 series : [
                     {
-                        title       : 'Circumference (cm)',
+                        title       : 'Weight (kg)',
                         type        : 'scatter',
                         axis        : 'left',
                         xField      : 'age_mos',
@@ -65,7 +65,7 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         tips: {
                             trackMouse: true,
                             renderer: function(storeItem, item) {
-                                this.update( me.yTitle + ' : ' + storeItem.get('age_mos') + '<br>'+ me.xTitle +': ' + storeItem.get('PP'));
+                                this.update('Age (Mos): ' + storeItem.get('age_mos') + '<br>Weight (mos): ' + storeItem.get('PP'));
                             }
                         }
                     },

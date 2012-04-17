@@ -33,7 +33,11 @@ class VectorGraph
 	}
 
 	public function getGraphData(stdClass $params){
+
 		$data = $this->getGraphCurves($params->type, $this->patient->getPatientSexIntByPid($params->pid));
+
+
+
 		return $data;
 	}
 
@@ -45,7 +49,8 @@ class VectorGraph
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
 			unset($row['type'],$row['sex'],$row['L'],$row['M'],$row['S']);
 
-			$row['PP'] = $row['P50'];
+			//$row['PP'] = $row['P50'];
+			//$row['PP'] = null;
 
 			foreach($row as $key => $val){
 				if($val == null) unset($row[$key]);
