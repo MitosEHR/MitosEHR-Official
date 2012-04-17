@@ -21,6 +21,13 @@ Ext.define('App.view.patientfile.Summary', {
 		me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
 		me.qrCodeWindow = Ext.create('App.view.patientfile.QrCodeWindow');
 
+		me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization');
+		me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
+		me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
+		me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
+		me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
+		me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications');
+
 		me.pageBody = [
 			{
 				xtype      : 'container',
@@ -55,202 +62,130 @@ Ext.define('App.view.patientfile.Summary', {
 					},
 
 					{
-						title: 'Medications',
+						title: 'Active Medications',
 						itemId:'MedicationsPanel',
-
+						hideHeaders: true,
 						xtype:'grid',
+						store  :me.patientMedicationsStore,
+						region : 'center',
+						autoScroll: false,
+						columns: [
+							{
+								flex:1,
+								header   : 'Name',
+								dataIndex: 'title',
+								sortable : true
+							}
 
+						]
+
+					},
+					{
+						title: 'Immunizations',
+						itemId:'ImmuPanel',
+						hideHeaders: true,
+						xtype:'grid',
+						store  : me.patientImmuListStore,
+						region : 'center',
+						columns: [
+							{
+
+								header   : 'Name',
+								dataIndex: 'immunization_name'
+							}
+
+						]
+
+					},
+					{
+						title: 'Allergies',
+						itemId:'AllergiesPanel',
+						hideHeaders: true,
+						xtype:'grid',
+						store  : me.patientAllergiesListStore,
+						region : 'center',
 						columns: [
 							{
 								width    : 70,
 								header   : 'Name',
-								dataIndex: '',
+								dataIndex: 'title',
 								sortable : true
 							}
 
 						]
 
 
-
 					},
 					{
-						title: 'Immunizations',
-
-						itemId:'ImmuPanel',
-						items:[
-							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
-
-								]
-
-							}
-
-						]
-					},
-					{
-						title: 'Allergies',
-						itemId:'AllergiesPanel',
-						items:[
-							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
-
-								]
-
-							}
-
-						]
-					},
-					{
-						title: 'Issues',
+						title: 'Medical Issues',
 						itemId:'IssuesPanel',
-						items:[
+						hideHeaders: true,
+						xtype:'grid',
+						store  : me.patientMedicalIssuesStore,
+						region : 'center',
+						columns: [
 							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
 
-								]
-
+								header   : 'Name',
+								dataIndex: 'title'
 							}
 
 						]
+
 					},
 
 					{
 						title: 'Dental',
 						itemId:'DentalPanel',
-						items:[
+						hideHeaders: true,
+						xtype:'grid',
+						store  :me.patientDentalStore,
+						region : 'center',
+						columns: [
 							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
 
-								]
+								header   : 'Name',
+								dataIndex: 'title'
 
 							}
 
 						]
+
 					},
 
 					{
 						title: 'Surgery',
 						itemId:'SurgeryPanel',
-						items:[
+						hideHeaders: true,
+						xtype:'grid',
+						store  :me.patientSurgeryStore,
+						region : 'center',
+						columns: [
 							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
 
-								]
-
+								header   : 'Name',
+								dataIndex: 'title',
+								sortable : true
 							}
 
 						]
+
 					},
+
 					{
 						title: 'Clinical Reminders',
-						items:[
-							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
+						html : 'Panel content!'
 
-								]
-
-							}
-
-						]
 					},
 					{
 						title: 'Appointments',
-						html : 'Panel content!',
-						items:[
-							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
+						html : 'Panel content!'
 
-								]
-
-							}
-
-						]
 					},
 
 					{
 						title: 'Prescriptions',
-						html : 'Panel content!',
-						items:[
-							{
-								xtype:'grid',
-								//store  :
-								region : 'center',
-								columns: [
-									{
-										width    : 70,
-										header   : 'Name',
-										dataIndex: '',
-										sortable : true
-									}
-
-								]
-
-							}
-
-						]
+						html : 'Panel content!'
 					}
 				]
 			},
@@ -537,6 +472,13 @@ Ext.define('App.view.patientfile.Summary', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
+
+		this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
+		this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
+		this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
+		this.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
+		this.patientDentalStore.load({params: {pid: app.currPatient.pid}});
+		this.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
 		var me = this;
 		if(this.checkIfCurrPatient()) {
 			var patient = me.getCurrPatient();
