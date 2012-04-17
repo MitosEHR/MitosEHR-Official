@@ -898,11 +898,21 @@ Ext.define('App.view.patientfile.Encounter', {
     },
 
 
-	onVitalsClick:function(view, record){
+	onVitalsClick:function(view, record, e){
 		var me = this,
 			form = me.vitalsPanel.down('form').getForm();
-		form.loadRecord(record);
-		say(record);
+            form.reset();
+        if(!record.data.auth_uid){
+            form.loadRecord(record);
+        }else{
+            Ext.Msg.show({
+                title:'Oops!',
+                msg: 'This column can not be modified because it has been signed by '+record.data.auth_uid,
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.WARNING,
+                animateTarget: e
+            });
+        }
 	},
 
 	reSetVitalsForm:function(){
