@@ -117,7 +117,7 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 				store:me.vitalsStore
 			}),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.WeightForAgeInf = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'Weight For Age ( 0 - 3 mos )',
                 xTitle:'Weight (kg)',
                 yTitle:'Age (months)',
@@ -128,7 +128,7 @@ Ext.define('App.view.patientfile.ChartsWindow', {
                 store:me.WeightForAgeInfStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.LengthForAgeInf = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'Length For Age ( 0 - 3 mos )',
                 xTitle:'Length (cm)',
                 yTitle:'Age (months)',
@@ -139,7 +139,7 @@ Ext.define('App.view.patientfile.ChartsWindow', {
                 store:me.LengthForAgeInfStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.WeightForRecumbentInf = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'Weight For Recumbent ( 0 - 3 mos )',
                 xTitle:'Weight (kg)',
                 yTitle:'Age (months)',
@@ -150,7 +150,7 @@ Ext.define('App.view.patientfile.ChartsWindow', {
                 store:me.WeightForRecumbentInfStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.HeadCircumferenceInf = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'Head Circumference ( 0 - 3 mos )',
                 xTitle:'Circumference (cm)',
                 yTitle:'Age (months)',
@@ -161,40 +161,40 @@ Ext.define('App.view.patientfile.ChartsWindow', {
                 store:me.HeadCircumferenceInfStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeightForStature',{
+            me.WeightForStature = Ext.create('App.view.patientfile.charts.HeightForStature',{
                 store:me.WeightForStatureStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.WeightForAge = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'Weight For Age ( 2 - 20 years )',
                 xTitle:'Weight (kg)',
                 yTitle:'Age (years)',
                 xMinimum : 10,
                 xMaximum : 110,
-                yMinimum : 24,
-                yMaximum : 240,
+                yMinimum : 2,
+                yMaximum : 20,
                 store:me.WeightForAgeStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.StatureForAge = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'Stature For Age ( 2 - 20 years )',
                 xTitle:'Stature (cm)',
                 yTitle:'Age (years)',
                 xMinimum : 60,
                 xMaximum : 200,
-                yMinimum : 24,
-                yMaximum : 240,
+                yMinimum : 2,
+                yMaximum : 20,
                 store:me.StatureForAgeStore
             }),
 
-            Ext.create('App.view.patientfile.charts.HeadCircumference',{
+            me.BMIForAge = Ext.create('App.view.patientfile.charts.HeadCircumference',{
                 title:'BMI For Age ( 2 - 20 years )',
                 xTitle:'BMI (kg)',
                 yTitle:'Age (years)',
                 xMinimum : 10,
                 xMaximum : 35,
-                yMinimum : 24,
-                yMaximum : 240,
+                yMinimum : 2,
+                yMaximum : 20,
                 store:me.BMIForAgeStore
             })
 
@@ -215,39 +215,48 @@ Ext.define('App.view.patientfile.ChartsWindow', {
 
         me.vitalsStore.load();
 
-        me.WeightForAgeInfStore.load({params:{pid:app.currPatient.pid}});
-        me.LengthForAgeInfStore.load({params:{pid:app.currPatient.pid}});
-        me.WeightForRecumbentInfStore.load({params:{pid:app.currPatient.pid}});
-        me.HeadCircumferenceInfStore.load({params:{pid:app.currPatient.pid}});
-        me.WeightForStatureStore.load({params:{pid:app.currPatient.pid}});
-        me.WeightForAgeStore.load({params:{pid:app.currPatient.pid}});
-        me.StatureForAgeStore.load({params:{pid:app.currPatient.pid}});
-        me.BMIForAgeStore.load({params:{pid:app.currPatient.pid}});
+//        me.WeightForAgeInfStore.load({params:{pid:app.currPatient.pid}});
+//        me.LengthForAgeInfStore.load({params:{pid:app.currPatient.pid}});
+//        me.WeightForRecumbentInfStore.load({params:{pid:app.currPatient.pid}});
+//        me.HeadCircumferenceInfStore.load({params:{pid:app.currPatient.pid}});
+//        me.WeightForStatureStore.load({params:{pid:app.currPatient.pid}});
+//        me.WeightForAgeStore.load({params:{pid:app.currPatient.pid}});
+//        me.StatureForAgeStore.load({params:{pid:app.currPatient.pid}});
+//        me.BMIForAgeStore.load({params:{pid:app.currPatient.pid}});
 
 	},
 
 	onChartSwitch: function(btn) {
-		var layout = this.getLayout(), card, chart, x, y;
+		var me = this,
+            layout = me.getLayout(), card, chart, x, y;
 
 		if(btn.action == 'bpPulseTemp') {
 			layout.setActiveItem(0);
 
         } else if(btn.action == 'WeightForAgeInf') {
             layout.setActiveItem(1);
+            me.WeightForAgeInfStore.load({params:{pid:app.currPatient.pid}});
         } else if(btn.action == 'LengthForAgeInf') {
             layout.setActiveItem(2);
+            me.LengthForAgeInfStore.load({params:{pid:app.currPatient.pid}});
         } else if(btn.action == 'WeightForRecumbentInf') {
             layout.setActiveItem(3);
+            me.WeightForRecumbentInfStore.load({params:{pid:app.currPatient.pid}});
         } else if(btn.action == 'HeadCircumferenceInf') {
             layout.setActiveItem(4);
+            me.HeadCircumferenceInfStore.load({params:{pid:app.currPatient.pid}});
 		} else if(btn.action == 'WeightForStature') {
             layout.setActiveItem(5);
+            me.WeightForStatureStore.load({params:{pid:app.currPatient.pid}});
 		} else if(btn.action == 'WeightForAge') {
             layout.setActiveItem(6);
+            me.WeightForAgeStore.load({params:{pid:app.currPatient.pid}});
 		} else if(btn.action == 'StatureForAge') {
             layout.setActiveItem(7);
+            me.StatureForAgeStore.load({params:{pid:app.currPatient.pid}});
 		} else if(btn.action == 'BMIForAge') {
             layout.setActiveItem(8);
+            me.BMIForAgeStore.load({params:{pid:app.currPatient.pid}});
 		}
 
         //say(layout.getActiveItem().down('chart'))

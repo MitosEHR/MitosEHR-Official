@@ -55,8 +55,18 @@ class VectorGraph
 			foreach($row as $key => $val){
 				if($val == null) unset($row[$key]);
 			}
+
+			if($row['age_mos'] == 16.5 ){
+				$row['PP'] = 11;
+			}
+
+			if($type == 5 || $type == 6 || $type == 7 || $type == 8){
+				$row['age_mos'] = ($row['age_mos'] / 12);
+			}
+
 			$records[] = $row;
 		}
+
 		return $records;
 	}
 
