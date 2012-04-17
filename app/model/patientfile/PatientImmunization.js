@@ -22,7 +22,8 @@ Ext.define('App.model.patientfile.PatientImmunization', {
 		{name: 'education_date', type: 'date', dateFormat: 'c'},
 		{name: 'vis_date', type: 'date', dateFormat: 'c'},
 		{name: 'create_date', type: 'date', dateFormat: 'c'},
-		{name: 'note', type: 'string'}
+		{name: 'note', type: 'string'},
+        {name: 'alert', type: 'bool'}
 	],
 	proxy : {
 		type: 'direct',

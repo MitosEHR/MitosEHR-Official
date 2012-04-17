@@ -18,7 +18,9 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                 store  : me.store,
                 animate: false,
                 shadow : true,
-                //theme  :'Sky',
+                legend: {
+                    position: 'right'
+                },
                 axes   : [
                     {
                         title         : me.xTitle,

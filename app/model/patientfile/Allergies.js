@@ -24,7 +24,8 @@ Ext.define('App.model.patientfile.Allergies', {
 		{name: 'reaction', type: 'string'},
 		{name: 'referred_by', type: 'string'},
 		{name: 'outcome', type: 'string'},
-		{name: 'destination', type: 'string'}
+		{name: 'destination', type: 'string'},
+        {name: 'alert', type: 'bool'}
 	],
 	proxy : {
 		type: 'direct',
