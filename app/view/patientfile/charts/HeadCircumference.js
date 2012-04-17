@@ -17,7 +17,7 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                 xtype  : 'chart',
                 store  : me.store,
                 animate: false,
-                shadow : true,
+                shadow : false,
                 theme  :'Sky',
                 axes   : [
                     {
@@ -76,7 +76,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P3',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     },
                     {
                         title       : 'P5',
@@ -85,7 +90,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P5',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     },
                     {
                         title       : 'P10',
@@ -94,7 +104,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P10',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     },
                     {
                         title       : 'P25',
@@ -103,7 +118,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P25',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     },
                     {
                         title       : 'P50',
@@ -114,10 +134,9 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         smooth      : true,
                         showMarkers : false,
                         style: {
-                            stroke: '#00ff00',
-                            'stroke-width': 1,
-                            fill: '#80A080',
-                            opacity: 0.2
+                            stroke: '#000000',
+                            'stroke-width': 3,
+                            opacity: 0.5
                         }
                     },
                     {
@@ -127,7 +146,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P75',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     },
                     {
                         title       : 'P95',
@@ -136,7 +160,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P95',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     },
                     {
                         title       : 'P97',
@@ -145,7 +174,12 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         xField      : 'age_mos',
                         yField      : 'P97',
                         smooth      : true,
-                        showMarkers : false
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        }
                     }
                 ]
 			}
