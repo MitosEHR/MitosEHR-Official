@@ -111,136 +111,173 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 					clicksToEdit: 1,
 
 					formItems   : [
+
 						{
-							xtype     : 'container',
-							height    : 260,
-							layout    : 'border',
-							border    : false,
-							bodyBorder: false,
-							defaults  : {
-								style     : 'background-color:transparent; border:none',
-								border    : false,
-								bodyBorder: false,
-								bodyStyle : 'border-top:none;border-bottom:none'
-							},
-							items     : [
+
+							title  : 'general',
+							xtype  : 'container',
+							padding: 10,
+							layout : 'vbox',
+							items  : [
 								{
-									layout       : 'column',
-									region       : 'center',
-									defaults     : { border: false, columnWidth: .5, defaultType: 'textfield', layout: 'anchor'},
-									fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
-									items        : [
+									/**
+									 * Line one
+									 */
+									xtype   : 'fieldcontainer',
+									layout  : 'hbox',
+									defaults: { margin: '0 10 5 0' },
+									items   : [
 										{
-											xtype: 'container',
-											items: [
-												{
-													fieldLabel     : 'Immunization Name',
-													name           : 'immunization_name',
-													itemId         : 'immuName',
-													action         : 'immuName',
-													enableKeyEvents: true,
-													listeners      : {
-                                                        scope: me,
-														focus: me.onCodeFieldFocus
-													}
-												},
-												{
-													fieldLabel     : 'Immunization (CVX Code)',
-													name           : 'immunization_id',
-													itemId         : 'immuCode',
-													action         : 'immuCode',
-													enableKeyEvents: true,
-													listeners      : {
-														scope: me,
-														focus: me.onCodeFieldFocus
-													}
-												},
-												{
-													fieldLabel: 'Date Administered',
-													xtype     : 'datefield',
-													format    : 'Y-m-d H:i:s',
-													name      : 'administered_date'
-												},
-												{
-													fieldLabel: 'Immunization Manufacturer',
-													name      : 'manufacturer'
-
-												},
-												{
-													fieldLabel: 'Immunization Lot Number',
-													name      : 'lot_number'
-
-												}
-											]
+											fieldLabel     : 'Immunization Name',
+											name           : 'immunization_name',
+											itemId         : 'immuName',
+											action         : 'immuName',
+											enableKeyEvents: true,
+											listeners      : {
+                                                scope: me,
+												focus: me.onCodeFieldFocus
+											}
 										},
 										{
-											xtype: 'container',
-											items: [
-												{
-													fieldLabel: 'Ocurrence',
-													xtype     : 'mitos.occurrencecombo',
-													name      : 'ocurrence'
+											fieldLabel     : 'Immunization (CVX Code)',
+											name           : 'immunization_id',
+											itemId         : 'immuCode',
+											action         : 'immuCode',
+											enableKeyEvents: true,
+											listeners      : {
+												scope: me,
+												focus: me.onCodeFieldFocus
+											}
+										},
+										{
+											fieldLabel: 'Date Administered',
+											xtype     : 'datefield',
+											format    : 'Y-m-d H:i:s',
+											name      : 'administered_date'
+										},
+										{
+											fieldLabel: 'Immunization Manufacturer',
+											name      : 'manufacturer'
 
-												},
-												{
-													fieldLabel: 'Name and Title of Immunization Administrator',
-													name      : 'administered_by'
+										},
+										{
+											fieldLabel: 'Immunization Lot Number',
+											name      : 'lot_number'
 
-												},
-												{
-													fieldLabel: 'Date Immunization Information Statements Given',
-													xtype     : 'datefield',
-													format    : 'Y-m-d H:i:s',
-													name      : 'education_date'
-												},
-												{
-													fieldLabel: 'Date of VIS Statement (?)',
-													xtype     : 'datefield',
-													format    : 'Y-m-d H:i:s',
-													name      : 'vis_date'
-												},
-												{
-													fieldLabel: 'Notes',
-													xtype     : 'textarea',
-													height    : 70,
-													name      : 'note'
-
-												}
-											]
 										}
 									]
+
 								},
 								{
-									xtype       : 'grid',
-									region      : 'east',
-									itemId      : 'immuListGrid',
-									action      : 'immuListGrid',
-									title       : 'Immunizations List',
-									width       : 400,
-									split       : true,
-									border      : false,
-									collapseMode: 'mini',
-                                    collapsed   : true,
-									store       : me.ImmuListStore,
-									columns     : [
+									/**
+									 * Line two
+									 */
+									xtype   : 'fieldcontainer',
+									layout  : 'hbox',
+									defaults: { margin: '0 10 5 0' },
+									items   : [
 										{
-											header   : 'Code',
-											width    : 40,
-											dataIndex: 'code'
+											fieldLabel: 'Ocurrence',
+											xtype     : 'mitos.occurrencecombo',
+											name      : 'ocurrence'
+
 										},
 										{
-											header   : 'Description',
-											flex     : 1,
-											dataIndex: 'code_text'
+											fieldLabel: 'Name and Title of Immunization Administrator',
+											name      : 'administered_by'
+
+										},
+										{
+											fieldLabel: 'Date Immunization Information Statements Given',
+											xtype     : 'datefield',
+											format    : 'Y-m-d H:i:s',
+											name      : 'education_date'
+										},
+										{
+											fieldLabel: 'Date of VIS Statement (?)',
+											xtype     : 'datefield',
+											format    : 'Y-m-d H:i:s',
+											name      : 'vis_date'
+										},
+										{
+											fieldLabel: 'Notes',
+											xtype     : 'textarea',
+											height    : 70,
+											name      : 'note'
+
 										}
-									],
-									listeners   : {
-                                        scope       : me,
-										itemdblclick: me.onImmuGridClick
-									}
+									]
+
 								}
+
 							]
+
+
 						}
+//						{
+//							xtype     : 'container',
+//							height    : 260,
+//							layout    : 'border',
+//							border    : false,
+//							bodyBorder: false,
+//							defaults  : {
+//								style     : 'background-color:transparent; border:none',
+//								border    : false,
+//								bodyBorder: false,
+//								bodyStyle : 'border-top:none;border-bottom:none'
+//							},
+//							items     : [
+//								{
+//									layout       : 'column',
+//									region       : 'center',
+//									defaults     : { border: false, columnWidth: .5, defaultType: 'textfield', layout: 'anchor'},
+//									fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
+//									items        : [
+//										{
+//											xtype: 'container',
+//											items: [
+//
+//											]
+//										},
+//										{
+//											xtype: 'container',
+//											items: [
+
+//											]
+//										}
+//									]
+//								},
+//								{
+//									xtype       : 'grid',
+//									region      : 'east',
+//									itemId      : 'immuListGrid',
+//									action      : 'immuListGrid',
+//									title       : 'Immunizations List',
+//									width       : 400,
+//									split       : true,
+//									border      : false,
+//									collapseMode: 'mini',
+//                                    collapsed   : true,
+//									store       : me.ImmuListStore,
+//									columns     : [
+//										{
+//											header   : 'Code',
+//											width    : 40,
+//											dataIndex: 'code'
+//										},
+//										{
+//											header   : 'Description',
+//											flex     : 1,
+//											dataIndex: 'code_text'
+//										}
+//									],
+//									listeners   : {
+//                                        scope       : me,
+//										itemdblclick: me.onImmuGridClick
+//									}
+//								}
+//							]
+//						}
 					]
 				})
 //						listeners: {
