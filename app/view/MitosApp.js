@@ -645,7 +645,7 @@ Ext.define('App.view.MitosApp', {
 		this.ChartsWindow.show();
 	},
 
-    PaymentEntryWindow: function() {
+    onPaymentEntryWindow: function() {
 		this.PaymentEntryWindow.show();
 	},
 

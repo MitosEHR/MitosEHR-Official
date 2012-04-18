@@ -91,6 +91,13 @@ class Patient extends Person {
         $p = $this->db->fetchRecord();
         return $this->fullname($p['fname'],$p['mname'],$p['lname']);
     }
+
+	public function getPatientSexIntByPid($pid){
+        $this->db->setSQL("SELECT sex FROM form_data_demographics WHERE pid = '$pid'");
+        $p = $this->db->fetchRecord();
+		$sex = (strtolower($p['sex']) == strtolower('FEMALE')) ? 1 : 2;
+        return $sex;
+    }
     /**
      * @param \stdClass $params
      * @internal param $search
@@ -185,24 +192,10 @@ class Patient extends Person {
 
 	public function getPatientAddressById($pid){
 		$this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
-		$p = $this->db->fetchRecord(PDO::FETCH_ASSOC);
-		$address = 'Address: ' . $p['address'] . ' ' .  $p['city'] . ' ' . $p['state'] . ' ' . $p['country'] . ' ' . $p['postal_code'];
+		$p = $this->db->fetchRecord();
+		$address = $p['address'] . ' <br>' .  $p['city'] . ',  ' . $p['state'] . ' ' . $p['country'];
 		return $address;
 	}
-
-    public function getPatientNameById($pid){
-    		$this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
-    		$p = $this->db->fetchRecord(PDO::FETCH_ASSOC);
-    		$fullname = 'Full name: ' . $p['fname'] . ' ' .  $p['mname'] . ' ' . $p['lname'];
-    		return $fullname;
-    	}
-
-    public function getPatientAdditionalInfoById($pid){
-    		$this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
-    		$p = $this->db->fetchRecord(PDO::FETCH_ASSOC);
-    		$fullname = 'S.S. : ' . $p['SS'] . ' Sex: ' .  $p['sex'] . ' Birthday: ' . $p['DOB'] . ' Marital Status: ' . $p['marital_status'] . ' Occupation: ' . $p['occupation'];
-    		return $fullname;
-    	}
 }
 //$p = new Patient();
 //echo '<pre>';

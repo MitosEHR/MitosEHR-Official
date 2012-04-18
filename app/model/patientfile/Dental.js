@@ -22,7 +22,8 @@ Ext.define('App.model.patientfile.Dental', {
 		{name: 'ocurrence', type: 'string'},
 		{name: 'referred_by', type: 'string'},
 		{name: 'outcome', type: 'string'},
-		{name: 'destination', type: 'string'}
+		{name: 'destination', type: 'string'},
+        {name: 'alert', type: 'bool'}
 	],
 	proxy : {
 		type: 'direct',

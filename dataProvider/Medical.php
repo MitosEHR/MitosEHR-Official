@@ -59,7 +59,7 @@ class Medical
 	public function addPatientImmunization(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['administered_date'] = $this->parseDate($data['administered_date']);
 		$data['education_date']    = $this->parseDate($data['education_date']);
 		$data['vis_date']          = $this->parseDate($data['vis_date']);
@@ -75,7 +75,7 @@ class Medical
 	{
 		$data = get_object_vars($params);
 		$id = $data['id'];
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['administered_date'] = $this->parseDate($data['administered_date']);
 		$data['education_date']    = $this->parseDate($data['education_date']);
 		$data['create_date']       = $this->parseDate($data['create_date']);
@@ -95,7 +95,7 @@ class Medical
 	public function addPatientAllergies(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -109,7 +109,7 @@ class Medical
 	{
 		$data = get_object_vars($params);
 		$id = $data['id'];
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -128,7 +128,7 @@ class Medical
 	public function addMedicalIssues(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -142,7 +142,7 @@ class Medical
 	{
 		$data = get_object_vars($params);
 		$id = $data['id'];
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -161,7 +161,7 @@ class Medical
 	public function addPatientSurgery(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -175,7 +175,7 @@ class Medical
 	{
 		$data = get_object_vars($params);
 		$id = $data['id'];
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -194,7 +194,7 @@ class Medical
 	public function addPatientDental(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -208,7 +208,7 @@ class Medical
 	{
 		$data = get_object_vars($params);
 		$id = $data['id'];
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -227,7 +227,7 @@ class Medical
 	public function addPatientMedications(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -241,7 +241,7 @@ class Medical
 	{
 		$data = get_object_vars($params);
 		$id = $data['id'];
-		unset($data['id']);
+		unset($data['id'],$data['alert']);
 		$data['begin_date']  = $this->parseDate($data['begin_date']);
 		$data['end_date']    = $this->parseDate($data['end_date']);
 		$data['create_date'] = $this->parseDate($data['create_date']);
@@ -279,7 +279,13 @@ class Medical
 	private function getImmunizationsByPatientID($pid)
 	{
 		$this->db->setSQL("SELECT * FROM patient_immunizations WHERE pid='$pid'");
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($rec['end_date'] == null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$records[]= $rec;
+		}
+		return $records;
 	}
 
 	/**
@@ -299,7 +305,12 @@ class Medical
 	private function getAllergiesByPatientID($pid)
 	{
 		$this->db->setSQL("SELECT * FROM patient_allergies WHERE pid='$pid'");
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$records[]= $rec;
+		}
+		return $records;
 	}
 
 	/**
@@ -319,7 +330,13 @@ class Medical
 	private function getMedicalIssuesByPatientID($pid)
 	{
 		$this->db->setSQL("SELECT * FROM patient_issues WHERE pid='$pid'");
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$records[]= $rec;
+		}
+
+		return $records;
 	}
 
 	/**
@@ -339,7 +356,13 @@ class Medical
 	private function getPatientSurgeryByPatientID($pid)
 	{
 		$this->db->setSQL("SELECT * FROM patient_surgery WHERE pid='$pid'");
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$records[]= $rec;
+		}
+
+		return $records;
 	}
 
 	/**
@@ -359,7 +382,13 @@ class Medical
 	private function getPatientDentalByPatientID($pid)
 	{
 		$this->db->setSQL("SELECT * FROM patient_dental WHERE pid='$pid'");
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$records[]= $rec;
+		}
+
+		return $records;
 	}
 
 	/**
@@ -379,7 +408,13 @@ class Medical
 	private function getPatientMedicationsByPatientID($pid)
 	{
 		$this->db->setSQL("SELECT * FROM patient_medications WHERE pid='$pid'");
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$records[]= $rec;
+		}
+
+		return $records;
 	}
 
 	/**
