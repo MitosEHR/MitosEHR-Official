@@ -39,7 +39,7 @@ Ext.define('App.view.patientfile.VisitPayment', {
                         type : 'hbox',
                         align: 'stretch'
                     },
-                    height: 400,
+                    height: 410,
                     items:[
                         {
                             xtype : 'form',
@@ -167,10 +167,23 @@ Ext.define('App.view.patientfile.VisitPayment', {
                                 }
                             ],
 	                        buttons:[
+                                {
+                                    text:'Save',
+                                    scope:me,
+                                    handler: me.onSave
+                                },
+                                '-',
 		                        {
 			                        text:'Reset',
-			                        handler:me.resetReceipForm
-		                        }
+                                    scope:me,
+			                        handler:me.resetReceiptForm
+		                        },
+                                '->',
+                                {
+                                    text:'Add Payment',
+                                    scope: me,
+                                    handler:me.onAddPaymentClick
+                                }
 	                        ]
                         },
                         {
@@ -194,6 +207,7 @@ Ext.define('App.view.patientfile.VisitPayment', {
                 {
                     xtype:'container',
                     layout:'hbox',
+                    defaults: { height:185 },
                     items:[
                         {
                             xtype: 'form',
@@ -208,21 +222,29 @@ Ext.define('App.view.patientfile.VisitPayment', {
                             items:[
                                 {
                                     xtype     : 'textfield',
-                                    name      : 'note',
-                                    fieldLabel: 'Note'
+                                    fieldLabel: 'Note',
+                                    action: 'notes'
                                 },
                                 {
                                     xtype     : 'textareafield',
                                     grow      : true,
-                                    name      : 'reminder',
-                                    fieldLabel: 'Alert'
+                                    fieldLabel: 'Alert',
+                                    action: 'notes'
                                 }
                             ],
 	                        buttons:[
                                 {
+                                    text:'Save',
+                                    scope:me,
+                                    handler: me.onSave
+                                },
+                                '-',
+                                {
                                     text:'Reset',
-                                    handler:me.resetReceipForm
-                                }
+                                    scope:me,
+                                    handler:me.resetNotes
+                                },
+                                '->'
                             ]
                         },
                         {
@@ -250,8 +272,7 @@ Ext.define('App.view.patientfile.VisitPayment', {
                             ],
 	                        buttons:[
                                 {
-                                    text:'Reset',
-                                    handler:me.resetReceipForm
+                                    text:'Schedule Appointment'
                                 }
                             ]
                         }
@@ -320,11 +341,22 @@ Ext.define('App.view.patientfile.VisitPayment', {
         win.close();
     },
 
-	resetReceipForm:function () {
+	resetReceiptForm:function () {
         var fields = this.query('[action="receipt"]');
-	    Ext.each(fields, function(field){
-			field.reset();
-	    });
+        Ext.each(fields, function(field){
+            field.reset();
+        });
+    },
+
+    resetNotes:function () {
+        var fields = this.query('[action="notes"]');
+   	    Ext.each(fields, function(field){
+   			field.reset();
+   	    });
+    },
+
+    onAddPaymentClick:function() {
+        app.onPaymentEntryWindow();
     },
 
     /**
@@ -337,6 +369,32 @@ Ext.define('App.view.patientfile.VisitPayment', {
     onActive:function (callback) {
 
         callback(true);
+    },
+
+    //////
+    onSave: function() {
+        var me = this, panel, form, values, date;
+
+        panel = me.down('form');
+        form = panel.getForm();
+
+        say(form);
+        values = form.getFieldValues();
+
+        values.date_created = Ext.Date.format(new Date(), 'Y-m-d H:i:s');
+
+        if(form.isValid()) {
+
+            Fees.addPayment(values, function(provider, response){
+                if(response.result.success){
+                    form.reset();
+                    me.hide();
+                }else{
+                    app.msg('Oops!','Payment entry error')
+                }
+
+            });
+        }
     }
 
 }); //end Checkout class

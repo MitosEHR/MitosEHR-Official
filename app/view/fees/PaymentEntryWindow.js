@@ -39,6 +39,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                         xtype:'mitos.payingentitycombo',
                                         labelWidth:95,
                                         name:'paying_entity',
+                                        action:'new_payment',
                                         width:230
                                     },
                                     {
@@ -46,6 +47,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                         fieldLabel:'From',
                                         itemId:'patientFrom',
                                         name:'payer_id',
+                                        action:'new_payment',
                                         anchor:null,
                                         labelWidth:42,
                                         width:470,
@@ -63,25 +65,27 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                         xtype:'mitos.paymentmethodcombo',
                                         labelWidth:95,
                                         name:'payment_method',
-                                        width:230,
-                                        margin:'10 0 0 0'
+                                        action:'new_payment',
+                                        width:230
                                     },
                                     {
                                         xtype:'mitos.billingfacilitiescombo',
                                         fieldLabel:'Pay To',
                                         labelWidth:42,
                                         name:'pay_to',
+                                        action:'new_payment',
                                         width:470,
-                                        margin:'10 0 0 25'
+                                        margin:'0 0 0 25'
                                     },
                                     {
                                         xtype:'mitos.currency',
                                         fieldLabel:'Amount',
                                         name:'amount',
+                                        action:'new_payment',
                                         labelWidth:45,
                                         width:230,
                                         labelAlign:'right',
-                                        margin:'10 0 0 25',
+                                        margin:'0 0 0 25',
                                         enableKeyEvents:true
                                     }
                                 ]
@@ -94,6 +98,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                         fieldLabel:'Date',
                                         xtype:'datefield',
                                         name:'date',
+                                        action:'new_payment',
                                         dateFormat:'Y-m-d',
                                         labelWidth:95,
                                         width:230
@@ -102,6 +107,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                         fieldLabel:'Note',
                                         xtype:'textfield',
                                         name:'note',
+                                        action:'new_payment',
                                         margin:'0 0 0 25',
                                         width: 725,
                                         labelWidth:42
@@ -119,7 +125,9 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                     },
                     '-',
                     {
-                        text:'Reset'
+                        text:'Reset',
+                        scope:me,
+                        handler:me.resetNewPayment
                     }
                 ]
             }
@@ -149,6 +157,14 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
 
             });
         }
+    },
+
+    resetNewPayment:function () {
+        var fields = this.query('[action="new_payment"]');
+        Ext.each(fields, function(field){
+            field.reset();
+        });
     }
+
 
 }); //end Checkout class

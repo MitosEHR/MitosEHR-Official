@@ -196,6 +196,17 @@ class Patient extends Person {
 		$address = $p['address'] . ' <br>' .  $p['city'] . ',  ' . $p['state'] . ' ' . $p['country'];
 		return $address;
 	}
+
+    public function patientCheckout(stdClass $params){
+//    		$data = get_object_vars($params);
+//    		$this->db->setSQL($this->db->sqlBind($data, "payment_transactions", "I"));
+//    		$this->db->execLog();
+//    		if($this->db->lastInsertId == 0){
+//    			return array('success' => false);
+//    		}else{
+//    			return array('success' => true);
+//    		}
+    }
 }
 //$p = new Patient();
 //echo '<pre>';
