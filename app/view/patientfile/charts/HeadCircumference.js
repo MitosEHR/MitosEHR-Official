@@ -17,7 +17,7 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                 xtype  : 'chart',
                 store  : me.store,
                 animate: false,
-                shadow : true,
+                shadow : false,
                 legend: {
                     position: 'right'
                 },
@@ -39,6 +39,7 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                     },
                     {
                         title         : me.yTitle,
+
                         type          : 'Numeric',
                         position      : 'bottom',
                         fields        : ['age_mos'],
@@ -72,105 +73,7 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                         }
                     },
                     {
-                        title       : 'P3',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P3',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 1,
-                            opacity: 0.3
-                        }
-                    },
-                    {
-                        title       : 'P5',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P5',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 1,
-                            opacity: 0.3
-                        }
-                    },
-                    {
-                        title       : 'P10',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P10',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 1,
-                            opacity: 0.3
-                        }
-                    },
-                    {
-                        title       : 'P25',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P25',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 1,
-                            opacity: 0.3
-                        }
-                    },
-                    {
-                        title       : 'P50',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P50',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 3,
-                            opacity: 0.5
-                        }
-                    },
-                    {
-                        title       : 'P75',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P75',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 1,
-                            opacity: 0.3
-                        }
-                    },
-                    {
-                        title       : 'P95',
-                        type        : 'line',
-                        axis        : 'left',
-                        xField      : 'age_mos',
-                        yField      : 'P95',
-                        smooth      : true,
-                        showMarkers : false,
-                        style: {
-                            stroke: '#000000',
-                            'stroke-width': 1,
-                            opacity: 0.3
-                        }
-                    },
-                    {
-                        title       : 'P97',
+                        title       : '97%',
                         type        : 'line',
                         axis        : 'left',
                         xField      : 'age_mos',
@@ -181,6 +84,136 @@ Ext.define('App.view.patientfile.charts.HeadCircumference',{
                             stroke: '#000000',
                             'stroke-width': 1,
                             opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
+                        }
+                    },
+                    {
+                        title       : '95%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P95',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
+                        }
+                    },
+                    {
+                        title       : '75%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P75',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
+                        }
+                    },
+                    {
+                        title       : '50%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P50',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 3,
+                            opacity: 0.5
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 4
+                        }
+                    },
+                    {
+                        title       : '25%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P25',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
+                        }
+                    },
+                    {
+                        title       : '10%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P10',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
+                        }
+                    },
+                    {
+                        title       : '5%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P5',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
+                        }
+                    },
+                    {
+                        title       : '3%',
+                        type        : 'line',
+                        axis        : 'left',
+                        xField      : 'age_mos',
+                        yField      : 'P3',
+                        smooth      : true,
+                        showMarkers : false,
+                        style: {
+                            stroke: '#000000',
+                            'stroke-width': 1,
+                            opacity: 0.3
+                        },
+                        highlight: {
+                            stroke: '#FF9900',
+                            size: 2
                         }
                     }
                 ]
