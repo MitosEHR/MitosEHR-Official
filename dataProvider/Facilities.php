@@ -112,11 +112,11 @@ class Facilities {
 
     public function getFacilityInfo ($fid){
 
-        $this->db->setSQL("SELECT street, phone, street, city, state, postal_code
+        $this->db->setSQL("SELECT name, phone, street, city, state, postal_code
                         	 FROM facility
                             WHERE id = '$fid'");
         $i = $this->db->fetchRecord(PDO::FETCH_ASSOC);
-        $facilityInfo = $i['fname'].'<br>'.$i['phone'].'<br>'.$i['street'].'<br>'.$i['city'].' '.$i['state'].' '.$i['postal_code'];
+        $facilityInfo = 'Facility: '.$i['name'].' '.$i['phone'].' '.$i['street'].' '.$i['city'].' '.$i['state'].' '.$i['postal_code'];
 
 
         return $facilityInfo;
