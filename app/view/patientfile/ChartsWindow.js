@@ -143,10 +143,10 @@ Ext.define('App.view.patientfile.ChartsWindow', {
                 title:'Weight For Recumbent ( 0 - 3 mos )',
                 xTitle:'Weight (kg)',
                 yTitle:'Age (months)',
-                xMinimum : 40,
-                xMaximum : 110,
-                yMinimum : 0,
-                yMaximum : 36,
+                xMinimum : 1,
+                xMaximum : 20,
+                yMinimum : 45,
+                yMaximum : 103.5,
                 store:me.WeightForRecumbentInfStore
             }),
 

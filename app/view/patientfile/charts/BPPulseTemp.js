@@ -29,7 +29,7 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp', {
                         xtype  : 'chart',
                         style  : 'background:#fff',
                         store  : me.store,
-                        animate: true,
+                        animate: false,
                         shadow : true,
                         legend: {
                             position: 'right'
@@ -150,7 +150,7 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp', {
                         xtype  : 'chart',
                         style  : 'background:#fff',
                         store  : me.store,
-                        animate: true,
+                        animate: false,
                         shadow : true,
                         legend: {
                             position: 'right'
@@ -214,9 +214,8 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp', {
                     {
 
                         xtype  : 'chart',
-                        style  : 'background:#fff',
                         store  : me.store,
-                        animate: true,
+                        animate: false,
                         shadow : true,
                         legend: {
                             position: 'right'
