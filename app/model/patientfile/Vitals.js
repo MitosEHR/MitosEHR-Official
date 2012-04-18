@@ -43,7 +43,8 @@ Ext.define('App.model.patientfile.Vitals', {
 		type       : 'direct',
 		api        : {
 			read: Encounter.getVitals,
-			create: Encounter.addVitals
+			create: Encounter.addVitals,
+			update: Encounter.updateVitals
 		},
 		reader     : {
 			type: 'json'

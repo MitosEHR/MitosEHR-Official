@@ -51,7 +51,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.patientfile.Visits',
 		'App.view.patientfile.Encounter',
 		'App.view.patientfile.MedicalWindow',
-		'App.view.patientfile.VisitPayment',
+		'App.view.patientfile.PatientCheckout',
 
 
 		'App.view.fees.Billing',
@@ -474,7 +474,7 @@ Ext.define('App.view.MitosApp', {
 				Ext.create('App.view.patientfile.Summary'),
 				Ext.create('App.view.patientfile.Visits'),
 				Ext.create('App.view.patientfile.Encounter'),
-				Ext.create('App.view.patientfile.VisitPayment'),
+				Ext.create('App.view.patientfile.PatientCheckout'),
 
 
 			/**
