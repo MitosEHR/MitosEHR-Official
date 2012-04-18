@@ -31,6 +31,9 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp', {
                         store  : me.store,
                         animate: true,
                         shadow : true,
+                        legend: {
+                            position: 'right'
+                        },
                         axes   : [
                             {
                                 title   : 'Blood Pressure',
@@ -149,6 +152,9 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp', {
                         store  : me.store,
                         animate: true,
                         shadow : true,
+                        legend: {
+                            position: 'right'
+                        },
                         axes   : [
                             {
                                 title   : 'Pulse (per min)',
@@ -212,6 +218,9 @@ Ext.define('App.view.patientfile.charts.BPPulseTemp', {
                         store  : me.store,
                         animate: true,
                         shadow : true,
+                        legend: {
+                            position: 'right'
+                        },
                         axes   : [
                             {
                                 title   : 'Temp Fahrenheits',
