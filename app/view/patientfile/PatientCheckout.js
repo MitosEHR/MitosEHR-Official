@@ -8,9 +8,9 @@
 // 
 // MitosEHR (Electronic Health Records) 2011
 //******************************************************************************
-Ext.define('App.view.patientfile.VisitPayment', {
+Ext.define('App.view.patientfile.PatientCheckout', {
 	extend       : 'App.classes.RenderPanel',
-	id           : 'panelVisitPayment',
+	id           : 'panelPatientCheckout',
 	pageTitle    : 'Visit Checkout',
 	uses         : ['App.classes.GridPanel'],
 

@@ -45,27 +45,24 @@
 .vitals-column-caution tr td {
 	background-color: #fffccc !important;
 }
-
-
-.x-grid-table-vitals-date {
-	padding: 2px !important;
-	font-weight:bold!important;
-	border-bottom: 1px solid #cccccc!important;
-}
 .x-grid-table-vitals tr first {
 	padding: 0 0!important;
 }
 .x-grid-table-vitals tr td {
     border-left: 1px solid #cccccc!important;
-    padding: 2px 0 0 0;
+	border-bottom: 1px solid #f3f3f3 !important;
+    padding: 1px 0 0 0;
     text-align: center !important;
 }
-.x-grid-table-vitals tr td .x-grid-cell-inner {
-    margin: 2px 0 3px;
+.x-grid-table-vitals .x-grid-table-vitals-date {
+	padding: 6px 0 7px 0 !important;
+	font-weight:bold!important;
+	border-bottom: 1px solid #cccccc!important;
 }
-
-
-
+.x-grid-table-vitals tr td .x-grid-cell-inner {
+    margin: 0;
+	padding: 2px 6px 3px;
+}
 
 .vitals-data .header, .general-data .header {
     text-align      : left;

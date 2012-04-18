@@ -43,11 +43,11 @@ class Navigation {
         // *************************************************************************************
         array_push( $nav, array( 'text' => 'Patient', 'cls' => 'folder', 'expanded' => true, 'children' =>
             array(
-                array( 'text' => $this->t['new_patient'][$this->lang],      'disabled'=> ($this->ACL->hasPermission('add_patient')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
-                array( 'text' => $this->t['patient_summary'][$this->lang],  'disabled'=> ($this->ACL->hasPermission('access_patient_summary')? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
-                array( 'text' => $this->t['visist_history'][$this->lang],   'disabled'=> ($this->ACL->hasPermission('access_patient_visits') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
-                array( 'text' => $this->t['encounter'][$this->lang],        'disabled'=> ($this->ACL->hasPermission('access_encounters')     ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelEncounter' ),
-                array( 'text' => $this->t['visit_payment'][$this->lang],    'disabled'=> ($this->ACL->hasPermission('access_visit_payment')  ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisitPayment' )
+                array( 'text' => $this->t['new_patient'][$this->lang],      'disabled'=> ($this->ACL->hasPermission('add_patient')              ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelNewPatient' ),
+                array( 'text' => $this->t['patient_summary'][$this->lang],  'disabled'=> ($this->ACL->hasPermission('access_patient_summary')   ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelSummary' ),
+                array( 'text' => $this->t['visist_history'][$this->lang],   'disabled'=> ($this->ACL->hasPermission('access_patient_visits')    ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelVisits' ),
+                array( 'text' => $this->t['encounter'][$this->lang],        'disabled'=> ($this->ACL->hasPermission('access_encounters')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelEncounter' ),
+                array( 'text' => $this->t['patient_checkout'][$this->lang],    'disabled'=> ($this->ACL->hasPermission('access_patient_checkout')  ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPatientCheckout' )
             )
         ));
         // *************************************************************************************
@@ -138,9 +138,9 @@ class Navigation {
                 'en_US' => 'Encounter',
                 'es'    => 'Encuentro',
             ),
-            'visit_payment' => array(
-                'en_US' => 'Visit Payment',
-                'es'    => 'Pago de Visita',
+            'patient_checkout' => array(
+                'en_US' => 'Patient Checkout',
+                'es'    => 'Salida de Paciente',
             ),
             'billing_manager' => array(
                 'en_US' => 'Billing Area',

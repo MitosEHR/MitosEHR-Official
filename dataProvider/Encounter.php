@@ -231,6 +231,8 @@ class Encounter {
 
 
     }
+
+	/******************************************************************************************************************/
     /**
      * @param $pid
      * @return array
@@ -298,8 +300,19 @@ class Encounter {
         $this->addEncounterHistoryEvent('Vitals added');
         return $params;
     }
+	public function updateVitals(stdClass $params){
+		$this->setEid($params->eid);
+		$data = get_object_vars($params);
+        unset($data['administer'],$data['id']);
+		$data['date'] = $this->parseDate($data['date']);
 
+		$sql = $this->db->sqlBind($data, 'form_data_vitals', 'U', "id='$params->id'");
+        $this->db->setSQL($sql);
+        $this->db->execLog();
+		return $params;
+	}
 
+	/******************************************************************************************************************/
     /**
      * @param $eid
      * @return array
@@ -316,6 +329,30 @@ class Encounter {
         $soap[0]['icdxCodes'] = $icdxs;
         return $soap;
     }
+	/**
+     * @param stdClass $params
+     * @return stdClass
+     */
+    public function updateSoapById(stdClass $params){
+
+        $this->setEid($params->eid);
+
+        $data = get_object_vars($params);
+        unset($data['id'],$data['icdxCodes']);
+        $this->db->setSQL($this->db->sqlBind($data, 'form_data_soap', 'U', "id='".$params->id."'"));
+        $this->db->execLog();
+
+        $this->db->setSQL("DELETE FROM encounter_codes_icdx WHERE eid = '$params->eid'");
+        $this->db->execOnly();
+
+        $this->updateEncounterIcdxCodes($params);
+
+
+        $this->addEncounterHistoryEvent('SOAP updated');
+        return $params;
+    }
+
+
     /**
      * @param $eid
      * @return array
@@ -347,28 +384,7 @@ class Encounter {
         $this->db->setSQL("SELECT * FROM form_data_dictation WHERE eid = '$eid' ORDER BY date DESC");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
     }
-    /**
-     * @param stdClass $params
-     * @return stdClass
-     */
-    public function updateSoapById(stdClass $params){
 
-        $this->setEid($params->eid);
-
-        $data = get_object_vars($params);
-        unset($data['id'],$data['icdxCodes']);
-        $this->db->setSQL($this->db->sqlBind($data, 'form_data_soap', 'U', "id='".$params->id."'"));
-        $this->db->execLog();
-
-        $this->db->setSQL("DELETE FROM encounter_codes_icdx WHERE eid = '$params->eid'");
-        $this->db->execOnly();
-
-        $this->updateEncounterIcdxCodes($params);
-
-
-        $this->addEncounterHistoryEvent('SOAP updated');
-        return $params;
-    }
 
     public function updateEncounterIcdxCodes(stdClass $params){
         $this->setEid($params->eid);
