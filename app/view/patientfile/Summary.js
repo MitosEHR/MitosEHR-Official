@@ -14,7 +14,10 @@ Ext.define('App.view.patientfile.Summary', {
     extend       : 'App.classes.RenderPanel',
     id           : 'panelSummary',
     pageTitle    : 'Patient Summary',
-    pageLayout   : 'border',
+    pageLayout   : {
+        type : 'hbox',
+        align: 'stretch'
+    },
     initComponent: function() {
         var me = this;
 
@@ -31,17 +34,56 @@ Ext.define('App.view.patientfile.Summary', {
         me.pageBody = [
             {
                 xtype      : 'container',
-                region     : 'east',
-                width      : 300,
+                flex       : 1,
                 bodyPadding: 0,
                 frame      : false,
                 border     : false,
-                defaults   : { layout: 'fit'},
+                itemId     : 'centerPanel',
+                defaults   : { margin: '0 5 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
+                items      : [
+                    {
+                        title: 'Billing',
+                        html : 'Balance Due: [token]'
+                    },
+                    {
+                        xtype : 'form',
+                        title : 'Demographics',
+                        itemId: 'demoFormPanel'
+                    },
+                    {
+                        title: 'Notes',
+                        html : 'Panel content!'
+                    },
+                    {
+                        title: 'Patient Reminders',
+                        html : 'Panel content!'
+                    },
+                    {
+                        title: 'Disclosure',
+                        html : 'Panel content!'
+                    },
+                    {
+                        title     : 'Vitals',
+                        autoScroll: true,
+                        items     : {
+                            xtype: 'vitalsdataview',
+                            store: me.vitalsStore
+                        }
+                    }
+                ]
+            },
+            {
+                xtype      : 'container',
+                width      : 250,
+                bodyPadding: 0,
+                frame      : false,
+                border     : false,
+                defaults   : {
+                    layout: 'fit'
+                },
                 listeners  : {
                     scope      : me,
                     afterrender: me.afterRightCol
-
-
                 },
                 items      : [
                     {
@@ -60,15 +102,13 @@ Ext.define('App.view.patientfile.Summary', {
 
                         ]
                     },
-
                     {
                         title      : 'Active Medications',
                         itemId     : 'MedicationsPanel',
                         hideHeaders: true,
                         xtype      : 'grid',
-
-                        store  : me.patientMedicationsStore,
-                        columns: [
+                        store      : me.patientMedicationsStore,
+                        columns    : [
                             {
 
                                 header   : 'Name',
@@ -107,7 +147,6 @@ Ext.define('App.view.patientfile.Summary', {
                             }
 
                         ]
-
                     },
                     {
                         title      : 'Allergies',
@@ -116,6 +155,26 @@ Ext.define('App.view.patientfile.Summary', {
                         xtype      : 'grid',
                         store      : me.patientAllergiesListStore,
                         region     : 'center',
+                        columns    : [
+                            {
+                                header   : 'Name',
+                                dataIndex: 'title',
+                                flex     : 1
+                            },
+                            {
+                                text     : 'Alert',
+                                width    : 55,
+                                dataIndex: 'alert',
+                                renderer : me.boolRenderer
+                            }
+                        ]
+                    },
+                    {
+                        title      : 'Medical Issues',
+                        itemId     : 'IssuesPanel',
+                        hideHeaders: true,
+                        xtype      : 'grid',
+                        store      : me.patientMedicalIssuesStore,
                         columns    : [
                             {
 
@@ -132,33 +191,7 @@ Ext.define('App.view.patientfile.Summary', {
 
                         ]
 
-
                     },
-                    {
-                        title      : 'Medical Issues',
-                        itemId     : 'IssuesPanel',
-                        hideHeaders: true,
-                        xtype      : 'grid',
-                        store      : me.patientMedicalIssuesStore,
-
-                        columns: [
-                            {
-
-                                header   : 'Name',
-                                dataIndex: 'title',
-                                flex     : 1
-                            },
-                            {
-                                text     : 'Alert',
-                                width    : 55,
-                                dataIndex: 'alert',
-                                renderer : me.boolRenderer
-                            }
-
-                        ]
-
-                    },
-
                     {
                         title      : 'Dental',
                         itemId     : 'DentalPanel',
@@ -184,7 +217,6 @@ Ext.define('App.view.patientfile.Summary', {
                         ]
 
                     },
-
                     {
                         title      : 'Surgery',
                         itemId     : 'SurgeryPanel',
@@ -194,11 +226,8 @@ Ext.define('App.view.patientfile.Summary', {
 
                         columns: [
                             {
-
-
                                 dataIndex: 'title',
                                 flex     : 1
-
                             },
                             {
                                 text     : 'Alert',
@@ -206,11 +235,8 @@ Ext.define('App.view.patientfile.Summary', {
                                 dataIndex: 'alert',
                                 renderer : me.boolRenderer
                             }
-
                         ]
-
                     },
-
                     {
                         title: 'Clinical Reminders',
                         html : 'Panel content!'
@@ -221,50 +247,9 @@ Ext.define('App.view.patientfile.Summary', {
                         html : 'Panel content!'
 
                     },
-
                     {
                         title: 'Prescriptions',
                         html : 'Panel content!'
-                    }
-                ]
-            },
-            {
-                xtype      : 'container',
-                region     : 'center',
-                bodyPadding: 0,
-                frame      : false,
-                border     : false,
-                itemId     : 'centerPanel',
-                defaults   : { margin: '0 5 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
-                items      : [
-                    {
-                        title: 'Billing',
-                        html : 'Balance Due: [token]'
-                    },
-                    {
-                        xtype : 'form',
-                        title : 'Demographics',
-                        itemId: 'demoFormPanel'
-                    },
-                    {
-                        title: 'Notes',
-                        html : 'Panel content!'
-                    },
-                    {
-                        title: 'Patient Reminders',
-                        html : 'Panel content!'
-                    },
-                    {
-                        title: 'Disclosure',
-                        html : 'Panel content!'
-                    },
-                    {
-                        title     : 'Vitals',
-                        autoScroll: true,
-                        items     : {
-                            xtype: 'vitalsdataview',
-                            store: me.vitalsStore
-                        }
                     }
                 ]
             }
@@ -341,14 +326,14 @@ Ext.define('App.view.patientfile.Summary', {
         ]);
 
         me.query('panel[action="patientImgs"]')[0].add({
-                xtype : 'container',
-                margin: '5 20',
-                html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
-            }, {
-                xtype : 'container',
-                margin: '5 20',
-                html  : '<img src="ui_icons/patientDataQrCode.png" height="100" width="100" >'
-            });
+            xtype : 'container',
+            margin: '5 20',
+            html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
+        }, {
+            xtype : 'container',
+            margin: '5 20',
+            html  : '<img src="ui_icons/patientDataQrCode.png" height="100" width="100" >'
+        });
 
     },
 
@@ -479,14 +464,14 @@ Ext.define('App.view.patientfile.Summary', {
         panel.removeAll();
 
         panel.add({
-                xtype : 'container',
-                margin: '5 20',
-                html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
-            }, {
-                xtype : 'container',
-                margin: '5 20',
-                html  : '<img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png" height="100" width="100" >'
-            });
+            xtype : 'container',
+            margin: '5 20',
+            html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
+        }, {
+            xtype : 'container',
+            margin: '5 20',
+            html  : '<img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png" height="100" width="100" >'
+        });
     },
 
     /**
