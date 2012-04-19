@@ -70,9 +70,30 @@ class Services
 	 */
 	public function addService(stdClass $params)
 	{
+					/*
+					 * define $code_table
+					 */
+
+		if($params->code_type == 'cpt' || $params->code_type == 1) {
+				$code_table = 'cpt_codes';
+			} elseif($params->code_type == 'icd' || $params->code_type == 2) {
+				$code_table = 'icd_codes';
+			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
+				$code_table = 'hcpcs_codes';
+			} else {
+				$code_table = 'cvx_codes';
+			}
+
+
+
 		$data = get_object_vars($params);
+
+		foreach($data as $key=>$val ){
+			if($val == null || $val == '')
+			unset($data[$key]);
+		}
 		unset($data['id']);
-		$sql = $this->db->sqlBind($data, "codes", "I");
+		$sql = $this->db->sqlBind($data, $code_table, 'I');
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		$params->id = $this->db->lastInsertId;
@@ -85,10 +106,31 @@ class Services
 	 */
 	public function updateService(stdClass $params)
 	{
+					/*
+					 * define $code_table
+					 */
+
+		if($params->code_type == 'cpt' || $params->code_type == 1) {
+				$code_table = 'cpt_codes';
+			} elseif($params->code_type == 'icd' || $params->code_type == 2) {
+				$code_table = 'icd_codes';
+			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
+				$code_table = 'hcpcs_codes';
+			} else {
+				$code_table = 'cvx_codes';
+			}
+
+
+
 		$data = get_object_vars($params);
-		$id   = $data['id'];
+
+		foreach($data as $key=>$val ){
+			if($val == null || $val == '')
+			unset($data[$key]);
+		}
 		unset($data['id']);
-		$sql = $this->db->sqlBind($data, "codes", "U", "id='$id'");
+
+		$sql = $this->db->sqlBind($data, $code_table, 'U', "id='$params->id'");
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		return $params;
@@ -389,9 +431,8 @@ class Services
 	public function updateMedications(stdClass $params)
 	{
 		$data = get_object_vars($params);
-		$id   = $data['id'];
 		unset($data['id']);
-		$sql = $this->db->sqlBind($data, "medications", "U", "id='$id'");
+		$sql = $this->db->sqlBind($data, "medications", "U", "id='$params->id'");
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		return $params;

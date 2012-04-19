@@ -244,7 +244,8 @@ class Encounter {
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
-            $row['administer'] = $this->user->getUserNameById($row['uid']);
+            $row['administer_by'] = $this->user->getUserNameById($row['uid']);
+	        $row['authorized_by'] = $this->user->getUserNameById($row['auth_uid']);
 
             array_push($rows, $row);
         }
@@ -261,7 +262,8 @@ class Encounter {
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
             $row['height_in'] = intval($row['height_in']);
             $row['height_cn'] = intval($row['height_cn']);
-            $row['administer'] = $this->user->getUserNameById($row['uid']);
+            $row['administer_by'] = $this->user->getUserNameById($row['uid']);
+            $row['authorized_by'] = $this->user->getUserNameById($row['auth_uid']);
 
             array_push($rows, $row);
         }
@@ -291,7 +293,7 @@ class Encounter {
         $this->setEid($params->eid);
 
         $data = get_object_vars($params);
-        unset($data['administer']);
+        unset($data['administer_by'],$data['authorized_by'],$data['id'],$data['bp_diastolic_normal'],$data['bp_systolic_normal']);
         $data['date'] = $this->parseDate($data['date']);
         $sql = $this->db->sqlBind($data, 'form_data_vitals', 'I');
         $this->db->setSQL($sql);
@@ -300,15 +302,22 @@ class Encounter {
         $this->addEncounterHistoryEvent('Vitals added');
         return $params;
     }
+	/**
+	 * @param stdClass $params
+	 * @return stdClass
+	 */
 	public function updateVitals(stdClass $params){
 		$this->setEid($params->eid);
 		$data = get_object_vars($params);
-        unset($data['administer'],$data['id']);
-		$data['date'] = $this->parseDate($data['date']);
+        unset($data['date'],$data['administer_by'],$data['authorized_by'],$data['id'],$data['bp_diastolic_normal'],$data['bp_systolic_normal']);
 
 		$sql = $this->db->sqlBind($data, 'form_data_vitals', 'U', "id='$params->id'");
         $this->db->setSQL($sql);
         $this->db->execLog();
+
+		$params->administer_by = $this->user->getUserNameById($params->uid);
+		$params->authorized_by = $this->user->getUserNameById($params->auth_uid);
+
 		return $params;
 	}
 

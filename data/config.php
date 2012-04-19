@@ -163,6 +163,9 @@ $API = array(
             'updatePatientImmunization'=>array(
                'len'=>1
             ),
+            'getImmunizationLiveSearch'=>array(
+               'len'=>1
+            ),
             'getPatientAllergies'=>array(
                'len'=>1
             ),

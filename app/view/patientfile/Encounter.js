@@ -371,11 +371,26 @@ Ext.define('App.view.patientfile.Encounter', {
             items:[
                 {
                     xtype:'form',
-                    width:305,
+                    width:313,
 	                margin:0,
                     border:false,
                     layout:'anchor',
-                    fieldDefaults:{ msgTarget:'side', labelAlign:'right' }
+                    fieldDefaults:{ msgTarget:'side', labelAlign:'right' },
+                    buttons:[
+                        {
+                            text:'save',
+                            action:'vitals',
+                            width:40,
+                            scope:me,
+                            handler:me.onSave
+                        },
+                        {
+                            text:'sign',
+                            width:40,
+                            scope:me,
+                            handler:me.onVitalsSign
+                        }
+                    ]
                 },
                 {
                     xtype:'vitalsdataview',
@@ -391,13 +406,6 @@ Ext.define('App.view.patientfile.Encounter', {
                 xtype:'toolbar',
                 dock:'top',
                 items:[
-                    {
-                        text:'Save',
-                        iconCls:'save',
-                        action:'vitals',
-                        scope:me,
-                        handler:me.onSave
-                    },
                     '->',
                     {
                         text:'Vector Charts',
@@ -685,9 +693,9 @@ Ext.define('App.view.patientfile.Encounter', {
             } else if (SaveBtn.action == 'vitals') {
                 ACL.hasPermission('add_vitals', function (provider, response) {
                     if (response.result) {
-                        me.signatureWin(function (btn, signature) {
+                        me.passwordVerificationWin(function (btn, password) {
                             if (btn == 'ok') {
-                                User.verifyUserPass(signature, function (provider, response) {
+                                User.verifyUserPass(password, function (provider, response) {
                                     if (response.result) {
                                         //noinspection JSUnresolvedFunction
                                         store = me.encounterStore.getAt(0).vitals();
@@ -701,21 +709,14 @@ Ext.define('App.view.patientfile.Encounter', {
                                             record.set(values);
                                         }
                                         store.sync();
-                                        store.sort('date', 'DESC');
+                                        //store.sort('date', 'DESC');
                                         form.reset();
                                         me.vitalsPanel.down('vitalsdataview').refresh();
+
                                         me.msg('Sweet!', 'Vitals Saved');
 
                                         me.updateProgressNote();
-//
-//                                        form.reset();
-//                                        record.add(values);
-//                                        record.sync();
-//                                        record.sort('date', 'DESC');
-//                                        me.vitalsPanel.down('vitalsdataview').refresh();
-//                                        me.updateProgressNote();
-//                                        me.msg('Sweet!', 'Vitals Saved');
-//                                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
+
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',
@@ -776,6 +777,47 @@ Ext.define('App.view.patientfile.Encounter', {
             }
         }
     },
+
+    onVitalsSign:function(){
+        var me = this,
+            form = me.vitalsPanel.down('form').getForm(),
+            store = me.encounterStore.getAt(0).vitals(),
+            record = form.getRecord();
+
+        if (form.isValid()) {
+            me.passwordVerificationWin(function (btn, password) {
+                if (btn == 'ok') {
+                    User.verifyUserPass(password, function (provider, response) {
+                        if (response.result) {
+
+                            record.set({auth_uid: user.id});
+                            store.sync();
+                            //store.sort('date', 'DESC');
+                            form.reset();
+
+                            me.msg('Sweet!', 'Vitals Saved');
+                            me.vitalsPanel.down('vitalsdataview').refresh();
+                            me.updateProgressNote();
+                        } else {
+                            Ext.Msg.show({
+                                title:'Oops!',
+                                msg:'Incorrect password',
+                                buttons:Ext.Msg.OKCANCEL,
+                                icon:Ext.Msg.ERROR,
+                                fn:function (btn) {
+                                    if (btn == 'ok') {
+                                        me.onVitalsSign();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+    },
+
     /**
      * Takes the form data to be send and adds the default
      * data used by every encounter form. For example
@@ -852,12 +894,12 @@ Ext.define('App.view.patientfile.Encounter', {
      */
     closeEncounter:function () {
         var me = this;
-        me.signatureWin(function (btn, signature) {
+        me.passwordVerificationWin(function (btn, password) {
             if (btn == 'ok') {
                 var params = {
                     eid       : app.currEncounterId,
                     close_date: Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
-                    signature : signature
+                    signature : password
                 };
                 Encounter.closeEncounter(params, function (provider, response) {
                     if (response.result.success) {

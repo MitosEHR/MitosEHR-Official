@@ -52,6 +52,7 @@
     border-left: 1px solid #cccccc!important;
 	border-bottom: 1px solid #f3f3f3 !important;
     padding: 1px 0 0 0;
+	height:20px;
     text-align: center !important;
 }
 .x-grid-table-vitals .x-grid-table-vitals-date {

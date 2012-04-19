@@ -146,18 +146,19 @@ Ext.define('App.view.administration.Services', {
 												value     : 0,
 												minValue  : 0,
 												width:150,
-												name      : 'frequency'
+												name      : 'frequency_number'
 
 											},
 											{
 												xtype: 'mitos.timecombo',
-												name : 'frequency',
+												name : 'frequency_time',
 												width:100
 
 											},
 											{
                                                 xtype     : 'numberfield',
                                                 fieldLabel: 'Age Start',
+                                                name: 'age_start',
                                                 labelWidth: 75,
                                                 width:140,
                                                 value     : 0,
@@ -193,10 +194,10 @@ Ext.define('App.view.administration.Services', {
 											{
 												xtype     : 'numberfield',
 												fieldLabel: 'Times to Perform',
+												name      : 'times_to_perform',
 												width     : 250,
 												value     : 0,
 												minValue  : 0,
-												name      : 'times',
 												tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
 
 											},
@@ -204,6 +205,7 @@ Ext.define('App.view.administration.Services', {
 
                                                 xtype     : 'numberfield',
                                                 fieldLabel: 'Age End',
+                                                name: 'age_end',
                                                 labelWidth: 75,
                                                 width:140,
                                                 value     : 0,
@@ -217,7 +219,7 @@ Ext.define('App.view.administration.Services', {
                                                 xtype   : 'checkboxfield',
                                                 labelWidth:105,
                                                 //margin  : '5 0 0 10',
-                                                name    : 'perform'
+                                                name    : 'only_once'
                                             }
 
 

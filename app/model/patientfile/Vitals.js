@@ -33,7 +33,8 @@ Ext.define('App.model.patientfile.Vitals', {
 		{name: 'bmi', type: 'int', useNull:true},
 		{name: 'bmi_status', type: 'int', useNull:true},
 		{name: 'other_notes', type: 'string'},
-		{name: 'administer', type: 'string'},
+		{name: 'administer_by', type: 'string'},
+		{name: 'authorized_by', type: 'string'},
 
 		{name: 'bp_systolic_normal', type: 'int', defaultValue: 120 },
 		{name: 'bp_diastolic_normal', type: 'int', defaultValue: 80 }

@@ -268,6 +268,23 @@ class Medical
 		return array('totals'=> $total,
 		             'rows'  => $records);
 	}
+	/*************************************************************************************************************/
+		public function getImmunizationLiveSearch(stdClass $params)
+		{
+			$this->db->setSQL("SELECT id,
+									  code,
+									  code_text,
+									  code_text_short
+
+								FROM cvx_codes
+								WHERE code_text LIKE '$params->query%'
+								   OR code      LIKE'$params->query%'");
+ 			$records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
+			$total = count($records);
+			$records  = array_slice($records, $params->start, $params->limit);
+			return array('totals'=> $total,
+			             'rows'  => $records);
+		}
 
 	/*********************************************
 	 * METHODS USED BY PHP                       *

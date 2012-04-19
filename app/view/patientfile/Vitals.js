@@ -141,7 +141,12 @@ Ext.define('App.view.patientfile.Vitals', {
 	        '                       </tr>' +
             '                       <tr class="x-grid-row ">' +
 	        '                           <td class="x-grid-cell">' +
-	        '                               <div class="x-grid-cell-inner ">{[values.administer || "-"]}<div>' +
+	        '                               <div class="x-grid-cell-inner ">{[(values.administer_by == null || values.administer_by == " ") ? "-" : values.administer_by]}<div>' +
+	        '                           </td>' +
+	        '                       </tr>' +
+            '                       <tr class="x-grid-row ">' +
+	        '                           <td class="x-grid-cell">' +
+	        '                               <div class="x-grid-cell-inner ">{[(values.authorized_by == null || values.authorized_by == " ") ? "-" : values.authorized_by]}<div>' +
 	        '                           </td>' +
 	        '                       </tr>' +
             '                   </tbody>' +
