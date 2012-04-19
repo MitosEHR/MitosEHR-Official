@@ -83,9 +83,17 @@ class Documents
 
 		//Patient Information
         $this->pdf->SetFont('Times', '', 8);
-		$this->pdf->MultiCell(0, 5, $this->patient->getPatientNameById($params->pid));
-        $this->pdf->MultiCell(0, 5, $this->patient->getPatientAdditionalInfoById($params->pid));
-        $this->pdf->MultiCell(0, 5, $this->patient->getPatientAddressById($params->pid));
+		//$this->pdf->MultiCell(0, 5, $this->patient->getPatientNameById($params->pid));
+        //$this->pdf->MultiCell(0, 5, $this->patient->getPatientAdditionalInfoById($params->pid));
+        $this->pdf->MultiCell(0, 5, 'Full Name: ');
+        $this->pdf->MultiCell(0, 5, 'Social Security: ');
+        $this->pdf->MultiCell(0, 5, 'Sex: ');
+        $this->pdf->MultiCell(0, 5, 'Birthday: ');
+        $this->pdf->MultiCell(0, 5, 'Marital Status: ');
+        $this->pdf->MultiCell(0, 5, 'Occupation: ');
+        $this->pdf->MultiCell(0, 5, 'Address: '.$this->patient->getPatientAddressById($params->pid));
+        $this->pdf->MultiCell(0, 5, 'Home Phone: ');
+        $this->pdf->MultiCell(0, 5, 'Mobile Phone: ');
         $this->pdf->Ln(4);
 
         //Second blue row contains insured person information
@@ -97,8 +105,12 @@ class Documents
 
         //Information of the insured Patient
         $this->pdf->SetFont('Times', '', 8);
-		$this->pdf->MultiCell(0, 5, $this->patient->getPatientNameById($params->pid));
-        $this->pdf->MultiCell(0, 5, $this->patient->getPatientAdditionalInfoById($params->pid));
+        $this->pdf->MultiCell(0, 5, 'Full Name: ');
+        $this->pdf->MultiCell(0, 5, 'Social Security: ');
+        $this->pdf->MultiCell(0, 5, 'Birthday/Sex: ');
+        $this->pdf->MultiCell(0, 5, 'Address: ');
+		//$this->pdf->MultiCell(0, 5, $this->patient->getPatientNameById($params->pid));
+        //$this->pdf->MultiCell(0, 5, $this->patient->getPatientAdditionalInfoById($params->pid));
         $this->pdf->Ln(4);
 
         //Thrid Blue Row contains insurance plan information
