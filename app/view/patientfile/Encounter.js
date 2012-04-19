@@ -709,14 +709,11 @@ Ext.define('App.view.patientfile.Encounter', {
                                             record.set(values);
                                         }
                                         store.sync();
-                                        //store.sort('date', 'DESC');
                                         form.reset();
                                         me.vitalsPanel.down('vitalsdataview').refresh();
-
                                         me.msg('Sweet!', 'Vitals Saved');
-
                                         me.updateProgressNote();
-
+                                        form.loadRecord('App.model.patientfile.Vitals');
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',
