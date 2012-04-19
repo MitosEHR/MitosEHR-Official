@@ -371,7 +371,7 @@ Ext.define('App.view.patientfile.Encounter', {
             items:[
                 {
                     xtype:'form',
-                    width:330,
+                    width:305,
 	                margin:0,
                     border:false,
                     layout:'anchor',
@@ -690,16 +690,32 @@ Ext.define('App.view.patientfile.Encounter', {
                                 User.verifyUserPass(signature, function (provider, response) {
                                     if (response.result) {
                                         //noinspection JSUnresolvedFunction
-                                        var store = me.encounterStore, record = store.getAt(0).vitals();
+                                        store = me.encounterStore.getAt(0).vitals();
+                                        record = form.getRecord();
                                         values = me.addDefaultData(values);
+                                        storeIndex = store.indexOf(record);
+
+                                        if(storeIndex == -1) {
+                                            store.add(values);
+                                        } else {
+                                            record.set(values);
+                                        }
+                                        store.sync();
+                                        store.sort('date', 'DESC');
                                         form.reset();
-                                        record.add(values);
-                                        record.sync();
-                                        record.sort('date', 'DESC');
                                         me.vitalsPanel.down('vitalsdataview').refresh();
-                                        me.updateProgressNote();
                                         me.msg('Sweet!', 'Vitals Saved');
-                                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
+
+                                        me.updateProgressNote();
+//
+//                                        form.reset();
+//                                        record.add(values);
+//                                        record.sync();
+//                                        record.sort('date', 'DESC');
+//                                        me.vitalsPanel.down('vitalsdataview').refresh();
+//                                        me.updateProgressNote();
+//                                        me.msg('Sweet!', 'Vitals Saved');
+//                                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',

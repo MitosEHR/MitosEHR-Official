@@ -195,7 +195,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/encounter/CurrentProceduralTerminology.js"></script>
         <script type="text/javascript" src="app/view/patientfile/encounter/ICDs.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/VisitPayment.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/PatientCheckout.js"></script>
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
         <script type="text/javascript" src="app/view/patientfile/MedicalWindow.js"></script>
         <script type="text/javascript" src="app/view/patientfile/QrCodeWindow.js"></script>
@@ -220,7 +220,7 @@ Globals::setGlobals();
 
 
 
-        <!-- Aplication Viewport -->
+        <!-- Application Viewport -->
         <script type="text/javascript" src="app/view/MitosApp.js"></script>
         <script type="text/javascript">
             var app;
