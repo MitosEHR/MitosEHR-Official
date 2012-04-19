@@ -16,14 +16,11 @@ Ext.define('App.view.patientfile.PatientCheckout', {
 
     initComponent:function () {
         var me = this;
-        var paymentDescription = Ext.create('Ext.data.Store', {
-            fields: ['name'],
-            data : [
-                { "name":"General Visit" },
-                { "name":"Special Visit" },
-                { "name":"Other" }
-            ]
+
+        me.serviceStore = Ext.create('Ext.data.Store', {
+            model:'App.model.patientfile.CptCodes'
         });
+
 
         me.pageBody = Ext.create('Ext.panel.Panel', {
             itemId:'visitpayment',
@@ -52,116 +49,71 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                             margin: 5,
                             flex  : 2,
                             items: [
-	                            {
-	                                xtype:'container',
-                                    items:[
-                                        {
-                                            fieldLabel: 'Date',
-                                            xtype     : 'datefield',
-                                            style     : 'float:left',
-	                                        action: 'receipt',
-                                            labelWidth: 108,
-                                            width     : 288
-                                        },
-	                                    {
-	                                        fieldLabel: 'No',
-	                                        xtype     : 'textfield',
-                                            style     : 'float:right',
-		                                    action: 'receipt',
-	                                        labelWidth: 60,
-	                                        width     : 240
-	                                    }
-
-                                    ]
-	                            },
-                                {
-                                    fieldLabel: 'Facility',
-                                    xtype     : 'mitos.facilitiescombo',
-                                    labelWidth: 108,
-                                    width     : 288,
-	                                action: 'receipt',
-                                    margin    : '7 0 40 0'
-                                },
-                                {
-                                    xtype :'fieldcontainer',
-                                    layout:'hbox',
-                                    items:[
-                                        {
-                                            fieldLabel: 'Received From',
-                                            xtype     : 'textfield',
-                                            labelWidth: 108,
-                                            margin      : '0 25 0 0',
-                                            anchor    : '100%',
-	                                        action: 'receipt',
-                                            flex      : 1
-                                        },
-                                        {
-                                            fieldLabel: 'Amount',
-                                            xtype     : 'mitos.currency',
-	                                        action: 'receipt',
-                                            labelWidth: 60
-                                        }
-
-                                    ]
-                                },
                                 {
                                     xtype:'container',
-                                    layout:'hbox',
+                                    itemId:'serviceContainer',
+                                    layout:'anchor',
                                     items:[
                                         {
-                                            fieldLabel  : 'For Payment of',
-                                            xtype       : 'combobox',
-                                            labelWidth  : 108,
-                                            margin      : '0 25 10 0',
-                                            anchor      : '100%',
-                                            flex        : 1,
-	                                        action: 'receipt',
-                                            store       : paymentDescription,
-                                            queryMode   : 'local',
-                                            displayField: 'name'
-                                        },
-
-                                        {
-                                            fieldLabel: 'Paid by',
-	                                        action: 'receipt',
-                                            xtype     : 'mitos.paymentmethodcombo',
-                                            labelWidth: 60
+                                            xtype  : 'grid',
+                                            frame:false,
+                                            border:false,
+                                            flex   : 1,
+                                            maxHeight:215,
+                                            store: me.serviceStore,
+                                            columns:[
+                                                {
+                                                    header:'Service',
+                                                    flex:1,
+                                                    dataIndex:'code_text',
+                                                    editor: {
+                                                        xtype: 'livecptsearch',
+                                                        allowBlank: false
+                                                    }
+                                                },
+                                                {
+                                                    header: 'Charge',
+                                                    width: 150,
+                                                    dataIndex:'charge',
+                                                    editor: {
+                                                        xtype: 'textfield',
+                                                        allowBlank: false
+                                                    }
+                                                }
+                                            ],
+                                            plugins: [
+                                                Ext.create('Ext.grid.plugin.CellEditing', {
+                                                    clicksToEdit: 2
+                                                })
+                                            ]
                                         }
                                     ]
                                 },
                                 {
-                                    fieldLabel: 'Description',
-                                    xtype     : 'textfield',
-                                    labelWidth: 108,
-	                                action: 'receipt',
-                                    anchor    : '100%'
-                                },
-                                {
                                     xtype:'container',
-                                    style      : 'float:right',
+                                    style: 'float:right',
+                                    width:258,
+                                    defaults: {
+                                        anchor:'100%',
+                                        labelWidth: 108,
+                                        action: 'receipt'
+                                    },
                                     items:[
+
                                         {
-                                            fieldLabel: 'Accounted Amount',
+                                            fieldLabel: 'Amount Due',
                                             xtype     : 'textfield',
-                                            labelWidth: 108,
-                                            width     : 288,
-	                                        action: 'receipt',
-                                            margin    : '40 0 5 0'
+                                            margin    : '10 0 5 0'
                                         },
+
                                         {
                                             fieldLabel: 'Payment Amount',
                                             xtype     : 'textfield',
-                                            labelWidth: 108,
-                                            width     : 288,
-	                                        action: 'receipt',
                                             margin    : '10 0 10 0'
                                         },
                                         {
-                                            fieldLabel: 'Balance Due',
-                                            xtype     : 'textfield',
-	                                        action: 'receipt',
-                                            labelWidth: 108,
-                                            width     : 288
+                                            fieldLabel: 'Balance',
+                                            xtype     : 'textfield'
                                         }
                                     ]
                                 }
@@ -179,6 +131,12 @@ Ext.define('App.view.patientfile.PatientCheckout', {
 			                        handler:me.resetReceiptForm
 		                        },
                                 '->',
+                                {
+                                    text:'Add Service',
+                                    scope: me,
+                                    handler:me.onNewService
+                                },
+                                '-',
                                 {
                                     text:'Add Payment',
                                     scope: me,
@@ -272,7 +230,10 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                             ],
 	                        buttons:[
                                 {
-                                    text:'Schedule Appointment'
+                                    text:'Schedule Appointment',
+                                    handler:function(){
+                                        app.onExtCalWin();
+                                    }
                                 }
                             ]
                         }
@@ -282,7 +243,6 @@ Ext.define('App.view.patientfile.PatientCheckout', {
         });
 
         me.printWindow = Ext.create('Ext.window.Window', {
-
             title      : 'Printing Options',
             closeAction: 'hide',
             closable   : false,
@@ -330,6 +290,41 @@ Ext.define('App.view.patientfile.PatientCheckout', {
         });
 
         me.callParent(arguments);
+
+
+    },
+
+
+
+
+    onNewService:function(btn){
+        var me = this,
+            grid = btn.up('panel').down('grid'),
+            store = grid.store;
+
+        say(grid);
+        say(store);
+
+            store.add({code_text:'none',charge:'20.00'});
+
+
+
+//        var me = this,
+//            container = me.down('form').getComponent('serviceContainer'),
+//            serviceField;
+//
+//        serviceField = Ext.create('Ext.form.FieldContainer',{
+//            layout:'hbox',
+//            items: [{
+//                xtype: 'textfield',
+//                flex: 1
+//            }, {
+//                xtype: 'textfield'
+//            }]
+//        });
+
+        //container.add(serviceField)
+
     },
 
     onPrintClick:function () {

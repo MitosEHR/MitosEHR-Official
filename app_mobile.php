@@ -24,10 +24,10 @@ $_SESSION['site']['flops'] = 0;
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>MitosEHR - Demo</title>
 
-    <link   rel="stylesheet"        href="lib/touch-2.0.0-pr3/resources/css/android.css" type="text/css">
+    <link   rel="stylesheet"        href="lib/sencha-touch-2.0.0-gpl/resources/css/android.css" type="text/css">
     <link   rel="stylesheet"        href="app_mobile/resources/css/sink.css?2" type="text/css">
     <script type="text/javascript"  src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script type="text/javascript"  src="lib/touch-2.0.0-pr3/sencha-touch.js"></script>
+    <script type="text/javascript"  src="lib/sencha-touch-2.0.0-gpl/sencha-touch.js"></script>
 	<script type="text/javascript"  src="app_mobile/all-classes.js"></script>
     <script type="text/javascript"  src="app_mobile/app.js"></script>
 </head>

@@ -257,7 +257,7 @@ Ext.define('App.view.MitosApp', {
 					itemId : 'patientCharge',
 					iconCls: me.icoMoney,
 					scope  : me,
-					handler: me.PaymentEntryWindow,
+					handler: me.onPaymentEntryWindow,
 					tooltip: 'Payment Entry'
 				},
 				{

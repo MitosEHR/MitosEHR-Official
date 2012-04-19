@@ -92,6 +92,12 @@ class Patient extends Person {
         return $this->fullname($p['fname'],$p['mname'],$p['lname']);
     }
 
+	public function getDOBByPid($pid){
+	    $this->db->setSQL("SELECT DOB FROM form_data_demographics WHERE pid = '$pid'");
+	    $p = $this->db->fetchRecord();
+	    return $p['DOB'];
+	}
+
 	public function getPatientSexIntByPid($pid){
         $this->db->setSQL("SELECT sex FROM form_data_demographics WHERE pid = '$pid'");
         $p = $this->db->fetchRecord();
