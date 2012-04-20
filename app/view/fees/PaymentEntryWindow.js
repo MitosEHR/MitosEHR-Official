@@ -34,6 +34,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 fieldLabel:'Paying Entity',
                                 xtype:'mitos.payingentitycombo',
                                 name:'paying_entity',
+                                action: 'new_payment',
                                 labelWidth:95,
                                 width:215
                             },
@@ -41,6 +42,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 xtype:'patienlivetsearch',
                                 fieldLabel:'From',
                                 name:'payer_id',
+                                action: 'new_payment',
                                 hideLabel:false,
                                 anchor:null,
                                 labelWidth:82,
@@ -57,6 +59,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                             {
                                 fieldLabel:'Payment Method',
                                 xtype:'mitos.paymentmethodcombo',
+                                action: 'new_payment',
                                 labelWidth:95,
                                 name:'payment_method',
                                 width:215
@@ -64,6 +67,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                             {
                                 xtype:'mitos.billingfacilitiescombo',
                                 fieldLabel:'Pay To',
+                                action: 'new_payment',
                                 labelWidth:82,
                                 name:'pay_to',
                                 width:282,
@@ -78,6 +82,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                             {
                                 xtype:'mitos.currency',
                                 fieldLabel:'Amount',
+                                action: 'new_payment',
                                 name:'amount',
                                 labelWidth:95,
                                 width:215,
@@ -87,6 +92,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 fieldLabel:'Check Number',
                                 xtype:'textfield',
                                 name:'check_number',
+                                action: 'new_payment',
                                 width: 282,
                                 labelWidth:82,
                                 margin:'0 0 0 25'
@@ -109,6 +115,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                             {
                                 fieldLabel:'Note',
                                 xtype:'textfield',
+                                action: 'new_payment',
                                 name:'note',
                                 width: 282,
                                 labelWidth:82,
