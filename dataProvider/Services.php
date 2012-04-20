@@ -97,7 +97,7 @@ class Services
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		$params->id = $this->db->lastInsertId;
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 	}
 
 	/**
@@ -307,7 +307,7 @@ class Services
 		$this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'I'));
 		$this->db->execLog();
 		$params->id = $this->db->lastInsertId;
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 	}
 
 	public function updateCptCode(stdClass $params)
@@ -317,7 +317,7 @@ class Services
 		$params->id = intval($params->id);
 		$this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'U', "id='$params->id'"));
 		$this->db->execLog();
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 	}
 
 	public function deleteCptCode(stdClass $params)
@@ -328,7 +328,7 @@ class Services
 			$this->db->setSQL("DELETE FROM encounter_codes_cpt WHERE id ='$params->id'");
 			$this->db->execLog();
 		}
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 	}
 
 	/**
@@ -435,7 +435,7 @@ class Services
 		$sql = $this->db->sqlBind($data, "medications", "U", "id='$params->id'");
 		$this->db->setSQL($sql);
 		$this->db->execLog();
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 
 	}
 
@@ -447,14 +447,14 @@ class Services
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		$params->id = $this->db->lastInsertId;
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 	}
 
 	public function removeMedications(stdClass $params)
 	{
 		$this->db->setSQL("DELETE FROM medications WHERE id ='$params->id'");
 		$this->db->execLog();
-		return $params;
+		return array('totals'=> 1, 'rows'  => $params);
 	}
 
 }
