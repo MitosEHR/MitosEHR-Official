@@ -378,17 +378,23 @@ Ext.define('App.view.patientfile.Encounter', {
                     fieldDefaults:{ msgTarget:'side', labelAlign:'right' },
                     buttons:[
                         {
-                            text:'save',
+                            text:'Reset',
+                            width:40,
+                            scope:me,
+                            handler:me.resetVitalsForm
+                        },
+                        {
+                            text:'Sign',
+                            width:40,
+                            scope:me,
+                            handler:me.onVitalsSign
+                        },
+                        {
+                            text:'Save',
                             action:'vitals',
                             width:40,
                             scope:me,
                             handler:me.onSave
-                        },
-                        {
-                            text:'sign',
-                            width:40,
-                            scope:me,
-                            handler:me.onVitalsSign
                         }
                     ]
                 },
@@ -704,16 +710,19 @@ Ext.define('App.view.patientfile.Encounter', {
                                         storeIndex = store.indexOf(record);
 
                                         if(storeIndex == -1) {
-                                            store.add(values);
+                                            store.insert(0,values);
                                         } else {
                                             record.set(values);
                                         }
                                         store.sync();
                                         form.reset();
-                                        me.vitalsPanel.down('vitalsdataview').refresh();
+
                                         me.msg('Sweet!', 'Vitals Saved');
                                         me.updateProgressNote();
-                                        form.loadRecord('App.model.patientfile.Vitals');
+                                        me.vitalsPanel.down('vitalsdataview').refresh();
+
+                                        me.resetVitalsForm();
+
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',
@@ -786,15 +795,13 @@ Ext.define('App.view.patientfile.Encounter', {
                 if (btn == 'ok') {
                     User.verifyUserPass(password, function (provider, response) {
                         if (response.result) {
-
                             record.set({auth_uid: user.id});
                             store.sync();
-                            //store.sort('date', 'DESC');
                             form.reset();
-
                             me.msg('Sweet!', 'Vitals Saved');
                             me.vitalsPanel.down('vitalsdataview').refresh();
                             me.updateProgressNote();
+                            me.resetVitalsForm();
                         } else {
                             Ext.Msg.show({
                                 title:'Oops!',
@@ -863,7 +870,7 @@ Ext.define('App.view.patientfile.Encounter', {
                         me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
                     }
                 }
-	            me.reSetVitalsForm();
+	            me.resetVitalsForm();
                 vitals.store = record[0].vitalsStore;
                 vitals.refresh();
                 //noinspection JSUnresolvedFunction
@@ -970,8 +977,11 @@ Ext.define('App.view.patientfile.Encounter', {
         }
 	},
 
-	reSetVitalsForm:function(){
-		this.vitalsPanel.down('form').getForm().reset();
+	resetVitalsForm:function(){
+		var form = this.vitalsPanel.down('form').getForm(),
+            model = Ext.ModelManager.getModel('App.model.patientfile.Vitals'),
+            newModel = Ext.ModelManager.create({}, model);
+        form.loadRecord(newModel);
 	},
 
 

@@ -122,6 +122,9 @@ $API = array(
             ),
             'addPayment'=>array(
                'len'=>1
+            ),
+            'getPatientBalance'=>array(
+               'len'=>1
             )
         ),
 
@@ -446,6 +449,9 @@ $API = array(
             	'len'=>1
             ),
             'getPatientsByPoolArea'=>array(
+            	'len'=>1
+            ),
+            'addNote'=>array(
             	'len'=>1
             )
 

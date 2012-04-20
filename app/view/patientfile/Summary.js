@@ -42,8 +42,11 @@ Ext.define('App.view.patientfile.Summary', {
                 defaults   : { margin: '0 5 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
                 items      : [
                     {
+                        xtype:'panel',
+                        action:'balance',
                         title: 'Billing',
-                        html : 'Balance Due: [token]'
+                        html:'Account Balance: '
+
                     },
                     {
                         xtype : 'form',
@@ -481,6 +484,11 @@ Ext.define('App.view.patientfile.Summary', {
      * to call every this panel becomes active
      */
     onActive: function(callback) {
+            var billingPanel = this.query('[action="balance"]')[0];
+
+        Fees.getPatientBalance({pid:app.currPatient.pid},function(balance){
+            billingPanel.body.update('Account Balance: $' + balance);
+        });
 
         this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});

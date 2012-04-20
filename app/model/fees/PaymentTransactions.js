@@ -6,7 +6,7 @@
  * Time: 11:09 PM
  */
 
-Ext.define('App.model.fees.FeesSheet', {
+Ext.define('App.model.fees.Pa', {
 	extend: 'Ext.data.Model',
 	fields: [
 

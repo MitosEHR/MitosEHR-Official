@@ -59,11 +59,23 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                             frame:false,
                                             border:false,
                                             flex   : 1,
-                                            maxHeight:215,
+                                            maxHeight:220,
                                             store: me.serviceStore,
                                             columns:[
                                                 {
-                                                    header:'Service',
+                                                    xtype:'actioncolumn',
+                                                    width:20,
+                                                    items: [
+                                                        {
+                                                            icon: 'ui_icons/no.gif',
+                                                            tooltip: 'Remove',
+                                                            scope:me,
+                                                            handler: me.onRemoveService
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    header:'Items',
                                                     flex:1,
                                                     dataIndex:'code_text',
                                                     editor: {
@@ -73,12 +85,13 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                                 },
                                                 {
                                                     header: 'Charge',
-                                                    width: 150,
+                                                    width: 95,
                                                     dataIndex:'charge',
                                                     editor: {
                                                         xtype: 'textfield',
                                                         allowBlank: false
-                                                    }
+                                                    },
+                                                    renderer:me.currencyRenderer
                                                 }
                                             ],
                                             plugins: [
@@ -92,55 +105,58 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                 {
                                     xtype:'container',
                                     style: 'float:right',
-                                    width:258,
+                                    width:208,
                                     defaults: {
-                                        anchor:'100%',
                                         labelWidth: 108,
-                                        action: 'receipt'
+                                        labelAlign:'right',
+                                        action: 'receipt',
+                                        width:208,
+                                        margin: '1 0'
                                     },
                                     items:[
-
+                                        {
+                                            fieldLabel: 'Total',
+                                            xtype     : 'mitos.currency',
+                                            action    : 'totalField'
+                                        },
                                         {
                                             fieldLabel: 'Amount Due',
-                                            xtype     : 'textfield',
-                                            margin    : '10 0 5 0'
+                                            xtype     : 'mitos.currency'
                                         },
 
                                         {
                                             fieldLabel: 'Payment Amount',
-                                            xtype     : 'textfield',
-                                            margin    : '10 0 10 0'
+                                            xtype     : 'mitos.currency'
                                         },
                                         {
                                             fieldLabel: 'Balance',
-                                            xtype     : 'textfield'
+                                            xtype     : 'mitos.currency'
                                         }
                                     ]
                                 }
                             ],
 	                        buttons:[
                                 {
-                                    text:'Save',
-                                    scope:me,
-                                    handler: me.onSave
-                                },
-                                '-',
-		                        {
-			                        text:'Reset',
-                                    scope:me,
-			                        handler:me.resetReceiptForm
-		                        },
-                                '->',
-                                {
                                     text:'Add Service',
                                     scope: me,
                                     handler:me.onNewService
                                 },
                                 '-',
+		                        {
+			                        text:'Add Co-Pay',
+                                    scope:me,
+			                        handler:me.resetReceiptForm
+		                        },
+                                '->',
                                 {
                                     text:'Add Payment',
                                     scope: me,
                                     handler:me.onAddPaymentClick
+                                },
+                                {
+                                    text:'Save',
+                                    scope:me,
+                                    handler: me.onSave
                                 }
 	                        ]
                         },
@@ -169,9 +185,10 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                     items:[
                         {
                             xtype: 'form',
-                            title: 'Notes and Alerts',
+                            title: 'Notes and Reminders',
 	                        frame:true,
 	                        flex:2,
+                            action:'formnotes',
 	                        bodyPadding:10,
 	                        margin:'0 5 5 5',
                             bodyBorder: true,
@@ -181,12 +198,14 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                 {
                                     xtype     : 'textfield',
                                     fieldLabel: 'Note',
+                                    name: 'note_body',
                                     action: 'notes'
                                 },
                                 {
                                     xtype     : 'textareafield',
                                     grow      : true,
-                                    fieldLabel: 'Alert',
+                                    fieldLabel: 'Reminders',
+                                    name: 'reminder_body',
                                     action: 'notes'
                                 }
                             ],
@@ -194,7 +213,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                 {
                                     text:'Save',
                                     scope:me,
-                                    handler: me.onSave
+                                    handler: me.onSaveNotes
                                 },
                                 '-',
                                 {
@@ -232,7 +251,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                 {
                                     text:'Schedule Appointment',
                                     handler:function(){
-                                        app.onExtCalWin();
+                                        //app.onExtCalWin();
                                     }
                                 }
                             ]
@@ -327,6 +346,28 @@ Ext.define('App.view.patientfile.PatientCheckout', {
 
     },
 
+    onAddCoPay:function(){
+
+    },
+
+    onAddService:function(){
+        var totalField = this.query('[action="totalField"]')[0];
+
+    },
+
+    onRemoveService:function(grid, rowIndex, colIndex){
+        var me = this,
+            totalField = me.query('[action="totalField"]')[0],
+            totalVal = totalField.getValue(),
+            rec = grid.getStore().getAt(rowIndex),
+            newVal;
+
+        me.serviceStore.remove(rec);
+        newVal = totalVal - rec.data.charge;
+        totalField.setValue(newVal);
+
+    },
+
     onPrintClick:function () {
         this.printWindow.show();
     },
@@ -354,42 +395,43 @@ Ext.define('App.view.patientfile.PatientCheckout', {
         app.onPaymentEntryWindow();
     },
 
+    currencyRenderer:function(v){
+        return ('<span style="float:right; padding-right:17px">$ ' + v + '</span>');
+    },
+
+    onSaveNotes: function() {
+        var me = this, form, values, container = this.query('form[action="formnotes"]');
+        form = container[0].getForm();
+
+        values = form.getFieldValues();
+        values.date= Ext.Date.format(new Date(), 'Y-m-d H:i:s');
+        values.pid= app.currPatient.pid;
+        values.eid= app.currEncounterId;
+        values.uid= app.user.id;
+
+                if(form.isValid()) {
+
+        Patient.addNote(values, function(provider, response){
+                if(response.result.success){
+                    form.reset();
+
+                }else{
+                    app.msg('Oops!','Notes entry error')
+                }
+
+            });
+        }
+    },
+
     /**
      * This function is called from MitosAPP.js when
      * this panel is selected in the navigation panel.
      * place inside this function all the functions you want
      * to call every this panel becomes active
      */
-
     onActive:function (callback) {
-
         callback(true);
-    },
-
-    //////
-    onSave: function() {
-        var me = this, panel, form, values, date;
-
-        panel = me.down('form');
-        form = panel.getForm();
-
-        say(form);
-        values = form.getFieldValues();
-
-        values.date_created = Ext.Date.format(new Date(), 'Y-m-d H:i:s');
-
-        if(form.isValid()) {
-
-            Fees.addPayment(values, function(provider, response){
-                if(response.result.success){
-                    form.reset();
-                    me.hide();
-                }else{
-                    app.msg('Oops!','Payment entry error')
-                }
-
-            });
-        }
     }
+
 
 }); //end Checkout class

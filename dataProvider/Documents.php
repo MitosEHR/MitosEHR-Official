@@ -69,7 +69,7 @@ class Documents
         $this->pdf->SetFont('Arial', 'B', 10);
         $this->pdf->Cell(30);
         $this->pdf->SetFillColor(255, 255, 255);
-        $this->pdf->multiCell(40, 5, $this->facility->getFacilityInfo($params->fid), 0, 0, 'C',true);
+        //$this->pdf->multiCell(40, 5, $this->facility->getFacilityInfo($params->fid), 0, 0, 'C',true);
         $this->pdf->Ln(20);
         $this->pdf->AliasNbPages();
 
@@ -91,7 +91,7 @@ class Documents
         $this->pdf->MultiCell(0, 5, 'Birthday: ');
         $this->pdf->MultiCell(0, 5, 'Marital Status: ');
         $this->pdf->MultiCell(0, 5, 'Occupation: ');
-        $this->pdf->MultiCell(0, 5, 'Address: '.$this->patient->getPatientAddressById($params->pid));
+        //$this->pdf->MultiCell(0, 5, 'Address: '.$this->patient->getPatientAddressById($params->pid));
         $this->pdf->MultiCell(0, 5, 'Home Phone: ');
         $this->pdf->MultiCell(0, 5, 'Mobile Phone: ');
         $this->pdf->Ln(4);

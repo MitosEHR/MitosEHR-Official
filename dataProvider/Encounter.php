@@ -308,6 +308,9 @@ class Encounter {
 	 */
 	public function updateVitals(stdClass $params){
 		$this->setEid($params->eid);
+
+		$params->date = $this->parseDate($params->date);
+
 		$data = get_object_vars($params);
         unset($data['date'],$data['administer_by'],$data['authorized_by'],$data['id'],$data['bp_diastolic_normal'],$data['bp_systolic_normal']);
 
