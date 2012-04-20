@@ -33,16 +33,14 @@ class Services
 	public function getServices(stdClass $params)
 	{
 		/*
-				 * define $code_table
-				 */
-		if($params->code_type == 'cpt' || $params->code_type == 1) {
+         * define $code_table
+         */
+		if($params->code_type == 'CPT4') {
 			$code_table = 'cpt_codes';
-		} elseif($params->code_type == 'icd' || $params->code_type == 2) {
+		} elseif($params->code_type == 'ICD9') {
 			$code_table = 'icd_codes';
-		} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
-			$code_table = 'hcpcs_codes';
 		} else {
-			$code_table = 'cvx_codes';
+			$code_table = 'hcpcs_codes';
 		}
 		$sortx = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
 		$this->db->setSQL("SELECT DISTINCT *

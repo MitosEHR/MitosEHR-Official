@@ -26,7 +26,7 @@ Ext.define('App.view.administration.Services', {
 
 		me.active = 1;
 		me.query = '';
-		me.code_type = '2';
+		me.code_type = 'CPT4';
 
 		me.store = Ext.create('App.store.administration.Services');
 
@@ -672,11 +672,9 @@ Ext.define('App.view.administration.Services', {
 	    }else if(this.currForm !== nextForm){
 
 		    Ext.each(this.currForm.query('[action="field"]'), function(field){
-					say(field);
 				   field.disable();
             });
 		    Ext.each(nextForm.query('[action="field"]'), function(field){
-			    say(field);
                 field.enable();
             });
 
@@ -701,7 +699,7 @@ Ext.define('App.view.administration.Services', {
 	onCodeTypeSelect: function(combo, record) {
 		var me = this,
 			store = me.store;
-		me.code_type = record[0].data.ct_id;
+		me.code_type = record[0].data.option_value;
 
 		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
 		me.store.load();
@@ -761,7 +759,7 @@ Ext.define('App.view.administration.Services', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
-		this.servicesGrid.query('combobox')[0].setValue("2");
+		this.servicesGrid.query('combobox')[0].setValue("CPT4");
 		this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
 		this.store.load();
 		callback(true);

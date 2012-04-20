@@ -1,10 +1,10 @@
-Ext.define('App.classes.combo.CodesTypes', {
+Ext.define('App.classes.combo.PreventiveCareTypes', {
 	extend       : 'Ext.form.ComboBox',
-	alias        : 'widget.mitos.codestypescombo',
+	alias        : 'widget.mitos.preventivecaretypescombo',
 	initComponent: function() {
 		var me = this;
 
-		Ext.define('CodesTypesModel', {
+		Ext.define('PreventiveCareTypesModel', {
 			extend: 'Ext.data.Model',
 			fields: [
 				{name: 'option_name', type: 'string' },
@@ -16,13 +16,13 @@ Ext.define('App.classes.combo.CodesTypes', {
 					read: CombosData.getOptionsByListId
 				},
 				extraParams: {
-					list_id: 56
+					list_id: 78
 				}
 			}
 		});
 
 		me.store = Ext.create('Ext.data.Store', {
-			model   : 'CodesTypesModel',
+			model   : 'PreventiveCareTypesModel',
 			autoLoad: true
 		});
 

@@ -26,7 +26,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 		me.active = 1;
 		me.query = '';
-		me.code_type = '2';
+		me.code_type = 'Laboratories';
 
 		me.store = Ext.create('App.store.administration.PreventiveCare');
 
@@ -573,8 +573,8 @@ Ext.define('App.view.administration.PreventiveCare', {
 				emptyMsg   : "No Office Notes to display",
 				plugins    : Ext.create('Ext.ux.SlidingPager', {}),
 				items      : ['-', {
-					xtype    : 'mitos.codestypescombo',
-					width    : 100,
+					xtype    : 'mitos.preventivecaretypescombo',
+					width    : 150,
 					listeners: {
 						scope : me,
 						select: me.onCodeTypeSelect
@@ -657,7 +657,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 	onCodeTypeSelect: function(combo, record) {
 		var me = this,
 			store = me.store;
-		me.code_type = record[0].data.ct_id;
+		me.code_type = record[0].data.option_value;
 
 		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
 		me.store.load();
@@ -700,7 +700,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
-		this.servicesGrid.query('combobox')[0].setValue("2");
+		this.servicesGrid.query('combobox')[0].setValue("Laboratories");
 		this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
 		this.store.load();
 		callback(true);
