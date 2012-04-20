@@ -23,6 +23,8 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                 xtype:'form',
                 defaults:{ margin:5 },
                 border:false,
+                height:129,
+                width:533,
                 items:[
                     {
                         xtype:'fieldcontainer',
@@ -33,7 +35,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 xtype:'mitos.payingentitycombo',
                                 name:'paying_entity',
                                 labelWidth:95,
-                                width:230
+                                width:215
                             },
                             {
                                 xtype:'patienlivetsearch',
@@ -41,8 +43,8 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 name:'payer_id',
                                 hideLabel:false,
                                 anchor:null,
-                                labelWidth:42,
-                                width:470,
+                                labelWidth:82,
+                                width:282,
                                 margin:'0 0 0 25'
                             }
 
@@ -57,25 +59,15 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 xtype:'mitos.paymentmethodcombo',
                                 labelWidth:95,
                                 name:'payment_method',
-                                width:230
+                                width:215
                             },
                             {
                                 xtype:'mitos.billingfacilitiescombo',
                                 fieldLabel:'Pay To',
-                                labelWidth:42,
+                                labelWidth:82,
                                 name:'pay_to',
-                                width:470,
+                                width:282,
                                 margin:'0 0 0 25'
-                            },
-                            {
-                                xtype:'mitos.currency',
-                                fieldLabel:'Amount',
-                                name:'amount',
-                                labelWidth:45,
-                                width:230,
-                                labelAlign:'right',
-                                margin:'0 0 0 25',
-                                enableKeyEvents:true
                             }
                         ]
                     },
@@ -84,21 +76,43 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                         layout:'hbox',
                         items:[
                             {
-                                fieldLabel:'Date',
+                                xtype:'mitos.currency',
+                                fieldLabel:'Amount',
+                                name:'amount',
+                                labelWidth:95,
+                                width:215,
+                                enableKeyEvents:true
+                            },
+                            {
+                                fieldLabel:'Check Number',
+                                xtype:'textfield',
+                                name:'check_number',
+                                width: 282,
+                                labelWidth:82,
+                                margin:'0 0 0 25'
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'fieldcontainer',
+                        layout:'hbox',
+                        items:[
+                            {
+                                fieldLabel:'Post To Date',
                                 xtype:'datefield',
                                 name:'post_to_date',
                                 action:'new_payment',
                                 format:'Y-m-d',
                                 labelWidth:95,
-                                width:230
+                                width:215
                             },
                             {
                                 fieldLabel:'Note',
                                 xtype:'textfield',
                                 name:'note',
-                                margin:'0 0 0 25',
-                                width: 725,
-                                labelWidth:42
+                                width: 282,
+                                labelWidth:82,
+                                margin:'0 0 0 25'
                             }
                         ]
                     }
