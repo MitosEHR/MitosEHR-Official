@@ -24,7 +24,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                 defaults:{ margin:5 },
                 border:false,
                 height:163,
-                width:745,
+                width:747,
                 items:[
                     {
                         xtype:'fieldcontainer',
@@ -54,8 +54,8 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 fieldLabel:'No',
                                 action: 'new_payment',
                                 name:'check_number',
-                                labelWidth:45,
-                                width:165,
+                                labelWidth:47,
+                                width:167,
                                 margin:'0 0 0 25'
                             }
                         ]
@@ -86,8 +86,8 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 fieldLabel:'Amount',
                                 action: 'new_payment',
                                 name:'amount',
-                                labelWidth:45,
-                                width:165,
+                                labelWidth:47,
+                                width:167,
                                 margin:'0 0 0 25',
                                 enableKeyEvents:true
                             }
