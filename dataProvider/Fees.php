@@ -114,18 +114,18 @@ class Fees extends Encounter {
 	}
 
 	public function getPatientBalance(stdClass $params)
-		{
-			$balance = 0;
-			$this->db->setSQL("SELECT * FROM payment_transactions WHERE payer_id = '$params->pid'");
+	{
+		$balance = 0;
+		$this->db->setSQL("SELECT * FROM payment_transactions WHERE payer_id = '$params->pid'");
 
-			foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
 
-				$balance = $balance + $row['amount'];
+			$balance = $balance + $row['amount'];
 
 
-			}
-			return $balance;
 		}
+		return $balance;
+	}
 }
 
 

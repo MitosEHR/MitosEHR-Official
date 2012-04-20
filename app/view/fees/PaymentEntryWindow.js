@@ -23,8 +23,8 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                 xtype:'form',
                 defaults:{ margin:5 },
                 border:false,
-                height:129,
-                width:533,
+                height:163,
+                width:747,
                 items:[
                     {
                         xtype:'fieldcontainer',
@@ -35,21 +35,29 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 xtype:'mitos.payingentitycombo',
                                 name:'paying_entity',
                                 action: 'new_payment',
-                                labelWidth:95,
-                                width:215
+                                labelWidth:98,
+                                width:220
                             },
                             {
                                 xtype:'patienlivetsearch',
                                 fieldLabel:'From',
+                                hideLabel:false,
                                 name:'payer_id',
                                 action: 'new_payment',
-                                hideLabel:false,
                                 anchor:null,
-                                labelWidth:82,
-                                width:282,
+                                labelWidth:42,
+                                width:300,
+                                margin:'0 0 0 25'
+                            },
+                            {
+                                xtype:'textfield',
+                                fieldLabel:'No',
+                                action: 'new_payment',
+                                name:'check_number',
+                                labelWidth:47,
+                                width:167,
                                 margin:'0 0 0 25'
                             }
-
                         ]
                     },
                     {
@@ -60,68 +68,48 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 fieldLabel:'Payment Method',
                                 xtype:'mitos.paymentmethodcombo',
                                 action: 'new_payment',
-                                labelWidth:95,
+                                labelWidth:98,
                                 name:'payment_method',
-                                width:215
+                                width:220
                             },
                             {
                                 xtype:'mitos.billingfacilitiescombo',
                                 fieldLabel:'Pay To',
                                 action: 'new_payment',
-                                labelWidth:82,
+                                labelWidth:42,
                                 name:'pay_to',
-                                width:282,
+                                width:300,
                                 margin:'0 0 0 25'
-                            }
-                        ]
-                    },
-                    {
-                        xtype:'fieldcontainer',
-                        layout:'hbox',
-                        items:[
+                            },
                             {
                                 xtype:'mitos.currency',
                                 fieldLabel:'Amount',
                                 action: 'new_payment',
                                 name:'amount',
-                                labelWidth:95,
-                                width:215,
+                                labelWidth:47,
+                                width:167,
+                                margin:'0 0 0 25',
                                 enableKeyEvents:true
-                            },
-                            {
-                                fieldLabel:'Check Number',
-                                xtype:'textfield',
-                                name:'check_number',
-                                action: 'new_payment',
-                                width: 282,
-                                labelWidth:82,
-                                margin:'0 0 0 25'
                             }
                         ]
                     },
                     {
-                        xtype:'fieldcontainer',
-                        layout:'hbox',
-                        items:[
-                            {
-                                fieldLabel:'Post To Date',
-                                xtype:'datefield',
-                                name:'post_to_date',
-                                action:'new_payment',
-                                format:'Y-m-d',
-                                labelWidth:95,
-                                width:215
-                            },
-                            {
-                                fieldLabel:'Note',
-                                xtype:'textfield',
-                                action: 'new_payment',
-                                name:'note',
-                                width: 282,
-                                labelWidth:82,
-                                margin:'0 0 0 25'
-                            }
-                        ]
+                        fieldLabel:'Post To Date',
+                        xtype:'datefield',
+                        name:'post_to_date',
+                        action:'new_payment',
+                        format:'Y-m-d',
+                        labelWidth:98,
+                        width:220
+                    },
+                    {
+                        fieldLabel:'Note',
+                        xtype     : 'textareafield',
+                        grow      : true,
+                        action: 'new_payment',
+                        name:'note',
+                        labelWidth:98,
+                        anchor:'100%'
                     }
                 ]
             }
@@ -143,7 +131,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
         me.callParent(arguments);
     },
     onSave: function() {
-        var me = this, panel, form, values, date;
+        var me = this, panel, form, values;
         panel = me.down('form');
         form = panel.getForm();
         values = form.getFieldValues();
