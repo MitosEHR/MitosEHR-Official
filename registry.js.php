@@ -40,6 +40,7 @@ perm = {
     access_users            : <?php print ($ACL->hasPermission('access_users')              ? 'true':'false') ?>,
     access_practice         : <?php print ($ACL->hasPermission('access_practice')           ? 'true':'false') ?>,
     access_services         : <?php print ($ACL->hasPermission('access_services')           ? 'true':'false') ?>,
+    access_medications      : <?php print ($ACL->hasPermission('access_medications')        ? 'true':'false') ?>,
     access_roles            : <?php print ($ACL->hasPermission('access_roles')              ? 'true':'false') ?>,
     access_layouts          : <?php print ($ACL->hasPermission('access_layouts')            ? 'true':'false') ?>,
     access_lists            : <?php print ($ACL->hasPermission('access_lists')              ? 'true':'false') ?>,

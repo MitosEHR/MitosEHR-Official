@@ -1,85 +1,38 @@
 <?php
-/**
- * @brief       Brief Description
- * @details     Detail Description ...
- *
- * @author      Ernesto J . Rodriguez(Certun) < erodriguez@certun . com >
- * @version     Vega 1.0
- * @copyright   Gnu Public License(GPLv3)
- */
-class Test {
-    public function getRec(){
-        return array(
-            array(
-                'company' => '3m Co',
-                'price' => '71.72',
-                'change' => '0.02',
-                'pctChange' => '0.03',
-                'lastChange' => '9/1 12:00am'
-            ),
-            array(
-                'company' => '3m Co',
-                'price' => '71.72',
-                'change' => '0.02',
-                'pctChange' => '0.03',
-                'lastChange' => '9/1 12:00am'
-            ),
-            array(
-                'company' => '3m Co',
-                'price' => '71.72',
-                'change' => '0.02',
-                'pctChange' => '0.03',
-                'lastChange' => '9/1 12:00am'
-            ),
-            array(
-                'company' => '3m Co',
-                'price' => '71.72',
-                'change' => '0.02',
-                'pctChange' => '0.03',
-                'lastChange' => '9/1 12:00am'
-            ),
-            array(
-                'company' => '3m Co',
-                'price' => '71.72',
-                'change' => '0.02',
-                'pctChange' => '0.03',
-                'lastChange' => '9/1 12:00am'
-            ),
-            array(
-                'company' => '3m Co',
-                'price' => '71.72',
-                'change' => '0.02',
-                'pctChange' => '0.03',
-                'lastChange' => '9/1 12:00am'
-            )
-        );
-    }
-
-    public function getRec2(){
-            return array(
-                array(
-                    'id' => 1,
-                    'company' => '3m Co',
-                    'price' => '71.72',
-                    'change' => '0.02',
-                    'pctChange' => '0.03',
-                    'lastChange' => '9/1 12:00am'
-                ),
-                array(
-                    'id' => 2,
-                    'company' => '3m Co',
-                    'price' => '71.72',
-                    'change' => '0.02',
-                    'pctChange' => '0.03',
-                    'lastChange' => '9/1 12:00am'
-                ),
-            );
-        }
-
-    public function addRec(stdClass $params){
-
-        $params->id = rand(100, 300);
-
-        return $params;
-    }
-}
+//$server = "localhost"; // Name or IP of database server.
+//$user = "mitosuser"; // username
+//$pwd = "pass"; // password
+//$db = "mitosdb"; // Name of database to connect to.
+//
+//if (!$conn = mysql_connect($server,$user,$pwd )) {
+//die("mysql_connect() failed");
+//}
+//
+//
+//if(!mysql_select_db($db)) {
+//	echo "Impossible d'accer la base de donns : " . mysql_error();
+//	exit;
+//}
+//
+//
+//$lines = file('http://localhost/MitosEHR/product.txt');
+//
+////foreach ($lines as $line_num => $line) {
+////    echo "Line #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
+////}
+////exit;
+//
+//foreach ($lines as $line_num => $line) {
+//	$arr  = explode("\t", $line);
+//	#if your data is comma separated
+//	# instead of tab separated,
+//	# change the '\t' above to ';'
+//	$sql = "insert into medications values ('" . implode("','", $arr) . "')";
+//
+//	mysql_query($sql);
+//	echo $sql . "\n";
+//	if(mysql_error()) {
+//		echo mysql_error() . "\n";
+//	}
+//}
+//?>

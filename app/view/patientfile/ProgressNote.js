@@ -31,12 +31,12 @@ Ext.define('App.view.patientfile.ProgressNote', {
             '               <td>' +
             '                   <div class="header row">Name: {patient_name} </div>' +
             '                   <div class="header row">Record: #{pid} </div>' +
-            '                   <div class="header row">Open by: {open_by} </div>' +
+            '                   <div class="header row">Provider date: {open_by} </div>' +
             '                   <div class="header row">Onset Date: {onset_date} </div>' +
             '                   <div class="header row">Signed by: {signed_by} </div>' +
             '               </td>' +
             '               <td>' +
-            '                   <div class="header row">Open On: {start_date} </div>' +
+            '                   <div class="header row">Service date: {start_date} </div>' +
             '                   <div class="header row">Visit Category: {visit_category} </div>' +
             '                   <div class="header row">Facility: {facility} </div>' +
             '                   <div class="header row">Sensitivity: {sensitivity} </div>' +
@@ -165,7 +165,6 @@ Ext.define('App.view.patientfile.ProgressNote', {
             '           </div>' +
             '       </div>' +
             '   </tpl>' +
-
             '</div>',
         {
             isNotNull: function(value){

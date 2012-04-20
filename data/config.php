@@ -23,6 +23,9 @@ $API = array(
             'addVitals'=>array(
                'len'=>1
             ),
+            'updateVitals'=>array(
+               'len'=>1
+            ),
             'createEncounter'=>array(
                 'len'=>1
             ),
@@ -55,6 +58,13 @@ $API = array(
             )
         )
     ),
+	'VectorGraph'=>array(
+		'methods'=>array(
+			'getGraphData'=>array(
+				'len'=>1
+			)
+		)
+	),
     /**
     * Calendar Functions
     */
@@ -109,6 +119,12 @@ $API = array(
             ),
             'getEncountersByPayment'=>array(
                'len'=>1
+            ),
+            'addPayment'=>array(
+               'len'=>1
+            ),
+            'getPatientBalance'=>array(
+               'len'=>1
             )
         ),
 
@@ -148,6 +164,9 @@ $API = array(
                'len'=>1
             ),
             'updatePatientImmunization'=>array(
+               'len'=>1
+            ),
+            'getImmunizationLiveSearch'=>array(
                'len'=>1
             ),
             'getPatientAllergies'=>array(
@@ -193,6 +212,9 @@ $API = array(
                'len'=>1
             ),
             'updatePatientMedications'=>array(
+               'len'=>1
+            ),
+            'getMedicationLiveSearch'=>array(
                'len'=>1
             )
         ),
@@ -350,6 +372,18 @@ $API = array(
             ),
             'removeActiveProblems'=>array(
                'len'=>1
+            ),
+            'getMedications'=>array(
+               'len'=>1
+            ),
+            'addMedications'=>array(
+               'len'=>1
+            ),
+            'removeMedications'=>array(
+               'len'=>1
+            ),
+            'updateMedications'=>array(
+               'len'=>1
             )
         )
     ),    /**
@@ -415,6 +449,9 @@ $API = array(
             	'len'=>1
             ),
             'getPatientsByPoolArea'=>array(
+            	'len'=>1
+            ),
+            'addNote'=>array(
             	'len'=>1
             )
 

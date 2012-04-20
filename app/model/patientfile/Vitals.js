@@ -12,6 +12,7 @@ Ext.define('App.model.patientfile.Vitals', {
 		{name: 'pid', type: 'int'},
 		{name: 'eid', type: 'int'},
 		{name: 'uid', type: 'int'},
+		{name: 'auth_uid', type: 'int'},
 		{name: 'date', type: 'date', dateFormat:'Y-m-d H:i:s' },
 		{name: 'weight_lbs', type: 'int', useNull:true},
 		{name: 'weight_kg', type: 'int', useNull:true},
@@ -32,14 +33,19 @@ Ext.define('App.model.patientfile.Vitals', {
 		{name: 'bmi', type: 'int', useNull:true},
 		{name: 'bmi_status', type: 'int', useNull:true},
 		{name: 'other_notes', type: 'string'},
-		{name: 'administer', type: 'string'}
+		{name: 'administer_by', type: 'string'},
+		{name: 'authorized_by', type: 'string'},
+
+		{name: 'bp_systolic_normal', type: 'int', defaultValue: 120 },
+		{name: 'bp_diastolic_normal', type: 'int', defaultValue: 80 }
 
 	],
 	proxy    : {
 		type       : 'direct',
 		api        : {
 			read: Encounter.getVitals,
-			create: Encounter.addVitals
+			create: Encounter.addVitals,
+			update: Encounter.updateVitals
 		},
 		reader     : {
 			type: 'json'

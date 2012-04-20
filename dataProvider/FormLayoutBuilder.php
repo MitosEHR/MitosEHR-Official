@@ -57,9 +57,9 @@ class FormLayoutBuilder {
          */
         if( $data['xtype'] == 'fieldcontainer' || $data['xtype'] == 'fieldset' ) $container = true;
         /**
-         * if getFieldDataCol returns true, means there is a colunm in the
+         * if getFieldDataCol returns true, means there is a column in the
          * current database form table. in that case we need to return that
-         * error leting the user know there is a duplicated field or duplicated
+         * error letting the user know there is a duplicated field or duplicated
          * name property. The user has 2 options, verify the form to make sure
          * the the field is not getting duplicated or change the name property
          * to save the field data inside another column.
@@ -77,17 +77,17 @@ class FormLayoutBuilder {
                 }
             }
             /**
-             * sinatizedData check the data array and if
+             * sanitized Data check the data array and if
              * the value is empty delete it form the array
-             * then checck the value and if is equal to "on"
+             * then check the value and if is equal to "on"
              * set it to true, and "off" set it to false
              */
-            $data = $this->sinatizedData($data);
+            $data = $this->sanitizedData($data);
             /**
              * if not xtype fieldcontainer and fieldset the add some
-             * defaul values.
+             * default values.
              */
-            $data = $this->setDefults($data);
+            $data = $this->setDefaults($data);
             /**
              * now lets start creating the field in the database
              */
@@ -122,7 +122,7 @@ class FormLayoutBuilder {
 
     /**
      * This function will update the fields and print
-     * the success callback if no errors found alog the way
+     * the success callback if no errors found along the way
      *
      * @param stdClass $params
      * @return array
@@ -132,22 +132,22 @@ class FormLayoutBuilder {
         $data = get_object_vars($params);
 
         /**
-         * sinatizedData check the data array and if
+         * sanitized Data check the data array and if
          * the value is empty delete it form the array
          * then checck the value and if is equal to "on"
          * set it to true, and "off" set it to false
          */
-        $data = $this->sinatizedData($data);
+        $data = $this->sanitizedData($data);
         /**
          * if not xtype fieldcontainer and fieldset the add some
-         * defaul values.
+         * default values.
          */
-        $data = $this->setDefults($data);
+        $data = $this->setDefaults($data);
         /**
          * Here we start the $field array and add a few
          * things from the $data array.
          *
-         * The $field arrray is use to update the forms_fields
+         * The $field array is use to update the forms_fields
          * table. with the new xtype, form_id, item_of.
          *
          * The $data array is use later to update the forms_field_options
@@ -155,14 +155,14 @@ class FormLayoutBuilder {
          */
         $field              = array();
         $id                 = $data['id'];
-        $field['form_id']   = $data['form_id'];
+        $field['form_id']   = intval($data['form_id']);
         $field['xtype']     = $data['xtype'];
         /**
          * if item_of is not empty add it the the $field array
          * and remove it from the $data array
          */
         if(isset($data['item_of'])){
-            $field['item_of'] = $data['item_of'];
+            $field['item_of'] = intval($data['item_of']);
             unset($data['item_of']);
         }
 
@@ -171,16 +171,16 @@ class FormLayoutBuilder {
          * Exec the new field sql statement and store the its ID
          * in $field_id to then store its options
          */
-        $sql = $this->db->sqlBind($field, "forms_fields", "U", "id='$id'");
-        $this->db->setSQL($sql);
+	    //return $field;
+        $this->db->setSQL($this->db->sqlBind($field, "forms_fields", "U", "id='$id'"));
         $ret = $this->db->execLog();
-        $this->checkError($ret);
+        //$this->checkError($ret);
         /**
          * delete old field options
          */
-        $this->db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
-        $ret = $this->db->execOnly();
-        $this->checkError($ret);
+//        $this->db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
+//        $ret = $this->db->execOnly();
+//        $this->checkError($ret);
         /**
          * take the remaining $data array and insert it in the
          * forms_field_options table one by one.
@@ -277,7 +277,7 @@ class FormLayoutBuilder {
         $parentItem = $data['parentNode'];
         $childItems = $data['parentNodeChilds'];
         /**
-         * set the field item_of to the paretn id and run the sql to
+         * set the field item_of to the parent id and run the sql to
          * update the item item_of column
          */
         $field['item_of'] = $parentItem;
@@ -380,7 +380,7 @@ class FormLayoutBuilder {
      * @param $data
      * @return array
      */
-    private function setDefults($data){
+    private function setDefaults($data){
         if($data['xtype'] != 'fieldcontainer' && $data['xtype'] != 'fieldset' ){
             if(!isset($data['margin'])) $data['margin'] = '0 5 0 0';
         }
@@ -461,7 +461,7 @@ class FormLayoutBuilder {
      * @param $data
      * @return array
      */
-    private function sinatizedData($data){
+    private function sanitizedData($data){
         foreach($data as $option => $val){
             if($val == '' || $val == null) unset($data[$option]);
             if($option == 'hideLabel' || $option == 'checkboxToggle' || $option == 'collapsed' || $option == 'collapsible'){
@@ -492,7 +492,7 @@ class FormLayoutBuilder {
      */
     private function checkError($err){
         if($err[2]){
-            print '{success:false,errors:{reason:"'.$err[2].'"}}';
+            print '{"success":false,"error":"'.$err[2].'"}';
             exit;
         }else{
             return;
@@ -547,7 +547,7 @@ class FormLayoutBuilder {
             $this->db->setSQL("Select * FROM forms_fields WHERE form_id = '$params->currForm' AND (item_of IS NULL OR item_of = '0') ORDER BY pos ASC, id ASC");
             $results = $this->db->fetchRecords(PDO::FETCH_ASSOC);
             foreach($results as $item){
-                $opts = $this->getItmesOptions($item['id']);
+                $opts = $this->getItemsOptions($item['id']);
                 foreach($opts as $opt => $val){
                     $item[$opt] = $val;
                 }
@@ -570,13 +570,13 @@ class FormLayoutBuilder {
 
     /**
      * @param $parent
-     * @return arrays
+     * @return array
      */
     private function getChildItems($parent){
         $items = array();
         $this->db->setSQL("Select * FROM forms_fields WHERE item_of = '$parent' ORDER BY pos ASC");
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $item){
-            $opts = $this->getItmesOptions($item['id']);
+            $opts = $this->getItemsOptions($item['id']);
             foreach($opts as $opt => $val){
                 $item[$opt] = $val;
             }
@@ -600,7 +600,7 @@ class FormLayoutBuilder {
      * @param $item_id
      * @return array
      */
-    private function getItmesOptions($item_id){
+    private function getItemsOptions($item_id){
         $foo = array();
         $this->db->setSQL("Select options FROM forms_field_options WHERE field_id = '$item_id'");
         $options = $this->db->fetchRecord();

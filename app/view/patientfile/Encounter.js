@@ -184,7 +184,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                                     boxLabel:'Medical Reconciliation'
                                                 },
                                                 {
-                                                    boxLabel:'Puch to Exchange'
+                                                    boxLabel:'Push to Exchange'
                                                 }
                                             ]
                                         }
@@ -194,7 +194,7 @@ Ext.define('App.view.patientfile.Encounter', {
                                     title:'Follow Up',
                                     columnWidth:.5,
                                     margin:'5 5 1 5',
-                                    height:91,
+                                    //height:90,
                                     defaults:{
                                         anchor:'100%'
                                     },
@@ -363,36 +363,55 @@ Ext.define('App.view.patientfile.Encounter', {
             action:'encounter',
             cls:'vitals-panel',
             bodyPadding:'5 10',
-            autoScroll:true,
+	        overflowY: 'auto',
             layout:{
-                type:'table',
-                columns:2
+                type:'hbox',
+                stretch:true
             },
             items:[
                 {
                     xtype:'form',
-                    columnWidth:325,
-                    width:325,
+                    width:313,
+	                margin:0,
                     border:false,
-                    url:'',
                     layout:'anchor',
-                    fieldDefaults:{ msgTarget:'side' }
+                    fieldDefaults:{ msgTarget:'side', labelAlign:'right' },
+                    buttons:[
+                        {
+                            text:'Reset',
+                            width:40,
+                            scope:me,
+                            handler:me.resetVitalsForm
+                        },
+                        {
+                            text:'Sign',
+                            width:40,
+                            scope:me,
+                            handler:me.onVitalsSign
+                        },
+                        {
+                            text:'Save',
+                            action:'vitals',
+                            width:40,
+                            scope:me,
+                            handler:me.onSave
+                        }
+                    ]
                 },
                 {
-                    xtype:'vitalsdataview'
+                    xtype:'vitalsdataview',
+	                flex:1,
+	                autoScroll:true,
+	                listeners:{
+		                scope:me,
+		                itemdblclick:me.onVitalsClick
+	                }
                 }
             ],
             dockedItems:{
                 xtype:'toolbar',
                 dock:'top',
                 items:[
-                    {
-                        text:'Save',
-                        iconCls:'save',
-                        action:'vitals',
-                        scope:me,
-                        handler:me.onSave
-                    },
                     '->',
                     {
                         text:'Vector Charts',
@@ -680,21 +699,30 @@ Ext.define('App.view.patientfile.Encounter', {
             } else if (SaveBtn.action == 'vitals') {
                 ACL.hasPermission('add_vitals', function (provider, response) {
                     if (response.result) {
-                        me.signatureWin(function (btn, signature) {
+                        me.passwordVerificationWin(function (btn, password) {
                             if (btn == 'ok') {
-                                User.verifyUserPass(signature, function (provider, response) {
+                                User.verifyUserPass(password, function (provider, response) {
                                     if (response.result) {
                                         //noinspection JSUnresolvedFunction
-                                        var store = me.encounterStore, record = store.getAt(0).vitals();
+                                        store = me.encounterStore.getAt(0).vitals();
+                                        record = form.getRecord();
                                         values = me.addDefaultData(values);
+                                        storeIndex = store.indexOf(record);
+
+                                        if(storeIndex == -1) {
+                                            store.insert(0,values);
+                                        } else {
+                                            record.set(values);
+                                        }
+                                        store.sync();
                                         form.reset();
-                                        record.add(values);
-                                        record.sync();
-                                        record.sort('date', 'DESC');
-                                        me.vitalsPanel.down('vitalsdataview').refresh();
-                                        me.updateProgressNote();
+
                                         me.msg('Sweet!', 'Vitals Saved');
-                                        me.encounterEventHistoryStore.load({params: {eid: app.currEncounterId}});
+                                        me.updateProgressNote();
+                                        me.vitalsPanel.down('vitalsdataview').refresh();
+
+                                        me.resetVitalsForm();
+
                                     } else {
                                         Ext.Msg.show({
                                             title:'Oops!',
@@ -755,6 +783,45 @@ Ext.define('App.view.patientfile.Encounter', {
             }
         }
     },
+
+    onVitalsSign:function(){
+        var me = this,
+            form = me.vitalsPanel.down('form').getForm(),
+            store = me.encounterStore.getAt(0).vitals(),
+            record = form.getRecord();
+
+        if (form.isValid()) {
+            me.passwordVerificationWin(function (btn, password) {
+                if (btn == 'ok') {
+                    User.verifyUserPass(password, function (provider, response) {
+                        if (response.result) {
+                            record.set({auth_uid: user.id});
+                            store.sync();
+                            form.reset();
+                            me.msg('Sweet!', 'Vitals Saved');
+                            me.vitalsPanel.down('vitalsdataview').refresh();
+                            me.updateProgressNote();
+                            me.resetVitalsForm();
+                        } else {
+                            Ext.Msg.show({
+                                title:'Oops!',
+                                msg:'Incorrect password',
+                                buttons:Ext.Msg.OKCANCEL,
+                                icon:Ext.Msg.ERROR,
+                                fn:function (btn) {
+                                    if (btn == 'ok') {
+                                        me.onVitalsSign();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
+    },
+
     /**
      * Takes the form data to be send and adds the default
      * data used by every encounter form. For example
@@ -803,7 +870,7 @@ Ext.define('App.view.patientfile.Encounter', {
                         me.updateTitle(patient.name + ' - ' + Ext.Date.format(me.currEncounterStartDate, 'F j, Y, g:i:s a') + ' (Closed Encounter) <span class="timer">' + timer + '</span>');
                     }
                 }
-
+	            me.resetVitalsForm();
                 vitals.store = record[0].vitalsStore;
                 vitals.refresh();
                 //noinspection JSUnresolvedFunction
@@ -819,7 +886,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
                 me.soapPanel.query('icdsfieldset')[0].loadIcds(record[0].soap().getAt(0).data.icdxCodes);
 
-                me.CurrentProceduralTerminology.encounterCptStoreLoad(null, function(){
+                me.CurrentProceduralTerminology.encounterCptStoreLoad(record[0].data.pid, eid, function(){
                     me.CurrentProceduralTerminology.setDefaultQRCptCodes();
                 });
             }
@@ -831,12 +898,12 @@ Ext.define('App.view.patientfile.Encounter', {
      */
     closeEncounter:function () {
         var me = this;
-        me.signatureWin(function (btn, signature) {
+        me.passwordVerificationWin(function (btn, password) {
             if (btn == 'ok') {
                 var params = {
                     eid       : app.currEncounterId,
                     close_date: Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
-                    signature : signature
+                    signature : password
                 };
                 Encounter.closeEncounter(params, function (provider, response) {
                     if (response.result.success) {
@@ -893,6 +960,29 @@ Ext.define('App.view.patientfile.Encounter', {
     },
 
 
+	onVitalsClick:function(view, record, e){
+		var me = this,
+			form = me.vitalsPanel.down('form').getForm();
+            form.reset();
+        if(!record.data.auth_uid){
+            form.loadRecord(record);
+        }else{
+            Ext.Msg.show({
+                title:'Oops!',
+                msg: 'This column can not be modified because it has been signed by '+record.data.auth_uid,
+                buttons: Ext.Msg.OK,
+                icon: Ext.Msg.WARNING,
+                animateTarget: e
+            });
+        }
+	},
+
+	resetVitalsForm:function(){
+		var form = this.vitalsPanel.down('form').getForm(),
+            model = Ext.ModelManager.getModel('App.model.patientfile.Vitals'),
+            newModel = Ext.ModelManager.create({}, model);
+        form.loadRecord(newModel);
+	},
 
 
 

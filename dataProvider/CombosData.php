@@ -140,17 +140,18 @@ class CombosData {
 
     public function getFiledXtypes(){
         return  array(
-            0 => array("id"=> 1,   "name" => "Fieldset",                "value" => "fieldset"),
-            1 => array("id"=> 2,   "name" => "Field Container",         "value" => "fieldcontainer"),
-            2 => array("id"=> 3,   "name" => "Text Field",              "value" => "textfield"),
-            3 => array("id"=> 4,   "name" => "TextArea Field",          "value" => "textareafield"),
-            4 => array("id"=> 5,   "name" => "CheckBox Field",          "value" => "mitos.checkbox"),
-            5 => array("id"=> 6,   "name" => "Slelect List / Combo Box","value" => "combobox"),
-            6 => array("id"=> 7,   "name" => "Radio Field",             "value" => "radiofield"),
-            7 => array("id"=> 8,   "name" => "Date/Time Field",         "value" => "mitos.datetime"),
-            8 => array("id"=> 9,   "name" => "Date Field",              "value" => "datefield"),
-            9 => array("id"=> 10,   "name" => "Time Field",              "value" => "timefield"),
-            10 => array("id"=> 11,  "name" => "Number Field",            "value" => "numberfield")
+            0 =>  array("id"=> 1,    "name" => "Fieldset",                "value" => "fieldset"),
+            1 =>  array("id"=> 2,    "name" => "Field Container",         "value" => "fieldcontainer"),
+            2 =>  array("id"=> 3,    "name" => "Display Field",           "value" => "displayfield"),
+            3 =>  array("id"=> 4,    "name" => "Text Field",              "value" => "textfield"),
+            4 =>  array("id"=> 5,    "name" => "TextArea Field",          "value" => "textareafield"),
+            5 =>  array("id"=> 6,    "name" => "CheckBox Field",          "value" => "mitos.checkbox"),
+            6 =>  array("id"=> 7,    "name" => "Slelect List / Combo Box","value" => "combobox"),
+            7 =>  array("id"=> 8,    "name" => "Radio Field",             "value" => "radiofield"),
+            8 =>  array("id"=> 9,    "name" => "Date/Time Field",         "value" => "mitos.datetime"),
+            9 =>  array("id"=> 10,   "name" => "Date Field",              "value" => "datefield"),
+            10 => array("id"=> 11,   "name" => "Time Field",              "value" => "timefield"),
+            11 => array("id"=> 12,   "name" => "Number Field",            "value" => "numberfield")
         );
     }
 

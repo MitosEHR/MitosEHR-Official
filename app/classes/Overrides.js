@@ -14,10 +14,10 @@
 //		}, me);
 //	}
 //});
-Ext.override(Ext.form.field.Checkbox, {
-	inputValue    : '1',
-	uncheckedValue: '0'
-});
+//Ext.override(Ext.form.field.Checkbox, {
+//	inputValue    : '1',
+//	uncheckedValue: '0'
+//});
 
 Ext.override(Ext.grid.ViewDropZone, {
 
@@ -127,5 +127,9 @@ Ext.override(Ext.layout.ContextItem, {
 
         return width;
     }
+
+});
+Ext.override(Ext.data.Field, {
+	useNull: true
 
 });

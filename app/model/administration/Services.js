@@ -23,7 +23,19 @@ Ext.define('App.model.administration.Services', {
 		{name: 'taxrates', type: 'string'},
 		{name: 'cyp_factor', type: 'string'},
 		{name: 'active', type: 'string'},
-		{name: 'reportable', type: 'string'}
+		{name: 'reportable', type: 'string'},
+        ////////////////////////////////////
+		{name: 'sex', type: 'string'},
+		{name: 'age_start', type: 'int'},
+		{name: 'age_end', type: 'int'},
+		{name: 'times_to_perform', type: 'int'},
+		{name: 'frequency_number', type: 'int'},
+		{name: 'frequency_time', type: 'string'},
+		{name: 'pregnant', type: 'bool'},
+		{name: 'only_once', type: 'bool'},
+		{name: 'active_problems', type: 'string'},
+		{name: 'medications', type: 'string'},
+		{name: 'labs', type: 'string'}
 	]
 
 });
