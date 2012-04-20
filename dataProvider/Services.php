@@ -48,7 +48,6 @@ class Services
 		$this->db->setSQL("SELECT DISTINCT *
                          FROM $code_table
                         WHERE code_text       LIKE '%$params->query%'
-                           OR code_text_short LIKE '%$params->query%'
                            OR code            LIKE '$params->query%'
                      ORDER BY $sortx");
 		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
@@ -337,7 +336,7 @@ class Services
 	 */
 	public function getCptRelatedByEidIcds($eid)
 	{
-		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
+		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text
                              FROM cpt_codes as cpt
                        RIGHT JOIN cpt_icd as ci ON ci.cpt = cpt.code
                         LEFT JOIN encounter_codes_icdx as eci ON eci.code = ci.icd

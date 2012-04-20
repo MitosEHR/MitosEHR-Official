@@ -80,6 +80,7 @@ class Navigation {
                 array( 'text' => 'Users',           'disabled'=> ($this->ACL->hasPermission('access_users')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelUsers' ),
                 array( 'text' => 'Practice',        'disabled'=> ($this->ACL->hasPermission('access_practice')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPractice' ),
                 array( 'text' => 'Services',        'disabled'=> ($this->ACL->hasPermission('access_services')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelServices' ),
+                array( 'text' => 'Preventive Care', 'disabled'=> ($this->ACL->hasPermission('access_preventive_care') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPreventiveCare' ),
                 array( 'text' => 'Medications',     'disabled'=> ($this->ACL->hasPermission('access_medications')     ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelMedications' ),
                 array( 'text' => 'Roles',           'disabled'=> ($this->ACL->hasPermission('access_roles')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
                 array( 'text' => 'Layouts',         'disabled'=> ($this->ACL->hasPermission('access_layouts')         ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLayout' ),

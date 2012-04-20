@@ -236,6 +236,19 @@ Ext.define('App.view.administration.Services', {
 								margin:5,
 								store: me.activeProblemsStore,
 								columns: [
+
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.gif',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveServices
+											}
+										]
+									},
 									{
 										header   : 'Code',
 										width     : 100,
@@ -266,12 +279,24 @@ Ext.define('App.view.administration.Services', {
 								width  : 300,
 								store: me.medicationsStore,
 								columns: [
-
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.gif',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveMedications
+											}
+										]
+									},
 									{
 										header   : 'Name',
 										flex     : 1,
 										dataIndex: 'PROPRIETARYNAME'
 									}
+
 								],
 								bbar:{
 									xtype:'medicationlivetsearch',
@@ -290,6 +315,18 @@ Ext.define('App.view.administration.Services', {
 								xtype  : 'grid',
 								width  : 300,
 								columns: [
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.gif',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveServices
+											}
+										]
+									},
 									{
 										header   : 'Value Name',
 										flex     : 1,
@@ -310,6 +347,7 @@ Ext.define('App.view.administration.Services', {
 										flex     : 1,
 										dataIndex: 'equal_to'
 									}
+
 
 								]
 							}
@@ -429,7 +467,6 @@ Ext.define('App.view.administration.Services', {
 										name: 'code'
 									},
 									{
-
 										fieldLabel: 'Modifier',
 										xtype: 'textfield',
 										name: 'mod'
@@ -698,7 +735,24 @@ Ext.define('App.view.administration.Services', {
 		field.reset();
 
 	},
+	onRemoveServices:function(grid, rowIndex, colIndex){
+		var me = this,
 
+			rec = grid.getStore().getAt(rowIndex);
+
+		me.activeProblemsStore.remove(rec);
+
+
+	},
+	onRemoveMedications:function(grid, rowIndex, colIndex){
+		var me = this,
+
+			rec = grid.getStore().getAt(rowIndex);
+
+		me.medicationsStore.remove(rec);
+
+
+	},
 
 	/**
 	 * This function is called from MitosAPP.js when

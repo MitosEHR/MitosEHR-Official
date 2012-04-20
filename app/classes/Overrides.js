@@ -36,9 +36,7 @@ Ext.override(Ext.grid.ViewDropZone, {
                 records = data.records;
                 data.records = [];
                 for (i = 0, len = records.length; i < len; i++) {
-                    delete records[i].data.id;
-                    //say(records[i].data);
-                    data.records.push(records[i].data);
+                    data.records.push(records[i].copy(records[i].getId()));
                 }
             } else {
                 data.view.store.remove(data.records, data.view === view);
@@ -46,10 +44,12 @@ Ext.override(Ext.grid.ViewDropZone, {
         }
 
         index = store.indexOf(record);
+
+        // 'after', or undefined (meaning a drop at index -1 on an empty View)...
         if (position !== 'before') {
             index++;
         }
-        store.add(data.records);
+        store.insert(index, data.records);
         view.getSelectionModel().select(data.records);
     }
 
