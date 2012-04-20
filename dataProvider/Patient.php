@@ -91,6 +91,19 @@ class Patient extends Person {
         $p = $this->db->fetchRecord();
         return $this->fullname($p['fname'],$p['mname'],$p['lname']);
     }
+
+	public function getDOBByPid($pid){
+	    $this->db->setSQL("SELECT DOB FROM form_data_demographics WHERE pid = '$pid'");
+	    $p = $this->db->fetchRecord();
+	    return $p['DOB'];
+	}
+
+	public function getPatientSexIntByPid($pid){
+        $this->db->setSQL("SELECT sex FROM form_data_demographics WHERE pid = '$pid'");
+        $p = $this->db->fetchRecord();
+		$sex = (strtolower($p['sex']) == strtolower('FEMALE')) ? 1 : 2;
+        return $sex;
+    }
     /**
      * @param \stdClass $params
      * @internal param $search
@@ -182,6 +195,53 @@ class Patient extends Person {
         $filename = $PNG_TEMP_DIR. '/patientDataQrCode.png';
         QRcode::png($data, $filename, 'Q', 2, 2);
     }
+
+	public function getPatientAddressById($pid){
+		$this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
+		$p = $this->db->fetchRecord();
+		$address = $p['address'] . ' <br>' .  $p['city'] . ',  ' . $p['state'] . ' ' . $p['country'];
+		return $address;
+	}
+
+	public function addNote(stdClass $params){
+		$data = get_object_vars($params);
+
+		unset($data['id']);
+
+		foreach($data as $key => $val) {
+			if($key == 'note_body') {
+				$note_body=$val;
+				unset($data[$key]);
+			}
+			if($key == 'reminder_body') {
+				$reminder_body=$val;
+				unset($data[$key]);
+			}
+		}
+		$data2 = $data;
+
+		$data['body']=$note_body;
+		$data2['body']=$reminder_body;
+
+
+
+		$this->db->setSQL($this->db->sqlBind($data2, "patient_reminders", "I"));
+		$this->db->execLog();
+
+		$this->db->setSQL($this->db->sqlBind($data, "patient_notes", "I"));
+		$this->db->execLog();
+
+
+
+		if($this->db->lastInsertId == 0){
+			return array('success' => false);
+		}else{
+			return array('success' => true);
+		}
+
+
+
+	}
 }
 //$p = new Patient();
 //echo '<pre>';

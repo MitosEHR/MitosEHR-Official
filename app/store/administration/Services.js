@@ -27,7 +27,7 @@ Ext.define('App.store.administration.Services', {
 			active   : this.active
 		}
 	},
-
+    autoSync  : true,
 	remoteSort: true,
 	autoLoad  : false
 });

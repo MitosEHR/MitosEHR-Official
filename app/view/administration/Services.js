@@ -31,6 +31,7 @@ Ext.define('App.view.administration.Services', {
 		me.store = Ext.create('App.store.administration.Services');
 
 		me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
+		me.medicationsStore = Ext.create('App.store.administration.Medications');
 
 		function code_type(val) {
 			if(val == '1') {
@@ -85,7 +86,6 @@ Ext.define('App.view.administration.Services', {
 						action:'100',
 						layout:'fit',
 						plain:true,
-						defaults:{ },
 						items: [
 							{
 								title : 'general',
@@ -99,7 +99,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true, action:'field_100' },
+										defaults:{ margin:'0 10 5 0', disabled:true, action:'field' },
 										items   : [
 											{
 
@@ -107,7 +107,7 @@ Ext.define('App.view.administration.Services', {
 												fieldLabel: 'Immunization Name',
 												name      : 'code_text',
 												labelWidth:130,
-												width:640
+												width:703
 											},
 											{
 												xtype     : 'mitos.sexcombo',
@@ -119,6 +119,7 @@ Ext.define('App.view.administration.Services', {
 											}
 
 
+
 										]
 									},
 									{
@@ -127,7 +128,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true , action:'field_100'  },
+										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
 										items   : [
 											{
 												xtype     : 'mitos.codestypescombo',
@@ -145,23 +146,33 @@ Ext.define('App.view.administration.Services', {
 												value     : 0,
 												minValue  : 0,
 												width:150,
-												name      : 'frequency'
+												name      : 'frequency_number'
 
 											},
 											{
 												xtype: 'mitos.timecombo',
-												name : 'frequency',
+												name : 'frequency_time',
 												width:100
 
 											},
 											{
-												fieldLabel: 'Must be pregnant',
-												xtype   : 'checkboxfield',
-												labelWidth:105,
-												name    : 'pregnant'
+                                                xtype     : 'numberfield',
+                                                fieldLabel: 'Age Start',
+                                                name: 'age_start',
+                                                labelWidth: 75,
+                                                width:140,
+                                                value     : 0,
+                                                minValue  : 0
 
-											}
+											},
+                                            {
+                                                fieldLabel: 'Must be pregnant',
+                                                xtype   : 'checkboxfield',
+                                                labelWidth:105,
+                                                name    : 'pregnant'
 
+
+                                            }
 										]
 
 									},
@@ -171,7 +182,7 @@ Ext.define('App.view.administration.Services', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disable:true , action:'field_100'  },
+										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
 										items   : [
 											{
 												xtype     : 'textfield',
@@ -183,21 +194,33 @@ Ext.define('App.view.administration.Services', {
 											{
 												xtype     : 'numberfield',
 												fieldLabel: 'Times to Perform',
+												name      : 'times_to_perform',
 												width     : 250,
 												value     : 0,
 												minValue  : 0,
-												name      : 'times',
 												tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
 
 											},
 											{
-												fieldLabel: 'perform only once',
-												xtype   : 'checkboxfield',
-												labelWidth:105,
-												//margin  : '5 0 0 10',
-												name    : 'perform'
 
-											}
+                                                xtype     : 'numberfield',
+                                                fieldLabel: 'Age End',
+                                                name: 'age_end',
+                                                labelWidth: 75,
+                                                width:140,
+                                                value     : 0,
+                                                minValue  : 0
+
+
+											},
+
+                                            {
+                                                fieldLabel: 'perform only once',
+                                                xtype   : 'checkboxfield',
+                                                labelWidth:105,
+                                                //margin  : '5 0 0 10',
+                                                name    : 'only_once'
+                                            }
 
 
 
@@ -241,13 +264,26 @@ Ext.define('App.view.administration.Services', {
 								title  : 'Medications',
 								xtype  : 'grid',
 								width  : 300,
+								store: me.medicationsStore,
 								columns: [
+
 									{
 										header   : 'Name',
 										flex     : 1,
-										dataIndex: 'name'
+										dataIndex: 'PROPRIETARYNAME'
 									}
-								]
+								],
+								bbar:{
+									xtype:'medicationlivetsearch',
+									margin:5,
+									fieldLabel:'Add Problem',
+									hideLabel:false,
+									disable:true,
+									listeners:{
+										scope:me,
+										select:me.addMedications
+									}
+								}
 							},
 							{
 								title  : 'Labs',
@@ -294,7 +330,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true, action:'field_1'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 									{
 
@@ -320,7 +356,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true, action:'field_1' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 									{
 
@@ -338,7 +374,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true, action:'field_1' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 
 									{
@@ -378,7 +414,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true, action:'field_2' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 									{
 
@@ -404,7 +440,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true, action:'field_2'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 									{
 
@@ -422,7 +458,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true, action:'field_2'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 
 									{
@@ -462,7 +498,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								msgTarget: 'under',
-								defaults:{ disable:true, action:'field_3'  },
+								defaults:{ disabled:true, action:'field'  },
 								items    : [
 									{
 
@@ -488,7 +524,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 10',
-								defaults:{ disable:true, action:'field_3' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 									{
 
@@ -506,7 +542,7 @@ Ext.define('App.view.administration.Services', {
 							{
 								xtype    : 'fieldcontainer',
 								margin:'0 0 0 20',
-								defaults:{ disable:true, action:'field_3' },
+								defaults:{ disabled:true, action:'field' },
 								items    : [
 
 									{
@@ -581,10 +617,6 @@ Ext.define('App.view.administration.Services', {
 
 
 		var editor = context.editor,
-//			cptForm = editor.getComponent('1'),
-//			icdForm = editor.getComponent('2'),
-//			hcpcsForm = editor.getComponent('3'),
-//			cvxForm = editor.getComponent('100'),
 			code_type = e.record.data.code_type,
 			nextForm = editor.query('[action="'+code_type+'"]')[0];
 
@@ -602,13 +634,12 @@ Ext.define('App.view.administration.Services', {
 
 	    }else if(this.currForm !== nextForm){
 
-		    say(this.currForm.query(''));
-		    Ext.each(this.currForm.query(''), function(field){
-
+		    Ext.each(this.currForm.query('[action="field"]'), function(field){
+					say(field);
 				   field.disable();
             });
-
-		    Ext.each(nextForm.query('[action="field_'+code_type+'"]'), function(field){
+		    Ext.each(nextForm.query('[action="field"]'), function(field){
+			    say(field);
                 field.enable();
             });
 
@@ -617,26 +648,6 @@ Ext.define('App.view.administration.Services', {
 		    this.currForm = nextForm;
 
 	    }
-
-//	    if(this.code_type != code_type){
-//
-//		    say(editor);
-//            say(cptForm);
-//            say(icdForm);
-//            say(hcpcsForm);
-//            say(cvxForm);
-//
-//
-//		    if(code_type == 1){
-//                say('CPT');
-//            }else if(code_type == 2){
-//                say('ICD9');
-//            }else if(code_type == 100){
-//                say('CVX');
-//            }else{
-//                say('HCPCS');
-//            }
-//	    }
 
     },
 
@@ -676,8 +687,15 @@ Ext.define('App.view.administration.Services', {
 
 	addActiveProblem:function(field, model){
 
-		say(field);
+
 		this.activeProblemsStore.add(model[0]);
+		field.reset();
+	},
+	addMedications:function(field, model){
+
+
+		this.medicationsStore.add(model[0]);
+		field.reset();
 
 	},
 

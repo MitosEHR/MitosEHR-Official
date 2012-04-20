@@ -101,6 +101,31 @@ class Fees extends Encounter {
         return array('totals' => $total, 'encounters' => $encounters);
 
     }
+
+	public function addPayment(stdClass $params){
+		$data = get_object_vars($params);
+		$this->db->setSQL($this->db->sqlBind($data, "payment_transactions", "I"));
+		$this->db->execLog();
+		if($this->db->lastInsertId == 0){
+			return array('success' => false);
+		}else{
+			return array('success' => true);
+		}
+	}
+
+	public function getPatientBalance(stdClass $params)
+		{
+			$balance = 0;
+			$this->db->setSQL("SELECT * FROM payment_transactions WHERE payer_id = '$params->pid'");
+
+			foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+
+				$balance = $balance + $row['amount'];
+
+
+			}
+			return $balance;
+		}
 }
 
 
