@@ -8,9 +8,9 @@
 Ext.define('App.model.patientfile.CptCodes', {
     extend: 'Ext.data.Model',
     fields: [
-        {name: 'id'},
-        {name: 'eid'},
-        {name: 'code', type: 'strig'},
+        {name: 'id', type:'int'},
+        {name: 'eid', type:'int'},
+        {name: 'code', type: 'string'},
         {name: 'code_text', type: 'string'},
         {name: 'code_text_medium', type: 'string'},
         {name: 'place_of_service', type: 'string'},
@@ -19,7 +19,7 @@ Ext.define('App.model.patientfile.CptCodes', {
         {name: 'days_of_units', type: 'string'},
         {name: 'essdt_plan', type: 'string'},
         {name: 'modifiers', type: 'string'},
-        {name: 'status', type: 'int'}
+        {name: 'status', type: 'int', defaultValue: 0}
     ],
     proxy : {
         type  : 'direct',

@@ -467,7 +467,6 @@ Ext.define('App.view.administration.Services', {
 										name: 'code'
 									},
 									{
-
 										fieldLabel: 'Modifier',
 										xtype: 'textfield',
 										name: 'mod'
