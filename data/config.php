@@ -506,6 +506,12 @@ $API = array(
             ),
             'addNote'=>array(
             	'len'=>1
+            ),
+            'getPatientReminders'=>array(
+            	'len'=>1
+            ),
+            'getPatientNotes'=>array(
+            	'len'=>1
             )
 
         )
