@@ -74,6 +74,7 @@ Ext.define('App.view.administration.Services', {
 				clicksToEdit: 1,
                 listeners:{
                     scope:me,
+
 	                beforeedit:me.beforeServiceEdit
                 },
 				formItems   : [
@@ -162,6 +163,8 @@ Ext.define('App.view.administration.Services', {
                                                 labelWidth: 75,
                                                 width:140,
                                                 value     : 0,
+
+
                                                 minValue  : 0
 
 											},

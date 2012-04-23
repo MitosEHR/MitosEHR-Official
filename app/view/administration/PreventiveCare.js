@@ -642,7 +642,9 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 	    }
 
+
     },
+
 
 	onSearch: function(field) {
 
@@ -671,6 +673,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
 		me.store.load();
 	},
+
 
 	onNew: function(form, model) {
 //		form.getForm().reset();
