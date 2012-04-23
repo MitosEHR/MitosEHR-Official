@@ -25,7 +25,7 @@ Ext.define('App.view.administration.Services', {
 		var me = this;
 
 		me.active = 1;
-		me.query = '';
+		me.dataQuery = '';
 		me.code_type = 'CPT4';
 
 		me.store = Ext.create('App.store.administration.Services');
@@ -416,9 +416,9 @@ Ext.define('App.view.administration.Services', {
 
 		var me = this,
 			store = me.store;
-		me.query = field.getValue();
+		me.dataQuery = field.getValue();
 
-		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
+		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.dataQuery};
 		me.store.load();
 	},
 
@@ -427,7 +427,7 @@ Ext.define('App.view.administration.Services', {
 			store = me.store;
 		me.code_type = record[0].data.option_value;
 
-		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
+		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.dataQuery};
 		me.store.load();
 	},
 
@@ -436,7 +436,7 @@ Ext.define('App.view.administration.Services', {
 			store = me.store;
 		me.active = pressed ? 0 : 1;
 
-		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
+		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.dataQuery};
 		me.store.load();
 	},
 
