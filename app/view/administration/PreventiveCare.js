@@ -80,10 +80,10 @@ Ext.define('App.view.administration.PreventiveCare', {
 					{
 						/**
 						 * CVX Container
- 						 */
+						 */
 						xtype: 'tabpanel',
 						hidden:true,
-						action:'100',
+						action:'Immunizations',
 						layout:'fit',
 						plain:true,
 						items: [
@@ -236,6 +236,19 @@ Ext.define('App.view.administration.PreventiveCare', {
 								margin:5,
 								store: me.activeProblemsStore,
 								columns: [
+
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.png',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveServices
+											}
+										]
+									},
 									{
 										header   : 'Code',
 										width     : 100,
@@ -266,12 +279,24 @@ Ext.define('App.view.administration.PreventiveCare', {
 								width  : 300,
 								store: me.medicationsStore,
 								columns: [
-
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.png',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveMedications
+											}
+										]
+									},
 									{
 										header   : 'Name',
 										flex     : 1,
 										dataIndex: 'PROPRIETARYNAME'
 									}
+
 								],
 								bbar:{
 									xtype:'medicationlivetsearch',
@@ -290,6 +315,18 @@ Ext.define('App.view.administration.PreventiveCare', {
 								xtype  : 'grid',
 								width  : 300,
 								columns: [
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.png',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveServices
+											}
+										]
+									},
 									{
 										header   : 'Value Name',
 										flex     : 1,
@@ -310,6 +347,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 										flex     : 1,
 										dataIndex: 'equal_to'
 									}
+
 
 								]
 							}
@@ -689,6 +727,25 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 		this.medicationsStore.add(model[0]);
 		field.reset();
+
+	},
+
+	onRemoveServices:function(grid, rowIndex, colIndex){
+		var me = this,
+
+			rec = grid.getStore().getAt(rowIndex);
+
+		me.activeProblemsStore.remove(rec);
+
+
+	},
+	onRemoveMedications:function(grid, rowIndex, colIndex){
+		var me = this,
+
+			rec = grid.getStore().getAt(rowIndex);
+
+		me.medicationsStore.remove(rec);
+
 
 	},
 

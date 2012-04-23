@@ -40,9 +40,10 @@ Ext.define('App.view.administration.Services', {
 				return 'ICD9';
 			} else if(val == '3') {
 				return 'HCPCS';
-			} else if(val == '100') {
+			}else if(val == '100') {
 				return 'CVX';
 			}
+
 			return val;
 		}
 
@@ -77,291 +78,14 @@ Ext.define('App.view.administration.Services', {
 	                beforeedit:me.beforeServiceEdit
                 },
 				formItems   : [
-					{
-						/**
-						 * CVX Container
- 						 */
-						xtype: 'tabpanel',
-						hidden:true,
-						action:'100',
-						layout:'fit',
-						plain:true,
-						items: [
-							{
-								title : 'general',
-								xtype : 'container',
-								padding:10,
-								layout:'vbox',
-								items : [
-									{
-										/**
-										 * line One
-										 */
-										xtype   : 'fieldcontainer',
-										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disabled:true, action:'field' },
-										items   : [
-											{
 
-												xtype     : 'textfield',
-												fieldLabel: 'Immunization Name',
-												name      : 'code_text',
-												labelWidth:130,
-												width:703
-											},
-											{
-												xtype     : 'mitos.sexcombo',
-												fieldLabel: 'Sex',
-												name      : 'sex',
-												width     : 100,
-												labelWidth: 30
-
-											}
-
-
-
-										]
-									},
-									{
-										/**
-										 * Line two
-										 */
-										xtype   : 'fieldcontainer',
-										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
-										items   : [
-											{
-												xtype     : 'mitos.codestypescombo',
-												fieldLabel: 'Coding System',
-												labelWidth:130,
-												value     : 'CVX',
-												name      : 'code_type',
-												readOnly:true
-
-											},
-											{
-												xtype     : 'numberfield',
-												fieldLabel: 'Frequency',
-												margin:'0 0 5 0',
-												value     : 0,
-												minValue  : 0,
-												width:150,
-												name      : 'frequency_number'
-
-											},
-											{
-												xtype: 'mitos.timecombo',
-												name : 'frequency_time',
-												width:100
-
-											},
-											{
-                                                xtype     : 'numberfield',
-                                                fieldLabel: 'Age Start',
-                                                name: 'age_start',
-                                                labelWidth: 75,
-                                                width:140,
-                                                value     : 0,
-                                                minValue  : 0
-
-											},
-                                            {
-                                                fieldLabel: 'Must be pregnant',
-                                                xtype   : 'checkboxfield',
-                                                labelWidth:105,
-                                                name    : 'pregnant'
-
-
-                                            }
-										]
-
-									},
-									{
-										/**
-										 * Line three
-										 */
-										xtype   : 'fieldcontainer',
-										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
-										items   : [
-											{
-												xtype     : 'textfield',
-												fieldLabel: 'Code',
-												name      : 'code',
-												labelWidth:130
-
-											},
-											{
-												xtype     : 'numberfield',
-												fieldLabel: 'Times to Perform',
-												name      : 'times_to_perform',
-												width     : 250,
-												value     : 0,
-												minValue  : 0,
-												tooltip   : 'Please enter a number greater than 1 or just check "Perform once"'
-
-											},
-											{
-
-                                                xtype     : 'numberfield',
-                                                fieldLabel: 'Age End',
-                                                name: 'age_end',
-                                                labelWidth: 75,
-                                                width:140,
-                                                value     : 0,
-                                                minValue  : 0
-
-
-											},
-
-                                            {
-                                                fieldLabel: 'perform only once',
-                                                xtype   : 'checkboxfield',
-                                                labelWidth:105,
-                                                //margin  : '5 0 0 10',
-                                                name    : 'only_once'
-                                            }
-
-
-
-										]
-
-									}
-
-								]
-							},
-							{
-								title  : 'Active Problems',
-								xtype  : 'grid',
-								margin:5,
-								store: me.activeProblemsStore,
-								columns: [
-
-									{
-										xtype:'actioncolumn',
-										width:20,
-										items: [
-											{
-												icon: 'ui_icons/delete.gif',
-												tooltip: 'Remove',
-												scope:me,
-												handler: me.onRemoveServices
-											}
-										]
-									},
-									{
-										header   : 'Code',
-										width     : 100,
-										dataIndex: 'code'
-									},
-									{
-										header   : 'Description',
-										flex     : 1,
-										dataIndex: 'code_text'
-									}
-
-								],
-								bbar:{
-									xtype:'liveicdxsearch',
-									margin:5,
-									fieldLabel:'Add Problem',
-									hideLabel:false,
-									disable:true,
-									listeners:{
-										scope:me,
-										select:me.addActiveProblem
-									}
-								}
-							},
-							{
-								title  : 'Medications',
-								xtype  : 'grid',
-								width  : 300,
-								store: me.medicationsStore,
-								columns: [
-									{
-										xtype:'actioncolumn',
-										width:20,
-										items: [
-											{
-												icon: 'ui_icons/delete.gif',
-												tooltip: 'Remove',
-												scope:me,
-												handler: me.onRemoveMedications
-											}
-										]
-									},
-									{
-										header   : 'Name',
-										flex     : 1,
-										dataIndex: 'PROPRIETARYNAME'
-									}
-
-								],
-								bbar:{
-									xtype:'medicationlivetsearch',
-									margin:5,
-									fieldLabel:'Add Problem',
-									hideLabel:false,
-									disable:true,
-									listeners:{
-										scope:me,
-										select:me.addMedications
-									}
-								}
-							},
-							{
-								title  : 'Labs',
-								xtype  : 'grid',
-								width  : 300,
-								columns: [
-									{
-										xtype:'actioncolumn',
-										width:20,
-										items: [
-											{
-												icon: 'ui_icons/delete.gif',
-												tooltip: 'Remove',
-												scope:me,
-												handler: me.onRemoveServices
-											}
-										]
-									},
-									{
-										header   : 'Value Name',
-										flex     : 1,
-										dataIndex: 'value_name'
-									},
-									{
-										header   : 'Less Than',
-										flex     : 1,
-										dataIndex: 'less_than'
-									},
-									{
-										header   : 'Greater Than',
-										flex     : 1,
-										dataIndex: 'greater_than'
-									},
-									{
-										header   : 'Equal To',
-										flex     : 1,
-										dataIndex: 'equal_to'
-									}
-
-
-								]
-							}
-
-						]
-
-					},
 					{
 						/**
 						 * CPT Container
  						 */
 						xtype   : 'container',
 						layout: 'column',
-						action:'1',
+						action:'CPT4',
 						hidden:true,
 						items : [
 
@@ -445,7 +169,7 @@ Ext.define('App.view.administration.Services', {
  						 */
 						xtype   : 'container',
 						layout: 'column',
-						action:'2',
+						action:'ICD9',
 						hidden:true,
 						items : [
 
@@ -528,7 +252,7 @@ Ext.define('App.view.administration.Services', {
  						 */
 						xtype   : 'container',
 						layout: 'column',
-						action:'3',
+						action:'HCPCS',
 						hidden:true,
 						items : [
 
@@ -654,8 +378,10 @@ Ext.define('App.view.administration.Services', {
 
 
 		var editor = context.editor,
-			code_type = e.record.data.code_type,
-			nextForm = editor.query('[action="'+code_type+'"]')[0];
+			code_type = e.record.data.code_type;
+			say(code_type);
+	    var nextForm = editor.query('[action="'+code_type+'"]')[0];
+
 
 	    /**
 	     * TODO: disable/enable the fields
@@ -714,43 +440,14 @@ Ext.define('App.view.administration.Services', {
 		me.store.load();
 	},
 
+
 	onNew: function(form, model) {
 //		form.getForm().reset();
 //		var newModel = Ext.ModelManager.create({}, model);
 //		form.getForm().loadRecord(newModel);
 	},
 
-	addActiveProblem:function(field, model){
 
-
-		this.activeProblemsStore.add(model[0]);
-		field.reset();
-	},
-	addMedications:function(field, model){
-
-
-		this.medicationsStore.add(model[0]);
-		field.reset();
-
-	},
-	onRemoveServices:function(grid, rowIndex, colIndex){
-		var me = this,
-
-			rec = grid.getStore().getAt(rowIndex);
-
-		me.activeProblemsStore.remove(rec);
-
-
-	},
-	onRemoveMedications:function(grid, rowIndex, colIndex){
-		var me = this,
-
-			rec = grid.getStore().getAt(rowIndex);
-
-		me.medicationsStore.remove(rec);
-
-
-	},
 
 	/**
 	 * This function is called from MitosAPP.js when

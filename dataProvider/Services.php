@@ -75,12 +75,9 @@ class Services
 				$code_table = 'cpt_codes';
 			} elseif($params->code_type == 'icd' || $params->code_type == 2) {
 				$code_table = 'icd_codes';
-			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
-				$code_table = 'hcpcs_codes';
 			} else {
-				$code_table = 'cvx_codes';
+				$code_table = 'hcpcs_codes';
 			}
-
 
 
 		$data = get_object_vars($params);
@@ -111,12 +108,9 @@ class Services
 				$code_table = 'cpt_codes';
 			} elseif($params->code_type == 'icd' || $params->code_type == 2) {
 				$code_table = 'icd_codes';
-			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
-				$code_table = 'hcpcs_codes';
 			} else {
-				$code_table = 'cvx_codes';
+				$code_table = 'hcpcs_codes';
 			}
-
 
 
 		$data = get_object_vars($params);
@@ -142,10 +136,8 @@ class Services
 			$code_table = 'cpt_codes';
 		} elseif($params->code_type == 'icd') {
 			$code_table = 'icd_codes';
-		} elseif($params->code_type == 'hcpcs') {
-			$code_table = 'hcpcs_codes';
 		} else {
-			$code_table = 'cvx_codes';
+			$code_table = 'hcpcs_codes';
 		}
 		/**
 		 * brake the $params->query coming form sencha using into an array using "commas"
@@ -201,7 +193,6 @@ class Services
 			$this->db->setSQL("SELECT *
                                  FROM $code_table
                                 WHERE (code_text      LIKE '%$query%'
-                                   OR code_text_short LIKE '%$query%'
                                    OR code            LIKE '$query%')
                              ORDER BY code ASC");
 			/**
