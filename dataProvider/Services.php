@@ -33,22 +33,19 @@ class Services
 	public function getServices(stdClass $params)
 	{
 		/*
-				 * define $code_table
-				 */
-		if($params->code_type == 'cpt' || $params->code_type == 1) {
+         * define $code_table
+         */
+		if($params->code_type == 'CPT4') {
 			$code_table = 'cpt_codes';
-		} elseif($params->code_type == 'icd' || $params->code_type == 2) {
+		} elseif($params->code_type == 'ICD9') {
 			$code_table = 'icd_codes';
-		} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
-			$code_table = 'hcpcs_codes';
 		} else {
-			$code_table = 'cvx_codes';
+			$code_table = 'hcpcs_codes';
 		}
 		$sortx = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
 		$this->db->setSQL("SELECT DISTINCT *
                          FROM $code_table
                         WHERE code_text       LIKE '%$params->query%'
-                           OR code_text_short LIKE '%$params->query%'
                            OR code            LIKE '$params->query%'
                      ORDER BY $sortx");
 		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
@@ -337,7 +334,7 @@ class Services
 	 */
 	public function getCptRelatedByEidIcds($eid)
 	{
-		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
+		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text
                              FROM cpt_codes as cpt
                        RIGHT JOIN cpt_icd as ci ON ci.cpt = cpt.code
                         LEFT JOIN encounter_codes_icdx as eci ON eci.code = ci.icd

@@ -30,7 +30,6 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
             autoSync:true,
             listeners:{
                 scope:me,
-                add:me.afterCptAdded,
                 beforesync:me.beforesync
             }
         });
@@ -157,7 +156,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             }),
                             listeners:{
                                 scope:me,
-                                change:me.onQuickRefereneOption
+                                change:me.onQuickReferenceOption
                             }
                         }
                     },
@@ -231,6 +230,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         store:me.encounterCptStore,
                         columns:[
                             {
+                                header:'id',
+                                dataIndex:'id'
+                            },
+                            {
                                 text:"Code",
                                 width:70,
                                 sortable:true,
@@ -268,13 +271,15 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                         ],
                         viewConfig:{
                             itemId:'view',
-                            plugins:[
-                                {
-                                    ptype:'gridviewdragdrop',
-                                    dropGroup:'CPTGridDDGroup'
-                                }
+                            plugins: {
+                                ptype:'gridviewdragdrop',
+                                dropGroup:'CPTGridDDGroup',
 
-                            ]
+                            },
+                            listeners:{
+                                scope:me,
+                                drop:me.onCptDropped
+                            }
                         },
                         plugins:me.cptFormEdit
 
@@ -317,13 +322,10 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
 
     },
 
-    onQuickRefereneOption:function (combo, value) {
+    onQuickReferenceOption:function (combo, value) {
         this.loadCptQuickReferenceGrid(value);
     },
 
-    onQuickRefereneDrop:function (node, data, dropRec, dropPosition) {
-        app.msg('Sweet!', 'CPT removed from this Encounter');
-    },
 
     onCompleteRemove:function () {
         app.msg('Sweet!', 'CPT removed from this Encounter');
@@ -348,17 +350,15 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         }
     },
 
-    afterCptAdded:function(model, index){
-        var me = this;
+    onCptDropped:function(node, data, dropRecord, dropPosition, dropFunction){
         app.msg('Sweet!', 'CPT added to this Encounter');
+        this.cptFormEdit.cancelEdit();
+        var store = dropRecord.store,
+            dropIndex = store.indexOf(dropRecord),
+            index = dropPosition == 'before' ? dropIndex - 1  : dropIndex + 1;
 
-        Ext.Function.defer(function(){
-            me.encounterCptStoreLoad();
-        }, 500);
-    },
 
-    gridItemClick:function (view) {
-        view.getPlugin('preview').toggleRowExpanded();
+        this.cptFormEdit.startEdit(index, 0)
     },
 
     setDefaultQRCptCodes:function(){

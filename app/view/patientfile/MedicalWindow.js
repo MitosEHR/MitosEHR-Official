@@ -25,7 +25,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
         var me = this;
 
-        me.ImmuListStore = Ext.create('App.store.patientfile.Immunization');
+
         me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
             groupField: 'immunization_name',
             sorters   : ['immunization_name', 'administered_date'],
@@ -33,18 +33,34 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         });
         me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies', {
 
+	        listeners: {
+		        scope     : me,
+		        beforesync: me.setDefaults
+	        },
             autoSync: true
         });
         me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues', {
 
+	        listeners: {
+		        scope     : me,
+		        beforesync: me.setDefaults
+	        },
             autoSync: true
         });
         me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery', {
 
+	        listeners: {
+		        scope     : me,
+		        beforesync: me.setDefaults
+	        },
             autoSync: true
         });
         me.patientDentalStore = Ext.create('App.store.patientfile.Dental', {
 
+	        listeners: {
+		        scope     : me,
+		        beforesync: me.setDefaults
+	        },
             autoSync: true
         });
         me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications', {
@@ -481,6 +497,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             xtype          : 'textfield',
                                             fieldLabel     : 'Type',
+	                                        name           : 'type',
                                             hideLabel      : false,
                                             itemId         : 'medicalissues',
                                             enableKeyEvents: true,
@@ -725,71 +742,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                 }
                             ]
                         }
-                        //                        {
-                        //                            xtype        : 'container',
-                        //                            layout       : 'column',
-                        //                            defaults     : { border: false, columnWidth: .5, defaultType: 'textfield', layout: 'anchor'},
-                        //                            fieldDefaults: { msgTarget: 'side', labelWidth: 100, anchor: '80%' },
-                        //                            items        : [
-                        //                                {
-                        //                                    xtype: 'container',
-                        //                                    items: [
-                        //
-                        //                                        {
-                        //                                            fieldLabel: 'Title',
-                        //                                            itemId    : 'title',
-                        //                                            name      : 'title'
-                        //                                        },
-                        //                                        {
-                        //                                            fieldLabel: 'Diagnosis Code',
-                        //                                            name      : 'diagnosis_code'
-                        //
-                        //                                        },
-                        //                                        {
-                        //                                            fieldLabel: 'Begin Date',
-                        //                                            xtype     : 'datefield',
-                        //                                            format    : 'Y-m-d H:i:s',
-                        //                                            name      : 'begin_date'
-                        //
-                        //
-                        //                                        },
-                        //                                        {
-                        //                                            fieldLabel: 'End Date',
-                        //                                            xtype     : 'datefield',
-                        //                                            format    : 'Y-m-d H:i:s',
-                        //                                            name      : 'end_date'
-                        //
-                        //                                        }
-                        //
-                        //                                    ]
-                        //                                },
-                        //                                {
-                        //                                    xtype: 'container',
-                        //                                    items: [
-                        //                                        {
-                        //                                            fieldLabel: 'Ocurrence',
-                        //                                            xtype     : 'mitos.occurrencecombo',
-                        //                                            name      : 'ocurrence'
-                        //
-                        //                                        },
-                        //                                        {
-                        //                                            fieldLabel: 'Referred by',
-                        //                                            name      : 'referred_by'
-                        //                                        },
-                        //                                        {
-                        //                                            fieldLabel: 'Outcome',
-                        //                                            xtype     : 'mitos.outcome2combo',
-                        //                                            name      : 'outcome'
-                        //
-                        //                                        },
-                        //                                        {
-                        //                                            fieldLabel: 'Destination',
-                        //                                            name      : 'destination'
-                        //                                        }
-                        //                                    ]
-                        //                                }
-                        //                            ]
-                        //                        }
+
                     ]
                 })
             },
@@ -1228,7 +1181,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
     },
 
-    setDefaults: function(options, context) {
+    setDefaults: function(options) {
 
         var data;
 

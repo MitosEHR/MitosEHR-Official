@@ -185,6 +185,11 @@ Ext.define('App.view.administration.Medications', {
 						keyup : me.onSearchMedications,
 						buffer: 500
 								}
+					},'-',
+					{
+						text:'Reset',
+						scope:me,
+						handler:me.onFieldReset
 					}
 				]
 			})
@@ -195,6 +200,10 @@ Ext.define('App.view.administration.Medications', {
 		me.callParent(arguments);
 	}, // end of initComponent
 
+	onFieldReset: function(){
+
+
+	},
 
 	onAddMedication: function() {
 		this.medicationsGrid.editingPlugin.cancelEdit();

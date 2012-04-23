@@ -7,13 +7,16 @@ Ext.define('App.classes.combo.CodesTypes', {
 		Ext.define('CodesTypesModel', {
 			extend: 'Ext.data.Model',
 			fields: [
-				{name: 'ct_id', type: 'string'},
-				{name: 'ct_key', type: 'string'}
+				{name: 'option_name', type: 'string' },
+				{name: 'option_value', type: 'string' }
 			],
 			proxy : {
-				type: 'direct',
-				api : {
-					read: CombosData.getCodeTypes
+				type       : 'direct',
+				api        : {
+					read: CombosData.getOptionsByListId
+				},
+				extraParams: {
+					list_id: 56
 				}
 			}
 		});
@@ -26,8 +29,8 @@ Ext.define('App.classes.combo.CodesTypes', {
 		Ext.apply(this, {
 			editable    : false,
 			queryMode   : 'local',
-			valueField  : 'ct_id',
-			displayField: 'ct_key',
+			valueField  : 'option_value',
+			displayField: 'option_name',
 			emptyText   : 'Select',
 			store       : me.store
 		}, null);

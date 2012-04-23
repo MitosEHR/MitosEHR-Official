@@ -31,6 +31,10 @@ Ext.define('App.view.patientfile.Summary', {
         me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
         me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications');
 
+
+        me.patientNotesStore = Ext.create('App.store.patientfile.Notes');
+        me.patientRemindersStore = Ext.create('App.store.patientfile.Reminders');
+
         me.pageBody = [
             {
                 xtype      : 'container',
@@ -54,12 +58,59 @@ Ext.define('App.view.patientfile.Summary', {
                         itemId: 'demoFormPanel'
                     },
                     {
-                        title: 'Notes',
-                        html : 'Panel content!'
+                        title      : 'Notes',
+                        itemId     : 'notesPanel',
+                        xtype      : 'grid',
+                        bodyPadding: 0,
+                        store      : me.patientNotesStore,
+                        columns    : [
+                            {
+                                text     : 'Date',
+                                dataIndex: 'date'
+                            },
+                            {
+                                header   : 'Type',
+                                dataIndex: 'type'
+                            },
+                            {
+                                text     : 'Note',
+                                dataIndex: 'body',
+                                flex     : 1
+                            },
+                            {
+                                text     : 'User',
+                                dataIndex: 'user_name'
+                            }
+                        ]
+
                     },
                     {
-                        title: 'Patient Reminders',
-                        html : 'Panel content!'
+                        title      : 'Reminders',
+                        itemId     : 'remindersPanel',
+                        xtype      : 'grid',
+                        bodyPadding: 0,
+                        store      : me.patientRemindersStore,
+                        columns    : [
+                            {
+                                text     : 'Date',
+                                dataIndex: 'date'
+                            },
+                            {
+
+                                header   : 'Type',
+                                dataIndex: 'type'
+                            },
+                            {
+                                text     : 'Note',
+                                dataIndex: 'body',
+                                flex     : 1
+                            },
+                            {
+                                text     : 'User',
+                                dataIndex: 'user_name'
+                            }
+                        ]
+
                     },
                     {
                         title: 'Disclosure',
@@ -68,6 +119,7 @@ Ext.define('App.view.patientfile.Summary', {
                     {
                         title     : 'Vitals',
                         autoScroll: true,
+                        bodyPadding: 0,
                         items     : {
                             xtype: 'vitalsdataview',
                             store: me.vitalsStore
@@ -484,12 +536,13 @@ Ext.define('App.view.patientfile.Summary', {
      * to call every this panel becomes active
      */
     onActive: function(callback) {
-            var billingPanel = this.query('[action="balance"]')[0];
+        var billingPanel = this.query('[action="balance"]')[0];
 
         Fees.getPatientBalance({pid:app.currPatient.pid},function(balance){
             billingPanel.body.update('Account Balance: $' + balance);
         });
-
+        this.patientNotesStore.load({params: {pid: app.currPatient.pid}});
+        this.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
         this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
