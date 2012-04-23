@@ -419,6 +419,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
         values.pid= app.currPatient.pid;
         values.eid= app.currEncounterId;
         values.uid= app.user.id;
+        values.type='administrative';
 
                 if(form.isValid()) {
 
