@@ -21,6 +21,7 @@ Ext.define('App.classes.LiveMedicationSearch', {
 			fields: [
 				{name: 'id'},
 				{name: 'PROPRIETARYNAME'},
+				{name: 'PRODUCTNDC'},
 				{name: 'NONPROPRIETARYNAME'},
 				{name: 'ACTIVE_NUMERATOR_STRENGTH'},
 				{name: 'ACTIVE_INGRED_UNIT'}

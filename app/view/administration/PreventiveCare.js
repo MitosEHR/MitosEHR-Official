@@ -29,7 +29,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 		me.code_type = 'Laboratories';
 
 		me.store = Ext.create('App.store.administration.PreventiveCare');
-
+        me.ImmuRelationStore = Ext.create('App.store.administration.Immunization_Relations');
 		me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
 		me.medicationsStore = Ext.create('App.store.administration.Medications');
 
@@ -86,6 +86,10 @@ Ext.define('App.view.administration.PreventiveCare', {
 						action:'Immunizations',
 						layout:'fit',
 						plain:true,
+						listeners: {
+							scope:me,
+							tabchange:me.onFormTapChange
+						},
 						items: [
 							{
 								title : 'general',
@@ -232,9 +236,10 @@ Ext.define('App.view.administration.PreventiveCare', {
 							},
 							{
 								title  : 'Active Problems',
+								action:'problems',
 								xtype  : 'grid',
 								margin:5,
-								store: me.activeProblemsStore,
+								store: me.ImmuRelationStore,
 								columns: [
 
 									{
@@ -275,9 +280,10 @@ Ext.define('App.view.administration.PreventiveCare', {
 							},
 							{
 								title  : 'Medications',
+								action :'medications',
 								xtype  : 'grid',
 								width  : 300,
-								store: me.medicationsStore,
+								store: me.ImmuRelationStore,
 								columns: [
 									{
 										xtype:'actioncolumn',
@@ -292,9 +298,14 @@ Ext.define('App.view.administration.PreventiveCare', {
 										]
 									},
 									{
-										header   : 'Name',
+										header   : 'Code',
+										width     : 100,
+										dataIndex: 'code'
+									},
+									{
+										header   : 'Description',
 										flex     : 1,
-										dataIndex: 'PROPRIETARYNAME'
+										dataIndex: 'code_text'
 									}
 
 								],
@@ -312,7 +323,9 @@ Ext.define('App.view.administration.PreventiveCare', {
 							},
 							{
 								title  : 'Labs',
+								action:'labs',
 								xtype  : 'grid',
+								store: me.ImmuRelationStore,
 								width  : 300,
 								columns: [
 									{
@@ -682,6 +695,11 @@ Ext.define('App.view.administration.PreventiveCare', {
 
     },
 
+	onFormTapChange:function(panel, newCard, oldCard){
+		this.ImmuRelationStore.proxy.extraParams = { code_type: newCard.action, selected_id:this.getSelectetId() };
+		this.ImmuRelationStore.load();
+	},
+
 	onSearch: function(field) {
 
 		var me = this,
@@ -718,14 +736,26 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 	addActiveProblem:function(field, model){
 
-
-		this.activeProblemsStore.add(model[0]);
+		this.ImmuRelationStore.add({
+			code:model[0].data.code,
+			code_text:model[0].data.code_text,
+			code_type:'problems',
+			foreign_id:model[0].data.id,
+			immunization_id: this.getSelectetId()
+		});
+		say(this.ImmuRelationStore);
 		field.reset();
 	},
 	addMedications:function(field, model){
 
-
-		this.medicationsStore.add(model[0]);
+		this.ImmuRelationStore.add({
+			code:model[0].data.PRODUCTNDC,
+			code_text:model[0].data.PROPRIETARYNAME,
+			code_type:'medications',
+			foreign_id:model[0].data.id,
+			immunization_id: this.getSelectetId()
+		});
+		say(this.ImmuRelationStore);
 		field.reset();
 
 	},
@@ -749,6 +779,12 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 	},
 
+
+	getSelectetId:function(){
+		var row = this.servicesGrid.getSelectionModel().getLastSelected();
+
+		return row.data.id;
+	},
 
 	/**
 	 * This function is called from MitosAPP.js when

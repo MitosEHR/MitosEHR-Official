@@ -36,11 +36,11 @@ class PreventiveCare
          * define $code_table
          */
 		if($params->code_type == 'Laboratories') {
-			$code_table = 'cvx_codes';
+			$code_table = 'immunizations';
 		} elseif($params->code_type == 'Diagnostic Tests') {
-			$code_table = 'cvx_codes';
+			$code_table = 'immunizations';
 		} else {
-			$code_table = 'cvx_codes';
+			$code_table = 'immunizations';
 		}
 		$sortx = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
 		$this->db->setSQL("SELECT DISTINCT *
@@ -78,7 +78,7 @@ class PreventiveCare
 			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
 				$code_table = 'hcpcs_codes';
 			} else {
-				$code_table = 'cvx_codes';
+				$code_table = 'immunizations';
 			}
 
 
@@ -114,7 +114,7 @@ class PreventiveCare
 			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
 				$code_table = 'hcpcs_codes';
 			} else {
-				$code_table = 'cvx_codes';
+				$code_table = 'immunizations';
 			}
 
 
@@ -145,7 +145,7 @@ class PreventiveCare
 		} elseif($params->code_type == 'hcpcs') {
 			$code_table = 'hcpcs_codes';
 		} else {
-			$code_table = 'cvx_codes';
+			$code_table = 'immunizations';
 		}
 		/**
 		 * brake the $params->query coming form sencha using into an array using "commas"
@@ -271,144 +271,7 @@ class PreventiveCare
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
 
-	/**
-	 * CPT CODES SECCION!!!
-	 */
-	/**
-	 * @param stdClass $params
-	 * @return array|stdClass
-	 */
-	public function getCptCodes(stdClass $params)
-	{
-		if($params->filter === 0) {
-			$record = $this->getCptRelatedByEidIcds($params->eid);
-		} elseif($params->filter === 1) {
-			$record = $this->getCptUsedByPid($params->pid);
-		} elseif($params->filter === 2) {
-			$record = $this->getCptUsedByClinic($params->pid);
-		} else {
-			$record = $this->getCptByEid($params->eid);
-		}
-		return $record;
-	}
 
-	public function addCptCode(stdClass $params)
-	{
-		$data = get_object_vars($params);
-		unset($data['code_text'], $data['code_text_medium']);
-		foreach($data as $key => $val) {
-			if($val == null || $val == '') {
-				unset($data[$key]);
-			}
-		}
-		$this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'I'));
-		$this->db->execLog();
-		$params->id = $this->db->lastInsertId;
-		return array('totals'=> 1, 'rows'  => $params);
-	}
-
-	public function updateCptCode(stdClass $params)
-	{
-		$data = get_object_vars($params);
-		unset($data['id'], $data['eid'], $data['code'], $data['code_text'], $data['code_text_medium']);
-		$params->id = intval($params->id);
-		$this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'U', "id='$params->id'"));
-		$this->db->execLog();
-		return array('totals'=> 1, 'rows'  => $params);
-	}
-
-	public function deleteCptCode(stdClass $params)
-	{
-		$this->db->setSQL("SELECT status FROM encounter_codes_cpt WHERE id = '$params->id'");
-		$cpt = $this->db->fetchRecord();
-		if($cpt['status'] == 0) {
-			$this->db->setSQL("DELETE FROM encounter_codes_cpt WHERE id ='$params->id'");
-			$this->db->execLog();
-		}
-		return array('totals'=> 1, 'rows'  => $params);
-	}
-
-	/**
-	 * @param $eid
-	 * @return array
-	 */
-	public function getCptRelatedByEidIcds($eid)
-	{
-		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text
-                             FROM cpt_codes as cpt
-                       RIGHT JOIN cpt_icd as ci ON ci.cpt = cpt.code
-                        LEFT JOIN encounter_codes_icdx as eci ON eci.code = ci.icd
-                            WHERE eci.eid = '$eid'");
-		$records = array();
-		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
-			if($row['code'] != null || $row['code'] != '') {
-				$records[] = $row;
-			}
-		}
-		return array('totals'=> count($records),
-		             'rows'  => $records);
-	}
-
-	/**
-	 * @param $eid
-	 * @return array
-	 */
-	public function getCptByEid($eid)
-	{
-		$this->db->setSQL("SELECT DISTINCT ecc.*, cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
-                             FROM encounter_codes_cpt AS ecc
-                        left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
-                            WHERE ecc.eid = '$eid' ORDER BY ecc.id ASC");
-		$records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-		return array('totals'=> count($records),
-		             'rows'  => $records);
-	}
-
-	/**
-	 * @param $pid
-	 * @return array
-	 */
-	public function getCptUsedByPid($pid)
-	{
-		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
-                             FROM encounter_codes_cpt AS ecc
-                        left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
-                        LEFT JOIN form_data_encounter AS e ON ecc.eid = e.eid
-                            WHERE e.pid = '$pid'
-                         ORDER BY e.start_date DESC");
-		$records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-		return array('totals'=> count($records),
-		             'rows'  => $records);
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getCptUsedByClinic()
-	{
-		$this->db->setSQL("SELECT DISTINCT cpt.code, cpt.code_text, cpt.code_text_medium, cpt.code_text_short
-                             FROM encounter_codes_cpt AS ecc
-                        left JOIN cpt_codes AS cpt ON ecc.code = cpt.code
-                         ORDER BY cpt.code DESC");
-		$records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-		return array('totals'=> count($records),
-		             'rows'  => $records);
-	}
-
-	public function getActiveProblems(stdClass $params)
-	{
-		return $params;
-	}
-
-	public function addActiveProblems(stdClass $params)
-	{
-		return $params;
-	}
-
-	public function removeActiveProblems(stdClass $params)
-	{
-		return $params;
-	}
 
 	public function getMedications(stdClass $params)
 	{
@@ -440,6 +303,7 @@ class PreventiveCare
 	{
 		$data = get_object_vars($params);
 		unset($data['id']);
+
 		$sql = $this->db->sqlBind($data, "medications", "I");
 		$this->db->setSQL($sql);
 		$this->db->execLog();
@@ -452,6 +316,65 @@ class PreventiveCare
 		$this->db->setSQL("DELETE FROM medications WHERE id ='$params->id'");
 		$this->db->execLog();
 		return array('totals'=> 1, 'rows'  => $params);
+	}
+
+    public function getRelations(stdClass $params)
+	{
+        if($params->code_type == 'problems'){
+            return $this->getImmunizationProblems($params->selected_id);
+        }else if($params->code_type == 'medications'){
+            return $this->getImmunizationMedications($params->selected_id);
+        }
+	}
+
+    public function getImmunizationProblems($id)
+    {
+        $this->db->setSQL("SELECT ir.id,
+                                  ir.immunization_id,
+                                  ir.foreign_id,
+                                  ir.code_type,
+                                  icd.code,
+                                  icd.code_text
+                             FROM immunizations_relations as ir
+                        LEFT JOIN icd_codes as icd on ir.foreign_id = icd.id
+                            WHERE ir.immunization_id = '$id'
+                              AND ir.code_type = 'problems'");
+        return $this->db->fetchRecords(PDO::FETCH_CLASS);
+    }
+
+    public function getImmunizationMedications($id)
+    {
+        $this->db->setSQL("SELECT ir.id,
+                                  ir.immunization_id,
+                                  ir.foreign_id,
+                                  ir.code_type,
+                                  med.PRODUCTNDC as code,
+                                  med.PROPRIETARYNAME as code_text
+                             FROM immunizations_relations as ir
+                        LEFT JOIN medications as med on ir.foreign_id = med.id
+                            WHERE ir.immunization_id = '$id'
+                              AND ir.code_type = 'medications'");
+        return $this->db->fetchRecords(PDO::FETCH_CLASS);
+    }
+
+	public function addRelations(stdClass $params)
+	{
+		$data = get_object_vars($params);
+		unset($data['id']);
+        unset($data['code']);
+        unset($data['code_text']);
+		$sql = $this->db->sqlBind($data, "immunizations_relations", "I");
+		$this->db->setSQL($sql);
+		$this->db->execLog();
+		$params->id = $this->db->lastInsertId;
+		return $params;
+	}
+
+	public function removeRelations(stdClass $params)
+	{
+		$this->db->setSQL("DELETE FROM immunizations_relations WHERE id ='$params->id'");
+		$this->db->execLog();
+		return $params;
 	}
 
 }
