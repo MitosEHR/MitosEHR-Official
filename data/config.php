@@ -386,7 +386,60 @@ $API = array(
                'len'=>1
             )
         )
-    ),    /**
+    ),
+    /**
+    * Preventive Care Functions
+    */
+    'PreventiveCare'=>array(
+        'methods'=>array(
+           'getServices'=>array(
+               'len'=>1
+           ),
+            'addService'=>array(
+               'len'=>1
+           ),
+            'updateService'=>array(
+               'len'=>1
+           ),
+            'liveCodeSearch'=>array(
+               'len'=>1
+           ),
+            'getCptCodes'=>array(
+               'len'=>1
+            ),
+            'addCptCode'=>array(
+               'len'=>1
+            ),
+            'updateCptCode'=>array(
+               'len'=>1
+            ),
+            'deleteCptCode'=>array(
+               'len'=>1
+            ),
+            'getActiveProblems'=>array(
+               'len'=>1
+            ),
+            'addActiveProblems'=>array(
+               'len'=>1
+            ),
+            'removeActiveProblems'=>array(
+               'len'=>1
+            ),
+            'getMedications'=>array(
+               'len'=>1
+            ),
+            'addMedications'=>array(
+               'len'=>1
+            ),
+            'removeMedications'=>array(
+               'len'=>1
+            ),
+            'updateMedications'=>array(
+               'len'=>1
+            )
+        )
+    ),
+	/**
      * Form layout Engine Functions
      */
     'FormLayoutEngine'=>array(
@@ -452,6 +505,12 @@ $API = array(
             	'len'=>1
             ),
             'addNote'=>array(
+            	'len'=>1
+            ),
+            'getPatientReminders'=>array(
+            	'len'=>1
+            ),
+            'getPatientNotes'=>array(
             	'len'=>1
             )
 

@@ -23,6 +23,8 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                 xtype:'form',
                 defaults:{ margin:5 },
                 border:false,
+                height:163,
+                width:747,
                 items:[
                     {
                         xtype:'fieldcontainer',
@@ -32,20 +34,30 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                                 fieldLabel:'Paying Entity',
                                 xtype:'mitos.payingentitycombo',
                                 name:'paying_entity',
-                                labelWidth:95,
-                                width:230
+                                action: 'new_payment',
+                                labelWidth:98,
+                                width:220
                             },
                             {
                                 xtype:'patienlivetsearch',
                                 fieldLabel:'From',
-                                name:'payer_id',
                                 hideLabel:false,
+                                name:'payer_id',
+                                action: 'new_payment',
                                 anchor:null,
                                 labelWidth:42,
-                                width:470,
+                                width:300,
+                                margin:'0 0 0 25'
+                            },
+                            {
+                                xtype:'textfield',
+                                fieldLabel:'No',
+                                action: 'new_payment',
+                                name:'check_number',
+                                labelWidth:47,
+                                width:167,
                                 margin:'0 0 0 25'
                             }
-
                         ]
                     },
                     {
@@ -55,52 +67,49 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
                             {
                                 fieldLabel:'Payment Method',
                                 xtype:'mitos.paymentmethodcombo',
-                                labelWidth:95,
+                                action: 'new_payment',
+                                labelWidth:98,
                                 name:'payment_method',
-                                width:230
+                                width:220
                             },
                             {
                                 xtype:'mitos.billingfacilitiescombo',
                                 fieldLabel:'Pay To',
+                                action: 'new_payment',
                                 labelWidth:42,
                                 name:'pay_to',
-                                width:470,
+                                width:300,
                                 margin:'0 0 0 25'
                             },
                             {
                                 xtype:'mitos.currency',
                                 fieldLabel:'Amount',
+                                action: 'new_payment',
                                 name:'amount',
-                                labelWidth:45,
-                                width:230,
-                                labelAlign:'right',
+                                labelWidth:47,
+                                width:167,
                                 margin:'0 0 0 25',
                                 enableKeyEvents:true
                             }
                         ]
                     },
                     {
-                        xtype:'fieldcontainer',
-                        layout:'hbox',
-                        items:[
-                            {
-                                fieldLabel:'Date',
-                                xtype:'datefield',
-                                name:'post_to_date',
-                                action:'new_payment',
-                                format:'Y-m-d',
-                                labelWidth:95,
-                                width:230
-                            },
-                            {
-                                fieldLabel:'Note',
-                                xtype:'textfield',
-                                name:'note',
-                                margin:'0 0 0 25',
-                                width: 725,
-                                labelWidth:42
-                            }
-                        ]
+                        fieldLabel:'Post To Date',
+                        xtype:'datefield',
+                        name:'post_to_date',
+                        action:'new_payment',
+                        format:'Y-m-d',
+                        labelWidth:98,
+                        width:220
+                    },
+                    {
+                        fieldLabel:'Note',
+                        xtype     : 'textareafield',
+                        grow      : true,
+                        action: 'new_payment',
+                        name:'note',
+                        labelWidth:98,
+                        anchor:'100%'
                     }
                 ]
             }
@@ -122,7 +131,7 @@ Ext.define('App.view.patientfile.PaymentEntryWindow', {
         me.callParent(arguments);
     },
     onSave: function() {
-        var me = this, panel, form, values, date;
+        var me = this, panel, form, values;
         panel = me.down('form');
         form = panel.getForm();
         values = form.getFieldValues();

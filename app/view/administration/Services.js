@@ -26,7 +26,7 @@ Ext.define('App.view.administration.Services', {
 
 		me.active = 1;
 		me.query = '';
-		me.code_type = '2';
+		me.code_type = 'CPT4';
 
 		me.store = Ext.create('App.store.administration.Services');
 
@@ -236,6 +236,19 @@ Ext.define('App.view.administration.Services', {
 								margin:5,
 								store: me.activeProblemsStore,
 								columns: [
+
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.gif',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveServices
+											}
+										]
+									},
 									{
 										header   : 'Code',
 										width     : 100,
@@ -266,12 +279,24 @@ Ext.define('App.view.administration.Services', {
 								width  : 300,
 								store: me.medicationsStore,
 								columns: [
-
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.gif',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveMedications
+											}
+										]
+									},
 									{
 										header   : 'Name',
 										flex     : 1,
 										dataIndex: 'PROPRIETARYNAME'
 									}
+
 								],
 								bbar:{
 									xtype:'medicationlivetsearch',
@@ -290,6 +315,18 @@ Ext.define('App.view.administration.Services', {
 								xtype  : 'grid',
 								width  : 300,
 								columns: [
+									{
+										xtype:'actioncolumn',
+										width:20,
+										items: [
+											{
+												icon: 'ui_icons/delete.gif',
+												tooltip: 'Remove',
+												scope:me,
+												handler: me.onRemoveServices
+											}
+										]
+									},
 									{
 										header   : 'Value Name',
 										flex     : 1,
@@ -310,6 +347,7 @@ Ext.define('App.view.administration.Services', {
 										flex     : 1,
 										dataIndex: 'equal_to'
 									}
+
 
 								]
 							}
@@ -429,7 +467,6 @@ Ext.define('App.view.administration.Services', {
 										name: 'code'
 									},
 									{
-
 										fieldLabel: 'Modifier',
 										xtype: 'textfield',
 										name: 'mod'
@@ -635,11 +672,9 @@ Ext.define('App.view.administration.Services', {
 	    }else if(this.currForm !== nextForm){
 
 		    Ext.each(this.currForm.query('[action="field"]'), function(field){
-					say(field);
 				   field.disable();
             });
 		    Ext.each(nextForm.query('[action="field"]'), function(field){
-			    say(field);
                 field.enable();
             });
 
@@ -664,7 +699,7 @@ Ext.define('App.view.administration.Services', {
 	onCodeTypeSelect: function(combo, record) {
 		var me = this,
 			store = me.store;
-		me.code_type = record[0].data.ct_id;
+		me.code_type = record[0].data.option_value;
 
 		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.query};
 		me.store.load();
@@ -698,7 +733,24 @@ Ext.define('App.view.administration.Services', {
 		field.reset();
 
 	},
+	onRemoveServices:function(grid, rowIndex, colIndex){
+		var me = this,
 
+			rec = grid.getStore().getAt(rowIndex);
+
+		me.activeProblemsStore.remove(rec);
+
+
+	},
+	onRemoveMedications:function(grid, rowIndex, colIndex){
+		var me = this,
+
+			rec = grid.getStore().getAt(rowIndex);
+
+		me.medicationsStore.remove(rec);
+
+
+	},
 
 	/**
 	 * This function is called from MitosAPP.js when
@@ -707,7 +759,7 @@ Ext.define('App.view.administration.Services', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
-		this.servicesGrid.query('combobox')[0].setValue("2");
+		this.servicesGrid.query('combobox')[0].setValue("CPT4");
 		this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.query};
 		this.store.load();
 		callback(true);

@@ -14,15 +14,21 @@ if(!isset($_SESSION)){
 
 include_once($_SESSION['site']['root'].'/dataProvider/Person.php');
 include_once($_SESSION['site']['root'].'/classes/dbHelper.php');
+include_once($_SESSION['site']['root'].'/dataProvider/User.php');
 
-class Patient extends Person {
+class Patient {
     /**
      * @var dbHelper
      */
     private $db;
+	/**
+	 * @var User
+	 */
+	private $user;
 
     function __construct(){
         $this->db = new dbHelper();
+        $this->user = new User();
         return;
     }
 
@@ -71,7 +77,7 @@ class Patient extends Person {
                     WHERE pid = '$pid'");
 
         $patient = $this->db->fetchRecord(PDO::FETCH_ASSOC);
-        $patient['fullname'] = $this->fullname($patient['fname'], $patient['mname'], $patient['lname']);
+        $patient['fullname'] = Person::fullname($patient['fname'], $patient['mname'], $patient['lname']);
 
         if(!$this->createPatientDir($pid)){
             return array("success" =>false, "error"=> 'Patient directory failed');
@@ -89,7 +95,7 @@ class Patient extends Person {
     public function getPatientFullNameByPid($pid){
         $this->db->setSQL("SELECT fname,mname,lname FROM form_data_demographics WHERE pid = '$pid'");
         $p = $this->db->fetchRecord();
-        return $this->fullname($p['fname'],$p['mname'],$p['lname']);
+        return Person::fullname($p['fname'],$p['mname'],$p['lname']);
     }
 
 	public function getDOBByPid($pid){
@@ -121,7 +127,7 @@ class Patient extends Person {
                                OR SS 	LIKE '%$params->query'");
         $rows = array();
         foreach($this->db->fetchRecords(PDO::FETCH_CLASS) as $row){
-            $row->fullname = $this->fullname($row->fname,$row->mname,$row->lname);
+            $row->fullname = Person::fullname($row->fname,$row->mname,$row->lname);
             unset($row->fname,$row->mname,$row->lname);
             array_push($rows, $row);
         }
@@ -242,6 +248,31 @@ class Patient extends Person {
 
 
 	}
+
+	public function getPatientNotes(stdClass $params)
+	{
+
+		$notes = array();
+		$this->db->setSQL("SELECT * FROM patient_notes WHERE pid = '$params->pid'");
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+			$row['user_name'] = $this->user->getUserNameById($row['uid']);
+			$notes[] = $row;
+		}
+		return $notes;
+	}
+
+	public function getPatientReminders(stdClass $params)
+	{
+
+		$reminders = array();
+		$this->db->setSQL("SELECT * FROM patient_reminders WHERE pid = '$params->pid'");
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+			$row['user_name'] = $this->user->getUserNameById($row['uid']);
+			$reminders[] = $row;
+		}
+		return $reminders;
+	}
+
 }
 //$p = new Patient();
 //echo '<pre>';

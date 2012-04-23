@@ -14,7 +14,7 @@ if(!isset($_SESSION)){
 include_once($_SESSION['site']['root']."/dataProvider/Person.php");
 include_once($_SESSION['site']['root']."/classes/AES.php");
 include_once($_SESSION['site']['root']."/classes/dbHelper.php");
-class User extends Person {
+class User {
 
     /**
      * @var dbHelper
@@ -66,7 +66,7 @@ class User extends Person {
                             LIMIT $params->start,$params->limit");
         $rows = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
-            $row['fullname']    = $this->fullname($row['fname'],$row['mname'],$row['lname']);
+            $row['fullname']    = Person::fullname($row['fname'],$row['mname'],$row['lname']);
             unset($row['password'],$row['pwd_history1'],$row['pwd_history2']);
             array_push($rows, $row);
         }

@@ -65,6 +65,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.administration.Practice',
 		'App.view.administration.Roles',
 		'App.view.administration.Services',
+		'App.view.administration.PreventiveCare',
 		'App.view.administration.Medications',
 		'App.view.administration.Users',
 
@@ -521,6 +522,9 @@ Ext.define('App.view.MitosApp', {
 		}
 		if(perm.access_services) {
 			me.MainPanel.add(Ext.create('App.view.administration.Services'));
+		}
+		if(perm.access_preventive_care) {
+			me.MainPanel.add(Ext.create('App.view.administration.PreventiveCare'));
 		}
 		if(perm.access_medications) {
 			me.MainPanel.add(Ext.create('App.view.administration.Medications'));

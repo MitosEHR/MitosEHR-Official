@@ -67,7 +67,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                                     width:20,
                                                     items: [
                                                         {
-                                                            icon: 'ui_icons/no.gif',
+                                                            icon: 'ui_icons/delete.png',
                                                             tooltip: 'Remove',
                                                             scope:me,
                                                             handler: me.onRemoveService
@@ -82,6 +82,13 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                                         xtype: 'livecptsearch',
                                                         allowBlank: false
                                                     }
+                                                },
+                                                {
+                                                    header:'Paid',
+                                                    xtype:'actioncolumn',
+                                                    dataIndex:'charge',
+                                                    width:35,
+
                                                 },
                                                 {
                                                     header: 'Charge',
@@ -324,7 +331,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
         say(grid);
         say(store);
 
-            store.add({code_text:'none',charge:'20.00'});
+            store.add({code_text:' ',charge:'20.00'});
 
 
 
@@ -347,7 +354,11 @@ Ext.define('App.view.patientfile.PatientCheckout', {
     },
 
     onAddCoPay:function(){
+        var me = this,
+            grid = btn.up('panel').down('grid'),
+            store = grid.store;
 
+        store.add({code_text:'Co-Pay',charge:'00.00'});
     },
 
     onAddService:function(){
@@ -408,6 +419,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
         values.pid= app.currPatient.pid;
         values.eid= app.currEncounterId;
         values.uid= app.user.id;
+        values.type='administrative';
 
                 if(form.isValid()) {
 
