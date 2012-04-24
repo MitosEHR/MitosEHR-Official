@@ -537,32 +537,36 @@ Ext.define('App.view.patientfile.Encounter', {
             },
             items:[
                 {
-                    text:'Add Immunizations ',
+                    text:'Immunizations ',
                     action:'immunization'
                 },
                 '-',
                 {
-                    text:'Add Allergies ',
+                    text:'Allergies ',
                     action:'allergies'
                 },
                 '-',
                 {
-                    text:'Add Medical Issues ',
+                    text:'Medical Issues ',
                     action:'issues'
                 },
                 '-',
                 {
-                    text:'Add Surgery ',
+                    text:'Surgery ',
                     action:'surgery'
                 },
                 '-',
                 {
-                    text:'Add Dental ',
+                    text:'Dental ',
                     action:'dental'
                 },'-',
                 {
-                    text:'Add Medications ',
+                    text:'Medications ',
                     action:'medications'
+                },'-',
+                {
+                    text:'Laboratories ',
+                    action:'laboratories'
                 },
                 '->',
                 {

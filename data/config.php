@@ -436,6 +436,15 @@ $API = array(
             ),
             'updateMedications'=>array(
                'len'=>1
+            ),
+            'getRelations'=>array(
+                'len'=>1
+            ),
+            'addRelations'=>array(
+                'len'=>1
+            ),
+            'removeRelations'=>array(
+                'len'=>1
             )
         )
     ),

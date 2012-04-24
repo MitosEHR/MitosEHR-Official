@@ -173,7 +173,7 @@ Ext.define('App.view.administration.Layout', {
 					read: CombosData.getOptionsByListId
 				}
 			},
-			autoLoad: true
+			autoLoad: false
 		});
 
 		/**
@@ -1113,9 +1113,15 @@ Ext.define('App.view.administration.Layout', {
 	 * to call every this panel becomes active
 	 */
 	onActive            : function(callback) {
-		this.onFormReset();
-		this.fieldForm.el.mask('Click "New" or Select a field to update');
-		this.loadFieldsGrid();
+        var me = this;
+        me.onFormReset();
+        me.fieldForm.el.mask('Click "New" or Select a field to update');
+        me.selectListoptionsStore.load({
+            callback:function(){
+                me.loadFieldsGrid();
+            }
+        });
+        //me.loadFieldsGrid();
 		callback(true);
 	}
 });

@@ -36,18 +36,24 @@ class Services
          * define $code_table
          */
 		if($params->code_type == 'CPT4') {
-			$code_table = 'cpt_codes';
+			$tableX = 'cpt_codes';
 		} elseif($params->code_type == 'ICD9') {
-			$code_table = 'icd_codes';
+			$tableX = 'icd_codes';
+		} elseif($params->code_type == 'HCPCS'){
+			$tableX = 'hcpcs_codes';
+		}elseif($params->code_type == 'Immunizations') {
+			$tableX = 'immunizations';
 		} else {
-			$code_table = 'hcpcs_codes';
+			$tableX = 'labs';
 		}
-		$sortx = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
+
+
+		$sortX = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
 		$this->db->setSQL("SELECT DISTINCT *
-                         FROM $code_table
+                         FROM $tableX
                         WHERE code_text       LIKE '%$params->query%'
                            OR code            LIKE '$params->query%'
-                     ORDER BY $sortx");
+                     ORDER BY $sortX");
 		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$records = $this->db->filterByQuery($records, 'active', $params->active);
 		$total   = count($records);
@@ -67,21 +73,17 @@ class Services
 	 */
 	public function addService(stdClass $params)
 	{
-					/*
-					 * define $code_table
-					 */
-
-		if($params->code_type == 'cpt' || $params->code_type == 1) {
-				$code_table = 'cpt_codes';
-			} elseif($params->code_type == 'icd' || $params->code_type == 2) {
-				$code_table = 'icd_codes';
-			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
-				$code_table = 'hcpcs_codes';
-			} else {
-				$code_table = 'cvx_codes';
-			}
-
-
+		if($params->code_type == 'CPT4') {
+			$tableX = 'cpt_codes';
+		} elseif($params->code_type == 'ICD9') {
+			$tableX = 'icd_codes';
+		} elseif($params->code_type == 'HCPCS'){
+			$tableX = 'hcpcs_codes';
+		}elseif($params->code_type == 'Immunizations') {
+			$tableX = 'immunizations';
+		} else {
+			$tableX = 'labs';
+		}
 
 		$data = get_object_vars($params);
 
@@ -90,7 +92,7 @@ class Services
 			unset($data[$key]);
 		}
 		unset($data['id']);
-		$sql = $this->db->sqlBind($data, $code_table, 'I');
+		$sql = $this->db->sqlBind($data, $tableX, 'I');
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		$params->id = $this->db->lastInsertId;
@@ -103,20 +105,17 @@ class Services
 	 */
 	public function updateService(stdClass $params)
 	{
-					/*
-					 * define $code_table
-					 */
-
-		if($params->code_type == 'cpt' || $params->code_type == 1) {
-				$code_table = 'cpt_codes';
-			} elseif($params->code_type == 'icd' || $params->code_type == 2) {
-				$code_table = 'icd_codes';
-			} elseif($params->code_type == 'hcpcs' || $params->code_type == 3) {
-				$code_table = 'hcpcs_codes';
-			} else {
-				$code_table = 'cvx_codes';
-			}
-
+		if($params->code_type == 'CPT4') {
+			$tableX = 'cpt_codes';
+		} elseif($params->code_type == 'ICD9') {
+			$tableX = 'icd_codes';
+		} elseif($params->code_type == 'HCPCS'){
+			$tableX = 'hcpcs_codes';
+		}elseif($params->code_type == 'Immunizations') {
+			$tableX = 'immunizations';
+		} else {
+			$tableX = 'labs';
+		}
 
 
 		$data = get_object_vars($params);
@@ -127,7 +126,7 @@ class Services
 		}
 		unset($data['id']);
 
-		$sql = $this->db->sqlBind($data, $code_table, 'U', "id='$params->id'");
+		$sql = $this->db->sqlBind($data, $tableX, 'U', "id='$params->id'");
 		$this->db->setSQL($sql);
 		$this->db->execLog();
 		return $params;
@@ -142,10 +141,8 @@ class Services
 			$code_table = 'cpt_codes';
 		} elseif($params->code_type == 'icd') {
 			$code_table = 'icd_codes';
-		} elseif($params->code_type == 'hcpcs') {
-			$code_table = 'hcpcs_codes';
 		} else {
-			$code_table = 'cvx_codes';
+			$code_table = 'hcpcs_codes';
 		}
 		/**
 		 * brake the $params->query coming form sencha using into an array using "commas"
@@ -201,7 +198,6 @@ class Services
 			$this->db->setSQL("SELECT *
                                  FROM $code_table
                                 WHERE (code_text      LIKE '%$query%'
-                                   OR code_text_short LIKE '%$query%'
                                    OR code            LIKE '$query%')
                              ORDER BY code ASC");
 			/**

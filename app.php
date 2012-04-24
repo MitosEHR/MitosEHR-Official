@@ -111,6 +111,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/model/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/model/administration/Medications.js"></script>
+        <script type="text/javascript" src="app/model/administration/Immunization_Relations.js"></script>
 
 
 
@@ -135,6 +136,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/store/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/store/administration/Medications.js"></script>
+        <script type="text/javascript" src="app/store/administration/Immunization_Relations.js"></script>
 
 
         <!-- Classes -->
@@ -211,7 +213,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/administration/Log.js"></script>
         <script type="text/javascript" src="app/view/administration/Practice.js"></script>
         <script type="text/javascript" src="app/view/administration/Roles.js"></script>
-        <script type="text/javascript" src="app/view/administration/Services.js"></script>
+        <script type="text/javascript" src="app/view/administration/DataManager.js"></script>
         <script type="text/javascript" src="app/view/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/view/administration/Medications.js"></script>
         <script type="text/javascript" src="app/view/administration/Users.js"></script>

@@ -7,6 +7,10 @@ if(!isset($_SESSION)){
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
 require_once'PHPLinq/LinqToObjects.php';
 
+ini_set('memory_limit', '256M');
+ini_set('max_input_time', '60');
+ini_set('max_execution_time', '60');
+
 /**
  * @brief       Database Helper Class.
  * @details     A PDO helper for MitosEHR, contains custom function to manage the database
