@@ -47,13 +47,12 @@ class Services
 			$tableX = 'labs';
 		}
 
-
 		$sortX = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
-		$this->db->setSQL("SELECT DISTINCT *
-                         FROM $tableX
-                        WHERE code_text       LIKE '%$params->query%'
-                           OR code            LIKE '$params->query%'
-                     ORDER BY $sortX");
+		if($params->query == ''){
+			$this->db->setSQL("SELECT DISTINCT * FROM $tableX ORDER BY $sortX");
+		}else{
+			$this->db->setSQL("SELECT DISTINCT * FROM $tableX WHERE code_text LIKE '%$params->query%' OR code LIKE '$params->query%' ORDER BY $sortX");
+		}
 		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$records = $this->db->filterByQuery($records, 'active', $params->active);
 		$total   = count($records);

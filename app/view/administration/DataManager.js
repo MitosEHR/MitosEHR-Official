@@ -51,13 +51,13 @@ Ext.define('App.view.administration.DataManager', {
         me.cptContainer = Ext.create('Ext.container.Container', {
             layout: 'column',
             action: 'CPT4',
-            hidden: true,
+            //hidden: true,
             items : [
 
                 {
                     xtype    : 'fieldcontainer',
                     msgTarget: 'under',
-                    defaults : { disabled: true, action: 'field'  },
+                    defaults : { action: 'field'  },
                     items    : [
                         {
 
@@ -83,7 +83,7 @@ Ext.define('App.view.administration.DataManager', {
                 {
                     xtype   : 'fieldcontainer',
                     margin  : '0 0 0 10',
-                    defaults: { disabled: true, action: 'field' },
+                    defaults: { action: 'field' },
                     items   : [
                         {
 
@@ -101,7 +101,7 @@ Ext.define('App.view.administration.DataManager', {
                 {
                     xtype   : 'fieldcontainer',
                     margin  : '0 0 0 20',
-                    defaults: { disabled: true, action: 'field' },
+                    defaults: { action: 'field' },
                     items   : [
 
                         {
@@ -127,13 +127,13 @@ Ext.define('App.view.administration.DataManager', {
         me.icd9Container = Ext.create('Ext.container.Container', {
             layout: 'column',
             action: 'ICD9',
-            hidden: true,
+            //hidden: true,
             items : [
 
                 {
                     xtype    : 'fieldcontainer',
                     msgTarget: 'under',
-                    defaults : { disabled: true, action: 'field' },
+                    defaults : { action: 'field' },
                     items    : [
                         {
 
@@ -158,7 +158,7 @@ Ext.define('App.view.administration.DataManager', {
                 {
                     xtype   : 'fieldcontainer',
                     margin  : '0 0 0 10',
-                    defaults: { disabled: true, action: 'field'  },
+                    defaults: { action: 'field'  },
                     items   : [
                         {
 
@@ -176,7 +176,7 @@ Ext.define('App.view.administration.DataManager', {
                 {
                     xtype   : 'fieldcontainer',
                     margin  : '0 0 0 20',
-                    defaults: { disabled: true, action: 'field'  },
+                    defaults: { action: 'field'  },
                     items   : [
 
                         {
@@ -209,13 +209,13 @@ Ext.define('App.view.administration.DataManager', {
         me.hpccsContainer = Ext.create('Ext.container.Container', {
             layout: 'column',
             action: 'HCPCS',
-            hidden: true,
+            //hidden: true,
             items : [
 
                 {
                     xtype    : 'fieldcontainer',
                     msgTarget: 'under',
-                    defaults : { disabled: true, action: 'field'  },
+                    defaults : { action: 'field'  },
                     items    : [
                         {
 
@@ -241,7 +241,7 @@ Ext.define('App.view.administration.DataManager', {
                 {
                     xtype   : 'fieldcontainer',
                     margin  : '0 0 0 10',
-                    defaults: { disabled: true, action: 'field' },
+                    defaults: { action: 'field' },
                     items   : [
                         {
 
@@ -259,7 +259,7 @@ Ext.define('App.view.administration.DataManager', {
                 {
                     xtype   : 'fieldcontainer',
                     margin  : '0 0 0 20',
-                    defaults: { disabled: true, action: 'field' },
+                    defaults: { action: 'field' },
                     items   : [
 
                         {
@@ -290,7 +290,7 @@ Ext.define('App.view.administration.DataManager', {
          * CVX Container
          */
         me.cvxCintainer = Ext.create('Ext.tab.Panel', {
-            hidden   : true,
+            //hidden   : true,
             action   : 'Immunizations',
             layout   : 'fit',
             plain    : true,
@@ -311,7 +311,7 @@ Ext.define('App.view.administration.DataManager', {
                              */
                             xtype   : 'fieldcontainer',
                             layout  : 'hbox',
-                            defaults: { margin: '0 10 5 0', disabled: true, action: 'field' },
+                            defaults: { margin: '0 10 5 0', action: 'field' },
                             items   : [
                                 {
 
@@ -338,7 +338,7 @@ Ext.define('App.view.administration.DataManager', {
                              */
                             xtype   : 'fieldcontainer',
                             layout  : 'hbox',
-                            defaults: { margin: '0 10 5 0', disabled: true, action: 'field'  },
+                            defaults: { margin: '0 10 5 0', action: 'field'  },
                             items   : [
                                 {
                                     xtype     : 'mitos.codestypescombo',
@@ -392,7 +392,7 @@ Ext.define('App.view.administration.DataManager', {
                              */
                             xtype   : 'fieldcontainer',
                             layout  : 'hbox',
-                            defaults: { margin: '0 10 5 0', disabled: true, action: 'field'  },
+                            defaults: { margin: '0 10 5 0', action: 'field'  },
                             items   : [
                                 {
                                     xtype     : 'textfield',
@@ -577,7 +577,7 @@ Ext.define('App.view.administration.DataManager', {
          */
         me.labContainer = Ext.create('Ext.container.Container', {
             action: 'Laboratories',
-            hidden: true,
+            //hidden: true,
             layout: 'vbox',
             items : [
                 {
@@ -586,7 +586,7 @@ Ext.define('App.view.administration.DataManager', {
                      */
                     xtype   : 'fieldcontainer',
                     layout  : 'hbox',
-                    defaults: { margin: '0 10 5 0', disabled: true, action: 'field' },
+                    defaults: { margin: '0 10 5 0', action: 'field' },
                     items   : [
                         {
                             xtype     : 'textfield',
@@ -599,13 +599,13 @@ Ext.define('App.view.administration.DataManager', {
                             xtype     : 'textfield',
                             fieldLabel: 'Code',
                             name      : 'code',
-                            width     : 100,
+                            width     : 130,
                             labelWidth: 30
 
                         },
                         {
-                            xtype     : 'checkbox',
-                            fieldLabel: 'Code',
+                            xtype     : 'mitos.checkbox',
+                            fieldLabel: 'Active',
                             name      : 'active',
                             width     : 100,
                             labelWidth: 30
@@ -615,7 +615,6 @@ Ext.define('App.view.administration.DataManager', {
                 },
                 {
                     xtype  : 'grid',
-                    title  : 'Observations',
                     columns: [
                         { header: 'Description', dataIndex: 'description' },
                         { header: 'Unit', dataIndex: 'unit' },
@@ -623,6 +622,12 @@ Ext.define('App.view.administration.DataManager', {
                         { header: 'Range End', dataIndex: 'range_end' },
                         { header: 'Threshold', dataIndex: 'threshold' },
                         { header: 'Notes', dataIndex: 'threshold' }
+                    ],
+                    tbar:[
+                        {
+                            text:'Add Observation',
+                            iconCls:'icoAddRecord'
+                        }
                     ]
                 }
             ]
@@ -632,11 +637,10 @@ Ext.define('App.view.administration.DataManager', {
             region : 'center',
             store  : me.store,
             columns: [
-                { header: 'id', sortable: false, dataIndex: 'id', hidden: true},
-                { width: 80, header: 'Code Type', sortable: true, dataIndex: 'code_type', renderer: code_type },
-                { width: 80, header: 'Code', sortable: true, dataIndex: 'code' },
-                { width: 60, header: 'Active', sortable: true, dataIndex: 'active', renderer: me.boolRenderer },
-                { flex: 1, header: 'Description', sortable: true, dataIndex: 'code_text' }
+                { width: 100, header: 'Code Type', sortable: true, dataIndex: 'code_type', renderer: code_type },
+                { width: 100, header: 'Code', sortable: true, dataIndex: 'code' },
+                { flex: 1, header: 'Name / Description', sortable: true, dataIndex: 'code_text' },
+                { width: 60, header: 'Active?', sortable: true, dataIndex: 'active', renderer: me.boolRenderer }
             ],
             plugins: Ext.create('App.classes.grid.RowFormEditing', {
                 autoCancel  : false,
@@ -645,10 +649,10 @@ Ext.define('App.view.administration.DataManager', {
                 listeners   : {
                     scope     : me,
                     beforeedit: me.beforeServiceEdit
-                },
-                formItems   : [
-                    me.cptContainer, me.icd9Container, me.hpccsContainer, me.cvxCintainer, me.labContainer
-                ]
+                }
+//                formItems   : [
+//                    me.cptContainer, me.icd9Container, me.hpccsContainer, me.cvxCintainer, me.labContainer
+//                ]
             }),
             tbar   : Ext.create('Ext.PagingToolbar', {
                 store      : me.store,
@@ -664,7 +668,7 @@ Ext.define('App.view.administration.DataManager', {
                     }
                 }, '-', {
                     text   : 'Add',
-                    iconCls: 'save',
+                    iconCls: 'icoAddRecord',
                     scope  : me,
                     handler: me.onAddData
                 }, '-', {
@@ -701,26 +705,56 @@ Ext.define('App.view.administration.DataManager', {
     },
 
     beforeServiceEdit: function(context, e) {
-        var editor = context.editor, nextForm, code_type = e.record.data.code_type;
-        say(code_type);
-        nextForm = editor.query('[action="' + code_type + '"]')[0];
-        if(!this.currForm) {
-            Ext.each(nextForm.query(), function(field) {
-                field.enable();
-            });
-            nextForm.show();
-            this.currForm = nextForm;
-        } else if(this.currForm !== nextForm) {
-            Ext.each(this.currForm.query('[action="field"]'), function(field) {
-                field.disable();
-            });
-            Ext.each(nextForm.query('[action="field"]'), function(field) {
-                field.enable();
-            });
-            this.currForm.hide();
-            nextForm.show();
-            this.currForm = nextForm;
+        var me = this,
+            editor = context.editor,
+            code_type = e.record.data.code_type,
+            thisForm;
+
+        say(editor);
+
+        //nextForm = editor.query('[action="' + code_type + '"]')[0];
+
+        if(code_type == 'CPT4'){
+            thisForm = me.cptContainer;
+        }else if(code_type == 'ICD9'){
+            thisForm = me.icd9Container;
+        }else if(code_type == 'HCPCS'){
+            thisForm = me.hpccsContainer;
+        }else if(code_type == 'Immunizations'){
+            thisForm = me.cvxCintainer;
+        }else if(code_type == 'Laboratories'){
+            thisForm = me.labContainer;
         }
+
+        if(!editor.items.length){
+            editor.add(thisForm);
+            editor.setFields();
+        }else if(this.currForm != thisForm){
+            editor.remove(0, false);
+            editor.add(thisForm);
+            editor.setFields();
+        }
+
+        this.currForm = thisForm;
+
+
+//        if(!this.currForm) {
+//            Ext.each(nextForm.query(), function(field) {
+//                field.enable();
+//            });
+//            nextForm.show();
+//            this.currForm = nextForm;
+//        } else if(this.currForm !== nextForm) {
+//            Ext.each(this.currForm.query('[action="field"]'), function(field) {
+//                field.disable();
+//            });
+//            Ext.each(nextForm.query('[action="field"]'), function(field) {
+//                field.enable();
+//            });
+//            this.currForm.hide();
+//            nextForm.show();
+//            this.currForm = nextForm;
+//        }
     },
 
     onSearch: function(field) {
