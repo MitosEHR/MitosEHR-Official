@@ -87,7 +87,7 @@ Ext.define('App.view.patientfile.PatientCheckout', {
                                                     header:'Paid',
                                                     xtype:'actioncolumn',
                                                     dataIndex:'charge',
-                                                    width:35,
+                                                    width:35
 
                                                 },
                                                 {
