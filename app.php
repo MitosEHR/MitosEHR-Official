@@ -111,7 +111,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/model/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/model/administration/Medications.js"></script>
-        <script type="text/javascript" src="app/model/administration/Immunization_Relations.js"></script>
+        <script type="text/javascript" src="app/model/administration/ImmunizationRelations.js"></script>
 
 
 
@@ -136,7 +136,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/store/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/store/administration/Medications.js"></script>
-        <script type="text/javascript" src="app/store/administration/Immunization_Relations.js"></script>
+        <script type="text/javascript" src="app/store/administration/ImmunizationRelations.js"></script>
 
 
         <!-- Classes -->
@@ -178,7 +178,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/Medications.js"></script>
         <script type="text/javascript" src="app/classes/combo/Occurrence.js"></script>
         <script type="text/javascript" src="app/classes/combo/Surgery.js"></script>
-        <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
+        <script type="text/javascript" src="app/classes/combo/TransmitMethod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>
         <script type="text/javascript" src="app/classes/combo/Providers.js"></script>

@@ -7,7 +7,7 @@
  */
 
 
-Ext.define('App.model.administration.Immunization_Relations', {
+Ext.define('App.model.administration.ImmunizationRelations', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'id', type: 'int'},

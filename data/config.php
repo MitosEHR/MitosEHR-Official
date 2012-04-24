@@ -384,6 +384,15 @@ $API = array(
             ),
             'updateMedications'=>array(
                'len'=>1
+            ),
+            'getLabObservations'=>array(
+               'len'=>1
+            ),
+            'addLabObservations'=>array(
+               'len'=>1
+            ),
+            'removeLabObservations'=>array(
+               'len'=>1
             )
         )
     ),

@@ -30,7 +30,8 @@ Ext.define('App.view.administration.DataManager', {
 
         me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
         me.medicationsStore = Ext.create('App.store.administration.Medications');
-        me.ImmuRelationStore = Ext.create('App.store.administration.Immunization_Relations');
+        me.ImmuRelationStore = Ext.create('App.store.administration.ImmunizationRelations');
+        me.labObservationsStore = Ext.create('App.store.administration.LabObservations');
 
         function code_type(val) {
             if(val == '1') {
@@ -454,7 +455,7 @@ Ext.define('App.view.administration.DataManager', {
                                     icon   : 'ui_icons/delete.png',
                                     tooltip: 'Remove',
                                     scope  : me,
-                                    handler: me.onRemoveServices
+                                    handler: me.onRemoveRelation
                                 }
                             ]
                         },
@@ -497,7 +498,7 @@ Ext.define('App.view.administration.DataManager', {
                                     icon   : 'ui_icons/delete.png',
                                     tooltip: 'Remove',
                                     scope  : me,
-                                    handler: me.onRemoveMedications
+                                    handler: me.onRemoveRelation
                                 }
                             ]
                         },
@@ -540,7 +541,7 @@ Ext.define('App.view.administration.DataManager', {
                                     icon   : 'ui_icons/delete.png',
                                     tooltip: 'Remove',
                                     scope  : me,
-                                    handler: me.onRemoveServices
+                                    handler: me.onRemoveRelation
                                 }
                             ]
                         },
@@ -615,20 +616,86 @@ Ext.define('App.view.administration.DataManager', {
                 },
                 {
                     xtype  : 'grid',
+                    store:me.labObservationsStore,
+                    plugins: Ext.create('Ext.grid.plugin.CellEditing', {
+                        clicksToEdit: 2
+                    }),
                     columns: [
-                        { header: 'Description', dataIndex: 'description' },
-                        { header: 'Unit', dataIndex: 'unit' },
-                        { header: 'Range Start', dataIndex: 'range_start' },
-                        { header: 'Range End', dataIndex: 'range_end' },
-                        { header: 'Threshold', dataIndex: 'threshold' },
-                        { header: 'Notes', dataIndex: 'threshold' }
+                        {
+                            xtype:'actioncolumn',
+                            width:20,
+                            items: [
+                                {
+                                    icon: 'ui_icons/delete.png',
+                                    tooltip: 'Remove',
+                                    scope:me,
+                                    handler: me.onRemoveRelation
+                                }
+                            ]
+                        },
+                        {
+                            header: 'Label',
+                            dataIndex: 'label',
+                            width:200,
+                            editor: {
+                                xtype: 'textfield'
+                            }
+                        },
+                        {
+                            header: 'Name',
+                            dataIndex: 'name',
+                            width:200
+                        },
+                        {
+                            header: 'Unit',
+                            dataIndex: 'unit',
+                            width:100,
+                            editor: {
+                                xtype: 'numberfield'
+                            }
+                        },
+                        {
+                            header: 'Range Start',
+                            dataIndex: 'range_start',
+                            width:100,
+                            editor: {
+                                xtype: 'numberfield'
+                            }
+                        },
+                        {
+                            header: 'Range End',
+                            dataIndex: 'range_end',
+                            width:100,
+                            editor: {
+                                xtype: 'numberfield'
+                            }
+                        },
+                        {
+                            header: 'Threshold',
+                            dataIndex: 'threshold',
+                            width:100,
+                            editor: {
+                                xtype: 'numberfield'
+                            }
+                        },
+                        {
+                            header: 'Notes',
+                            dataIndex: 'notes',
+                            flex:1,
+                            editor: {
+                                xtype: 'textfield'
+                            }
+                        }
                     ],
                     tbar:[
                         {
                             text:'Add Observation',
-                            iconCls:'icoAddRecord'
+                            iconCls:'icoAddRecord',
+                            scope:me,
+                            handler:me.addLabObservation
                         }
                     ]
+
                 }
             ]
         });
@@ -650,9 +717,6 @@ Ext.define('App.view.administration.DataManager', {
                     scope     : me,
                     beforeedit: me.beforeServiceEdit
                 }
-//                formItems   : [
-//                    me.cptContainer, me.icd9Container, me.hpccsContainer, me.cvxCintainer, me.labContainer
-//                ]
             }),
             tbar   : Ext.create('Ext.PagingToolbar', {
                 store      : me.store,
@@ -710,10 +774,6 @@ Ext.define('App.view.administration.DataManager', {
             code_type = e.record.data.code_type,
             thisForm;
 
-        say(editor);
-
-        //nextForm = editor.query('[action="' + code_type + '"]')[0];
-
         if(code_type == 'CPT4'){
             thisForm = me.cptContainer;
         }else if(code_type == 'ICD9'){
@@ -737,24 +797,6 @@ Ext.define('App.view.administration.DataManager', {
 
         this.currForm = thisForm;
 
-
-//        if(!this.currForm) {
-//            Ext.each(nextForm.query(), function(field) {
-//                field.enable();
-//            });
-//            nextForm.show();
-//            this.currForm = nextForm;
-//        } else if(this.currForm !== nextForm) {
-//            Ext.each(this.currForm.query('[action="field"]'), function(field) {
-//                field.disable();
-//            });
-//            Ext.each(nextForm.query('[action="field"]'), function(field) {
-//                field.enable();
-//            });
-//            this.currForm.hide();
-//            nextForm.show();
-//            this.currForm = nextForm;
-//        }
     },
 
     onSearch: function(field) {
@@ -808,14 +850,24 @@ Ext.define('App.view.administration.DataManager', {
 
     },
 
-    onRemoveServices: function(grid, rowIndex, colIndex) {
-        var me = this, rec = grid.getStore().getAt(rowIndex);
-        me.activeProblemsStore.remove(rec);
+    addLabObservation:function(){
+        this.labObservationsStore.add({
+            label:'Test',
+            name:'Test',
+            unit:'M/uL (H)',
+            range_start:9999,
+            range_end:9999,
+            threshold:0,
+            notes:'none'
+
+        });
     },
 
-    onRemoveMedications: function(grid, rowIndex, colIndex) {
-        var me = this, rec = grid.getStore().getAt(rowIndex);
-        me.medicationsStore.remove(rec);
+    onRemoveRelation: function(grid, rowIndex) {
+        var me = this,
+            store = grid.getStore(),
+            record = store.getAt(rowIndex);
+        store.remove(record);
     },
 
     /**

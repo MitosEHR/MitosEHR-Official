@@ -449,6 +449,26 @@ class Services
 		return array('totals'=> 1, 'rows'  => $params);
 	}
 
+	//******************************************************************************************************************
+	public function getLabObservations(stdClass $params)
+	{
+
+		return $params;
+	}
+	public function addLabObservations(stdClass $params)
+	{
+
+		return $params;
+	}
+	public function removeLabObservations(stdClass $params)
+	{
+
+		return $params;
+	}
+
+
+
+
 }
 
 //$params = new stdClass();

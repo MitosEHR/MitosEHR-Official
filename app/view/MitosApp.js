@@ -32,7 +32,7 @@ Ext.define('App.view.MitosApp', {
 		'App.classes.combo.Languages',
 		'App.classes.combo.Authorizations',
 		'App.classes.combo.Facilities',
-		'App.classes.combo.TransmitMedthod',
+		'App.classes.combo.TransmitMethod',
 		'App.classes.combo.InsurancePayerType',
 
 

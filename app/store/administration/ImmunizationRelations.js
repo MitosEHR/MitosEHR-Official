@@ -7,8 +7,8 @@
  */
 
 
-Ext.define('App.store.administration.Immunization_Relations', {
-	model: 'App.model.administration.Immunization_Relations',
+Ext.define('App.store.administration.ImmunizationRelations', {
+	model: 'App.model.administration.ImmunizationRelations',
 	extend: 'Ext.data.Store',
     autoLoad  : false,
 	autoSync  : true,
