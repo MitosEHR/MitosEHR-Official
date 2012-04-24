@@ -46,15 +46,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 			return val;
 		}
 
-		function bool(val) {
-			if(val == '0') {
-				return '<img src="ui_icons/no.gif" />';
-			} else if(val == '1') {
-				return '<img src="ui_icons/yes.gif" />';
-			}
-			return val;
-		}
-
 		me.servicesGrid = Ext.create('App.classes.GridPanel', {
 			region : 'center',
 			store  : me.store,
@@ -246,7 +237,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 												icon: 'ui_icons/delete.png',
 												tooltip: 'Remove',
 												scope:me,
-												handler: me.onRemoveServices
+												handler: me.onRemoveRelation
 											}
 										]
 									},
@@ -289,7 +280,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 												icon: 'ui_icons/delete.png',
 												tooltip: 'Remove',
 												scope:me,
-												handler: me.onRemoveMedications
+												handler: me.onRemoveRelation
 											}
 										]
 									},
@@ -332,7 +323,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 												icon: 'ui_icons/delete.png',
 												tooltip: 'Remove',
 												scope:me,
-												handler: me.onRemoveServices
+												handler: me.onRemoveRelation
 											}
 										]
 									},
@@ -755,23 +746,11 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 	},
 
-	onRemoveServices:function(grid, rowIndex, colIndex){
+    onRemoveRelation:function(grid, rowIndex, colIndex){
 		var me = this,
-
-			rec = grid.getStore().getAt(rowIndex);
-
-		me.activeProblemsStore.remove(rec);
-
-
-	},
-	onRemoveMedications:function(grid, rowIndex, colIndex){
-		var me = this,
-
-			rec = grid.getStore().getAt(rowIndex);
-
-		me.medicationsStore.remove(rec);
-
-
+            store = grid.getStore(),
+			record = store.getAt(rowIndex);
+        store.remove(record);
 	},
 
 

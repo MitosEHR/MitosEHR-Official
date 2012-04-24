@@ -21,8 +21,7 @@ Ext.define('App.model.administration.Services', {
 		{name: 'superbill', type: 'string'},
 		{name: 'related_code', type: 'string'},
 		{name: 'taxrates', type: 'string'},
-		{name: 'cyp_factor', type: 'string'},
-		{name: 'active', type: 'string'},
+		{name: 'active', type: 'bool'},
 		{name: 'reportable', type: 'string'},
         ////////////////////////////////////
 		{name: 'sex', type: 'string'},
