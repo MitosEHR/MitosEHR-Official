@@ -12,9 +12,9 @@
  * @namespace Services.addService
  * @namespace Services.updateService
  */
-Ext.define('App.view.administration.Services', {
+Ext.define('App.view.administration.DataManager', {
 	extend       : 'App.classes.RenderPanel',
-	id           : 'panelServices',
+	id           : 'panelDataManager',
 	pageTitle    : 'Services',
 	uses         : [
 		'App.classes.GridPanel',

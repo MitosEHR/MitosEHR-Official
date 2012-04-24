@@ -39,7 +39,7 @@ perm = {
     access_facilities       : <?php print ($ACL->hasPermission('access_facilities')         ? 'true':'false') ?>,
     access_users            : <?php print ($ACL->hasPermission('access_users')              ? 'true':'false') ?>,
     access_practice         : <?php print ($ACL->hasPermission('access_practice')           ? 'true':'false') ?>,
-    access_services         : <?php print ($ACL->hasPermission('access_services')           ? 'true':'false') ?>,
+	access_data_manager     : <?php print ($ACL->hasPermission('access_data_manager')       ? 'true':'false') ?>,
     access_preventive_care  : <?php print ($ACL->hasPermission('access_preventive_care')    ? 'true':'false') ?>,
     access_medications      : <?php print ($ACL->hasPermission('access_medications')        ? 'true':'false') ?>,
     access_roles            : <?php print ($ACL->hasPermission('access_roles')              ? 'true':'false') ?>,
