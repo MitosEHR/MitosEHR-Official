@@ -20,10 +20,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
         var me = this;
 
 
-        me.referenceCptStore = Ext.create('App.store.patientfile.QRCptCodes',{
-//            buffered: true,
-//            pageSize: 100
-        });
+        me.referenceCptStore = Ext.create('App.store.patientfile.QRCptCodes');
 
         me.encounterCptStore = Ext.create('Ext.data.Store', {
             model:'App.model.patientfile.CptCodes',
@@ -273,7 +270,7 @@ Ext.define('App.view.patientfile.encounter.CurrentProceduralTerminology', {
                             itemId:'view',
                             plugins: {
                                 ptype:'gridviewdragdrop',
-                                dropGroup:'CPTGridDDGroup',
+                                dropGroup:'CPTGridDDGroup'
 
                             },
                             listeners:{

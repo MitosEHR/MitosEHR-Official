@@ -163,6 +163,7 @@ Ext.define('App.panel.login.Login',{
             resizable		: false,
             draggable		: false,
             closable		: false,
+            width			: 495,
             bodyStyle		: 'background: #ffffff;',
             items			: [{ xtype: 'box', width: 483, height: 135, html: '<img src="ui_app/logon_header.png" />'}, me.formLogin ],
             listeners:{

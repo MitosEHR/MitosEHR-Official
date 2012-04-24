@@ -256,6 +256,7 @@ class Medical
 	{
 		$this->db->setSQL("SELECT id,
 								  PROPRIETARYNAME,
+								  PRODUCTNDC,
 								  NONPROPRIETARYNAME,
 								  ACTIVE_NUMERATOR_STRENGTH,
 								  ACTIVE_INGRED_UNIT
@@ -276,7 +277,7 @@ class Medical
 									  code_text,
 									  code_text_short
 
-								FROM cvx_codes
+								FROM  immunizations
 								WHERE code_text LIKE '$params->query%'
 								   OR code      LIKE'$params->query%'");
  			$records =$this->db->fetchRecords(PDO::FETCH_ASSOC);

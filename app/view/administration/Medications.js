@@ -212,6 +212,7 @@ Ext.define('App.view.administration.Medications', {
 		this.medicationsGrid.editingPlugin.startEdit(0,0);
 
 	},
+
 	onSearchMedications: function(field) {
 		var me = this,
 			store = me.storeMedications;

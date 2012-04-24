@@ -79,7 +79,7 @@ class Navigation {
                 array( 'text' => 'Facilities',      'disabled'=> ($this->ACL->hasPermission('access_facilities')      ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelFacilities' ),
                 array( 'text' => 'Users',           'disabled'=> ($this->ACL->hasPermission('access_users')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelUsers' ),
                 array( 'text' => 'Practice',        'disabled'=> ($this->ACL->hasPermission('access_practice')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPractice' ),
-                array( 'text' => 'Services',        'disabled'=> ($this->ACL->hasPermission('access_services')        ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelServices' ),
+                array( 'text' => 'Data Manager',     'disabled'=> ($this->ACL->hasPermission('access_data_manager')    ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelDataManager' ),
                 array( 'text' => 'Preventive Care', 'disabled'=> ($this->ACL->hasPermission('access_preventive_care') ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelPreventiveCare' ),
                 array( 'text' => 'Medications',     'disabled'=> ($this->ACL->hasPermission('access_medications')     ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelMedications' ),
                 array( 'text' => 'Roles',           'disabled'=> ($this->ACL->hasPermission('access_roles')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
