@@ -255,6 +255,8 @@ Ext.define('App.classes.grid.RowFormEditor', {
 
     reposition: function(animateConfig) {
 
+        say(animateConfig);
+
         if(this.currRowH) this.currRow.setHeight(this.currRowH);
 
         var me = this,
@@ -341,6 +343,65 @@ Ext.define('App.classes.grid.RowFormEditor', {
         //btnEl.setLeft(left);
     },
 
+    resizeEditor:function(){
+
+        if(this.currRowH) this.currRow.setHeight(this.currRowH);
+
+        var me = this,
+            context = me.context,
+            row = context && Ext.get(context.row),
+            //btns = me.getFloatingButtons(),
+            //btnEl = btns.el,
+            grid = me.editingPlugin.grid,
+            viewEl = grid.view.el,
+            scroller = grid.verticalScroller,
+
+
+            // always get data from ColumnModel as its what drives
+            // the GridView's sizing
+            mainBodyWidth = grid.headerCt.getFullWidth(),
+            scrollerWidth = grid.getWidth(),
+
+            // use the minimum as the columns may not fill up the entire grid
+            // width
+            width = Math.min(mainBodyWidth, scrollerWidth),
+            scrollLeft = grid.view.el.dom.scrollLeft,
+            //btnWidth = btns.getWidth(),
+            //left = (width - btnWidth) / 2 + scrollLeft,
+            y, rowH, newHeight;
+
+
+        // need to set both top/left
+        if (row && Ext.isElement(row.dom)) {
+            // Bring our row into view if necessary, so a row editor that's already
+            // visible and animated to the row will appear smooth
+            row.scrollIntoView(viewEl, false);
+
+            // Get the y position of the row relative to its top-most static parent.
+            // offsetTop will be relative to the table, and is incorrect
+            // when mixed with certain grid features (e.g., grouping).
+            y = row.getXY()[1] + 19;
+
+
+            me.currRowH = row.getHeight();
+            me.currRow = row;
+
+            row.setHeight(me.getHeight() + 19);
+
+            // IE doesn't set the height quite right.
+            // This isn't a border-box issue, it even happens
+            // in IE8 and IE7 quirks.
+            // TODO: Test in IE9!
+            if (Ext.isIE) {
+                newHeight += 2;
+            }
+
+        }
+        if (me.getWidth() != mainBodyWidth) {
+            me.setWidth(mainBodyWidth);
+        }
+    },
+
     getEditor: function(fieldInfo) {
         var me = this;
 
@@ -357,10 +418,16 @@ Ext.define('App.classes.grid.RowFormEditor', {
     setFields: function(column) {
         var me = this,
             form = me.getForm(),
-            fields = form.getFields().items;
+            fields = form.getFields().items,
+            grids = this.query('container');
+
 
         Ext.each(fields, function(field){
             me.mon(field, 'change', me.onFieldValueChange, me);
+        });
+
+        Ext.each(grids, function(grid){
+            me.mon(grid, 'resize', me.resizeEditor, me);
         });
     },
 

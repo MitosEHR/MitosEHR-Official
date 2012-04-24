@@ -555,7 +555,8 @@ Ext.define('App.view.MitosApp', {
 				{
 					xtype            : 'dataview',
 					margin           : '0 0 3 0',
-					hidden           : window.innerWidth >= me.minWidthToFullMode,
+					hidden           : true,
+                    hideMode         : 'offsets',
 					cls              : 'patient-pool-view-footer x-toolbar x-toolbar-default x-box-layout-ct',
 					tpl              : '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>' +
 						'<tpl for=".">' +
