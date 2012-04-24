@@ -25,7 +25,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
         var me = this;
 
-
         me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
             groupField: 'immunization_name',
             sorters   : ['immunization_name', 'administered_date'],
@@ -33,35 +32,35 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         });
         me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies', {
 
-	        listeners: {
-		        scope     : me,
-		        beforesync: me.setDefaults
-	        },
-            autoSync: true
+            listeners: {
+                scope     : me,
+                beforesync: me.setDefaults
+            },
+            autoSync : true
         });
         me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues', {
 
-	        listeners: {
-		        scope     : me,
-		        beforesync: me.setDefaults
-	        },
-            autoSync: true
+            listeners: {
+                scope     : me,
+                beforesync: me.setDefaults
+            },
+            autoSync : true
         });
         me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery', {
 
-	        listeners: {
-		        scope     : me,
-		        beforesync: me.setDefaults
-	        },
-            autoSync: true
+            listeners: {
+                scope     : me,
+                beforesync: me.setDefaults
+            },
+            autoSync : true
         });
         me.patientDentalStore = Ext.create('App.store.patientfile.Dental', {
 
-	        listeners: {
-		        scope     : me,
-		        beforesync: me.setDefaults
-	        },
-            autoSync: true
+            listeners: {
+                scope     : me,
+                beforesync: me.setDefaults
+            },
+            autoSync : true
         });
         me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications', {
 
@@ -102,7 +101,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         header   : 'Manufacturer',
                         width    : 100,
                         dataIndex: 'manufacturer'
-                    }, {
+                    },
+                    {
                         header   : 'Lot Number',
                         width    : 100,
                         dataIndex: 'lot_number'
@@ -163,7 +163,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'Administrator',
                                             name      : 'administered_by',
-                                            width: 260
+                                            width     : 260
 
                                         },
 
@@ -232,19 +232,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             name      : 'note'
 
                                         },
-									    {
+                                        {
                                             fieldLabel: 'Manufacturer',
                                             xtype     : 'textfield',
-										    width: 260,
+                                            width     : 260,
 
-                                            name      : 'manufacturer'
+                                            name: 'manufacturer'
 
                                         },
                                         {
                                             fieldLabel: 'Lot Number',
                                             xtype     : 'textfield',
-	                                        width     : 295,
-	                                        labelWidth: 180,
+                                            width     : 295,
+                                            labelWidth: 180,
                                             name      : 'lot_number'
 
                                         }
@@ -398,7 +398,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
                                         {
                                             xtype     : 'textfield',
-	                                        width     : 260,
+                                            width     : 260,
                                             fieldLabel: 'Referred by',
                                             name      : 'referred_by'
                                         }
@@ -515,7 +515,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             xtype          : 'textfield',
                                             fieldLabel     : 'Type',
-	                                        name           : 'type',
+                                            name           : 'type',
                                             hideLabel      : false,
                                             itemId         : 'medicalissues',
                                             enableKeyEvents: true,
@@ -1058,6 +1058,15 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         }
                     ]
                 })
+            },
+            {
+                /**
+                 * Lab panel
+                 */
+
+                xtype : 'container',
+                action: 'patientLabs',
+                html  : 'Lab Placeholder'
             }
         ];
 
@@ -1123,6 +1132,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         toggleGroup : 'medicalWin',
                         itemId      : 'medications',
                         action      : 'medications',
+                        scope       : me,
+                        handler     : me.cardSwitch
+                    },
+                    '-',
+                    {
+                        text        : 'Laboratories',
+                        enableToggle: true,
+                        toggleGroup : 'medicalWin',
+                        itemId      : 'laboratories',
+                        action      : 'laboratories',
                         scope       : me,
                         handler     : me.cardSwitch
                     },
@@ -1238,6 +1257,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(btn.action == 'medications') {
             layout.setActiveItem(5);
             title = 'Medications';
+
+        } else if(btn.action == 'laboratories') {
+            layout.setActiveItem(6);
+            title = 'Laboratories';
 
         }
 
