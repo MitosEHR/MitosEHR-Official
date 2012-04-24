@@ -615,7 +615,6 @@ Ext.define('App.view.administration.DataManager', {
                 },
                 {
                     xtype  : 'grid',
-                    title  : 'Observations',
                     columns: [
                         { header: 'Description', dataIndex: 'description' },
                         { header: 'Unit', dataIndex: 'unit' },
@@ -623,6 +622,12 @@ Ext.define('App.view.administration.DataManager', {
                         { header: 'Range End', dataIndex: 'range_end' },
                         { header: 'Threshold', dataIndex: 'threshold' },
                         { header: 'Notes', dataIndex: 'threshold' }
+                    ],
+                    tbar:[
+                        {
+                            text:'Add Observation',
+                            iconCls:'icoAddRecord'
+                        }
                     ]
                 }
             ]
@@ -663,7 +668,7 @@ Ext.define('App.view.administration.DataManager', {
                     }
                 }, '-', {
                     text   : 'Add',
-                    iconCls: 'save',
+                    iconCls: 'icoAddRecord',
                     scope  : me,
                     handler: me.onAddData
                 }, '-', {
