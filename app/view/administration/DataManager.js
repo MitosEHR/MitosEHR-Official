@@ -771,7 +771,7 @@ Ext.define('App.view.administration.DataManager', {
         var me = this,
             editor = context.editor,
             code_type = e.record.data.code_type,
-            thisForm;
+            grids, thisForm;
 
         if(code_type == 'CPT4'){
             thisForm = me.cptContainer;
@@ -793,6 +793,16 @@ Ext.define('App.view.administration.DataManager', {
             editor.add(thisForm);
             editor.setFields();
         }
+
+        /**
+         * find grids inside the form and load the its store with the row ID
+         * @type {*}
+         */
+        grids = thisForm.query('grid');
+        Ext.each(grids, function(grid){
+            grid.getStore().load({params:{selectedId:me.getSelectId()}});
+        });
+
         this.currForm = thisForm;
 
     },
@@ -819,7 +829,7 @@ Ext.define('App.view.administration.DataManager', {
     },
 
     onFormTapChange: function(panel, newCard, oldCard) {
-        this.ImmuRelationStore.proxy.extraParams = { code_type: newCard.action, selected_id: this.getSelectId() };
+        this.ImmuRelationStore.proxy.extraParams = { code_type: newCard.action, selectedId: this.getSelectId() };
         this.ImmuRelationStore.load();
     },
 

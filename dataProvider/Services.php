@@ -452,7 +452,7 @@ class Services
 	//******************************************************************************************************************
 	public function getLabObservations(stdClass $params)
 	{
-		$this->db->setSQL("SELECT * FROM labs_observations WHERE lab_id = '%$params->lab_id%'");
+		$this->db->setSQL("SELECT * FROM labs_observations WHERE lab_id = '$params->selectedId'");
 		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		return $records;
 	}
