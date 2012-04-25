@@ -11,12 +11,14 @@ Ext.define('App.model.administration.LabObservations', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'id' },
+		{name: 'lab_id' },
 		{name: 'label' },
 		{name: 'name' },
 		{name: 'unit' },
 		{name: 'range_start' },
 		{name: 'range_end' },
-		{name: 'threshold' }
+		{name: 'threshold' },
+		{name: 'notes' }
 	]
 
 });

@@ -15,6 +15,7 @@ Ext.define('App.store.administration.LabObservations', {
 		api        : {
 			read  : Services.getLabObservations,
 			create: Services.addLabObservations,
+			update: Services.updateLabObservations,
 			destroy: Services.removeLabObservations
 		}
 	},

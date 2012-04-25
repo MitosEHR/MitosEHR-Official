@@ -651,7 +651,7 @@ Ext.define('App.view.administration.DataManager', {
                             dataIndex: 'unit',
                             width:100,
                             editor: {
-                                xtype: 'numberfield'
+                                xtype: 'mitos.unitscombo'
                             }
                         },
                         {
@@ -695,7 +695,6 @@ Ext.define('App.view.administration.DataManager', {
                             handler:me.addLabObservation
                         }
                     ]
-
                 }
             ]
         });
@@ -794,7 +793,6 @@ Ext.define('App.view.administration.DataManager', {
             editor.add(thisForm);
             editor.setFields();
         }
-
         this.currForm = thisForm;
 
     },
@@ -833,7 +831,6 @@ Ext.define('App.view.administration.DataManager', {
             foreign_id     : model[0].data.id,
             immunization_id: this.getSelectId()
         });
-        say(this.ImmuRelationStore);
         field.reset();
     },
 
@@ -845,20 +842,18 @@ Ext.define('App.view.administration.DataManager', {
             foreign_id     : model[0].data.id,
             immunization_id: this.getSelectId()
         });
-        say(this.ImmuRelationStore);
         field.reset();
 
     },
 
     addLabObservation:function(){
         this.labObservationsStore.add({
-            label:'Test',
-            name:'Test',
-            unit:'M/uL (H)',
-            range_start:9999,
-            range_end:9999,
-            threshold:0,
-            notes:'none'
+            lab_id: this.getSelectId(),
+            label:'',
+            name:'',
+            //unit:'M/uL (H)',
+            range_start:'-99999',
+            range_end:'99999'
 
         });
     },
@@ -869,6 +864,11 @@ Ext.define('App.view.administration.DataManager', {
             record = store.getAt(rowIndex);
         store.remove(record);
     },
+
+    getSelectId:function(){
+   		var row = this.dataManagerGrid.getSelectionModel().getLastSelected();
+   		return row.data.id;
+   	},
 
     /**
      * This function is called from MitosAPP.js when

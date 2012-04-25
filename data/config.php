@@ -391,6 +391,9 @@ $API = array(
             'addLabObservations'=>array(
                'len'=>1
             ),
+            'updateLabObservations'=>array(
+               'len'=>1
+            ),
             'removeLabObservations'=>array(
                'len'=>1
             )

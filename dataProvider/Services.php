@@ -452,17 +452,31 @@ class Services
 	//******************************************************************************************************************
 	public function getLabObservations(stdClass $params)
 	{
-
-		return $params;
+		$this->db->setSQL("SELECT * FROM labs_observations WHERE lab_id = '%$params->lab_id%'");
+		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
+		return $records;
 	}
 	public function addLabObservations(stdClass $params)
 	{
-
+		$data = get_object_vars($params);
+		unset($data['id']);
+		$this->db->setSQL($this->db->sqlBind($data, 'labs_observations', 'I'));
+		$this->db->execLog();
+		$params->id = $this->db->lastInsertId;
+		return $params;
+	}
+	public function updateLabObservations(stdClass $params)
+	{
+		$data = get_object_vars($params);
+		unset($data['id']);
+		$this->db->setSQL($this->db->sqlBind($data, 'labs_observations', 'U', "id='$params->id'"));
+		$this->db->execLog();
 		return $params;
 	}
 	public function removeLabObservations(stdClass $params)
 	{
-
+		$this->db->setSQL("DELETE FROM labs_observations WHERE id ='$params->id'");
+		$this->db->execLog();
 		return $params;
 	}
 
