@@ -217,7 +217,7 @@ $API = array(
             'getMedicationLiveSearch'=>array(
                'len'=>1
             ),
-            'getImmunizationsCheck'=>array(
+            'CheckImmunizations'=>array(
                'len'=>1
             )
         ),

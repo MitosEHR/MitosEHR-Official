@@ -8,7 +8,7 @@
 Ext.define('App.store.patientfile.ImmunizationCheck', {
 	extend: 'Ext.data.Store',
 	model     : 'App.model.patientfile.ImmunizationCheck',
-	remoteSort: false,
+	remoteSort: true,
 	autoLoad  : false
 });
 

@@ -24,7 +24,7 @@ Ext.define('App.view.patientfile.Summary', {
         me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
         me.qrCodeWindow = Ext.create('App.view.patientfile.QrCodeWindow');
 
-        me.patientImmuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
+        me.immuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
 
 
         me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
@@ -187,13 +187,13 @@ Ext.define('App.view.patientfile.Summary', {
                         itemId     : 'ImmuPanel',
                         hideHeaders: true,
                         xtype      : 'grid',
-                        store      : me.patientImmuCheckListStore,
+                        store      : me.immuCheckListStore,
                         region     : 'center',
                         columns    : [
                             {
 
                                 header   : 'Name',
-                                dataIndex: 'immunization_name',
+                                dataIndex: 'code_text',
                                 flex     : 1
                             },
                             {
@@ -545,7 +545,7 @@ Ext.define('App.view.patientfile.Summary', {
         });
         this.patientNotesStore.load({params: {pid: app.currPatient.pid}});
         this.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
-        this.patientImmuCheckListStore.load({params: {pid: app.currPatient.pid}});
+        this.immuCheckListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
         this.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});

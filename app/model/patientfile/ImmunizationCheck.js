@@ -18,7 +18,7 @@ Ext.define('App.model.patientfile.ImmunizationCheck', {
 	proxy : {
 		type: 'direct',
 		api : {
-			read: Medical.getImmunizationsCheck
+			read: Medical.CheckImmunizations
 		}
 	}
 });
