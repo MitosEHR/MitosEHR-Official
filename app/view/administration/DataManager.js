@@ -657,7 +657,10 @@ Ext.define('App.view.administration.DataManager', {
                         {
                             header: 'Description',
                             dataIndex: 'description',
-                            flex:1
+                            flex:1,
+                            editor:{
+                                xtype:'textfield'
+                            }
                         }
                     ],
                     tbar:[

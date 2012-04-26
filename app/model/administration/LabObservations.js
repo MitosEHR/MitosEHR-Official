@@ -20,7 +20,7 @@ Ext.define('App.model.administration.LabObservations', {
 		{name: 'loinc_name' },
 		{name: 'default_unit' },
 		{name: 'required_in_panel' },
-		{name: 'threshold' }
+		{name: 'threshold' },
+		{name: 'description' }
 	]
-
 });
