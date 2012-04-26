@@ -12,6 +12,7 @@ Ext.define('App.model.administration.LabObservations', {
 	fields: [
 		{name: 'id' },
 		{name: 'lab_id' },
+		{name: 'observation_element_id' },
 		{name: 'label' },
 		{name: 'name' },
 		{name: 'unit' },

@@ -14,9 +14,9 @@ Ext.define('App.store.administration.LabObservations', {
 		type       : 'direct',
 		api        : {
 			read  : Services.getLabObservations,
-			create: Services.addLabObservations,
-			update: Services.updateLabObservations,
-			destroy: Services.removeLabObservations
+			create: Services.addLabObservation,
+			update: Services.updateLabObservation,
+			destroy: Services.removeLabObservation
 		}
 	},
     autoSync: true,

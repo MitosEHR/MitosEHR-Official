@@ -642,11 +642,6 @@ Ext.define('App.view.administration.DataManager', {
                             }
                         },
                         {
-                            header: 'Name',
-                            dataIndex: 'name',
-                            width:200
-                        },
-                        {
                             header: 'Unit',
                             dataIndex: 'unit',
                             width:100,
@@ -688,6 +683,15 @@ Ext.define('App.view.administration.DataManager', {
                         }
                     ],
                     tbar:[
+                        {
+                            xtype:'labobservationscombo',
+                            fieldLabel:'Add Observation',
+                            width:300,
+                            listeners: {
+                                scope : me,
+                                select: me.onObservationSelect
+                            }
+                        },
                         {
                             text:'Add Observation',
                             iconCls:'icoAddRecord',
@@ -819,6 +823,15 @@ Ext.define('App.view.administration.DataManager', {
         me.code_type = record[0].data.option_value;
         store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.dataQuery};
         me.store.load();
+    },
+
+    onObservationSelect:function(combo, record){
+        say(record[0].data);
+        this.labObservationsStore.add({
+            lab_id: this.getSelectId(),
+            observation_element_id:record[0].data.id
+        });
+        combo.reset();
     },
 
     onActivePressed: function(btn, pressed) {
