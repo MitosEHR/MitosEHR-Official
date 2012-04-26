@@ -126,10 +126,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 ],
 
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
-                    autoCancel  : false,
+	                autoCancel  : false,
                     errorSummary: false,
                     clicksToEdit: 1,
-                    enableRemove: true,
                     formItems   : [
 
                         {
@@ -1165,45 +1164,20 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         me.callParent(arguments);
     },
 
-    onCancel: function(btn) {
-        var me = this, panel, form;
-        if(btn.itemId == 'CancelImmunization') {
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-            form = panel.down('form').getForm();
-        } else {
-            panel = me.getLayout().getActiveItem().down('form');
-            form = panel.getForm();
-        }
-        me.closeImmunizationGrid();
-
-        panel.collapse();
-        panel.hide();
-        form.reset();
-    },
-
-    closeImmunizationGrid: function() {
-        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
-        grid[0].collapse();
-    },
-
-    openImmunizationGrid: function() {
-        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
-        grid[0].expand();
-    },
-
-    onCodeFieldFocus: function() {
-        this.openImmunizationGrid();
-    },
 
     onOptionType: function(val, model) {
         var value = model[0].data.code, titlefield = val.up('form').query('textfield[action="immuCode"]');
 
         titlefield[0].setValue(value);
+
+	    this.patientImmuListStore.add({
+		    immunization_id:model[0].data.id
+	    });
     },
 
     onAddItem: function() {
 
-        var grid = this.getLayout().getActiveItem(), store = grid.store, data;
+        var grid = this.getLayout().getActiveItem(), store = grid.store;
 
         grid.editingPlugin.cancelEdit();
         store.insert(0, {

@@ -298,14 +298,98 @@ class Medical
 	{
 		$this->db->setSQL("SELECT * FROM patient_immunizations WHERE pid='$pid'");
 
-		$records = array();
-		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date'] == null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
-			$records[]= $rec;
-		}
-		return $records;
+		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
 
+//&& $this->check_sex($pid) == true
+    private function getImmunizationsCheck($pid)
+	{
+		$this->db->setSQL("SELECT * FROM immunizations");
+
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+			$rec['alert'] = ($this->check_age($pid) == true  ) ? 1 : 0 ;
+			if($rec['alert'] == false)
+            $records[]= $rec;
+		}
+
+		return $records;
+	}
+    private function check_age($pid){
+
+        $this->db->setSQL("SELECT DOB
+                           FROM patient_data
+                           WHERE pid ='$pid'");
+        $DOB = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+        $age =$this ->ages($DOB['DOB']);
+
+        $this->db->setSQL("SELECT age_start,
+                                  age_end
+                           FROM immunizations");
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $immu){
+
+            if( $age >= $immu['age_start']){
+                return false;
+            }
+            elseif( $age <= $immu['age_end']){
+                return false;
+            }
+            else{
+
+                return true;
+            }
+
+        }
+
+    }
+    /**
+     * @param $birthday
+     * @return array
+     */
+
+    private function ages ($birthday){
+        list($year,$month,$day) = explode("-",$birthday);
+        $year_diff  = date("Y") - $year;
+        $month_diff = date("m") - $month;
+        $day_diff   = date("d") - $day;
+        if ($day_diff < 0 || $month_diff < 0)
+            $year_diff--;
+        return $year_diff;
+    }
+
+    /**
+     * @param $pid
+     * @return array
+     */
+//    private function check_sex($pid){
+//
+//        $this->db->setSQL("SELECT sex
+//                           FROM patient_data
+//                           WHERE pid ='$pid'");
+//        $DOB = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+//
+//        $age =$this ->ages($DOB['DOB']);
+//
+//        $this->db->setSQL("SELECT age_start,
+//                                  age_end
+//                           FROM immunizations");
+//        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $immu){
+//
+//            if( $age >= $immu['age_start']){
+//                return false;
+//            }
+//            elseif( $age <= $immu['age_end']){
+//                return false;
+//            }
+//            else{
+//
+//                return true;
+//            }
+//
+//        }
+//
+//    }
 	/**
 	 * @param $eid
 	 * @return array
