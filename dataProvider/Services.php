@@ -450,20 +450,20 @@ class Services
 	}
 
 	//******************************************************************************************************************
-
-
 	public function getAllLabs(stdClass $params)
 	{
 
 		$sortX = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'sequence ASC';
 		$records = array();
-		$this->db->setSQL("SELECT id,
-								  parent_id,
-								  parent_loinc,
-								  sequence,
-								  parent_name AS code_text,
-								  loinc_number AS code
-						     FROM labs_observations
+		$this->db->setSQL("SELECT lp.id,
+								  lp.parent_id,
+								  lp.parent_loinc,
+								  lp.sequence,
+								  lp.default_unit,
+								  lp.parent_name AS code_text,
+								  lp.loinc_number AS code
+						     FROM labs_panels AS lp
+						     LEFT JOIN labs_loinc AS loinc on loinc.LOINC_NUM = lp.parent_loinc
 						    WHERE parent_name LIKE '%$params->query%'
 					          AND id = parent_id
 					     ORDER BY $sortX");
@@ -477,50 +477,51 @@ class Services
 		return array('totals'=> $total, 'rows'  => $records);
 	}
 
-	public function getAllLabObservations(stdClass $params)
-	{
-		$this->db->setSQL("SELECT * FROM labs_observations_elements");
-		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
-		return $records;
-	}
 	public function getLabObservations(stdClass $params)
 	{
-		$this->db->setSQL("SELECT loe.*
-							 FROM labs_observations_elements AS loe
-					    LEFT JOIN labs_observations AS lo ON loe.id = lo.observation_element_id
-					        WHERE lo.lab_id = '$params->selectedId'");
-		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
+		$records = array();
+		$this->db->setSQL("SELECT lp.*,
+							      loinc.SUBMITTED_UNITS
+							 FROM labs_panels AS lp
+						LEFT JOIN labs_loinc AS loinc ON lp.loinc_number = loinc.LOINC_NUM
+					        WHERE lp.parent_id = '$params->selectedId'
+					          AND lp.id != lp.parent_id
+				         ORDER BY sequence");
+		foreach($this->db->fetchRecords(PDO::FETCH_CLASS) as $row){
+			$row->default_unit = ($row->default_unit != null) ? $row->default_unit : $row->SUBMITTED_UNITS;
+			$records[] = $row;
+		}
 		return $records;
 	}
 	public function addLabObservation(stdClass $params)
 	{
-		$data = get_object_vars($params);
-		unset($data['id']);
-		foreach($data as $key => $val){
-			if($val == null || $val == '') unset($data[$key]);
-		}
-		$this->db->setSQL($this->db->sqlBind($data, 'labs_observations', 'I'));
-		$this->db->execLog();
-		return $this->getLabObservationElementById($params->observation_element_id);
+//		$data = get_object_vars($params);
+//		unset($data['id']);
+//		foreach($data as $key => $val){
+//			if($val == null || $val == '') unset($data[$key]);
+//		}
+//		$this->db->setSQL($this->db->sqlBind($data, 'labs_observations', 'I'));
+//		$this->db->execLog();
+//		return $this->getLabObservationElementById($params->observation_element_id);
 	}
 	public function updateLabObservation(stdClass $params)
 	{
-		$data = get_object_vars($params);
-		unset($data['id']);
-		$this->db->setSQL($this->db->sqlBind($data, 'labs_observations', 'U', "id='$params->id'"));
-		$this->db->execLog();
+//		$data = get_object_vars($params);
+//		unset($data['id']);
+//		$this->db->setSQL($this->db->sqlBind($data, 'labs_observations', 'U', "id='$params->id'"));
+//		$this->db->execLog();
 		return $params;
 	}
 	public function removeLabObservation(stdClass $params)
 	{
-		$this->db->setSQL("DELETE FROM labs_observations WHERE id ='$params->id'");
-		$this->db->execLog();
+//		$this->db->setSQL("DELETE FROM labs_observations WHERE id ='$params->id'");
+//		$this->db->execLog();
 		return $params;
 	}
 	public function getLabObservationElementById($id)
 	{
-		$this->db->setSQL("SELECT * FROM labs_observations_elements WHERE id = '$$id'");
-		return $this->db->fetchRecords(PDO::FETCH_CLASS);
+//		$this->db->setSQL("SELECT * FROM labs_observations_elements WHERE id = '$$id'");
+//		return $this->db->fetchRecords(PDO::FETCH_CLASS);
 	}
 
 

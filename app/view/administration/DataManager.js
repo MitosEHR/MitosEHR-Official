@@ -578,8 +578,10 @@ Ext.define('App.view.administration.DataManager', {
          */
         me.labContainer = Ext.create('Ext.container.Container', {
             action: 'Laboratories',
-            //hidden: true,
-            layout: 'vbox',
+            layout: {
+                type:'vbox',
+                align:'stretch'
+            },
             items : [
                 {
                     /**
@@ -622,64 +624,40 @@ Ext.define('App.view.administration.DataManager', {
                     }),
                     columns: [
                         {
-                            xtype:'actioncolumn',
-                            width:20,
-                            items: [
-                                {
-                                    icon: 'ui_icons/delete.png',
-                                    tooltip: 'Remove',
-                                    scope:me,
-                                    handler: me.onRemoveRelation
-                                }
-                            ]
-                        },
-                        {
                             header: 'Label',
                             dataIndex: 'label',
                             width:200,
-                            editor: {
-                                xtype: 'textfield'
+                            editor:{
+                                xtype:'textfield'
                             }
                         },
                         {
-                            header: 'Unit',
-                            dataIndex: 'unit',
+                            header: 'Loinc Name',
+                            dataIndex: 'loinc_name',
+                            width:200
+                        },
+                        {
+                            header: 'Loinc Number',
+                            dataIndex: 'loinc_number',
+                            width:100
+                        },
+                        {
+                            header: 'Default Unit',
+                            dataIndex: 'default_unit',
                             width:100,
-                            editor: {
-                                xtype: 'mitos.unitscombo'
+                            editor:{
+                                xtype:'mitos.unitscombo'
                             }
                         },
                         {
-                            header: 'Range Start',
-                            dataIndex: 'range_start',
-                            width:100,
-                            editor: {
-                                xtype: 'numberfield'
-                            }
+                            header: 'Required?',
+                            dataIndex: 'required_in_panel',
+                            width:100
                         },
                         {
-                            header: 'Range End',
-                            dataIndex: 'range_end',
-                            width:100,
-                            editor: {
-                                xtype: 'numberfield'
-                            }
-                        },
-                        {
-                            header: 'Threshold',
-                            dataIndex: 'threshold',
-                            width:100,
-                            editor: {
-                                xtype: 'numberfield'
-                            }
-                        },
-                        {
-                            header: 'Notes',
-                            dataIndex: 'notes',
-                            flex:1,
-                            editor: {
-                                xtype: 'textfield'
-                            }
+                            header: 'Description',
+                            dataIndex: 'description',
+                            flex:1
                         }
                     ],
                     tbar:[
