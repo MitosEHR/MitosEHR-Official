@@ -11,7 +11,7 @@ Ext.define('App.model.administration.LabObservations', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'id' },
-        {name: 'label' },
+        {name: 'code_text_short' },
 		{name: 'parent_id' },
 		{name: 'parent_loinc' },
 		{name: 'parent_name' },
@@ -19,8 +19,10 @@ Ext.define('App.model.administration.LabObservations', {
 		{name: 'loinc_number' },
 		{name: 'loinc_name' },
 		{name: 'default_unit' },
+		{name: 'range_start' },
+		{name: 'range_end' },
 		{name: 'required_in_panel' },
-		{name: 'threshold' },
-		{name: 'description' }
+		{name: 'description' },
+		{name: 'active', type:'bool' }
 	]
 });

@@ -399,6 +399,9 @@ $API = array(
             ),
             'removeLabObservation'=>array(
                'len'=>1
+            ),
+            'getActiveLaboratoryTypes'=>array(
+               'len'=>0
             )
         )
     ),

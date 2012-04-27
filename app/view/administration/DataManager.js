@@ -593,40 +593,33 @@ Ext.define('App.view.administration.DataManager', {
                     items   : [
                         {
                             xtype     : 'textfield',
-                            fieldLabel: 'Laboratory Name',
-                            name      : 'code_text',
+                            fieldLabel: 'Short Name (alias)',
+                            name      : 'code_text_short',
                             labelWidth: 130,
-                            width     : 703
-                        },
-                        {
-                            xtype     : 'textfield',
-                            fieldLabel: 'Code',
-                            name      : 'code',
-                            width     : 130,
-                            labelWidth: 30
-
+                            width     : 500
                         },
                         {
                             xtype     : 'mitos.checkbox',
-                            fieldLabel: 'Active',
+                            fieldLabel: 'Active?',
                             name      : 'active',
-                            width     : 100,
-                            labelWidth: 30
+                            anchor     : '100%',
+                            labelWidth: 50
 
                         }
                     ]
                 },
                 {
                     xtype  : 'grid',
+                    frame:true,
                     store:me.labObservationsStore,
                     plugins: Ext.create('Ext.grid.plugin.CellEditing', {
                         clicksToEdit: 2
                     }),
                     columns: [
                         {
-                            header: 'Label',
-                            dataIndex: 'label',
-                            width:200,
+                            header: 'Label (alias)',
+                            dataIndex: 'code_text_short',
+                            width:100,
                             editor:{
                                 xtype:'textfield'
                             }
@@ -650,9 +643,25 @@ Ext.define('App.view.administration.DataManager', {
                             }
                         },
                         {
-                            header: 'Required?',
+                            header: 'Req / Opt',
                             dataIndex: 'required_in_panel',
-                            width:100
+                            width:75
+                        },
+                        {
+                            header: 'Range Start',
+                            dataIndex: 'range_start',
+                            width:100,
+                            editor:{
+                                xtype:'numberfield'
+                            }
+                        },
+                        {
+                            header: 'Range End',
+                            dataIndex: 'range_end',
+                            width:100,
+                            editor:{
+                                xtype:'numberfield'
+                            }
                         },
                         {
                             header: 'Description',
@@ -662,24 +671,24 @@ Ext.define('App.view.administration.DataManager', {
                                 xtype:'textfield'
                             }
                         }
-                    ],
-                    tbar:[
-                        {
-                            xtype:'labobservationscombo',
-                            fieldLabel:'Add Observation',
-                            width:300,
-                            listeners: {
-                                scope : me,
-                                select: me.onObservationSelect
-                            }
-                        },
-                        {
-                            text:'Add Observation',
-                            iconCls:'icoAddRecord',
-                            scope:me,
-                            handler:me.addLabObservation
-                        }
                     ]
+//                    tbar:[
+//                        {
+//                            xtype:'labobservationscombo',
+//                            fieldLabel:'Add Observation',
+//                            width:300,
+//                            listeners: {
+//                                scope : me,
+//                                select: me.onObservationSelect
+//                            }
+//                        },
+//                        {
+//                            text:'Add Observation',
+//                            iconCls:'icoAddRecord',
+//                            scope:me,
+//                            handler:me.addLabObservation
+//                        }
+//                    ]
                 }
             ]
         });
@@ -687,11 +696,42 @@ Ext.define('App.view.administration.DataManager', {
         me.dataManagerGrid = Ext.create('App.classes.GridPanel', {
             region : 'center',
             store  : me.store,
+            viewConfig:{
+                loadMask:true
+            },
             columns: [
-                { width: 100, header: 'Code Type', sortable: true, dataIndex: 'code_type', renderer: code_type },
-                { width: 100, header: 'Code', sortable: true, dataIndex: 'code' },
-                { flex: 1, header: 'Name / Description', sortable: true, dataIndex: 'code_text' },
-                { width: 60, header: 'Active?', sortable: true, dataIndex: 'active', renderer: me.boolRenderer }
+                {
+                    width: 100,
+                    header: 'Code Type',
+                    sortable: true,
+                    dataIndex: 'code_type',
+                    renderer: code_type
+                },
+                {
+                    width: 100,
+                    header: 'Code',
+                    sortable: true,
+                    dataIndex: 'code'
+                },
+                {
+                    header: 'Short Name',
+                    dataIndex: 'code_text_short',
+                    width:100,
+                    flex: 1
+                },
+                {
+                    header: 'Long Name',
+                    sortable: true,
+                    dataIndex: 'code_text',
+                    flex: 2
+                },
+                {
+                    width: 60,
+                    header: 'Active?',
+                    sortable: true,
+                    dataIndex: 'active',
+                    renderer: me.boolRenderer
+                }
             ],
             plugins: Ext.create('App.classes.grid.RowFormEditing', {
                 autoCancel  : false,
@@ -747,9 +787,17 @@ Ext.define('App.view.administration.DataManager', {
 
     onAddData: function() {
         var me = this;
-        me.dataManagerGrid.plugins[0].cancelEdit();
-        me.store.add({code_type:me.code_type});
-        me.dataManagerGrid.plugins[0].startEdit(0,0);
+        if(me.code_type == 'Laboratories'){
+            Ext.Msg.alert('Opps!',
+                'Sorry, Unable to add laboratories. Laboratory data are pre-loaded using<br>' +
+                'Logical Observation Identifiers Names and Codes (LOINC)<br>' +
+                'visit <a href="http://loinc.org/" target="_blank">loinc.org</a> for more info.');
+        }else{
+            me.dataManagerGrid.plugins[0].cancelEdit();
+            me.store.add({code_type:me.code_type});
+            me.dataManagerGrid.plugins[0].startEdit(0,0);
+        }
+
     },
 
     beforeServiceEdit: function(context, e) {

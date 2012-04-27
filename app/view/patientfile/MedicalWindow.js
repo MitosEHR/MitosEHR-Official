@@ -70,6 +70,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             },
             autoSync : true
         });
+        me.labPanelsStore = Ext.create('App.store.patientfile.LaboratoryTypes');
 
         me.items = [
             {
@@ -1063,10 +1064,95 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 /**
                  * Lab panel
                  */
-
                 xtype : 'container',
                 action: 'patientLabs',
-                html  : 'Lab Placeholder'
+                layout:'border',
+                items:[
+                    {
+                        xtype:'panel',
+                        region:'north',
+                        layout:'border',
+                        bodyBorder:false,
+                        border:false,
+                        height:300,
+                        split:true,
+                        items:[
+                            {
+                                xtype:'grid',
+                                region:'west',
+                                width:200,
+                                split:true,
+                                store:me.labPanelsStore,
+                                columns:[
+                                    {
+                                        header:'Laboratories',
+                                        dataIndex:'label',
+                                        flex:1
+                                    }
+                                ]
+                            },
+                            {
+                                xtype:'panel',
+                                title:'Laboratory Preview',
+                                region:'center',
+                                flex:1
+                            }
+                        ],
+                        tbar:[
+                            '->',
+                            {
+                                text:'Scan'
+                            },
+                            {
+                                text:'Upload'
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'container',
+                        region:'center',
+                        layout:'border',
+                        split:true,
+                        items:[
+                            {
+                                xtype:'form',
+                                title:'Laboratory Entry Form',
+                                region:'west',
+                                width:200,
+                                split:true
+                            },
+                            {
+                                xtype:'grid',
+                                region:'center',
+                                height:300,
+                                split:true,
+                                columns:[
+                                    {
+                                        header:'Date'
+                                    },
+                                    {
+                                        header:'Sing By'
+                                    },
+                                    {
+                                        header:'Provider'
+                                    },
+                                    {
+                                        header:'WBC'
+                                    },
+                                    {
+                                        header:'RBC'
+                                    },
+                                    {
+                                        header:'Puta'
+                                    },
+                                    {
+                                        header:'status'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ];
 
@@ -1232,8 +1318,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
     cardSwitch: function(btn) {
-        var layout = this.getLayout(), title;
+        var layout = this.getLayout(),
+            addBtn = this.down('toolbar').query('[action="AddRecord"]')[0],
+            title;
 
+        addBtn.show();
         if(btn.action == 'immunization') {
             layout.setActiveItem(0);
             title = 'Immunizations';
@@ -1261,7 +1350,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(btn.action == 'laboratories') {
             layout.setActiveItem(6);
             title = 'Laboratories';
-
+            addBtn.hide();
         }
 
         this.setTitle(app.currPatient.name + ' - Medical Window ( ' + title + ' )');
@@ -1269,6 +1358,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
     onMedicalWinShow: function() {
+        this.labPanelsStore.load();
         this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});

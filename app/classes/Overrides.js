@@ -129,6 +129,17 @@ Ext.override(Ext.layout.ContextItem, {
     }
 
 });
+
+Ext.override(Ext.view.AbstractView, {
+    onRender: function() {
+        var me = this;
+        me.callOverridden(arguments);
+        if (me.loadMask && Ext.isObject(me.store)) {
+            me.setMaskBind(me.store);
+        }
+    }
+});
+
 Ext.override(Ext.data.Field, {
 	useNull: true
 
