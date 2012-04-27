@@ -1,0 +1,629 @@
+<html xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 4.5.1 - Barbecue Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td colspan="2" align="right"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - Barbecue Sample (version 4.5.1)</span></td><td align="right"><img src="../../resources/jasperreports.png" border="0"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how barcodes could be included in reports using the Barbecue component.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%204.5.1/jasperreports-4.5.1-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://jasperforge.org/scm/viewvc.php/tags/jr-4-5-1/jasperreports/demo/samples/barbecue/?root=jasperreports" target="_blank">Browse Sample Source Files on SVN</a></span>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#barbecue">Barcodes (Barbecue Custom Component)</a></span></td>
+</tr>
+<tr>
+<td colspan="2">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Secondary Features</span></td>
+</tr>
+<tr>
+<td></td><td><span class="element"><a href="../barcode4j/index.html#barcodes">Barcodes</a></span></td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="6" align="right"><a name="barbecue"></a><a href="#top" class="toc">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img src="../../resources/jr-16x16.png" border="0"></td><td colspan="4"><span class="name">Barcodes (Barbecue Custom Component)</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:shertage@users.sourceforge.net" class="copy">Sanda Zaharia</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+Shows how to render barcodes in a report, using the barcode component based on the <a href="http://barbecue.sourceforge.net" target="_blank" class="element">Barbecue</a> library.
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">3.5.2</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+<b>The Barbecue Library</b>
+
+<br>
+
+<br>
+As shown in the <a href="../barcode4j/index.html#barcodes" target="_blank" class="element">Barcodes</a> section, the use of barcodes became universal. Depending on particular needs, 
+there are several barcode specifications, called symbologies. This sample illustrates how to use the built-in component based on the open source 
+<a href="http://barbecue.sourceforge.net" target="_blank" class="element">Barbecue</a> library. 
+<br>
+
+<br>
+The <span class="code"><code>Barbecue</code></span> library supports the following barcode formats:
+<ul>
+
+<li>
+<span class="code"><code>2 of 7 (Codabar)</code></span>
+</li>
+
+<li>
+<span class="code"><code>3 of 9 (Code 39)</code></span>
+</li>
+
+<li>
+<span class="code"><code>Bookland</code></span>
+</li>
+
+<li>
+<span class="code"><code>Codabar</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code 128</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code 128A</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code 128B</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code 128C</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code 39</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code 39 (Extended)</code></span>
+</li>
+
+<li>
+<span class="code"><code>EAN 128</code></span>
+</li>
+
+<li>
+<span class="code"><code>EAN 13</code></span>
+</li>
+
+<li>
+<span class="code"><code>Global Trade Item Number</code></span>
+</li>
+
+<li>
+<span class="code"><code>Interleave 2 of 5</code></span>
+</li>
+
+<li>
+<span class="code"><code>Monarch</code></span>
+</li>
+
+<li>
+<span class="code"><code>NW7</code></span>
+</li>
+
+<li>
+<span class="code"><code>PDF417</code></span>
+</li>
+
+<li>
+<span class="code"><code>PostNet</code></span>
+</li>
+
+<li>
+<span class="code"><code>Random Weight UPCA</code></span>
+</li>
+
+<li>
+<span class="code"><code>SCC-14 Shipping Code</code></span>
+</li>
+
+<li>
+<span class="code"><code>Shipment Identification Number</code></span>
+</li>
+
+<li>
+<span class="code"><code>SSCC-18</code></span>
+</li>
+
+<li>
+<span class="code"><code>Standard 2 of 5</code></span>
+</li>
+
+<li>
+<span class="code"><code>UCC 128</code></span>
+</li>
+
+<li>
+<span class="code"><code>UPCA</code></span>
+</li>
+
+<li>
+<span class="code"><code>USD-3</code></span>
+</li>
+
+<li>
+<span class="code"><code>USD-4</code></span>
+</li>
+
+<li>
+<span class="code"><code>USPS</code></span>
+</li>
+
+</ul>
+It also provides support for multiple output formats:
+<ul>
+
+<li>
+<span class="code"><code>PNG</code></span>
+</li>
+
+<li>
+<span class="code"><code>GIF</code></span>
+</li>
+
+<li>
+<span class="code"><code>JPEG</code></span>
+</li>
+
+</ul>
+
+<b>The Barbecue Component</b>
+
+<br>
+
+<br>
+According to the <a href="../../components.schema.reference.html#barbecue" target="_blank" class="element">barbecue</a> element in the 
+<a href="../../components.schema.reference.html" target="_blank" class="element">components.xsd</a> schema, to completely determine a barcode, the following 
+pieces are needed:
+<br>
+
+<br>
+Elements:
+<ul>
+
+<li>
+<span class="code"><code>codeExpression</code></span> - representing the alphanumeric character sequence for the barcode</li>
+
+<li>
+<span class="code"><code>applicationIdentifierExpression</code></span> - useful when the 
+<a href="http://barbecue.sourceforge.net/apidocs/net/sourceforge/barbecue/linear/ean/UCCEAN128Barcode.html" target="_blank" class="element">UCCEAN128Barcode</a>
+class is involved, to distinguis between various barcode providers.</li>
+
+<li>
+<span class="code"><code></code></span>
+</li>
+
+<li>
+<span class="code"><code></code></span>
+</li>
+
+<li>
+<span class="code"><code></code></span>
+</li>
+
+<li>
+<span class="code"><code></code></span>
+</li>
+
+</ul>
+Attributes:
+<ul>
+
+<li>
+<span class="code"><code>type</code></span> - determines the symbology used to generate the barcode. Allowed values are:
+<ul>
+
+<li>
+<span class="code"><code>2of7</code></span>
+</li>
+
+<li>
+<span class="code"><code>3of9</code></span>
+</li>
+
+<li>
+<span class="code"><code>Bookland</code></span>
+</li>
+
+<li>
+<span class="code"><code>Codabar</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code128</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code128A</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code128B</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code128C</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code39</code></span>
+</li>
+
+<li>
+<span class="code"><code>Code39 (Extended)</code></span>
+</li>
+
+<li>
+<span class="code"><code>EAN128</code></span>
+</li>
+
+<li>
+<span class="code"><code>EAN13</code></span>
+</li>
+
+<li>
+<span class="code"><code>GlobalTradeItemNumber</code></span>
+</li>
+
+<li>
+<span class="code"><code>Int2of5</code></span>
+</li>
+
+<li>
+<span class="code"><code>Monarch</code></span>
+</li>
+
+<li>
+<span class="code"><code>NW7</code></span>
+</li>
+
+<li>
+<span class="code"><code>PDF417</code></span>
+</li>
+
+<li>
+<span class="code"><code>PostNet</code></span>
+</li>
+
+<li>
+<span class="code"><code>RandomWeightUPCA</code></span>
+</li>
+
+<li>
+<span class="code"><code>SCC14ShippingCode</code></span>
+</li>
+
+<li>
+<span class="code"><code>ShipmentIdentificationNumber</code></span>
+</li>
+
+<li>
+<span class="code"><code>SSCC18</code></span>
+</li>
+
+<li>
+<span class="code"><code>Std2of5</code></span>
+</li>
+
+<li>
+<span class="code"><code>UCC128</code></span>
+</li>
+
+<li>
+<span class="code"><code>UPCA</code></span>
+</li>
+
+<li>
+<span class="code"><code>USD3</code></span>
+</li>
+
+<li>
+<span class="code"><code>USD4</code></span>
+</li>
+
+<li>
+<span class="code"><code>USPS</code></span>
+</li>
+
+</ul>
+
+</li>
+
+<li>
+<span class="code"><code>drawText</code></span> - specifies whether the text information should be visible in the generated barcode</li>
+
+<li>
+<span class="code"><code>checksumRequired</code></span> - specifies whether the checksum is required for the barcode</li>
+
+<li>
+<span class="code"><code>barWidth</code></span> - represents the width (in pixels) of the thinnest bar in the barcode</li>
+
+<li>
+<span class="code"><code>barHeight</code></span> - represents the height (in pixels) for the bars in the barcode</li>
+
+<li>
+<span class="code"><code>evaluationTime</code></span> - represents the report element evaluation time</li>
+
+<li>
+<span class="code"><code>evaluationGroup</code></span> - represents the report element evaluation group name</li>
+
+<li>
+<span class="code"><code>rotation</code></span> - represents the type of orientation for the barcode object.Allowed values are:
+<ul>
+
+<li>
+<span class="code"><code>None</code></span>
+</li>
+
+<li>
+<span class="code"><code>Left</code></span>
+</li>
+
+<li>
+<span class="code"><code>Right</code></span>
+</li>
+
+<li>
+<span class="code"><code>UpsideDown</code></span>
+</li>
+
+</ul>
+
+</li>
+
+</ul>
+
+<b>The Barbecue Sample</b>
+
+<br>
+
+<br>
+The sample shows how can be used the <span class="code"><code>barbecue</code></span> component to compute various barcodes:
+<pre>
+&lt;parameter name="Code" class="java.lang.String"&gt;
+  &lt;defaultValueExpression&gt;&lt;![CDATA["01234567890"]] &gt;&lt;/defaultValueExpression&gt;
+&lt;/parameter&gt;
+...
+&lt;componentElement&gt;
+  &lt;reportElement x="0" y="100" width="400" height="50"/&gt;
+  &lt;c:barbecue xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" 
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components 
+    http://jasperreports.sourceforge.net/xsd/components.xsd" 
+    type="Code128" 
+    drawText="true" 
+    checksumRequired="false"&gt;
+    &lt;c:codeExpression&gt;&lt;![CDATA["JasperReports"]] &gt;&lt;/c:codeExpression&gt;
+  &lt;/c:barbecue&gt;
+&lt;/componentElement&gt;
+&lt;componentElement&gt;
+  &lt;reportElement x="0" y="160" width="400" height="50"/&gt;
+  &lt;c:barbecue xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" 
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components 
+    http://jasperreports.sourceforge.net/xsd/components.xsd" 
+    type="Codabar" 
+    drawText="true" 
+    checksumRequired="false"&gt;
+    &lt;c:codeExpression&gt;&lt;![CDATA[$P{Code}]] &gt;&lt;/c:codeExpression&gt;
+  &lt;/c:barbecue&gt;
+&lt;/componentElement&gt;
+&lt;componentElement&gt;
+  &lt;reportElement x="0" y="220" width="400" height="50"/&gt;
+  &lt;c:barbecue xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" 
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components 
+    http://jasperreports.sourceforge.net/xsd/components.xsd" 
+    type="Int2of5" 
+    drawText="true" 
+    checksumRequired="true" 
+    barWidth="3" 
+    barHeight="20"&gt;
+    &lt;c:codeExpression&gt;&lt;![CDATA[$P{Code}]] &gt;&lt;/c:codeExpression&gt;
+  &lt;/c:barbecue&gt;
+&lt;/componentElement&gt;
+&lt;componentElement&gt;
+  &lt;reportElement x="0" y="280" width="400" height="50"/&gt;
+  &lt;c:barbecue xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" 
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components 
+    http://jasperreports.sourceforge.net/xsd/components.xsd" 
+    type="Std2of5" 
+    drawText="false" 
+    checksumRequired="false"&gt;
+    &lt;c:codeExpression&gt;&lt;![CDATA[$P{Code}]] &gt;&lt;/c:codeExpression&gt;
+  &lt;/c:barbecue&gt;
+&lt;/componentElement&gt;
+...</pre>
+
+<b>Running the Sample</b>
+
+<br>
+
+<br>
+Running the sample requires the <a href="http://ant.apache.org/" target="_blank" class="element">Apache Ant</a> library. Make sure that <span class="code"><code>ant</code></span> is already installed on your system (version 1.5 or later).
+<br>
+In a command prompt/terminal window set the current folder to <span class="code"><code>demo/samples/barbecue</code></span> within the JasperReports source project and run the <span class="code"><code>&gt; ant test view</code></span> command.
+<br>
+It will generate all supported document types containing the sample report in the <span class="code"><code>demo/samples/barbecue/build/reports</code></span> directory. 
+<br>
+Then the report will open in the JasperReports internal viewer.
+
+    </span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-2011 Jaspersoft Corporation <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>
