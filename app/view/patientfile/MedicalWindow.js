@@ -1143,6 +1143,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                             {
                                 xtype:'grid',
                                 region:'center',
+                                action:'labsResultsGrid',
                                 height:300,
                                 split:true,
                                 columns:[
@@ -1271,15 +1272,29 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
     onLabPanelSelected:function(grid, model){
         var me = this,
-            formPanel = me.query('[action="patientLabs"]')[0].down('form');
+            formPanel = me.query('[action="patientLabs"]')[0].down('form'),
+            gridPanel = me.query('[action="labsResultsGrid"]')[0],
+            store = gridPanel.store,
+            columns = [];
+
+        columns.push({
+            xtype:'gridcolumn',
+            header:'Date',
+            dataIndex:'date'
+        },
+        {
+            xtype:'gridcolumn',
+            header:'Provider',
+            dataIndex:'provider'
+        });
+
 
         formPanel.removeAll();
         Ext.each(model.data.fields, function(field){
-            say(field);
             formPanel.add({
                 xtype:'fieldcontainer',
                 layout:'hbox',
-                //width:250,
+                margin:0,
                 anchor:'100%',
                 items:[
                     {
@@ -1292,11 +1307,20 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     },
                     {
                         xtype:'mitos.unitscombo',
+                        value: field.default_unit,
                         width:90
                     }
                 ]
             });
+
+            columns.push(Ext.create('Ext.grid.column.Column',{
+                header :field.code_text_short || field.loinc_name,
+                dataIndex:field.loinc_number
+
+            }))
         });
+
+        gridPanel.reconfigure(store,columns);
 
     },
 
