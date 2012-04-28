@@ -31,7 +31,7 @@ Ext.define('App.classes.combo.Units', {
 			queryMode   : 'local',
 			valueField  : 'option_value',
 			displayField: 'option_name',
-			emptyText   : 'Select',
+			//emptyText   : 'Select',
 			store       : me.store
 		}, null);
 		me.callParent(arguments);

@@ -525,10 +525,10 @@ class Services
 //		$this->db->execLog();
 		return $params;
 	}
-	public function getLabObservationElementById($id)
+	public function getLabObservationFieldsByParentId($id)
 	{
-//		$this->db->setSQL("SELECT * FROM labs_observations_elements WHERE id = '$$id'");
-//		return $this->db->fetchRecords(PDO::FETCH_CLASS);
+		$this->db->setSQL("SELECT * FROM labs_panels WHERE parent_id = '$id' AND parent_id != id");
+		return $this->db->fetchRecords(PDO::FETCH_CLASS);
 	}
 	public function getActiveLaboratoryTypes()
 	{
@@ -541,6 +541,7 @@ class Services
 		$rows = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		foreach($rows as $row) {
 			$row->label = ($row->code_text_short == '' || $row->code_text_short == null) ? $row->parent_name : $row->code_text_short;
+			$row->fields = $this->getLabObservationFieldsByParentId($row->id);
 			$records[] = $row;
 		}
 		return $records;

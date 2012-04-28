@@ -14,8 +14,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     title        : 'Medical Window',
     layout       : 'card',
     closeAction  : 'hide',
-    height       : 700,
-    width        : 1000,
+    height       : 800,
+    width        : 1200,
     bodyStyle    : 'background-color:#fff',
     modal        : true,
     defaults     : {
@@ -1080,7 +1080,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                             {
                                 xtype:'grid',
                                 region:'west',
-                                width:200,
+                                width:290,
                                 split:true,
                                 store:me.labPanelsStore,
                                 columns:[
@@ -1089,7 +1089,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         dataIndex:'label',
                                         flex:1
                                     }
-                                ]
+                                ],
+                                listeners:{
+                                    scope:me,
+                                    itemclick:me.onLabPanelSelected
+                                }
                             },
                             {
                                 xtype:'panel',
@@ -1103,6 +1107,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                             {
                                 text:'Scan'
                             },
+                            '-',
                             {
                                 text:'Upload'
                             }
@@ -1118,8 +1123,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                 xtype:'form',
                                 title:'Laboratory Entry Form',
                                 region:'west',
-                                width:200,
-                                split:true
+                                width:290,
+                                split:true,
+                                bodyPadding:5,
+                                autoScroll:true,
+                                bbar:[
+                                    '->',
+                                    {
+                                        text:'Reset',
+                                        handler:me.onLabResultsReset
+                                    },
+                                    '-',
+                                    {
+                                        text:'Save',
+                                        handler:me.onLabResultsSave
+                                    }
+                                ]
                             },
                             {
                                 xtype:'grid',
@@ -1241,15 +1260,58 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 ]
             }
         ];
-
         me.listeners = {
             scope: me,
-
             show: me.onMedicalWinShow
         };
-
         me.callParent(arguments);
     },
+
+    //*******************************************************
+
+    onLabPanelSelected:function(grid, model){
+        var me = this,
+            formPanel = me.query('[action="patientLabs"]')[0].down('form');
+
+        formPanel.removeAll();
+        Ext.each(model.data.fields, function(field){
+            say(field);
+            formPanel.add({
+                xtype:'fieldcontainer',
+                layout:'hbox',
+                //width:250,
+                anchor:'100%',
+                items:[
+                    {
+                        xtype:'textfield',
+                        fieldLabel:field.code_text_short || field.loinc_name,
+                        name:field.loinc_number,
+                        labelWidth:130,
+                        flex:1,
+                        allowBlank: field.required_in_panel != 'R'
+                    },
+                    {
+                        xtype:'mitos.unitscombo',
+                        width:90
+                    }
+                ]
+            });
+        });
+
+    },
+
+
+    onLabResultsSave:function(btn){
+        var form = btn.up('form').getForm();
+        form.isValid();
+    },
+    onLabResultsReset:function(btn){
+        var form = btn.up('form').getForm();
+        form.reset();
+    },
+
+    //*********************************************************
+
 
     onCancel: function(btn) {
         var me = this, panel, form;

@@ -11,7 +11,8 @@ Ext.define('App.model.patientfile.LaboratoryTypes', {
 	fields: [
 
 		{name: 'id', type: 'int'},
-		{name: 'label', type: 'string'}
+		{name: 'label', type: 'string'},
+		{name: 'fields' }
 
 	],
 	proxy : {
