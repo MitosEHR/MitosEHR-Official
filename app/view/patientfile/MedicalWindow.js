@@ -1268,8 +1268,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             store = dataView.store,
             fields = [];
 
-
         formPanel.removeAll();
+
+        formPanel.add({
+            xtype:'textfield',
+            name:'id',
+            hidden:true
+        });
         Ext.each(model.data.fields, function(field){
             formPanel.add({
                 xtype:'fieldcontainer',
@@ -1303,6 +1308,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         var me = this,
             form = me.query('[action="patientLabs"]')[0].down('form').getForm();
         form.reset();
+        model.data.data.id = model.data.id;
         form.setValues(model.data.data);
     },
 
@@ -1311,10 +1317,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         var me = this,
             form = btn.up('form').getForm(),
             dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
-            store = dataView.store;
+            store = dataView.store,
+            values = form.getValues(),
+            record  = dataView.getSelectionModel().getLastSelected();
 
-        say(form.getValues());
-        form.isValid();
+        if(form.isValid()){
+            Medical.updatePatientLabsResult(values,function(){
+                store.load({params:{parent_id:record.data.parent_id}});
+                form.reset();
+            });
+        }
 
     },
     onLabResultsReset:function(btn){
