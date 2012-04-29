@@ -244,14 +244,10 @@ class Patient {
 		}else{
 			return array('success' => true);
 		}
-
-
-
 	}
 
 	public function getPatientNotes(stdClass $params)
 	{
-
 		$notes = array();
 		$this->db->setSQL("SELECT * FROM patient_notes WHERE pid = '$params->pid'");
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
@@ -263,7 +259,6 @@ class Patient {
 
 	public function getPatientReminders(stdClass $params)
 	{
-
 		$reminders = array();
 		$this->db->setSQL("SELECT * FROM patient_reminders WHERE pid = '$params->pid'");
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){

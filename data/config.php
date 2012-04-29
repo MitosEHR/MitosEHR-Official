@@ -216,6 +216,18 @@ $API = array(
             ),
             'getMedicationLiveSearch'=>array(
                'len'=>1
+            ),
+            'getPatientLabsResults'=>array(
+               'len'=>1
+            ),
+            'addPatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'updatePatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'deletePatientLabsResult'=>array(
+               'len'=>1
             )
         ),
 

@@ -70,7 +70,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             },
             autoSync : true
         });
-        me.labPanelsStore = Ext.create('App.store.patientfile.LaboratoryTypes');
+        me.labPanelsStore = Ext.create('App.store.patientfile.LaboratoryTypes',{
+            autoSync : true
+        });
 
         me.items = [
             {
@@ -1131,42 +1133,31 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     '->',
                                     {
                                         text:'Reset',
+                                        scope:me,
                                         handler:me.onLabResultsReset
                                     },
                                     '-',
                                     {
                                         text:'Save',
+                                        scope:me,
                                         handler:me.onLabResultsSave
                                     }
                                 ]
                             },
                             {
-                                xtype:'grid',
+                                xtype:'panel',
                                 region:'center',
-                                action:'labsResultsGrid',
                                 height:300,
                                 split:true,
-                                columns:[
+                                items:[
                                     {
-                                        header:'Date'
-                                    },
-                                    {
-                                        header:'Sing By'
-                                    },
-                                    {
-                                        header:'Provider'
-                                    },
-                                    {
-                                        header:'WBC'
-                                    },
-                                    {
-                                        header:'RBC'
-                                    },
-                                    {
-                                        header:'Puta'
-                                    },
-                                    {
-                                        header:'status'
+                                        xtype:'lalboratoryresultsdataview',
+                                        action:'lalboratoryresultsdataview',
+                                        store: Ext.create('App.store.patientfile.PatientLabsResults'),
+                                        listeners:{
+                                            scope:me,
+                                            itemclick:me.onLabResultClick
+                                        }
                                     }
                                 ]
                             }
@@ -1273,20 +1264,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     onLabPanelSelected:function(grid, model){
         var me = this,
             formPanel = me.query('[action="patientLabs"]')[0].down('form'),
-            gridPanel = me.query('[action="labsResultsGrid"]')[0],
-            store = gridPanel.store,
-            columns = [];
-
-        columns.push({
-            xtype:'gridcolumn',
-            header:'Date',
-            dataIndex:'date'
-        },
-        {
-            xtype:'gridcolumn',
-            header:'Provider',
-            dataIndex:'provider'
-        });
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            fields = [];
 
 
         formPanel.removeAll();
@@ -1308,26 +1288,34 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     {
                         xtype:'mitos.unitscombo',
                         value: field.default_unit,
+                        name:field.loinc_number+'_unit',
                         width:90
                     }
                 ]
             });
-
-            columns.push(Ext.create('Ext.grid.column.Column',{
-                header :field.code_text_short || field.loinc_name,
-                dataIndex:field.loinc_number
-
-            }))
         });
 
-        gridPanel.reconfigure(store,columns);
+        store.load({params:{parent_id:model.data.id}});
+        say(model);
+    },
 
+    onLabResultClick:function(view, model){
+        var me = this,
+            form = me.query('[action="patientLabs"]')[0].down('form').getForm();
+        form.reset();
+        form.setValues(model.data.data);
     },
 
 
     onLabResultsSave:function(btn){
-        var form = btn.up('form').getForm();
+        var me = this,
+            form = btn.up('form').getForm(),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store;
+
+        say(form.getValues());
         form.isValid();
+
     },
     onLabResultsReset:function(btn){
         var form = btn.up('form').getForm();

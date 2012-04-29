@@ -270,22 +270,61 @@ class Medical
 		             'rows'  => $records);
 	}
 	/*************************************************************************************************************/
-		public function getImmunizationLiveSearch(stdClass $params)
-		{
-			$this->db->setSQL("SELECT id,
-									  code,
-									  code_text,
-									  code_text_short
+	public function getImmunizationLiveSearch(stdClass $params)
+	{
+		$this->db->setSQL("SELECT id,
+								  code,
+								  code_text,
+								  code_text_short
 
-								FROM  immunizations
-								WHERE code_text LIKE '$params->query%'
-								   OR code      LIKE'$params->query%'");
- 			$records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
-			$total = count($records);
-			$records  = array_slice($records, $params->start, $params->limit);
-			return array('totals'=> $total,
-			             'rows'  => $records);
+							FROM  immunizations
+							WHERE code_text LIKE '$params->query%'
+							   OR code      LIKE'$params->query%'");
+        $records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$total = count($records);
+		$records  = array_slice($records, $params->start, $params->limit);
+		return array('totals'=> $total,
+		             'rows'  => $records);
+	}
+	/***************************************************************************************************************/
+
+	public function getPatientLabsResults(stdClass $params)
+	{
+		$records = array();
+		$this->db->setSQL("SELECT * FROM patient_labs WHERE parent_id = '$params->parent_id'");
+        $labs = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		foreach($labs as $lab){
+			$id = $lab['id'];
+			$this->db->setSQL("SELECT observation_loinc, observation_value, unit
+							     FROM patient_labs_results
+							    WHERE patient_lab_id = '$id'");
+			$lab['columns'] = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+			$lab['data'] = array();
+			foreach($lab['columns'] as $column){
+				$lab['data'][$column['observation_loinc']] = $column['observation_value'];
+				$lab['data'][$column['observation_loinc'].'_unit'] = $column['unit'];
+			}
+
+			$records[] = $lab;
 		}
+		return $records;
+	}
+	public function addPatientLabsResult(stdClass $params)
+	{
+
+		return $params;
+	}
+	public function updatePatientLabsResult(stdClass $params)
+	{
+
+		return $params;
+	}
+	public function deletePatientLabsResult(stdClass $params)
+	{
+
+		return $params;
+	}
+
 
 	/*********************************************
 	 * METHODS USED BY PHP                       *
@@ -444,6 +483,10 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_medications WHERE eid='$eid'");
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
+
+	//******************************************************************************************************************
+
+
 
 	/**
 	 * @param $date
