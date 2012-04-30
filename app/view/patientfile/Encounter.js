@@ -284,6 +284,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
 
         me.reviewSysPanel = Ext.create('Ext.form.Panel', {
+            autoScroll:true,
             action:'encounter',
             title:'Review of Systems',
             fieldDefaults:{ msgTarget:'side' },
