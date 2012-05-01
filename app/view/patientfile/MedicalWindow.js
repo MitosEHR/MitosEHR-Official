@@ -25,6 +25,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
         var me = this;
 
+
         me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
             groupField: 'immunization_name',
             sorters   : ['immunization_name', 'administered_date'],
@@ -1094,14 +1095,54 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                 ],
                                 listeners:{
                                     scope:me,
-                                    itemclick:me.onLabPanelSelected
+                                    itemclick:me.onLabPanelSelected,
+                                    selectionchange:me.onLabPanelSelectionChange
                                 }
                             },
                             {
                                 xtype:'panel',
+                                action:'labPreviewPanel',
                                 title:'Laboratory Preview',
                                 region:'center',
-                                flex:1
+                                items:[
+                                    me.uploadWin = Ext.create('Ext.window.Window',{
+                                        draggable :false,
+                                        closable:false,
+                                        closeAction:'hide',
+                                        items:[
+                                            {
+                                                xtype:'form',
+                                                bodyPadding:10,
+                                                width:400,
+                                                items:[
+                                                    {
+                                                        xtype: 'filefield',
+                                                        name: 'filePath',
+                                                        buttonText: 'Select a file...',
+                                                        anchor:'100%'
+                                                    }
+                                                ],
+                                             //   url: 'dataProvider/DocumentHandler.php'
+                                                api: {
+                                                    submit: DocumentHandler.uploadDocument
+                                                }
+                                            }
+                                        ],
+                                        buttons:[
+                                            {
+                                                text:'Cancel',
+                                                handler:function(){
+                                                    me.uploadWin.close();
+                                                }
+                                            },
+                                            {
+                                                text:'Upload',
+                                                scope:me,
+                                                handler:me.onLabUpload
+                                            }
+                                        ]
+                                    })
+                                ]
                             }
                         ],
                         tbar:[
@@ -1111,7 +1152,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                             },
                             '-',
                             {
-                                text:'Upload'
+                                text:'Upload',
+                                disabled:true,
+                                action:'uploadBtn',
+                                scope:me,
+                                handler:me.onLabUploadWind
                             }
                         ]
                     },
@@ -1301,7 +1346,45 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         });
 
         store.load({params:{parent_id:model.data.id}});
-        say(model);
+    },
+
+    onLabPanelSelectionChange:function(model, record){
+        this.query('[action="uploadBtn"]')[0].setDisabled(record.length == 0);
+    },
+
+    onLabUploadWind:function(){
+        var me = this,
+            previewPanel = me.query('[action="labPreviewPanel"]')[0], win;
+        me.uploadWin.show();
+        me.uploadWin.alignTo(previewPanel.el.dom,'tr-tr',[-5,30])
+    },
+
+    onLabUpload:function(btn){
+        var me = this,
+            form = me.uploadWin.down('form').getForm(),
+            win = btn.up('window');
+
+        if(form.isValid()){
+            form.submit({
+                waitMsg: 'Uploading Laboratory...',
+                params:{
+                    pid:app.currPatient.pid,
+                    docType:'laboratory'
+                },
+                success: function(fp, o) {
+                    win.close();
+
+                    say(o.result);
+                },
+                failure:function(fp, o){
+                    say(o.result.error);
+
+                }
+            });
+        }
+
+       // DocumentHandler.uploadDocument(values);
+
     },
 
     onLabResultClick:function(view, model){
@@ -1311,7 +1394,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         model.data.data.id = model.data.id;
         form.setValues(model.data.data);
     },
-
 
     onLabResultsSave:function(btn){
         var me = this,
@@ -1391,7 +1473,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
     setDefaults: function(options) {
-
         var data;
 
         if(options.update) {
@@ -1400,7 +1481,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(options.create) {
 
         }
-
     },
 
     cardSwitch: function(btn) {

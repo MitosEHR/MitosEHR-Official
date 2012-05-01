@@ -43,7 +43,7 @@ Ext.define('App.view.patientfile.Summary', {
                 frame      : false,
                 border     : false,
                 itemId     : 'centerPanel',
-                defaults   : { margin: '0 5 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
+                defaults   : { margin: '0 0 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
                 items      : [
                     {
                         xtype:'panel',
@@ -134,7 +134,8 @@ Ext.define('App.view.patientfile.Summary', {
                 frame      : false,
                 border     : false,
                 defaults   : {
-                    layout: 'fit'
+                    layout: 'fit',
+                    margin: '0 0 5 5'
                 },
                 listeners  : {
                     scope      : me,

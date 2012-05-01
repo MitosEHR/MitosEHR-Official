@@ -149,6 +149,14 @@ $API = array(
         ),
 
     ),
+    'DocumentHandler'=>array(
+        'methods'=>array(
+            'uploadDocument'=>array(
+	            'formHandler'=>true,
+	            'len'=>1
+            )
+        )
+    ),
     /**
     * Medical Functions
     */
