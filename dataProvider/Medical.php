@@ -297,7 +297,8 @@ class Medical
 		$this->db->setSQL("SELECT pLab.*, pDoc.url AS document_url
 							 FROM patient_labs AS pLab
 						LEFT JOIN patient_documents AS pDoc ON pLab.document_id = pDoc.id
-							WHERE pLab.parent_id = '$params->parent_id'");
+							WHERE pLab.parent_id = '$params->parent_id'
+						 ORDER BY date DESC");
         $labs = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 		foreach($labs as $lab){
 			$id = $lab['id'];
@@ -333,7 +334,7 @@ class Medical
 			$foo = array();
 			$foo['patient_lab_id'] = $patient_lab_id;
 			$foo['observation_loinc'] = $result->loinc_number;
-			$foo['observation_value'] = '-';
+			$foo['observation_value'] = null;
 			$foo['unit'] = $result->default_unit;
 			$this->db->setSQL($this->db->sqlBind($foo,'patient_labs_results','I'));
 			$this->db->execOnly();
@@ -345,7 +346,32 @@ class Medical
 
 	public function updatePatientLabsResult(stdClass $params)
 	{
+		$data = get_object_vars($params);
+		$id = $data['id'];
+		unset($data['id']);
 
+		$fo = array();
+		foreach($data as $key => $val){
+			$foo = explode('_', $key);
+			if(sizeof($foo) > 1){
+				$fo[0] = $val;
+			}else{
+				$this->db->setSQL("UPDATE patient_labs_results
+									  SET observation_value = '$val',
+									      unit = '$fo[0]'
+								    WHERE patient_lab_id = '$id'
+								      AND observation_loinc = '$foo[0]'");
+				$this->db->execLog();
+				$fo = array();
+			}
+
+
+
+		}
+
+
+		//unset($data['id'],$data['data'],$data['columns']);
+		//$this->db->setSQL($this->db->sqlBind($data,'patient_labs_results','U',"id = '$params->id'"));
 		return $params;
 	}
 
@@ -354,6 +380,14 @@ class Medical
 	{
 
 		return $params;
+	}
+
+	public function signPatientLabsResultById($id)
+	{
+		$foo['auth_uid'] = $_SESSION['user']['id'];
+		$this->db->setSQL($this->db->sqlBind($foo,'patient_labs','U', "id = '$id'"));
+		$this->db->execLog();
+		return array('success' => true);
 	}
 
 

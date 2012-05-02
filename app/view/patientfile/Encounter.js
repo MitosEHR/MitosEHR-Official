@@ -823,7 +823,6 @@ Ext.define('App.view.patientfile.Encounter', {
                     });
                 }
             });
-
         }
     },
 

@@ -21,6 +21,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     defaults     : {
         margin: 5
     },
+    mixins: ['App.classes.RenderPanel'],
+
     initComponent: function() {
 
         var me = this;
@@ -1182,6 +1184,12 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     },
                                     '-',
                                     {
+                                        text:'Sign',
+                                        scope:me,
+                                        handler:me.onLabResultsSign
+                                    },
+                                    '-',
+                                    {
                                         text:'Save',
                                         scope:me,
                                         handler:me.onLabResultsSave
@@ -1384,16 +1392,73 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 }
             });
         }
-
     },
 
     onLabResultClick:function(view, model){
         var me = this,
             form = me.query('[action="patientLabs"]')[0].down('form').getForm();
-        form.reset();
-        model.data.data.id = model.data.id;
-        form.setValues(model.data.data);
-        me.getLabDocument(model.data.document_url);
+
+        if(me.currDocUrl != model.data.document_url){
+            form.reset();
+            model.data.data.id = model.data.id;
+            form.setValues(model.data.data);
+            me.getLabDocument(model.data.document_url);
+            me.currDocUrl = model.data.document_url;
+        }
+
+    },
+
+    onLabResultsSign:function(){
+        var me = this,
+            form = me.query('[action="patientLabs"]')[0].down('form').getForm(),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            values = form.getValues(),
+            record  = dataView.getSelectionModel().getLastSelected();
+
+        if (form.isValid()) {
+            if(values.id){
+                me.passwordVerificationWin(function (btn, password) {
+                    if (btn == 'ok') {
+                        User.verifyUserPass(password, function (provider, response) {
+                            if (response.result) {
+                                say(record);
+                                Medical.signPatientLabsResultById(record.data.id,function(provider, response){
+                                    store.load({params:{parent_id:me.currLabPanelId}});
+                                });
+                            } else {
+                                Ext.Msg.show({
+                                    title:'Oops!',
+                                    msg:'Incorrect password',
+                                    //buttons:Ext.Msg.OKCANCEL,
+                                    buttons:Ext.Msg.OK,
+                                    icon:Ext.Msg.ERROR,
+                                    fn:function (btn) {
+                                        if (btn == 'ok') {
+                                            //me.onLabResultsSign();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }else{
+                Ext.Msg.show({
+                    title:'Oops!',
+                    msg:'Nothing to sign.',
+                    //buttons:Ext.Msg.OKCANCEL,
+                    buttons:Ext.Msg.OK,
+                    icon:Ext.Msg.ERROR,
+                    fn:function (btn) {
+                        if (btn == 'ok') {
+                            //me.onLabResultsSign();
+                        }
+                    }
+                });
+            }
+
+        }
     },
 
     onLabResultsSave:function(btn){
@@ -1410,17 +1475,18 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 form.reset();
             });
         }
-
     },
 
     addNewLabResults:function(docId){
         var me = this,
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
             params = {
                 parent_id:me.currLabPanelId,
                 document_id:docId
             };
         Medical.addPatientLabsResult(params, function(provider, response){
-
+            store.load({params:{parent_id:me.currLabPanelId}});
             say(response.result);
         });
     },

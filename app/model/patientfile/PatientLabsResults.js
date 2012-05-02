@@ -11,6 +11,7 @@ Ext.define('App.model.patientfile.PatientLabsResults', {
 		{name: 'id', type: 'int'},
 		{name: 'pid', type: 'int'},
 		{name: 'uid', type: 'int'},
+		{name: 'auth_uid', type: 'int'},
 		{name: 'eid', type: 'int'},
 		{name: 'document_id', type: 'int'},
 		{name: 'document_url'},

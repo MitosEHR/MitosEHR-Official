@@ -134,6 +134,7 @@ Ext.define('App.classes.RenderPanel', {
         });
         var f = msg.textField.getInputId();
         document.getElementById(f).type = 'password';
+        return msg;
     },
     getPageHeader:function(){
         return this.getComponent('RenderPanel-header');

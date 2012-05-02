@@ -236,6 +236,9 @@ $API = array(
             ),
             'deletePatientLabsResult'=>array(
                'len'=>1
+            ),
+            'signPatientLabsResultById'=>array(
+               'len'=>1
             )
         ),
 
