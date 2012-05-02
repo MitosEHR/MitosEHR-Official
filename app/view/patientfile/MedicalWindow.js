@@ -268,7 +268,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 /**
                  * Allergies Card panel
                  */
-
                 xtype  : 'grid',
                 action : 'patientAllergiesListGrid',
                 store  : me.patientAllergiesListStore,
@@ -1077,7 +1076,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         layout:'border',
                         bodyBorder:false,
                         border:false,
-                        height:300,
+                        height:400,
                         split:true,
                         items:[
                             {
@@ -1313,6 +1312,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             store = dataView.store,
             fields = [];
 
+        me.currLabPanelId = model.data.id;
+        me.removeLabDocument();
         formPanel.removeAll();
 
         formPanel.add({
@@ -1373,8 +1374,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 },
                 success: function(fp, o) {
                     win.close();
-
                     say(o.result);
+                    me.getLabDocument(o.result.doc.url);
+                    me.addNewLabResults(o.result.doc.id);
                 },
                 failure:function(fp, o){
                     say(o.result.error);
@@ -1382,8 +1384,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 }
             });
         }
-
-       // DocumentHandler.uploadDocument(values);
 
     },
 
@@ -1393,6 +1393,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         form.reset();
         model.data.data.id = model.data.id;
         form.setValues(model.data.data);
+        me.getLabDocument(model.data.document_url);
     },
 
     onLabResultsSave:function(btn){
@@ -1411,9 +1412,33 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         }
 
     },
+
+    addNewLabResults:function(docId){
+        var me = this,
+            params = {
+                parent_id:me.currLabPanelId,
+                document_id:docId
+            };
+        Medical.addPatientLabsResult(params, function(provider, response){
+
+            say(response.result);
+        });
+    },
+
     onLabResultsReset:function(btn){
         var form = btn.up('form').getForm();
         form.reset();
+    },
+
+    getLabDocument:function(src){
+        var panel = this.query('[action="labPreviewPanel"]')[0];
+        panel.remove(this.doc);
+        panel.add(this.doc = Ext.create('App.classes.ManagedIframe', {src: src}));
+    },
+
+    removeLabDocument:function(src){
+        var panel = this.query('[action="labPreviewPanel"]')[0];
+        panel.remove(this.doc);
     },
 
     //*********************************************************

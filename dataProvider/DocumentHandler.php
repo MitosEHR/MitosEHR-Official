@@ -26,7 +26,6 @@ class DocumentHandler
 	private $services;
 	private $facility;
 
-
 	private $pid;
 	private $docType;
 	private $workingDir;
@@ -44,51 +43,54 @@ class DocumentHandler
 
 	public function uploadDocument($params, $file)
 	{
-		$src = $this->setWorkingDir($params).$this->setFileName($file);
-
+		$src = $this->setWorkingDir($params) . $this->setFileName($file);
 		if(move_uploaded_file($file['filePath']['tmp_name'], $src)) {
-			return array('success'=>true, 'doc' => array('name' => $this->fileName, 'url' => $this->getDocumentUrl()));
-		} else{
-			return array('success'=>false, 'error' => 'File could not be uploaded');
+			$doc = array();
+			$doc['pid']     = $this->pid;
+			$doc['uid']     = $_SESSION['user']['id'];
+			$doc['docType'] = $this->docType;
+			$doc['name']    = $this->fileName;
+			$doc['url']     = $this->getDocumentUrl();
+			$doc['date']    = date('Y-m-d H:i:s');
+			$this->db->setSQL($this->db->sqlBind($doc, 'patient_documents', 'I'));
+			$this->db->execLog();
+			$doc_id = $this->db->lastInsertId;
+			return array('success'=> true,
+			             'doc'    => array('id'   => $doc_id,
+			                               'name' => $this->fileName,
+			                               'url'  => $this->getDocumentUrl()));
+		} else {
+			return array('success'=> false,
+			             'error'  => 'File could not be uploaded');
 		}
-
-
 	}
 
-	protected function getRootPath(){
-		return $_SESSION['root'];
+	protected function getDocumentUrl()
+	{
+		return $_SESSION['site']['url'] . '/sites/' . $_SESSION['site']['site'] . '/patients/' . $this->pid . '/' . $this->docType . '/' . $this->fileName;
 	}
 
-	protected function getDocumentUrl(){
-		return $_SESSION['site']['url'].'/sites/'.$_SESSION['site']['site'].'/patients/'.$this->pid.'/'.$this->docType.'/'.$this->fileName;
-	}
-
-
-	protected function setFileName($file){
-		$ext = end(explode('.',$file['filePath']['name']));
+	protected function setFileName($file)
+	{
+		$ext  = end(explode('.', $file['filePath']['name']));
 		$name = time();
-		while(file_exists($this->workingDir.'/'.$name)){
+		while(file_exists($this->workingDir . '/' . $name)) {
 			$name = time();
 		}
-		return $this->fileName = $name.'.'.$ext;
+		return $this->fileName = $name . '.' . $ext;
 	}
 
-	protected function setWorkingDir($params){
-		$this->pid = (isset($params['pid'])) ? $params['pid'] : $_SESSION['patient']['pid'];
-		$this->docType = (isset($params['docType'])) ?  $params['docType'] : 'orphanDocuments';
-
-		$path = $_SESSION['site']['root'].'/sites/'.$_SESSION['site']['site'].'/patients/'.$this->pid.'/'.$this->docType.'/';
-
-		if(is_dir($path) || mkdir($path , 0777, true)){
-			chmod($path,0777);
+	protected function setWorkingDir($params)
+	{
+		$this->pid     = (isset($params['pid'])) ? $params['pid'] : $_SESSION['patient']['pid'];
+		$this->docType = (isset($params['docType'])) ? $params['docType'] : 'orphanDocuments';
+		$path = $_SESSION['site']['root'] . '/sites/' . $_SESSION['site']['site'] . '/patients/' . $this->pid . '/' . $this->docType . '/';
+		if(is_dir($path) || mkdir($path, 0777, true)) {
+			chmod($path, 0777);
 		}
 		return $this->workingDir = $path;
 	}
 }
-
-
-//echo '{success:true, file:'.json_encode($_FILES['file-path']['name']).'}';
-
 
 
 

@@ -13,6 +13,7 @@ if(!isset($_SESSION)) {
 }
 include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/classes/dbHelper.php');
 class Medical
 {
@@ -28,12 +29,14 @@ class Medical
 	 * @var Patient
 	 */
 	private $patient;
+	private $services;
 
 	function __construct()
 	{
 		$this->db      = new dbHelper();
 		$this->user    = new User();
 		$this->patient = new Patient();
+		$this->services = new Services();
 		return;
 	}
 
@@ -291,7 +294,10 @@ class Medical
 	public function getPatientLabsResults(stdClass $params)
 	{
 		$records = array();
-		$this->db->setSQL("SELECT * FROM patient_labs WHERE parent_id = '$params->parent_id'");
+		$this->db->setSQL("SELECT pLab.*, pDoc.url AS document_url
+							 FROM patient_labs AS pLab
+						LEFT JOIN patient_documents AS pDoc ON pLab.document_id = pDoc.id
+							WHERE pLab.parent_id = '$params->parent_id'");
         $labs = $this->db->fetchRecords(PDO::FETCH_ASSOC);
 		foreach($labs as $lab){
 			$id = $lab['id'];
@@ -309,16 +315,41 @@ class Medical
 		}
 		return $records;
 	}
+
+
 	public function addPatientLabsResult(stdClass $params)
 	{
+		$lab['pid'] = (isset($params->pid)) ? $params->pid : $_SESSION['patient']['pid'];
+		$lab['uid'] = $_SESSION['user']['id'];
+		$lab['document_id'] = $params->document_id;
+		$lab['date'] = date('Y-m-d H:i:s');
+		$lab['parent_id'] = $params->parent_id;
+		$this->db->setSQL($this->db->sqlBind($lab,'patient_labs','I'));
+		$this->db->execLog();
+		$patient_lab_id = $this->db->lastInsertId;
+
+
+		foreach($this->services->getLabObservationFieldsByParentId($params->parent_id) as $result){
+			$foo = array();
+			$foo['patient_lab_id'] = $patient_lab_id;
+			$foo['observation_loinc'] = $result->loinc_number;
+			$foo['observation_value'] = '-';
+			$foo['unit'] = $result->default_unit;
+			$this->db->setSQL($this->db->sqlBind($foo,'patient_labs_results','I'));
+			$this->db->execOnly();
+		}
 
 		return $params;
 	}
+
+
 	public function updatePatientLabsResult(stdClass $params)
 	{
 
 		return $params;
 	}
+
+
 	public function deletePatientLabsResult(stdClass $params)
 	{
 

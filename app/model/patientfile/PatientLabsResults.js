@@ -13,6 +13,7 @@ Ext.define('App.model.patientfile.PatientLabsResults', {
 		{name: 'uid', type: 'int'},
 		{name: 'eid', type: 'int'},
 		{name: 'document_id', type: 'int'},
+		{name: 'document_url'},
 		{name: 'date', type: 'date', dateFormat:'Y-m-d H:s:i'},
 		{name: 'data'},
 		{name: 'columns'},
