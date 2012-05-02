@@ -216,9 +216,6 @@ $API = array(
             ),
             'getMedicationLiveSearch'=>array(
                'len'=>1
-            ),
-            'CheckImmunizations'=>array(
-               'len'=>1
             )
         ),
 
@@ -447,6 +444,9 @@ $API = array(
                 'len'=>1
             ),
             'removeRelations'=>array(
+                'len'=>1
+            ),
+            'getImmunizationsCheck'=>array(
                 'len'=>1
             )
         )

@@ -200,7 +200,7 @@ Ext.define('App.view.patientfile.Summary', {
                                 text     : 'Alert',
                                 width    : 55,
                                 dataIndex: 'alert',
-                                renderer : me.boolRenderer
+                                renderer : me.alertRenderer
                             }
 
                         ]

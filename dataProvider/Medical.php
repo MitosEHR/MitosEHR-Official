@@ -302,90 +302,8 @@ class Medical
 	}
 
 
-    private function CheckImmunizations(stdClass $params)
-	{
-		$this->db->setSQL("SELECT * FROM immunizations WHERE code_type='100'");
-
-		$records = array();
-		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($this->check_age($params->pid, $rec['id']) == true && $this->check_sex($params->pid, $rec['id']) == true  ) ? 1 : 0 ;
-			if($rec['alert'] == false){
-            $records[]= $rec;
-            }
-
-		}
-
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
-	}
-    private function check_age($pid, $immu_id){
-
-        $this->db->setSQL("SELECT DOB
-                           FROM patient_data
-                           WHERE pid ='$pid'");
-        $DOB = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
-        $age = $this ->ages($DOB['DOB']);
-
-        $this->db->setSQL("SELECT age_start,
-                                  age_end
-                           FROM immunizations
-                           WHERE id='$immu_id'");
-        $immu = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
-            if( $age >= $immu['age_start']){
-                return false;
-            }
-            elseif( $age <= $immu['age_end']){
-                return false;
-            }
-            else{
-
-                return true;
-            }
 
 
-
-    }
-    /**
-     * @param $birthday
-     * @return array
-     */
-
-    private function ages ($birthday){
-        list($year,$month,$day) = explode("-",$birthday);
-        $year_diff  = date("Y") - $year;
-        $month_diff = date("m") - $month;
-        $day_diff   = date("d") - $day;
-        if ($day_diff < 0 || $month_diff < 0)
-            $year_diff--;
-        return $year_diff;
-    }
-
-    /**
-     * @param $pid
-     * @return array
-     */
-    private function check_sex($pid, $immu_id){
-
-        $this->db->setSQL("SELECT sex
-                           FROM patient_data
-                           WHERE pid ='$pid'");
-        $sex = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
-
-        $this->db->setSQL("SELECT sex
-                           FROM immunizations
-                           WHERE id='$immu_id'");
-        $immu = $this->db->fetchRecords(PDO::FETCH_ASSOC) ;
-
-            if($immu['sex'] == $sex){
-                return false;
-            }
-            else{
-
-                return true;
-            }
-    }
 	/**
 	 * @param $eid
 	 * @return array
@@ -535,7 +453,11 @@ class Medical
 	}
 
 }
-//
+
+
+
+
 //$e = new Medical();
 //echo '<pre>';
-//print_r($e->getProgressNoteByEid(7));
+//print_r($e->CheckImmunizations());
+
