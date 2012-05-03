@@ -1,0 +1,290 @@
+<html xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 4.5.1 - Webapp Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td colspan="2" align="right"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - Webapp Sample (version 4.5.1)</span></td><td align="right"><img src="../../resources/jasperreports.png" border="0"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how reporting functionality could be added to a Web application.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%204.5.1/jasperreports-4.5.1-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://jasperforge.org/scm/viewvc.php/tags/jr-4-5-1/jasperreports/demo/samples/webapp/?root=jasperreports" target="_blank">Browse Sample Source Files on SVN</a></span>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#webapp">Deploying Reports in Web Applications</a></span></td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="6" align="right"><a name="webapp"></a><a href="#top" class="toc">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img src="../../resources/jr-16x16.png" border="0"></td><td colspan="4"><span class="name">Deploying Reports in Web Applications</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:lshannon@users.sourceforge.net" class="copy">Luke Shannon</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+How to add reporting functionality to a Web application.
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">0.4.4</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+    Once a report is created the next challenge is to make this available to your report users. This sample <br>
+	reviews embedding a JasperReports template into a Java Application.<br>
+	The technology used are simple Servlets and JSP.<br>
+	This sample also demonstrates:
+	<ul>
+		
+<li>Configuring and using several of the JasperReports exporters</li>
+		
+<li>Viewing a report in Flash</li>
+		
+<li>Viewing a report in an Applet</li>
+		
+<li>Creating and using an XML Datasource</li>
+	
+</ul>
+	
+<br>
+	
+<br>
+	
+<b>Setting Up The Sample</b>
+	<i>Prerequisites</i>
+<br>
+    Ant is required. By running 'ant --version' you will be able to check if ant is set up on your system (at least version 1.5 is required):<br>
+    
+<pre>
+    
+    C:\&gt;ant -version Apache Ant version 1.8.0 compiled on February 1 2010
+	
+	</pre>
+	You can obtain ant from http://ant.apache.org/, instructions for installation can be found there as well.
+	<br>
+	Also before generating this sample you will need to run the jar ant command in the build file at the <br>
+	in the root of the project. This will generate JasperReports jar files in the dist directory of the root <br>
+	level. These jars are using in the web app sample, the sample will not function without them.
+	<br>
+	 
+<i>Generating the Application</i>
+    
+<br>
+    Open up a separate command prompt/terminal window and browse to the root directory of the sample.
+    <br>
+    By running 'ant -p' you will be presented with a list of options available. Of interest in this list is all the exporters available for testing.
+    <br>
+    By running the command 'war' the following actions will be performed:
+    <br>
+    
+<ul>
+    
+<li>All the dependancies will be copied to the WEB-INF\lib directory</li>
+	
+<li>All required Java classes will be compiled</li>
+	
+<li>The dependancies, class files and any other files will be packaged into a war file</li>
+    
+</ul>
+	The war file will be generated in the root level of the project. This file can be deployed in a Java application server such as Tomcat (simply place<br>
+	the file in the webapps folder and restart the server).
+    <br>
+    You now have a working version of the app you can review.
+    <br>
+    
+<br>
+	
+<b>Folder Structure and Resources</b>
+	
+<br>
+	
+<b>Compiling the JRXML</b>
+	
+<br>
+	
+<b>Filling the Report</b>
+	
+<br>
+	
+<b>Exporting the Report</b>
+	
+<br>
+	
+<b>Applet Viewer</b>
+	
+<br>
+	
+<b>Flash Viewer</b>
+	
+<br>
+	
+<b>Further Resources:</b>
+    
+<br>
+    JasperReports Ultimate Guide (available from the JasperSoft eShop)<br>
+    iReport Ultimate Guide (available from the JasperSoft eShop)<br>
+    
+</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-2011 Jaspersoft Corporation <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>

@@ -2,14 +2,11 @@
 require('config.php');
 header('Content-Type: text/javascript');
 
-//----------------------------------------------------------------------------------------------------------------------
 // convert API config to Ext.Direct spec
-// What is the purpose of this file.
-//----------------------------------------------------------------------------------------------------------------------
 $actions = array();
-foreach ($API as $aname=>&$a) {
+foreach($API as $aname=>&$a){
 	$methods = array();
-	foreach ($a['methods'] as $mname=>&$m) {
+	foreach($a['methods'] as $mname=>&$m){
 	    if (isset($m['len'])) {
 		    $md = array(
 			    'name'=>$mname,
@@ -21,7 +18,7 @@ foreach ($API as $aname=>&$a) {
 		        'params'=>$m['params']
 		    );
 		}
-		if (isset($m['formHandler']) && $m['formHandler']) {
+		if(isset($m['formHandler']) && $m['formHandler']){
 			$md['formHandler'] = true;
 		}
 		$methods[] = $md;
@@ -30,7 +27,7 @@ foreach ($API as $aname=>&$a) {
 }
 
 $cfg = array(
-    'url'=>'data/router.php',
+	'url'=>'data/router.php',
     'type'=>'remoting',
 	'actions'=>$actions
 );

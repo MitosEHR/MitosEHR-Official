@@ -13,6 +13,7 @@ if(!isset($_SESSION)) {
 }
 include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/classes/dbHelper.php');
 class Medical
 {
@@ -28,12 +29,14 @@ class Medical
 	 * @var Patient
 	 */
 	private $patient;
+	private $services;
 
 	function __construct()
 	{
 		$this->db      = new dbHelper();
 		$this->user    = new User();
 		$this->patient = new Patient();
+		$this->services = new Services();
 		return;
 	}
 
@@ -270,22 +273,123 @@ class Medical
 		             'rows'  => $records);
 	}
 	/*************************************************************************************************************/
-		public function getImmunizationLiveSearch(stdClass $params)
-		{
-			$this->db->setSQL("SELECT id,
-									  code,
-									  code_text,
-									  code_text_short
+	public function getImmunizationLiveSearch(stdClass $params)
+	{
+		$this->db->setSQL("SELECT id,
+								  code,
+								  code_text,
+								  code_text_short
 
-								FROM  immunizations
-								WHERE code_text LIKE '$params->query%'
-								   OR code      LIKE'$params->query%'");
- 			$records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
-			$total = count($records);
-			$records  = array_slice($records, $params->start, $params->limit);
-			return array('totals'=> $total,
-			             'rows'  => $records);
+							FROM  immunizations
+							WHERE code_text LIKE '$params->query%'
+							   OR code      LIKE'$params->query%'");
+        $records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$total = count($records);
+		$records  = array_slice($records, $params->start, $params->limit);
+		return array('totals'=> $total,
+		             'rows'  => $records);
+	}
+	/***************************************************************************************************************/
+
+	public function getPatientLabsResults(stdClass $params)
+	{
+		$records = array();
+		$this->db->setSQL("SELECT pLab.*, pDoc.url AS document_url
+							 FROM patient_labs AS pLab
+						LEFT JOIN patient_documents AS pDoc ON pLab.document_id = pDoc.id
+							WHERE pLab.parent_id = '$params->parent_id'
+						 ORDER BY date DESC");
+        $labs = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		foreach($labs as $lab){
+			$id = $lab['id'];
+			$this->db->setSQL("SELECT observation_loinc, observation_value, unit
+							     FROM patient_labs_results
+							    WHERE patient_lab_id = '$id'");
+			$lab['columns'] = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+			$lab['data'] = array();
+			foreach($lab['columns'] as $column){
+				$lab['data'][$column['observation_loinc']] = $column['observation_value'];
+				$lab['data'][$column['observation_loinc'].'_unit'] = $column['unit'];
+			}
+
+			$records[] = $lab;
 		}
+		return $records;
+	}
+
+
+	public function addPatientLabsResult(stdClass $params)
+	{
+		$lab['pid'] = (isset($params->pid)) ? $params->pid : $_SESSION['patient']['pid'];
+		$lab['uid'] = $_SESSION['user']['id'];
+		$lab['document_id'] = $params->document_id;
+		$lab['date'] = date('Y-m-d H:i:s');
+		$lab['parent_id'] = $params->parent_id;
+		$this->db->setSQL($this->db->sqlBind($lab,'patient_labs','I'));
+		$this->db->execLog();
+		$patient_lab_id = $this->db->lastInsertId;
+
+
+		foreach($this->services->getLabObservationFieldsByParentId($params->parent_id) as $result){
+			$foo = array();
+			$foo['patient_lab_id'] = $patient_lab_id;
+			$foo['observation_loinc'] = $result->loinc_number;
+			$foo['observation_value'] = null;
+			$foo['unit'] = $result->default_unit;
+			$this->db->setSQL($this->db->sqlBind($foo,'patient_labs_results','I'));
+			$this->db->execOnly();
+		}
+
+		return $params;
+	}
+
+
+	public function updatePatientLabsResult(stdClass $params)
+	{
+		$data = get_object_vars($params);
+		$id = $data['id'];
+		unset($data['id']);
+
+		$fo = array();
+		foreach($data as $key => $val){
+			$foo = explode('_', $key);
+			if(sizeof($foo) > 1){
+				$fo[0] = $val;
+			}else{
+				$this->db->setSQL("UPDATE patient_labs_results
+									  SET observation_value = '$val',
+									      unit = '$fo[0]'
+								    WHERE patient_lab_id = '$id'
+								      AND observation_loinc = '$foo[0]'");
+				$this->db->execLog();
+				$fo = array();
+			}
+
+
+
+		}
+
+
+		//unset($data['id'],$data['data'],$data['columns']);
+		//$this->db->setSQL($this->db->sqlBind($data,'patient_labs_results','U',"id = '$params->id'"));
+		return $params;
+	}
+
+
+	public function deletePatientLabsResult(stdClass $params)
+	{
+
+		return $params;
+	}
+
+	public function signPatientLabsResultById($id)
+	{
+		$foo['auth_uid'] = $_SESSION['user']['id'];
+		$this->db->setSQL($this->db->sqlBind($foo,'patient_labs','U', "id = '$id'"));
+		$this->db->execLog();
+		return array('success' => true);
+	}
+
 
 	/*********************************************
 	 * METHODS USED BY PHP                       *
@@ -442,6 +546,10 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_medications WHERE eid='$eid'");
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
+
+	//******************************************************************************************************************
+
+
 
 	/**
 	 * @param $date

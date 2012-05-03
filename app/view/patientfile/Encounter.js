@@ -122,13 +122,13 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 {
                     xtype:'grid',
-                    title:'Orders',
+                    title:'Orders / Rx',
                     region:'east',
                     split:true,
                     width:485,
                     columns:[
                         {
-                            header:'Code',
+                            header:'Order Type',
                             width:40,
                             dataIndex:'code'
                         },
@@ -136,6 +136,11 @@ Ext.define('App.view.patientfile.Encounter', {
                             header:'Description',
                             flex:1,
                             dataIndex:'code_text'
+                        }
+                    ],
+                    bbar:[
+                        {
+                            text:'Add Order'
                         }
                     ]
                 },
@@ -265,11 +270,6 @@ Ext.define('App.view.patientfile.Encounter', {
             title:'Misc. Billing Options HCFA',
             html:'<h1>Misc. Billing Options HCFA form placeholder!</h1>'
         });
-        me.procedurePanel = Ext.create('Ext.form.Panel', {
-            autoScroll:true,
-            title:'Procedure Order',
-            html:'<h1>Procedure Order form placeholder!</h1>'
-        });
 
         me.CurrentProceduralTerminology = Ext.create('App.view.patientfile.encounter.CurrentProceduralTerminology',{
             title:'Current Procedural Terminology'
@@ -284,6 +284,7 @@ Ext.define('App.view.patientfile.Encounter', {
 
 
         me.reviewSysPanel = Ext.create('Ext.form.Panel', {
+            autoScroll:true,
             action:'encounter',
             title:'Review of Systems',
             fieldDefaults:{ msgTarget:'side' },
@@ -460,7 +461,7 @@ Ext.define('App.view.patientfile.Encounter', {
                         layout:'fit'
                     },
                     items:[
-                        me.MiscBillingOptionsPanel, me.procedurePanel, me.CurrentProceduralTerminology, me.EncounterEventHistory
+                        me.MiscBillingOptionsPanel, me.CurrentProceduralTerminology, me.EncounterEventHistory
                     ]
                 }
             ],
@@ -822,7 +823,6 @@ Ext.define('App.view.patientfile.Encounter', {
                     });
                 }
             });
-
         }
     },
 

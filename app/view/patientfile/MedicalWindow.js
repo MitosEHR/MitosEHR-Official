@@ -14,16 +14,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     title        : 'Medical Window',
     layout       : 'card',
     closeAction  : 'hide',
-    height       : 700,
-    width        : 1000,
+    height       : 800,
+    width        : 1200,
     bodyStyle    : 'background-color:#fff',
     modal        : true,
     defaults     : {
         margin: 5
     },
+    mixins: ['App.classes.RenderPanel'],
+
     initComponent: function() {
 
         var me = this;
+
 
         me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
             groupField: 'immunization_name',
@@ -68,6 +71,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 scope     : me,
                 beforesync: me.setDefaults
             },
+            autoSync : true
+        });
+        me.labPanelsStore = Ext.create('App.store.patientfile.LaboratoryTypes',{
             autoSync : true
         });
 
@@ -263,7 +269,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 /**
                  * Allergies Card panel
                  */
-
                 xtype  : 'grid',
                 action : 'patientAllergiesListGrid',
                 store  : me.patientAllergiesListStore,
@@ -1062,10 +1067,154 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 /**
                  * Lab panel
                  */
-
                 xtype : 'container',
                 action: 'patientLabs',
-                html  : 'Lab Placeholder'
+                layout:'border',
+                items:[
+                    {
+                        xtype:'panel',
+                        region:'north',
+                        layout:'border',
+                        bodyBorder:false,
+                        border:false,
+                        height:400,
+                        split:true,
+                        items:[
+                            {
+                                xtype:'grid',
+                                region:'west',
+                                width:290,
+                                split:true,
+                                store:me.labPanelsStore,
+                                columns:[
+                                    {
+                                        header:'Laboratories',
+                                        dataIndex:'label',
+                                        flex:1
+                                    }
+                                ],
+                                listeners:{
+                                    scope:me,
+                                    itemclick:me.onLabPanelSelected,
+                                    selectionchange:me.onLabPanelSelectionChange
+                                }
+                            },
+                            {
+                                xtype:'panel',
+                                action:'labPreviewPanel',
+                                title:'Laboratory Preview',
+                                region:'center',
+                                items:[
+                                    me.uploadWin = Ext.create('Ext.window.Window',{
+                                        draggable :false,
+                                        closable:false,
+                                        closeAction:'hide',
+                                        items:[
+                                            {
+                                                xtype:'form',
+                                                bodyPadding:10,
+                                                width:400,
+                                                items:[
+                                                    {
+                                                        xtype: 'filefield',
+                                                        name: 'filePath',
+                                                        buttonText: 'Select a file...',
+                                                        anchor:'100%'
+                                                    }
+                                                ],
+                                             //   url: 'dataProvider/DocumentHandler.php'
+                                                api: {
+                                                    submit: DocumentHandler.uploadDocument
+                                                }
+                                            }
+                                        ],
+                                        buttons:[
+                                            {
+                                                text:'Cancel',
+                                                handler:function(){
+                                                    me.uploadWin.close();
+                                                }
+                                            },
+                                            {
+                                                text:'Upload',
+                                                scope:me,
+                                                handler:me.onLabUpload
+                                            }
+                                        ]
+                                    })
+                                ]
+                            }
+                        ],
+                        tbar:[
+                            '->',
+                            {
+                                text:'Scan'
+                            },
+                            '-',
+                            {
+                                text:'Upload',
+                                disabled:true,
+                                action:'uploadBtn',
+                                scope:me,
+                                handler:me.onLabUploadWind
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'container',
+                        region:'center',
+                        layout:'border',
+                        split:true,
+                        items:[
+                            {
+                                xtype:'form',
+                                title:'Laboratory Entry Form',
+                                region:'west',
+                                width:290,
+                                split:true,
+                                bodyPadding:5,
+                                autoScroll:true,
+                                bbar:[
+                                    '->',
+                                    {
+                                        text:'Reset',
+                                        scope:me,
+                                        handler:me.onLabResultsReset
+                                    },
+                                    '-',
+                                    {
+                                        text:'Sign',
+                                        scope:me,
+                                        handler:me.onLabResultsSign
+                                    },
+                                    '-',
+                                    {
+                                        text:'Save',
+                                        scope:me,
+                                        handler:me.onLabResultsSave
+                                    }
+                                ]
+                            },
+                            {
+                                xtype:'panel',
+                                region:'center',
+                                height:300,
+                                split:true,
+                                items:[
+                                    {
+                                        xtype:'lalboratoryresultsdataview',
+                                        action:'lalboratoryresultsdataview',
+                                        store: Ext.create('App.store.patientfile.PatientLabsResults'),
+                                        listeners:{
+                                            scope:me,
+                                            itemclick:me.onLabResultClick
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ];
 
@@ -1154,16 +1303,241 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 ]
             }
         ];
-
         me.listeners = {
             scope: me,
-
             show: me.onMedicalWinShow
         };
-
         me.callParent(arguments);
     },
 
+    //*******************************************************
+
+    onLabPanelSelected:function(grid, model){
+        var me = this,
+            formPanel = me.query('[action="patientLabs"]')[0].down('form'),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            fields = [];
+
+        me.currLabPanelId = model.data.id;
+        me.removeLabDocument();
+        formPanel.removeAll();
+
+        formPanel.add({
+            xtype:'textfield',
+            name:'id',
+            hidden:true
+        });
+        Ext.each(model.data.fields, function(field){
+            formPanel.add({
+                xtype:'fieldcontainer',
+                layout:'hbox',
+                margin:0,
+                anchor:'100%',
+                items:[
+                    {
+                        xtype:'textfield',
+                        fieldLabel:field.code_text_short || field.loinc_name,
+                        name:field.loinc_number,
+                        labelWidth:130,
+                        flex:1,
+                        allowBlank: field.required_in_panel != 'R'
+                    },
+                    {
+                        xtype:'mitos.unitscombo',
+                        value: field.default_unit,
+                        name:field.loinc_number+'_unit',
+                        width:90
+                    }
+                ]
+            });
+        });
+
+        store.load({params:{parent_id:model.data.id}});
+    },
+
+    onLabPanelSelectionChange:function(model, record){
+        this.query('[action="uploadBtn"]')[0].setDisabled(record.length == 0);
+    },
+
+    onLabUploadWind:function(){
+        var me = this,
+            previewPanel = me.query('[action="labPreviewPanel"]')[0], win;
+        me.uploadWin.show();
+        me.uploadWin.alignTo(previewPanel.el.dom,'tr-tr',[-5,30])
+    },
+
+    onLabUpload:function(btn){
+        var me = this,
+            form = me.uploadWin.down('form').getForm(),
+            win = btn.up('window');
+
+        if(form.isValid()){
+            form.submit({
+                waitMsg: 'Uploading Laboratory...',
+                params:{
+                    pid:app.currPatient.pid,
+                    docType:'laboratory'
+                },
+                success: function(fp, o) {
+                    win.close();
+                    say(o.result);
+                    me.getLabDocument(o.result.doc.url);
+                    me.addNewLabResults(o.result.doc.id);
+                },
+                failure:function(fp, o){
+                    say(o.result.error);
+
+                }
+            });
+        }
+    },
+
+    onLabResultClick:function(view, model){
+        var me = this,
+            form = me.query('[action="patientLabs"]')[0].down('form').getForm();
+
+        if(me.currDocUrl != model.data.document_url){
+            form.reset();
+            model.data.data.id = model.data.id;
+            form.setValues(model.data.data);
+            me.getLabDocument(model.data.document_url);
+            me.currDocUrl = model.data.document_url;
+        }
+
+    },
+
+    onLabResultsSign:function(){
+        var me = this,
+            form = me.query('[action="patientLabs"]')[0].down('form').getForm(),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            values = form.getValues(),
+            record  = dataView.getSelectionModel().getLastSelected();
+
+        if (form.isValid()) {
+            if(values.id){
+                me.passwordVerificationWin(function (btn, password) {
+                    if (btn == 'ok') {
+                        User.verifyUserPass(password, function (provider, response) {
+                            if (response.result) {
+                                say(record);
+                                Medical.signPatientLabsResultById(record.data.id,function(provider, response){
+                                    store.load({params:{parent_id:me.currLabPanelId}});
+                                });
+                            } else {
+                                Ext.Msg.show({
+                                    title:'Oops!',
+                                    msg:'Incorrect password',
+                                    //buttons:Ext.Msg.OKCANCEL,
+                                    buttons:Ext.Msg.OK,
+                                    icon:Ext.Msg.ERROR,
+                                    fn:function (btn) {
+                                        if (btn == 'ok') {
+                                            //me.onLabResultsSign();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }else{
+                Ext.Msg.show({
+                    title:'Oops!',
+                    msg:'Nothing to sign.',
+                    //buttons:Ext.Msg.OKCANCEL,
+                    buttons:Ext.Msg.OK,
+                    icon:Ext.Msg.ERROR,
+                    fn:function (btn) {
+                        if (btn == 'ok') {
+                            //me.onLabResultsSign();
+                        }
+                    }
+                });
+            }
+
+        }
+    },
+
+    onLabResultsSave:function(btn){
+        var me = this,
+            form = btn.up('form').getForm(),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            values = form.getValues(),
+            record  = dataView.getSelectionModel().getLastSelected();
+
+        if(form.isValid()){
+            Medical.updatePatientLabsResult(values,function(){
+                store.load({params:{parent_id:record.data.parent_id}});
+                form.reset();
+            });
+        }
+    },
+
+    addNewLabResults:function(docId){
+        var me = this,
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            params = {
+                parent_id:me.currLabPanelId,
+                document_id:docId
+            };
+        Medical.addPatientLabsResult(params, function(provider, response){
+            store.load({params:{parent_id:me.currLabPanelId}});
+            say(response.result);
+        });
+    },
+
+    onLabResultsReset:function(btn){
+        var form = btn.up('form').getForm();
+        form.reset();
+    },
+
+    getLabDocument:function(src){
+        var panel = this.query('[action="labPreviewPanel"]')[0];
+        panel.remove(this.doc);
+        panel.add(this.doc = Ext.create('App.classes.ManagedIframe', {src: src}));
+    },
+
+    removeLabDocument:function(src){
+        var panel = this.query('[action="labPreviewPanel"]')[0];
+        panel.remove(this.doc);
+    },
+
+    //*********************************************************
+
+
+    onCancel: function(btn) {
+        var me = this, panel, form;
+        if(btn.itemId == 'CancelImmunization') {
+            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
+            form = panel.down('form').getForm();
+        } else {
+            panel = me.getLayout().getActiveItem().down('form');
+            form = panel.getForm();
+        }
+        me.closeImmunizationGrid();
+
+        panel.collapse();
+        panel.hide();
+        form.reset();
+    },
+
+    closeImmunizationGrid: function() {
+        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
+        grid[0].collapse();
+    },
+
+    openImmunizationGrid: function() {
+        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
+        grid[0].expand();
+    },
+
+    onCodeFieldFocus: function() {
+        this.openImmunizationGrid();
+    },
 
     onOptionType: function(val, model) {
         var value = model[0].data.code, titlefield = val.up('form').query('textfield[action="immuCode"]');
@@ -1193,7 +1567,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
     setDefaults: function(options) {
-
         var data;
 
         if(options.update) {
@@ -1202,12 +1575,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(options.create) {
 
         }
-
     },
 
     cardSwitch: function(btn) {
-        var layout = this.getLayout(), title;
+        var layout = this.getLayout(),
+            addBtn = this.down('toolbar').query('[action="AddRecord"]')[0],
+            title;
 
+        addBtn.show();
         if(btn.action == 'immunization') {
             layout.setActiveItem(0);
             title = 'Immunizations';
@@ -1235,7 +1610,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(btn.action == 'laboratories') {
             layout.setActiveItem(6);
             title = 'Laboratories';
-
+            addBtn.hide();
         }
 
         this.setTitle(app.currPatient.name + ' - Medical Window ( ' + title + ' )');
@@ -1243,6 +1618,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
     onMedicalWinShow: function() {
+        this.labPanelsStore.load();
         this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});

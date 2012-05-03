@@ -29,7 +29,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 		me.code_type = 'Immunizations';
 
 		me.store = Ext.create('App.store.administration.PreventiveCare');
-        me.ImmuRelationStore = Ext.create('App.store.administration.Immunization_Relations');
+        me.ImmuRelationStore = Ext.create('App.store.administration.ImmunizationRelations');
 		me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
 		me.medicationsStore = Ext.create('App.store.administration.Medications');
 
@@ -756,7 +756,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 	getSelectId:function(){
 		var row = this.servicesGrid.getSelectionModel().getLastSelected();
-
 		return row.data.id;
 	},
 
