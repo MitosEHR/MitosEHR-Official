@@ -86,7 +86,7 @@ Ext.define('App.view.administration.Lists', {
 					update: Lists.updateList
 				}
 			},
-			autoLoad: true
+			autoLoad: false
 		});
 		/**
 		 * RowEditor Classes
@@ -389,7 +389,12 @@ Ext.define('App.view.administration.Lists', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
-		this.loadGrid();
-		callback(true);
+        var me = this;
+        this.listsStore.load({
+            scope:me,
+            callback:me.loadGrid
+        });
+		//this.loadGrid();
+        callback(true);
 	}
 });

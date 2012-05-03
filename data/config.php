@@ -149,6 +149,14 @@ $API = array(
         ),
 
     ),
+    'DocumentHandler'=>array(
+        'methods'=>array(
+            'uploadDocument'=>array(
+	            'formHandler'=>true,
+	            'len'=>1
+            )
+        )
+    ),
     /**
     * Medical Functions
     */
@@ -215,6 +223,21 @@ $API = array(
                'len'=>1
             ),
             'getMedicationLiveSearch'=>array(
+               'len'=>1
+            ),
+            'getPatientLabsResults'=>array(
+               'len'=>1
+            ),
+            'addPatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'updatePatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'deletePatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'signPatientLabsResultById'=>array(
                'len'=>1
             )
         ),
@@ -384,6 +407,24 @@ $API = array(
             ),
             'updateMedications'=>array(
                'len'=>1
+            ),
+            'getAllLabObservations'=>array(
+               'len'=>1
+            ),
+            'getLabObservations'=>array(
+               'len'=>1
+            ),
+            'addLabObservation'=>array(
+               'len'=>1
+            ),
+            'updateLabObservation'=>array(
+               'len'=>1
+            ),
+            'removeLabObservation'=>array(
+               'len'=>1
+            ),
+            'getActiveLaboratoryTypes'=>array(
+               'len'=>0
             )
         )
     ),
@@ -436,6 +477,18 @@ $API = array(
             ),
             'updateMedications'=>array(
                'len'=>1
+            ),
+            'getRelations'=>array(
+                'len'=>1
+            ),
+            'addRelations'=>array(
+                'len'=>1
+            ),
+            'removeRelations'=>array(
+                'len'=>1
+            ),
+            'getImmunizationsCheck'=>array(
+                'len'=>1
             )
         )
     ),

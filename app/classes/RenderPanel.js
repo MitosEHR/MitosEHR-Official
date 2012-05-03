@@ -100,10 +100,19 @@ Ext.define('App.classes.RenderPanel', {
 	},
 
 	boolRenderer: function(val) {
-		if(val == '1') {
+		if(val == '1' || val == true || val == 'true') {
 			return '<img style="padding-left: 13px" src="ui_icons/yes.gif" />';
-		} else if(val == '0') {
+		} else if(val == '0' || val == false || val == 'false') {
 			return '<img style="padding-left: 13px" src="ui_icons/no.gif" />';
+		}
+		return val;
+	},
+
+	alertRenderer: function(val) {
+		if(val == '1' || val == true || val == 'true') {
+			return '<img style="padding-left: 13px" src="ui_icons/no.gif" />';
+		} else if(val == '0' || val == false || val == 'false') {
+			return '<img style="padding-left: 13px" src="ui_icons/yes.gif" />';
 		}
 		return val;
 	},
@@ -134,6 +143,7 @@ Ext.define('App.classes.RenderPanel', {
         });
         var f = msg.textField.getInputId();
         document.getElementById(f).type = 'password';
+        return msg;
     },
     getPageHeader:function(){
         return this.getComponent('RenderPanel-header');

@@ -32,7 +32,7 @@ Ext.define('App.view.MitosApp', {
 		'App.classes.combo.Languages',
 		'App.classes.combo.Authorizations',
 		'App.classes.combo.Facilities',
-		'App.classes.combo.TransmitMedthod',
+		'App.classes.combo.TransmitMethod',
 		'App.classes.combo.InsurancePayerType',
 
 
@@ -64,7 +64,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.administration.Log',
 		'App.view.administration.Practice',
 		'App.view.administration.Roles',
-		'App.view.administration.Services',
+		'App.view.administration.DataManager',
 		'App.view.administration.PreventiveCare',
 		'App.view.administration.Medications',
 		'App.view.administration.Users',
@@ -520,8 +520,8 @@ Ext.define('App.view.MitosApp', {
 		if(perm.access_practice) {
 			me.MainPanel.add(Ext.create('App.view.administration.Practice'));
 		}
-		if(perm.access_services) {
-			me.MainPanel.add(Ext.create('App.view.administration.Services'));
+		if(perm.access_data_manager) {
+			me.MainPanel.add(Ext.create('App.view.administration.DataManager'));
 		}
 		if(perm.access_preventive_care) {
 			me.MainPanel.add(Ext.create('App.view.administration.PreventiveCare'));
@@ -555,7 +555,8 @@ Ext.define('App.view.MitosApp', {
 				{
 					xtype            : 'dataview',
 					margin           : '0 0 3 0',
-					hidden           : window.innerWidth >= me.minWidthToFullMode,
+					hidden           : true,
+                    hideMode         : 'offsets',
 					cls              : 'patient-pool-view-footer x-toolbar x-toolbar-default x-box-layout-ct',
 					tpl              : '<div class="x-toolbar-separator x-toolbar-item x-toolbar-separator-horizontal" style="float:left; margin-top:5px;" role="presentation" tabindex="-1"></div>' +
 						'<tpl for=".">' +

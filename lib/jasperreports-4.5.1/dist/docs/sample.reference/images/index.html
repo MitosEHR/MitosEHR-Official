@@ -1,0 +1,456 @@
+<html xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 4.5.1 - Images Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td colspan="2" align="right"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - Images Sample (version 4.5.1)</span></td><td align="right"><img src="../../resources/jasperreports.png" border="0"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how images could be used in a report template.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%204.5.1/jasperreports-4.5.1-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://jasperforge.org/scm/viewvc.php/tags/jr-4-5-1/jasperreports/demo/samples/images/?root=jasperreports" target="_blank">Browse Sample Source Files on SVN</a></span>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#images">Images</a></span></td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="6" align="right"><a name="images"></a><a href="#top" class="toc">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img src="../../resources/jr-16x16.png" border="0"></td><td colspan="4"><span class="name">Images</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:shertage@users.sourceforge.net" class="copy">Sanda Zaharia</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+How to render images in reports using the build-in image element.
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">0.1.0</span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Other Samples</span></td><td>
+<br>
+</td><td colspan="3">
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><span class="element"><a href="../horizontal/index.html">/demo/samples/horizontal</a></span></td>
+</tr>
+<tr>
+<td><span class="element"><a href="../jasper/index.html">/demo/samples/jasper</a></span></td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+<b>Images in JasperReports</b>
+
+<br>
+
+<br>
+Below is an image.
+<br>
+
+<span class="element"><img src="dukesign.jpg" border="0"></span>
+
+<br>
+
+<br>
+Images are the most complex graphic objects in a report. Just as for text field elements, 
+their content is dynamically evaluated at runtime, using a report expression. The process of 
+image rendering depends on a set of attributes and expressions available for the <span class="code"><code>&lt;image/&gt;</code></span> element.
+<br>
+
+<br>
+
+<b>Image Attributes</b>
+
+<ul>
+
+<li>
+<span class="code"><code>scaleImage</code></span> - indicates how should be rendered the image when its actual size does not fit the size of the image report element. 
+This is because in a lot of situations images are loaded at runtime and there is no way to know their exact size when creating the report template. 
+Possible values for this attribute are:
+<ul>
+
+<li>
+<span class="code"><code>Clip</code></span> - if the actual image is larger than the image element size, it will be cut off so that it keeps its original resolution, 
+and only the region that fits the specified size will be displayed.
+</li>
+
+<li>
+<span class="code"><code>FillFrame</code></span> - if the dimensions of the actual image do not fit those 
+specified for the image element that displays it, the image is forced to obey them 
+and stretch itself so that it fits in the designated output area. It will be deformed if 
+necessary.</li>
+
+<li>
+<span class="code"><code>RetainShape</code></span> - if the actual image does not fit into the image 
+element, it can be adapted to those dimensions while keeping its original undeformed proportions.</li>
+
+<li>
+<span class="code"><code>RealHeight</code></span> - the image can be stretched vertically to 
+match the actual image height, while preserving the declared width of the image element.</li>
+
+<li>
+<span class="code"><code>RealSize</code></span> - the image can be stretched vertically to 
+match the actual image height, while adjusting the width of the image element to match the actual image width.</li>
+
+</ul>
+
+</li>
+
+<li>If the scale type for the image is <span class="code"><code>Clip</code></span> or <span class="code"><code>RetainShape</code></span> and the actual image is smaller 
+than its defined size in the report template or does not have the same proportions, the 
+image might not occupy all the space allocated to it in the report template. In these conditions the image can be both 
+horizontally and vertically aligned within its report element. Two attributes are responsible for the image alignment:
+<ul>
+
+<li>
+<span class="code"><code>hAlign</code></span> - specifies the horizontal alignment. Possible values are: <span class="code"><code>Left</code></span>, <span class="code"><code>Center</code></span>, <span class="code"><code>Right</code></span>.</li>
+
+<li>
+<span class="code"><code>vAlign</code></span> - specifies the vertical alignment. Possible values are: <span class="code"><code>Top</code></span>, <span class="code"><code>Middle</code></span>, <span class="code"><code>Bottom</code></span>.</li>
+
+</ul>
+
+</li>
+
+<li>
+<span class="code"><code>isUsingCache</code></span> - flag that indicates if an image should be loaded each time it gets displayed in a report, or 
+if it should be loaded only once and then stored in a memory cache for better performance. For images with static content applying the 
+caching mechanism is strongly recommended. When one set the <span class="code"><code>isUsingCache</code></span> attribute to 
+<span class="code"><code>true</code></span>, the reporting engine will try to recognize previously loaded images using their specified source. 
+This caching functionality is available for image elements whose expressions return 
+objects of any type as the image source. The <span class="code"><code>isUsingCache</code></span> flag is set to <span class="code"><code>true</code></span> by 
+default for images having <span class="code"><code>java.lang.String</code></span> expressions and to <span class="code"><code>false</code></span> for all other 
+types. </li>
+
+<li>
+<span class="code"><code>isLazy</code></span> - flag that specifies whether the image should be loaded and processed during report filling or 
+during exporting, in case that the image is not available at fill time. By default this flag is set to <span class="code"><code>false</code></span>. 
+When it is set to <span class="code"><code>true</code></span>, an image path String is stored at fill time instead of the image itself, and during the 
+exporting process the image will be loaded from the location read from this path String. For example, this sample contains an 
+image element pointing to the JasperReports logo, which is lazy loaded from the project&rsquo;s web site.</li>
+
+<li>
+<span class="code"><code>onErrorType</code></span> - if an image is unavailable when the engine tries to load it, some kind of output should be provided 
+instead. The <span class="code"><code>onErrorType</code></span> attribute specifies this output. Possible values are:
+<ul>
+
+<li>
+<span class="code"><code>Error</code></span> - an exception is thrown if the engine cannot load the image.</li>
+
+<li>
+<span class="code"><code>Blank</code></span> - any image-loading exception is ignored and nothing will appear in the generated document.</li>
+
+<li>
+<span class="code"><code>Icon</code></span> -  the engine will put a small specific icon in the document to indicate that the actual image is missing.</li>
+
+</ul>
+
+</li>
+
+<li>
+<span class="code"><code>evaluationTime</code></span> - specify the moment when the image expression gets evaluated. Possible values are:
+<ul>
+
+<li>
+<span class="code"><code>Now</code></span> - the image expression is evaluated when the current band is filled.</li>
+
+<li>
+<span class="code"><code>Report</code></span> - the image expression is evaluated when the end of the report is reached.</li>
+
+<li>
+<span class="code"><code>Page</code></span> -  the image expression is evaluated when the end of the current page is reached.</li>
+
+<li>
+<span class="code"><code>Column</code></span> - the image expression is evaluated when the end of the current column is reached.</li>
+
+<li>
+<span class="code"><code>Group</code></span> - the image expression is evaluated when the group specified by the <span class="code"><code>evaluationGroup</code></span> attribute changes.</li>
+
+<li>
+<span class="code"><code>Auto</code></span> - each variable participating in the image expression is evaluated at a time corresponding to its reset type.</li>
+
+</ul>
+
+</li>
+
+<li>
+<span class="code"><code>evaluationGroup</code></span> - the group involved in the image evaluation process when the <span class="code"><code>evaluationTime</code></span> attribute is set to <span class="code"><code>Group</code></span>.</li>
+
+</ul>
+
+<b>Image Expression</b>
+
+<br>
+
+<br>
+The value returned by the image expression is the source for the image to be displayed. 
+The image expression is introduced by the <span class="code"><code>&lt;imageExpression/&gt;</code></span> element and can return 
+values from only the limited range of classes listed following:
+<ul>
+
+<li>
+<span class="code"><code>java.lang.String</code></span>
+</li>
+
+<li>
+<span class="code"><code>java.io.File</code></span>
+</li>
+
+<li>
+<span class="code"><code>java.net.URL</code></span>
+</li>
+
+<li>
+<span class="code"><code>java.io.InputStream</code></span>
+</li>
+
+<li>
+<span class="code"><code>java.awt.Image</code></span>
+</li>
+
+<li>
+<span class="code"><code>net.sf.jasperreports.engine.JRRenderable</code></span>
+</li>
+
+</ul>
+
+<b>Image Hyperlinks</b>
+
+<br>
+
+<br>
+In JasperReports image elements provide hyperlink support. All available hyperlink expressions are allowed to be part of an <span class="code"><code>&lt;image/&gt;</code></span> element. 
+See also the <a href="../hyperlink/index.html#hyperlinks" target="_blank" class="element">hyperlink</a> sample.
+<br>
+
+<br>
+
+<b>Image Examples</b>
+
+<br>
+
+<br>
+This reports/ImagesReport.jrxml report template contains a series of image examples, having a specific combination of the attributes above.
+<br>
+The first image in the report is loaded from the <a href="http://jasperreports.sourceforge.net" target="_blank" class="element">http://jasperreports.sourceforge.net</a> web site at export time.
+<br> 
+
+<br> 
+
+<span class="code"><code>
+&nbsp;&nbsp;&lt;image scaleImage="Clip" onErrorType="Icon" isLazy="true"&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;reportElement x="0" y="0" width="150" height="40"/&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;imageExpression class="java.lang.String"&gt;&lt;![CDATA["http://jasperreports.sourceforge.net/jasperreports.png"]]&gt;&lt;/imageExpression&gt;
+<br>
+&nbsp;&nbsp;&lt;/image&gt;
+</code></span>
+
+<br>
+
+<br>
+The last image in the report template is loaded from the <span class="code"><code>src/dukesign.jpg</code></span> file in this sample and is scaled to its real height. 
+The image expression's class is missing, therefore it is assumed to be <span class="code"><code>java.lang.String</code></span>. The image style is <span class="code"><code>imageBox</code></span>, 
+a report style defined for images with visible border lines.
+<br>
+
+<br>
+
+<span class="code"><code>
+&nbsp;&nbsp;&lt;image scaleImage="RealHeight"&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;reportElement x="0" y="0" width="100" height="40" style="imageBox"/&gt;
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;imageExpression&gt;&lt;![CDATA["dukesign.jpg"]]&gt;&lt;/imageExpression&gt;
+<br>
+&nbsp;&nbsp;&lt;/image&gt;
+</code></span>
+
+<br>
+
+<br>
+
+<b>Running the Sample</b>
+
+<br>
+
+<br>
+Running the sample requires the <a href="http://ant.apache.org/" target="_blank" class="element">Apache Ant</a> library. Make sure that <span class="code"><code>ant</code></span> is already installed on your system (version 1.5 or later).
+<br>
+In a command prompt/terminal window set the current folder to <span class="code"><code>demo/samples/images</code></span> within the JasperReports source project and run the <span class="code"><code>&gt; ant test view</code></span> command.
+<br>
+It will generate all supported document types containing the sample report in the <span class="code"><code>demo/samples/images/build/reports</code></span> directory. 
+<br>
+Then the report will open in the JasperReports internal viewer.
+    </span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-2011 Jaspersoft Corporation <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>
