@@ -82,7 +82,6 @@ class Medical
 		$data['administered_date'] = $this->parseDate($data['administered_date']);
 		$data['education_date']    = $this->parseDate($data['education_date']);
 		$data['create_date']       = $this->parseDate($data['create_date']);
-		$data['vis_date']          = $this->parseDate($data['vis_date']);
 		$this->db->setSQL($this->db->sqlBind($data, "patient_immunizations", "U", "id='$id'"));
 		$this->db->execLog();
 		return $params;
