@@ -167,7 +167,13 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/MsgStatus.js"></script>
         <script type="text/javascript" src="app/classes/combo/posCodes.js"></script>
         <script type="text/javascript" src="app/classes/combo/Roles.js"></script>
-        <script type="text/javascript" src="app/classes/combo/AllergyTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesLocation.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesSystemic.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesSkin.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesSeverity.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesLocal.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesAbdominal.js"></script>
         <script type="text/javascript" src="app/classes/combo/Sex.js"></script>
         <script type="text/javascript" src="app/classes/combo/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>

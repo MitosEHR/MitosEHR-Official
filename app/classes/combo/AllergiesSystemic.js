@@ -1,10 +1,10 @@
-Ext.define('App.classes.combo.AllergyTypes', {
+Ext.define('App.classes.combo.AllergiesSystemic', {
 	extend       : 'Ext.form.ComboBox',
-	alias        : 'widget.mitos.allergytypescombo',
+	alias        : 'widget.mitos.allergiessystemiccombo',
 	initComponent: function() {
 		var me = this;
 
-		Ext.define('AllergyTypesModel', {
+		Ext.define('allergiessystemicModel', {
 			extend: 'Ext.data.Model',
 			fields: [
 				{name: 'option_name', type: 'string' },
@@ -16,13 +16,13 @@ Ext.define('App.classes.combo.AllergyTypes', {
 					read: CombosData.getOptionsByListId
 				},
 				extraParams: {
-					list_id: 73
+					list_id: 83
 				}
 			}
 		});
 
 		me.store = Ext.create('Ext.data.Store', {
-			model   : 'AllergyTypesModel',
+			model   : 'allergiessystemicModel',
 			autoLoad: true
 		});
 

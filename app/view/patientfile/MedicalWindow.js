@@ -241,6 +241,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     ]
                 })
             },
+
             {
                 /**
                  * Allergies Card panel
@@ -252,52 +253,17 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     {
                         header   : 'Type',
                         width    : 100,
-                        dataIndex: 'type'
+                        dataIndex: 'allergy_type'
                     },
                     {
-                        header   : 'Title',
+                        header   : 'Name',
                         width    : 100,
-                        dataIndex: 'title'
+                        dataIndex: 'allergy_name'
                     },
                     {
-                        header   : 'Diagnosis Code',
-                        width    : 100,
-                        dataIndex: 'diagnosis_code'
-                    },
-                    {
-                        header   : 'Begin Date',
-                        width    : 100,
-                        dataIndex: 'begin_date'
-                    },
-                    {
-                        header   : 'End Date',
+                        header   : 'Summary',
                         flex     : 1,
-                        dataIndex: 'end_date'
-                    },
-                    {
-                        header   : 'Ocurrence',
-                        flex     : 1,
-                        dataIndex: 'ocurrence'
-                    },
-                    {
-                        header   : 'Reaction',
-                        flex     : 1,
-                        dataIndex: 'reaction'
-                    },
-                    {
-                        header   : 'Referred by',
-                        flex     : 1,
-                        dataIndex: 'referred_by'
-                    },
-                    {
-                        header   : 'Outcome',
-                        flex     : 1,
-                        dataIndex: 'outcome'
-                    },
-                    {
-                        header   : 'Destination',
-                        flex     : 1,
-                        dataIndex: 'destination'
+                        dataIndex: 'summary'
                     }
                 ],
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
