@@ -34,7 +34,9 @@
 .x-livesearch-match {
     background-color: yellow;
 }
-
+.x-grid-icon-padding {
+	padding: 0 5px;
+}
 
 .vitals-column-over tr td {
 	background-color: #ededed !important;

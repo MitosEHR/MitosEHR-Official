@@ -562,6 +562,9 @@ $API = array(
             ),
             'getPatientNotes'=>array(
             	'len'=>1
+            ),
+            'getPatientDocuments'=>array(
+            	'len'=>1
             )
 
         )

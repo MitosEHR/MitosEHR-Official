@@ -268,6 +268,17 @@ class Patient {
 		return $reminders;
 	}
 
+	public function getPatientDocuments(stdClass $params)
+	{
+		$reminders = array();
+		$this->db->setSQL("SELECT * FROM patient_documents WHERE pid = '$params->pid'");
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+			$row['user_name'] = $this->user->getUserNameById($row['uid']);
+			$reminders[] = $row;
+		}
+		return $reminders;
+	}
+
 }
 //$p = new Patient();
 //echo '<pre>';
