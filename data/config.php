@@ -486,6 +486,9 @@ $API = array(
             ),
             'removeRelations'=>array(
                 'len'=>1
+            ),
+            'getImmunizationsCheck'=>array(
+                'len'=>1
             )
         )
     ),
