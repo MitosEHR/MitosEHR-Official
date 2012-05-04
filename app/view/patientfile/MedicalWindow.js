@@ -94,35 +94,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         dataIndex: 'immunization_name'
                     },
                     {
-                        header   : 'Code Type',
-                        width    : 100,
-                        dataIndex: 'immunization_id'
-                    },
-                    {
                         header   : 'Date',
                         width    : 100,
                         dataIndex: 'administered_date'
                     },
                     {
-                        header   : 'Manufacturer',
-                        width    : 100,
-                        dataIndex: 'manufacturer'
-                    },
-                    {
                         header   : 'Lot Number',
                         width    : 100,
                         dataIndex: 'lot_number'
-                    },
-                    {
-                        header   : 'Date Immunization',
-                        flex     : 1,
-                        dataIndex: 'education_date'
-                    },
-                    {
-                        header   : 'Date VIS Statement',
-                        flex     : 1,
-                        dataIndex: 'vis_date'
-
                     },
                     {
                         header   : 'Notes',
@@ -132,10 +111,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 ],
 
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
-                    autoCancel  : false,
+	                autoCancel  : false,
                     errorSummary: false,
                     clicksToEdit: 1,
-                    enableRemove: true,
                     formItems   : [
 
                         {
@@ -157,15 +135,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             xtype          : 'immunizationlivesearch',
                                             fieldLabel     : 'Name',
                                             hideLabel      : false,
-                                            itemId         : 'immunization',
+                                            itemId         : 'immunization_name',
+	                                        name           : 'immunization_name',
                                             enableKeyEvents: true,
+                                            action         : 'immunizations',
                                             width          : 300,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
-
+	                                    {
+		                                    xtype:'textfield',
+		                                    hidden:true,
+		                                    name:'immunization_id',
+		                                    action:'idField'
+	                                    },
                                         {
                                             fieldLabel: 'Administrator',
                                             name      : 'administered_by',
@@ -193,20 +178,18 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 3 0', xtype: 'textfield' },
                                     items   : [
+	                                    {
+		                                    fieldLabel: 'Lot Number',
+		                                    xtype     : 'textfield',
+		                                    width     : 300,
+		                                    name      : 'lot_number'
 
-                                        {
-                                            fieldLabel     : 'Code',
-                                            name           : 'immunization_id',
-                                            width          : 300,
-                                            itemId         : 'immuCode',
-                                            action         : 'immuCode',
-                                            enableKeyEvents: true
-
-                                        },
-                                        {
+	                                    },
+	                                    {
 
                                             xtype     : 'numberfield',
                                             fieldLabel: 'Dosis Number',
+		                                    width     : 260,
                                             name      : 'dosis'
                                         },
 
@@ -244,14 +227,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             width     : 260,
 
                                             name: 'manufacturer'
-
-                                        },
-                                        {
-                                            fieldLabel: 'Lot Number',
-                                            xtype     : 'textfield',
-                                            width     : 295,
-                                            labelWidth: 180,
-                                            name      : 'lot_number'
 
                                         }
 
@@ -351,14 +326,21 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             fieldLabel     : 'Type',
                                             hideLabel      : false,
                                             itemId         : 'allergies',
+                                            action         : 'allergies',
                                             enableKeyEvents: true,
                                             width          : 225,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
 
                                         {
                                             fieldLabel: 'Begin Date',
@@ -385,25 +367,23 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
+	                                    {
+		                                    fieldLabel: 'Ocurrence',
+		                                    width     : 225,
+		                                    labelWidth: 70,
+		                                    xtype     : 'mitos.occurrencecombo',
+		                                    name      : 'ocurrence'
 
-                                        {   xtype     : 'textfield',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            fieldLabel: 'Title',
-                                            action    : 'title',
-                                            name      : 'title'
-                                        },
+	                                    },
                                         {
                                             fieldLabel: 'End Date',
                                             xtype     : 'datefield',
                                             format    : 'Y-m-d H:i:s',
                                             name      : 'end_date'
-
                                         },
-
                                         {
                                             xtype     : 'textfield',
-                                            width     : 260,
+                                            width     : 250,
                                             fieldLabel: 'Referred by',
                                             name      : 'referred_by'
                                         }
@@ -420,17 +400,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
 
-                                        {
-                                            fieldLabel: 'Ocurrence',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            xtype     : 'mitos.occurrencecombo',
-                                            name      : 'ocurrence'
 
-                                        },
                                         {
                                             xtype     : 'textfield',
-                                            width     : 260,
+	                                        width     : 225,
+	                                        labelWidth: 70,
                                             fieldLabel: 'Reaction',
                                             name      : 'reaction'
                                         }
@@ -523,14 +497,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             name           : 'type',
                                             hideLabel      : false,
                                             itemId         : 'medicalissues',
+                                            action         : 'medicalissues',
                                             enableKeyEvents: true,
                                             width          : 225,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
+
 
                                         {
                                             fieldLabel: 'Begin Date',
@@ -685,13 +667,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             labelWidth     : 70,
                                             xtype          : 'mitos.surgerycombo',
                                             itemId         : 'surgery',
+                                            action         : 'surgery',
                                             enableKeyEvents: true,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
-
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
@@ -843,10 +831,15 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             width     : 225,
                                             labelWidth: 70,
                                             fieldLabel: 'Title',
-                                            action    : 'title',
+                                            action    : 'dental',
                                             name      : 'title'
                                         },
-
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
@@ -979,14 +972,21 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             fieldLabel     : 'Type',
                                             hideLabel      : false,
                                             itemId         : 'medication',
+                                            action         : 'medication',
                                             enableKeyEvents: true,
                                             width          : 225,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
 
                                         {
                                             fieldLabel: 'Begin Date',
@@ -1510,45 +1510,44 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     //*********************************************************
 
 
-    onCancel: function(btn) {
-        var me = this, panel, form;
-        if(btn.itemId == 'CancelImmunization') {
-            panel = me.getLayout().getActiveItem().getComponent('immuNorth');
-            form = panel.down('form').getForm();
-        } else {
-            panel = me.getLayout().getActiveItem().down('form');
-            form = panel.getForm();
-        }
-        me.closeImmunizationGrid();
 
-        panel.collapse();
-        panel.hide();
-        form.reset();
-    },
 
-    closeImmunizationGrid: function() {
-        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
-        grid[0].collapse();
-    },
+    onLiveSearchSelect: function(combo, model) {
 
-    openImmunizationGrid: function() {
-        var grid = this.getComponent('patientImmuListGrid').plugins[0].editor.query('grid[action="immuListGrid"]');
-        grid[0].expand();
-    },
+	    var me = this,
+		    field, id;
 
-    onCodeFieldFocus: function() {
-        this.openImmunizationGrid();
-    },
+	    id = model[0].data.id;
+	    field =  combo.up('container').query('[action="idField"]')[0];
 
-    onOptionType: function(val, model) {
-        var value = model[0].data.code, titlefield = val.up('form').query('textfield[action="immuCode"]');
+	    say(combo.action);
 
-        titlefield[0].setValue(value);
+
+	    field.setValue(id);
+//	    this.patientImmuListStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientAllergiesListStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientMedicalIssuesStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientSurgeryStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientDentalStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientMedicationsStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+
     },
 
     onAddItem: function() {
 
-        var grid = this.getLayout().getActiveItem(), store = grid.store, data;
+        var grid = this.getLayout().getActiveItem(), store = grid.store;
 
         grid.editingPlugin.cancelEdit();
         store.insert(0, {

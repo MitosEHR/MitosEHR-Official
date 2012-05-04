@@ -5,6 +5,7 @@ if(!isset($_SESSION)) {
 	session_cache_limiter('private');
 }
 include_once($_SESSION['site']['root'] . '/classes/dbHelper.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 /**
  * @brief       Services Class.
  * @details     This class will handle all services
@@ -14,6 +15,8 @@ include_once($_SESSION['site']['root'] . '/classes/dbHelper.php');
  * @copyright   Gnu Public License (GPLv3)
  *
  */
+
+
 class PreventiveCare
 {
 	/**
@@ -21,9 +24,16 @@ class PreventiveCare
 	 */
 	private $db;
 
+    /**
+	 * @var Patient
+	 */
+	private $patient;
+
+
 	function __construct()
 	{
-		return $this->db = new dbHelper();
+		$this->db = new dbHelper();
+		$this->patient = new Patient();
 	}
 
 	/**
@@ -376,6 +386,84 @@ class PreventiveCare
 		$this->db->execLog();
 		return $params;
 	}
+
+    public function checkAge($pid, $immu_id){
+
+        $age = $this ->patient->getPatientAgeByDOB($this->patient->getPatientDOBByPid($pid));
+        $range = $this->getImmunizationAgeRangeById($immu_id);
+        if( $age >= $range['age_start'] || $age <= $range['age_end']){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function checkSex($pid, $immu_id){
+
+        $pSex = $this->patient->getPatientSexByPid($pid);
+
+        $iSex = $this->getImmunizationSexById($immu_id);
+        if($iSex == $pSex){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function checkPregnant($pid, $immu_id){
+
+        $ppreg =  $this->patient->getPatientPregnantStatusByPid($pid);
+        $ipreg =  $this->getImmunizationPregnantById($immu_id);
+
+        if($ppreg == $ipreg){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    public function getImmunizationPregnantById($id){
+        $this->db->setSQL("SELECT pregnant
+                           FROM immunizations
+                           WHERE id='$id'");
+        $u = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        return $u['pregnant'];
+    }
+    public function getImmunizationSexById($id){
+        $this->db->setSQL("SELECT sex
+                           FROM immunizations
+                           WHERE id='$id'");
+        $u = $this->db->fetchRecord(PDO::FETCH_ASSOC) ;
+
+        return $u['sex'];
+    }
+
+    public function getImmunizationAgeRangeById($id){
+        $this->db->setSQL("SELECT age_start,
+                                  age_end
+                           FROM immunizations
+                           WHERE id='$id'");
+        return $this->db->fetchRecord(PDO::FETCH_ASSOC);
+    }
+
+    public function getImmunizationsCheck(stdClass $params)
+    {
+        $this->db->setSQL("SELECT * FROM immunizations");
+        $records = array();
+        foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+            $rec['alert'] = ($this->checkAge($params->pid, $rec['id'])
+                          && $this->checkSex($params->pid, $rec['id'])) ? true : false ;
+//            && $this->checkPregnant($params->pid, $rec['id'])
+            if($rec['alert']){
+                $records[]= $rec;
+            }
+
+        }
+        return $records;
+    }
 
 }
 

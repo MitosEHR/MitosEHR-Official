@@ -82,7 +82,6 @@ class Medical
 		$data['administered_date'] = $this->parseDate($data['administered_date']);
 		$data['education_date']    = $this->parseDate($data['education_date']);
 		$data['create_date']       = $this->parseDate($data['create_date']);
-		$data['vis_date']          = $this->parseDate($data['vis_date']);
 		$this->db->setSQL($this->db->sqlBind($data, "patient_immunizations", "U", "id='$id'"));
 		$this->db->execLog();
 		return $params;
@@ -402,13 +401,11 @@ class Medical
 	{
 		$this->db->setSQL("SELECT * FROM patient_immunizations WHERE pid='$pid'");
 
-		$records = array();
-		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date'] == null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
-			$records[]= $rec;
-		}
-		return $records;
+		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
+
+
+
 
 	/**
 	 * @param $eid
@@ -563,7 +560,11 @@ class Medical
 	}
 
 }
-//
+
+
+
+
 //$e = new Medical();
 //echo '<pre>';
-//print_r($e->getProgressNoteByEid(7));
+//print_r($e->CheckImmunizations());
+

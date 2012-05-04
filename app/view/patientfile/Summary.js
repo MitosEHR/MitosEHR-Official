@@ -24,7 +24,9 @@ Ext.define('App.view.patientfile.Summary', {
         me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
         me.qrCodeWindow = Ext.create('App.view.patientfile.QrCodeWindow');
 
-        me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization');
+        me.immuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
+
+
         me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
         me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
         me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
@@ -257,20 +259,20 @@ Ext.define('App.view.patientfile.Summary', {
                         itemId     : 'ImmuPanel',
                         hideHeaders: true,
                         xtype      : 'grid',
-                        store      : me.patientImmuListStore,
+                        store      : me.immuCheckListStore,
                         region     : 'center',
                         columns    : [
                             {
 
                                 header   : 'Name',
-                                dataIndex: 'immunization_name',
+                                dataIndex: 'code_text',
                                 flex     : 1
                             },
                             {
                                 text     : 'Alert',
                                 width    : 55,
                                 dataIndex: 'alert',
-                                renderer : me.boolRenderer
+                                renderer : me.alertRenderer
                             }
 
                         ]
@@ -553,7 +555,7 @@ Ext.define('App.view.patientfile.Summary', {
         });
         this.patientNotesStore.load({params: {pid: app.currPatient.pid}});
         this.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
-        this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
+        this.immuCheckListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
         this.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
