@@ -32,6 +32,7 @@ Ext.define('App.view.patientfile.Summary', {
         me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
         me.patientDentalStore = Ext.create('App.store.patientfile.Dental');
         me.patientMedicationsStore = Ext.create('App.store.patientfile.Medications');
+        me.patientDocumentsStore = Ext.create('App.store.patientfile.PatientDocuments');
 
 
         me.patientNotesStore = Ext.create('App.store.patientfile.Notes');
@@ -39,84 +40,94 @@ Ext.define('App.view.patientfile.Summary', {
 
         me.pageBody = [
             {
-                xtype      : 'container',
+                xtype      : 'tabpanel',
                 flex       : 1,
+                margin     : '3 0 0 0',
                 bodyPadding: 0,
                 frame      : false,
                 border     : false,
+                plain      : true,
                 itemId     : 'centerPanel',
-                defaults   : { margin: '0 0 5 0', bodyPadding: 5, collapsible: true, titleCollapse: true },
                 items      : [
                     {
                         xtype:'panel',
-                        action:'balance',
-                        title: 'Billing',
-                        html:'Account Balance: '
+                        title:'Patient General',
+                        autoScroll:true,
+                        defaults   : { margin: 5, bodyPadding: 5, collapsible: true, titleCollapse: true },
+                        items:[
+                            {
+                                xtype:'panel',
+                                action:'balance',
+                                title: 'Billing',
+                                html:'Account Balance: '
 
-                    },
-                    {
-                        xtype : 'form',
-                        title : 'Demographics',
-                        itemId: 'demoFormPanel'
-                    },
-                    {
-                        title      : 'Notes',
-                        itemId     : 'notesPanel',
-                        xtype      : 'grid',
-                        bodyPadding: 0,
-                        store      : me.patientNotesStore,
-                        columns    : [
-                            {
-                                text     : 'Date',
-                                dataIndex: 'date'
                             },
                             {
-                                header   : 'Type',
-                                dataIndex: 'type'
+                                xtype : 'form',
+                                title : 'Demographics',
+                                action: 'demoFormPanel',
+                                itemId: 'demoFormPanel'
                             },
                             {
-                                text     : 'Note',
-                                dataIndex: 'body',
-                                flex     : 1
+                                title      : 'Notes',
+                                itemId     : 'notesPanel',
+                                xtype      : 'grid',
+                                bodyPadding: 0,
+                                store      : me.patientNotesStore,
+                                columns    : [
+                                    {
+                                        text     : 'Date',
+                                        dataIndex: 'date'
+                                    },
+                                    {
+                                        header   : 'Type',
+                                        dataIndex: 'type'
+                                    },
+                                    {
+                                        text     : 'Note',
+                                        dataIndex: 'body',
+                                        flex     : 1
+                                    },
+                                    {
+                                        text     : 'User',
+                                        dataIndex: 'user_name'
+                                    }
+                                ]
+
                             },
                             {
-                                text     : 'User',
-                                dataIndex: 'user_name'
+                                title      : 'Reminders',
+                                itemId     : 'remindersPanel',
+                                xtype      : 'grid',
+                                bodyPadding: 0,
+                                store      : me.patientRemindersStore,
+                                columns    : [
+                                    {
+                                        text     : 'Date',
+                                        dataIndex: 'date'
+                                    },
+                                    {
+
+                                        header   : 'Type',
+                                        dataIndex: 'type'
+                                    },
+                                    {
+                                        text     : 'Note',
+                                        dataIndex: 'body',
+                                        flex     : 1
+                                    },
+                                    {
+                                        text     : 'User',
+                                        dataIndex: 'user_name'
+                                    }
+                                ]
+
+                            },
+                            {
+                                title: 'Disclosure',
+                                html : 'Panel content!'
                             }
                         ]
-
-                    },
-                    {
-                        title      : 'Reminders',
-                        itemId     : 'remindersPanel',
-                        xtype      : 'grid',
-                        bodyPadding: 0,
-                        store      : me.patientRemindersStore,
-                        columns    : [
-                            {
-                                text     : 'Date',
-                                dataIndex: 'date'
-                            },
-                            {
-
-                                header   : 'Type',
-                                dataIndex: 'type'
-                            },
-                            {
-                                text     : 'Note',
-                                dataIndex: 'body',
-                                flex     : 1
-                            },
-                            {
-                                text     : 'User',
-                                dataIndex: 'user_name'
-                            }
-                        ]
-
-                    },
-                    {
-                        title: 'Disclosure',
-                        html : 'Panel content!'
                     },
                     {
                         title     : 'Vitals',
@@ -126,6 +137,66 @@ Ext.define('App.view.patientfile.Summary', {
                             xtype: 'vitalsdataview',
                             store: me.vitalsStore
                         }
+                    },
+                    {
+                        title     : 'History',
+                        xtype     :'grid',
+                        columns:[
+                            {
+                                header:'Date',
+                                dataIndex:'date'
+                            },
+                            {
+                                header:'Event',
+                                dataIndex:'title',
+                                flex:true
+                            },
+                            {
+                                header:'User',
+                                dataIndex:'user'
+                            }
+                        ]
+                    },
+                    {
+                        title     : 'Documents',
+                        xtype     :'grid',
+                        store: me.patientDocumentsStore,
+                        columns:[
+                            {
+                                xtype: 'actioncolumn',
+                                width:26,
+                                items: [
+                                    {
+                                        icon: 'ui_icons/preview.png',
+                                        tooltip: 'View Document',
+                                        handler: function(grid, rowIndex, colIndex) {
+                                            var rec = grid.getStore().getAt(rowIndex);
+                                            alert("Edit " + rec.get('firstname'));
+                                        },
+                                        getClass:function(){
+                                            return 'x-grid-icon-padding';
+                                        }
+                                    }
+                                ]
+                            },
+                            {
+                                header:'Type',
+                                dataIndex:'docType'
+                            },
+                            {
+                                header:'Date',
+                                dataIndex:'date'
+                            },
+                            {
+                                header:'Title',
+                                dataIndex:'title',
+                                flex:true
+                            },
+                            {
+                                header:'User',
+                                dataIndex:'user_name'
+                            }
+                        ]
                     }
                 ]
             },
@@ -321,75 +392,13 @@ Ext.define('App.view.patientfile.Summary', {
 
         me.callParent(arguments);
 
-        me.down('panel').addDocked([
-            {
-                xtype: 'toolbar',
-                dock : 'top',
-                items: [
-                    {
-                        text   : 'History',
-                        iconCls: 'icoListOptions',
-                        handler: function() {
-
-                        }
-                    },
-                    '-',
-                    {
-                        text   : 'Reports',
-                        iconCls: 'icoListOptions',
-                        handler: function() {
-
-                        }
-                    },
-                    '-',
-                    {
-                        text   : 'Documents',
-                        iconCls: 'icoListOptions',
-                        handler: function() {
-
-                        }
-                    },
-                    '-',
-                    {
-                        text   : 'Transactionstory',
-                        iconCls: 'icoListOptions',
-                        handler: function() {
-
-                        }
-                    },
-                    '-',
-                    {
-                        text   : 'Issues',
-                        iconCls: 'icoListOptions',
-                        handler: function() {
-
-                        }
-                    },
-                    '->',
-                    {
-                        text   : 'Edit Demographics',
-                        iconCls: 'icoListOptions',
-                        handler: function() {
-
-                        }
-                    },
-                    {
-                        text   : 'Print QRcode',
-                        iconCls: 'icoListOptions',
-                        scope  : me,
-                        handler: me.onQrCodeCreate
-                    }
-                ]
-            }
-        ]);
-
         me.query('panel[action="patientImgs"]')[0].add({
             xtype : 'container',
-            margin: '5 20',
+            margin: '5 5',
             html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
         }, {
             xtype : 'container',
-            margin: '5 20',
+            margin: '5 5',
             html  : '<img src="ui_icons/patientDataQrCode.png" height="100" width="100" >'
         });
 
@@ -445,7 +454,7 @@ Ext.define('App.view.patientfile.Summary', {
     },
 
     beforePanelRender: function() {
-        var me = this, center = me.down('panel').getComponent('centerPanel'), demoFormPanel = center.getComponent('demoFormPanel');
+        var me = this, demoFormPanel = me.query('[action="demoFormPanel"]')[0];
 
         this.getFormItems(demoFormPanel, 'Demographics', function(success) {
             if(success) {
@@ -523,11 +532,11 @@ Ext.define('App.view.patientfile.Summary', {
 
         panel.add({
             xtype : 'container',
-            margin: '5 20',
+            margin: '5 10',
             html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
         }, {
             xtype : 'container',
-            margin: '5 20',
+            margin: '5 10',
             html  : '<img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png" height="100" width="100" >'
         });
     },
@@ -552,12 +561,13 @@ Ext.define('App.view.patientfile.Summary', {
         this.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
         this.patientDentalStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
+        this.patientDocumentsStore.load({params: {pid: app.currPatient.pid}});
         var me = this;
         if(this.checkIfCurrPatient()) {
             var patient = me.getCurrPatient();
             this.updateTitle(patient.name + ' - #' + patient.pid + ' (Patient Summary)');
 
-            var center = me.down('panel').getComponent('centerPanel'), demoFormPanel = center.getComponent('demoFormPanel');
+            var demoFormPanel = me.query('[action="demoFormPanel"]')[0];
 
             me.getFormData(demoFormPanel);
             me.getPatientImgs();
