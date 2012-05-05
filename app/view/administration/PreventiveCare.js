@@ -26,12 +26,11 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 		me.active = 1;
 		me.dataQuery = '';
-		me.code_type = 'Immunizations';
+		me.category_id = '3';
 
 		me.store = Ext.create('App.store.administration.PreventiveCare');
-        me.ImmuRelationStore = Ext.create('App.store.administration.ImmunizationRelations');
-		me.activeProblemsStore = Ext.create('App.store.administration.ActiveProblems');
-		me.medicationsStore = Ext.create('App.store.administration.Medications');
+        me.activeProblemsStore = Ext.create('App.store.administration.PreventiveCareActiveProblems');
+		me.immunizationsStore = Ext.create('App.store.administration.PreventiveCareMedications');
 
 		function code_type(val) {
 			if(val == '1') {
@@ -50,10 +49,31 @@ Ext.define('App.view.administration.PreventiveCare', {
 			region : 'center',
 			store  : me.store,
 			columns: [
+                {
+                    xtype: 'actioncolumn',
+                    width:30,
+                    items: [
+                        {
+                            icon: 'ui_icons/delete.png',  // Use a URL in the icon config
+                            tooltip: 'Remove',
+                            handler: function(grid, rowIndex, colIndex) {
+                                var rec = grid.getStore().getAt(rowIndex);
+                                //alert("Edit " + rec.get('firstname'));
+                                say(rec);
+                            },
+                            getClass:function(){
+                                return 'x-grid-icon-padding';
+                            }
+                        }
+                    ]
+                },
 				{ width: 100, header: 'Type', sortable: true, dataIndex: 'code_type', renderer: code_type },
-				{ width: 80, header: 'Code', sortable: true, dataIndex: 'code' },
-				{ flex: 1, header: 'Description', sortable: true, dataIndex: 'code_text' },
-                { width: 60, header: 'Active', sortable: true, dataIndex: 'active', renderer: this.boolRenderer }
+				{ flex: 1, header: 'Description', sortable: true, dataIndex: 'description' },
+				{ width: 100, header: 'Age start', sortable: true, dataIndex: 'age_start' },
+				{ width: 100, header: 'Age End', sortable: true, dataIndex: 'age_end' },
+				{ width: 100, header: 'Sex', sortable: true, dataIndex: 'sex' },
+				{ width: 100, header: 'Frequency', sortable: true, dataIndex: 'frequency' }
+
 			],
 			plugins: Ext.create('App.classes.grid.RowFormEditing', {
 				autoCancel  : false,
@@ -69,7 +89,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 						 * CVX Container
 						 */
 						xtype: 'tabpanel',
-						hidden:true,
 						action:'Immunizations',
 						layout:'fit',
 						plain:true,
@@ -90,7 +109,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disabled:true, action:'field' },
+										defaults:{ margin:'0 10 5 0', action:'field' },
 										items   : [
 											{
 
@@ -119,7 +138,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
+										defaults:{ margin:'0 10 5 0', action:'field'  },
 										items   : [
 											{
 												xtype     : 'mitos.codestypescombo',
@@ -173,7 +192,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 										 */
 										xtype   : 'fieldcontainer',
 										layout:'hbox',
-										defaults:{ margin:'0 10 5 0', disabled:true , action:'field'  },
+										defaults:{ margin:'0 10 5 0', action:'field'  },
 										items   : [
 											{
 												xtype     : 'textfield',
@@ -226,7 +245,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 								action:'problems',
 								xtype  : 'grid',
 								margin:5,
-								store: me.ImmuRelationStore,
+								store: me.activeProblemsStore,
 								columns: [
 
 									{
@@ -258,7 +277,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 									margin:5,
 									fieldLabel:'Add Problem',
 									hideLabel:false,
-									disable:true,
 									listeners:{
 										scope:me,
 										select:me.addActiveProblem
@@ -270,7 +288,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 								action :'medications',
 								xtype  : 'grid',
 								width  : 300,
-								store: me.ImmuRelationStore,
+								store: me.immunizationsStore,
 								columns: [
 									{
 										xtype:'actioncolumn',
@@ -301,7 +319,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 									margin:5,
 									fieldLabel:'Add Problem',
 									hideLabel:false,
-									disable:true,
 									listeners:{
 										scope:me,
 										select:me.addMedications
@@ -312,7 +329,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 								title  : 'Labs',
 								action:'labs',
 								xtype  : 'grid',
-								store: me.ImmuRelationStore,
+								//store: me.ImmuRelationStore,
 								width  : 300,
 								columns: [
 									{
@@ -354,251 +371,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 						]
 
-					},
-					{
-						/**
-						 * CPT Container
- 						 */
-						xtype   : 'container',
-						layout: 'column',
-                        action:'Laboratories',
-						hidden:true,
-						items : [
-
-							{
-								xtype    : 'fieldcontainer',
-								msgTarget: 'under',
-								defaults:{ disabled:true, action:'field'  },
-								items    : [
-									{
-
-										fieldLabel: 'Type',
-										xtype: 'mitos.codestypescombo',
-										name: 'code_type'
-									},
-									{
-
-										fieldLabel: 'Code',
-										xtype: 'textfield',
-										name: 'code'
-									},
-									{
-
-										fieldLabel: 'Modifier',
-										xtype: 'textfield',
-										name: 'mod'
-									}
-
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								margin:'0 0 0 10',
-								defaults:{ disabled:true, action:'field' },
-								items    : [
-									{
-
-										fieldLabel: 'Description',
-										xtype: 'textfield',
-										name: 'code_text'
-									},
-									{
-										fieldLabel: 'Category',
-										xtype: 'mitos.titlescombo',
-										name: 'title'
-									}
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								margin:'0 0 0 20',
-								defaults:{ disabled:true, action:'field' },
-								items    : [
-
-									{
-
-										boxLabel: 'Reportable?',
-										xtype: 'checkboxfield',
-										name: 'reportable'
-
-									}
-									,
-									{
-
-										boxLabel: 'Active?',
-										labelWidth: 75,
-										xtype: 'checkboxfield',
-										name: 'active'
-
-
-									}
-								]
-							}
-
-
-						]
-
-					},
-					{
-						/**
-						 * ICD9 Container
- 						 */
-						xtype   : 'container',
-						layout: 'column',
-                        action:'Diagnostic Tests',
-						hidden:true,
-						items : [
-
-							{
-								xtype    : 'fieldcontainer',
-								msgTarget: 'under',
-								defaults:{ disabled:true, action:'field' },
-								items    : [
-									{
-
-										fieldLabel: 'Type',
-										xtype: 'mitos.codestypescombo',
-										name: 'code_type'
-									},
-									{
-
-										fieldLabel: 'Code',
-										xtype: 'textfield',
-										name: 'code'
-									}
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								margin:'0 0 0 10',
-								defaults:{ disabled:true, action:'field'  },
-								items    : [
-									{
-
-										fieldLabel: 'Description',
-										xtype: 'textfield',
-										name: 'code_text'
-									},
-									{
-										fieldLabel: 'Category',
-										xtype: 'mitos.titlescombo',
-										name: 'title'
-									}
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								margin:'0 0 0 20',
-								defaults:{ disabled:true, action:'field'  },
-								items    : [
-
-									{
-
-										boxLabel: 'Reportable?',
-										xtype: 'checkboxfield',
-										name: 'reportable'
-
-									}
-									,
-									{
-
-										boxLabel: 'Active?',
-										labelWidth: 75,
-										xtype: 'checkboxfield',
-										name: 'active'
-
-
-									}
-								]
-							}
-
-
-						]
-
-					},
-					{
-						/**
-						 * HCPSC Container
- 						 */
-						xtype   : 'container',
-						layout: 'column',
-						action:'3',
-						hidden:true,
-						items : [
-
-							{
-								xtype    : 'fieldcontainer',
-								msgTarget: 'under',
-								defaults:{ disabled:true, action:'field'  },
-								items    : [
-									{
-
-										fieldLabel: 'Type',
-										xtype: 'mitos.codestypescombo',
-										name: 'code_type'
-									},
-									{
-
-										fieldLabel: 'Code',
-										xtype: 'textfield',
-										name: 'code'
-									},
-									{
-
-										fieldLabel: 'Modifier',
-										xtype: 'textfield',
-										name: 'mod'
-									}
-
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								margin:'0 0 0 10',
-								defaults:{ disabled:true, action:'field' },
-								items    : [
-									{
-
-										fieldLabel: 'Description',
-										xtype: 'textfield',
-										name: 'code_text'
-									},
-									{
-										fieldLabel: 'Category',
-										xtype: 'mitos.titlescombo',
-										name: 'title'
-									}
-								]
-							},
-							{
-								xtype    : 'fieldcontainer',
-								margin:'0 0 0 20',
-								defaults:{ disabled:true, action:'field' },
-								items    : [
-
-									{
-
-										boxLabel: 'Reportable?',
-										xtype: 'checkboxfield',
-										name: 'reportable'
-
-									}
-									,
-									{
-
-										boxLabel: 'Active?',
-										labelWidth: 75,
-										xtype: 'checkboxfield',
-										name: 'active'
-
-
-									}
-								]
-							}
-
-
-						]
-
 					}
 
 				]
@@ -610,32 +382,17 @@ Ext.define('App.view.administration.PreventiveCare', {
 				displayInfo: true,
 				emptyMsg   : "No Office Notes to display",
 				plugins    : Ext.create('Ext.ux.SlidingPager', {}),
-				items      : ['-', {
-					xtype    : 'mitos.preventivecaretypescombo',
-					width    : 150,
-					listeners: {
-						scope : me,
-						select: me.onCodeTypeSelect
-					}
-				}, '-', {
-					xtype          : 'textfield',
-					emptyText      : 'Search',
-					enableKeyEvents: true,
-					listeners      : {
-						scope : me,
-						keyup : me.onSearch,
-						buffer: 500
-					}
-				}, '-', {
-					xtype       : 'button',
-					text        : 'Show Inactive Codes Only',
-					iconCls     : 'save',
-					enableToggle: true,
-					listeners   : {
-						scope : me,
-						toggle: me.onActivePressed
-					}
-				}]
+				items      : [
+                    '-',
+                    {
+                        xtype    : 'mitos.preventivecaretypescombo',
+                        width    : 150,
+                        listeners: {
+                            scope : me,
+                            select: me.onCodeTypeSelect
+                        }
+                    }
+                ]
 			})
 		}); // END GRID
 
@@ -645,50 +402,22 @@ Ext.define('App.view.administration.PreventiveCare', {
 	}, // end of initComponent
 
     beforeServiceEdit:function(context, e){
-
-
 		var editor = context.editor,
-			code_type = e.record.data.code_type,
-			nextForm = editor.query('[action="'+code_type+'"]')[0];
+			grids = editor.query('grid');
 
-	    /**
-	     * TODO: disable/enable the fields
-	     */
-	    if(!this.currForm){
-
-		    Ext.each(nextForm.query(), function(field){
-			    field.enable();
-		    });
-
-		    nextForm.show();
-			this.currForm = nextForm;
-
-	    }else if(this.currForm !== nextForm){
-
-		    Ext.each(this.currForm.query('[action="field"]'), function(field){
-					say(field);
-				   field.disable();
-            });
-		    Ext.each(nextForm.query('[action="field"]'), function(field){
-			    say(field);
-                field.enable();
-            });
-
-		    this.currForm.hide();
-		    nextForm.show();
-		    this.currForm = nextForm;
-
-	    }
+        Ext.each(grids,function(grid){
+            grid.store.load({params:{id: e.record.data.id}});
+        });
 
     },
 
 	onFormTapChange:function(panel, newCard, oldCard){
-		this.ImmuRelationStore.proxy.extraParams = { code_type: newCard.action, selected_id:this.getSelectId() };
-		this.ImmuRelationStore.load();
+        //say(newCard);
+		//this.ImmuRelationStore.proxy.extraParams = { code_type: newCard.action, selected_id:this.getSelectId() };
+		//this.ImmuRelationStore.load();
 	},
 
 	onSearch: function(field) {
-
 		var me = this,
 			store = me.store;
 		me.dataQuery = field.getValue();
@@ -698,21 +427,9 @@ Ext.define('App.view.administration.PreventiveCare', {
 	},
 
 	onCodeTypeSelect: function(combo, record) {
-		var me = this,
-			store = me.store;
-		me.code_type = record[0].data.option_value;
-
-		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.dataQuery};
-		me.store.load();
-	},
-
-	onActivePressed: function(btn, pressed) {
-		var me = this,
-			store = me.store;
-		me.active = pressed ? 0 : 1;
-
-		store.proxy.extraParams = {active: me.active, code_type: me.code_type, query: me.dataQuery};
-		me.store.load();
+		var me = this;
+		me.category_id = record[0].data.option_value;
+		me.store.load({params:{category_id: me.category_id}});
 	},
 
 	onNew: function(form, model) {
@@ -766,9 +483,8 @@ Ext.define('App.view.administration.PreventiveCare', {
 	 * to call every this panel becomes active
 	 */
 	onActive: function(callback) {
-		this.servicesGrid.query('combobox')[0].setValue("Immunizations");
-		this.store.proxy.extraParams = {active: this.active, code_type: this.code_type, query: this.dataQuery};
-		this.store.load();
+		this.servicesGrid.query('combobox')[0].setValue(this.category_id);
+		this.store.load({params:{category_id: this.category_id}});
 		callback(true);
 	}
 }); //ens servicesPage class
