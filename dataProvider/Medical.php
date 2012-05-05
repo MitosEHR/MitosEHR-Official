@@ -117,6 +117,7 @@ class Medical
 		$data['create_date'] = $this->parseDate($data['create_date']);
 		$this->db->setSQL($this->db->sqlBind($data, "patient_allergies", "U", "id='$id'"));
 		$this->db->execLog();
+        $params->alert = ($params->end_date == null || $params->end_date == '0000-00-00 00:00:00'|| $params->end_date == '' ) ? 1 : 0 ;
 		return $params;
 
 	}
@@ -426,7 +427,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_allergies WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 		return $records;
@@ -451,7 +452,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_issues WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -477,7 +478,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_surgery WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -503,7 +504,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_dental WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -529,7 +530,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_medications WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 

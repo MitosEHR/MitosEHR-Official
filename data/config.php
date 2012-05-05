@@ -674,6 +674,12 @@ $API = array(
             'getPosCodes'=>array(
                 'len'=>0
             ),
+            'getAllergieTypes'=>array(
+                'len'=>0
+            ),
+            'getAllergiesByType'=>array(
+                'len'=>1
+            )
         )
     ),
     /**

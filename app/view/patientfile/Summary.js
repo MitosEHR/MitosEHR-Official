@@ -287,7 +287,7 @@ Ext.define('App.view.patientfile.Summary', {
                         columns    : [
                             {
                                 header   : 'Name',
-                                dataIndex: 'title',
+                                dataIndex: 'allergy',
                                 flex     : 1
                             },
                             {

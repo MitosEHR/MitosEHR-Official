@@ -171,6 +171,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/AllergiesLocation.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergiesSystemic.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergiesSkin.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Allergies.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergiesSeverity.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergiesLocal.js"></script>
         <script type="text/javascript" src="app/classes/combo/AllergiesAbdominal.js"></script>

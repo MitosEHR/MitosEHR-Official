@@ -261,6 +261,22 @@ class CombosData {
 
         return $pos;
     }
+
+    public function getAllergiesByType(stdClass $params){
+        $this->db->setSQL("SELECT *
+                           	 FROM allergies
+                            WHERE allergy_type = '$params->allergy_type'");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+    }
+    public function getAllergieTypes(){
+        $this->db->setSQL("SELECT DISTINCT allergy_type
+                           	 FROM allergies");
+
+        $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $records[] = array('allergy_type' => 'Drug');
+        return $records;
+    }
 }
 //$c = new CombosData();
-//print_r($c->getTitles());
+//print '<pre>';
+//print_r($c->getAllergiesByType());

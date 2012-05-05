@@ -258,15 +258,26 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     {
                         header   : 'Name',
                         width    : 100,
-                        dataIndex: 'allergy_name'
+                        dataIndex: 'allergy'
                     },
                     {
-                        header   : 'Summary',
+                        header   : 'Location',
+	                    width    : 100,
+                        dataIndex: 'location'
+                    },
+                    {
+                        header   : 'Severity',
                         flex     : 1,
-                        dataIndex: 'summary'
-                    }
+                        dataIndex: 'severity'
+                    },
+	                {
+		                text     : 'Active?',
+		                width    : 55,
+		                dataIndex: 'alert',
+		                renderer : me.boolRenderer
+	                }
                 ],
-                plugins: Ext.create('App.classes.grid.RowFormEditing', {
+                plugins: me.rowEditingAllergies = Ext.create('App.classes.grid.RowFormEditing', {
                     autoCancel  : false,
                     errorSummary: false,
                     clicksToEdit: 1,
@@ -288,39 +299,37 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
                                         {
-                                            xtype          : 'textfield',
+                                            xtype          : 'mitos.allergiestypescombo',
                                             fieldLabel     : 'Type',
-                                            hideLabel      : false,
-                                            itemId         : 'allergies',
-                                            action         : 'allergies',
+	                                        name           : 'allergy_type',
                                             enableKeyEvents: true,
+
                                             width          : 225,
                                             labelWidth     : 70,
-                                            listeners      : {
-                                                scope   : me,
-                                                'select': me.onLiveSearchSelect
-                                            }
+	                                        listeners      : {
+		                                        scope   : me,
+		                                        'select': me.onAllergyTypeSelect
+	                                        }
                                         },
-//                                        {
-//   		                                    xtype:'textfield',
-//   		                                    hidden:true,
-//   		                                    name:'immunization_id',
-//   		                                    action:'idField'
-//   	                                    },
+	                                    {
+		                                    xtype          : 'mitos.allergieslocationcombo',
+		                                    fieldLabel     : 'Location',
+		                                    name           : 'location',
+		                                    width          : 225,
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    'select': me.onLocationSelect
+		                                    }
 
-                                        {
-                                            fieldLabel: 'Begin Date',
-                                            xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
-                                            name      : 'begin_date'
+	                                    },
+	                                    {
+		                                    fieldLabel: 'Begin Date',
+		                                    xtype     : 'datefield',
+		                                    format    : 'Y-m-d H:i:s',
+		                                    name      : 'begin_date'
 
-                                        },
-                                        {
-                                            fieldLabel: 'Outcome',
-                                            xtype     : 'mitos.outcome2combo',
-                                            name      : 'outcome'
-
-                                        }
+	                                    }
 
                                     ]
 
@@ -334,11 +343,81 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
 	                                    {
-		                                    fieldLabel: 'Ocurrence',
-		                                    width     : 225,
-		                                    labelWidth: 70,
-		                                    xtype     : 'mitos.occurrencecombo',
-		                                    name      : 'ocurrence'
+		                                    xtype          : 'mitos.allergiescombo',
+		                                    fieldLabel     : 'Allergy',
+		                                    id         : 'allergie_name',
+		                                    action         : 'allergie_name',
+		                                    name           : 'allergy',
+		                                    enableKeyEvents: true,
+		                                    disabled        : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    'select': me.onLiveSearchSelect
+		                                    }
+	                                    },
+	                                    {
+		                                    xtype          : 'medicationlivetsearch',
+		                                    fieldLabel     : 'Allergy',
+		                                    hideLabel      : false,
+		                                    id         : 'drug_name',
+		                                    action         : 'drug_name',
+		                                    name           : 'allergy',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    enableKeyEvents: true,
+		                                    width          : 225,
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    'select': me.onLiveSearchSelect
+		                                    }
+	                                    },
+                                        {
+   		                                    xtype:'textfield',
+   		                                    hidden:true,
+   		                                    name:'allergy_id',
+   		                                    action:'idField'
+   	                                    },
+	                                    {
+		                                    xtype          : 'mitos.allergiesabdominalcombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'abdominalreaction',
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
+
+	                                    },{
+		                                    xtype          : 'mitos.allergieslocalcombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'localreaction',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
+
+	                                    },{
+		                                    xtype          : 'mitos.allergiesskincombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'skinreaction',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
+
+	                                    },{
+		                                    xtype          : 'mitos.allergiessystemiccombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'systemicreaction',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
 
 	                                    },
                                         {
@@ -346,12 +425,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             xtype     : 'datefield',
                                             format    : 'Y-m-d H:i:s',
                                             name      : 'end_date'
-                                        },
-                                        {
-                                            xtype     : 'textfield',
-                                            width     : 250,
-                                            fieldLabel: 'Referred by',
-                                            name      : 'referred_by'
                                         }
 
                                     ]
@@ -365,15 +438,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
+	                                    {
+		                                    xtype          : 'mitos.allergiesseveritycombo',
+		                                    fieldLabel     : 'Severity',
+		                                    name           : 'severity',
+		                                    width          : 225,
+		                                    labelWidth     : 70
 
-
-                                        {
-                                            xtype     : 'textfield',
-	                                        width     : 225,
-	                                        labelWidth: 70,
-                                            fieldLabel: 'Reaction',
-                                            name      : 'reaction'
-                                        }
+	                                    }
 
                                     ]
                                 }
@@ -1482,14 +1554,27 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	    var me = this,
 		    field, id;
+		if(combo.action == 'immunizations'){
+		    id = model[0].data.id;
+		    field =  combo.up('container').query('[action="idField"]')[0];
+		    field.setValue(id);
+		}
+	    else if(combo.id == 'allergie_name' || combo.id == 'drug_name'){
+			id = model[0].data.id;
+			field =  combo.up('fieldcontainer').query('[action="idField"]')[0];
+			field.setValue(id);
 
-	    id = model[0].data.id;
-	    field =  combo.up('container').query('[action="idField"]')[0];
+	    }
+		else if(combo.action == 'medicalissues'){
 
-	    say(combo.action);
+	    }
+		else if(combo.action == 'surgery'){
 
+	    }
+		else if(combo.action == 'medication'){
 
-	    field.setValue(id);
+	    }
+
 //	    this.patientImmuListStore.add({
 //		    immunization_id:model[0].data.id
 //	    });
@@ -1527,7 +1612,79 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         grid.editingPlugin.startEdit(0, 0);
 
     },
+	hideall: function(combo,skinCombo,localCombo,abdominalCombo,systemicCombo){
 
+		skinCombo.hide(true);
+		skinCombo.setDisabled(true);
+		skinCombo.reset();
+		localCombo.hide(true);
+		localCombo.setDisabled(true);
+		localCombo.reset();
+		abdominalCombo.hide(true);
+		abdominalCombo.setDisabled(true);
+		abdominalCombo.reset();
+		systemicCombo.hide(true);
+		systemicCombo.setDisabled(true);
+		systemicCombo.reset();
+
+	},
+	onLocationSelect: function(combo,record){
+		var me          = this,
+		skinCombo       = combo.up('form').getForm().findField('skinreaction'),
+		localCombo      = combo.up('form').getForm().findField('localreaction'),
+		abdominalCombo  = combo.up('form').getForm().findField('abdominalreaction'),
+		systemicCombo   = combo.up('form').getForm().findField('systemicreaction'),
+		value           = combo.getValue();
+
+		me.hideall(combo,skinCombo,localCombo,abdominalCombo,systemicCombo);
+		if(value == 'Skin'){
+			skinCombo.show(true);
+			skinCombo.setDisabled(false);
+		}else if(value == 'Local'){
+			localCombo.show(true);
+			localCombo.setDisabled(false);
+		}else if(value == 'Abdominal'){
+			abdominalCombo.show(true);
+			abdominalCombo.setDisabled(false);
+		}else if(value == 'Systemic / Anaphylactic'){
+			systemicCombo.show(true);
+			systemicCombo.setDisabled(false);
+
+		}
+	},
+
+	onAllergyTypeSelect: function(combo,record) {
+		var me         = this,
+		allergyCombo   = combo.up('form').getForm().findField('allergie_name'),
+		drugLiveSearch = combo.up('form').getForm().findField('drug_name');
+
+
+        if(record[0].data.allergy_type == 'Drug'){
+        allergyCombo.hide(true);
+        allergyCombo.setDisabled(true);
+        allergyCombo.reset();
+	    drugLiveSearch.show(true);
+	    drugLiveSearch.setDisabled(false);
+
+        }
+        else if(record[0].data.allergy_type == '' || record[0].data.allergy_type == null){
+        allergyCombo.setDisabled(true);
+	    drugLiveSearch.hide(true);
+	    drugLiveSearch.setDisabled(true);
+        allergyCombo.show(true);
+        }
+		else{
+        drugLiveSearch.hide(true);
+        drugLiveSearch.setDisabled(true);
+	    allergyCombo.show(true);
+        allergyCombo.setDisabled(false);
+        allergyCombo.reset();
+        allergyCombo.store.load({params:{allergy_type:record[0].data.allergy_type}})
+        }
+
+
+
+    },
     setDefaults: function(options) {
         var data;
 
