@@ -62,7 +62,7 @@ class Fees extends Encounter {
             $row['primaryProvider'] = $row['primaryProviderUid'] == null ? 'None' : $this->user->getUserNameById($row['primaryProviderUid']);
             $row['encounterProvider'] = $row['encounterProviderUid'] == null ? 'None' : $this->user->getUserNameById($row['encounterProviderUid']);
 
-            $row['patientName'] = $row['title'].' '.$this->patient->fullname($row['fname'],$row['mname'],$row['lname']);
+            $row['patientName'] = $row['title'].' '.person::fullname($row['fname'],$row['mname'],$row['lname']);
             $encounters[] = $row;
         }
         $total = count($encounters);
@@ -93,7 +93,7 @@ class Fees extends Encounter {
             $row['primaryProvider'] = $row['primaryProviderUid'] == null ? 'None' : $this->user->getUserNameById($row['primaryProviderUid']);
             $row['encounterProvider'] = $row['encounterProviderUid'] == null ? 'None' : $this->user->getUserNameById($row['encounterProviderUid']);
 
-            $row['patientName'] = $row['title'].' '.$this->patient->fullname($row['fname'],$row['mname'],$row['lname']);
+            $row['patientName'] = $row['title'].' '.person::fullname($row['fname'],$row['mname'],$row['lname']);
             $encounters[] = $row;
         }
         $total = count($encounters);

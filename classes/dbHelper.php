@@ -316,7 +316,7 @@ class dbHelper {
 			/**
              * Using the same, internal functions.
              */
-            $data['dtime']      = date('Y-m-d H:i:s');
+            $data['date']       = date('Y-m-d H:i:s');
             $data['event']      = $eventLog;
             $data['comments']   = $this->sql_statement;
             $data['user']       = $_SESSION['user']['name'];
@@ -344,7 +344,7 @@ class dbHelper {
      */
 	function execEvent($eventLog)
     {
-        $data["dtime"] = date('Y-m-d H:i:s');
+        $data["date"] = date('Y-m-d H:i:s');
         $data["event"] = $eventLog;
         $data["comments"] = $this->sql_statement;
         $data["user"] = $_SESSION['user']['name'];
