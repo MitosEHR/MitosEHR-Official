@@ -63,13 +63,13 @@ class PreventiveCare
 	 * @return \stdClass
 	 */
 	public function getGuideLineActiveProblems(stdClass $params){
-		$this->db->setSQL("SELECT active_problems FROM preventive_care_guidelines WHERE id = '$params->id'");
+		$this->db->setSQL("SELECT active_problems FROM preventive_care_guidelines WHERE id = '$params->id' AND active_problems IS NOT NULL");
 		$guidelines = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$active_problems = array();
 		foreach($guidelines as $guideline){
 			$foo = explode(';',$guideline->active_problems);
 			foreach($foo AS $fo){
-				$this->db->setSQL("SELECT code, code_text FROM codes_icds WHERE code = '$fo'");
+				$this->db->setSQL("SELECT code, code_text FROM codes_icds WHERE code = '$fo' AND code IS NOT NULL");
 				$active_problems[] = $this->db->fetchRecord(PDO::FETCH_CLASS);
 			}
 		}
@@ -81,7 +81,7 @@ class PreventiveCare
 	 * @return \stdClass
 	 */
 	public function getGuideLineMedications(stdClass $params){
-		$this->db->setSQL("SELECT medications FROM preventive_care_guidelines WHERE id = '$params->id'");
+		$this->db->setSQL("SELECT medications FROM preventive_care_guidelines WHERE id = '$params->id' AND medications IS NOT NULL");
 		$guidelines = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$medications = array();
 		foreach($guidelines as $guideline){
@@ -92,7 +92,7 @@ class PreventiveCare
 										  ' (',ACTIVE_NUMERATOR_STRENGTH,') ',
 										  ACTIVE_INGRED_UNIT) AS code_text
 								     FROM medications
-								    WHERE id = '$fo'");
+								    WHERE id = '$fo' AND code IS NOT NULL");
 				$medications[] = $this->db->fetchRecord(PDO::FETCH_CLASS);
 			}
 		}
@@ -220,13 +220,13 @@ class PreventiveCare
     }
 
 }
-
+//
 //$params = new stdClass();
 //
-//$params->id = 1;
+//$params->id = 15;
 //$params->start = 0;
 //$params->limit = 25;
 //
 //$t = new PreventiveCare();
 //print '<pre>';
-//print_r($t->getGuideLineMedications($params));
+//print_r($t->getGuideLineActiveProblems($params));

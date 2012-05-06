@@ -193,10 +193,15 @@ class dbHelper {
          */
         $sql .= ' SET ';
 		foreach($BindFieldsArray as $key => $value){
-			if( $Where <> ($key . "='" . addslashes($value) . "'") &&
-                $Where <> ($key . "="  . addslashes($value)) &&
-                $Where <> ($key . '="' . addslashes($value) . '"')){
-				$sql .= $key . "='" . trim(addslashes($value)) . "', ";
+			$value = addslashes($value);
+			if( $Where <> ($key . "='$value'") &&
+                $Where <> ($key . '='.$value) &&
+                $Where <> ($key . '="$value"')){
+				if($value == null || $value == 'NULL' || $value == 'null'){
+					$sql .= $key . '=NULL, ';
+				}else{
+					$sql .= $key . "='".trim($value)."', ";
+				}
 			}else{
                 return array(
                     'success'=>false,
