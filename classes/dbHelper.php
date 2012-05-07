@@ -197,7 +197,7 @@ class dbHelper {
 			if( $Where <> ($key . "='$value'") &&
                 $Where <> ($key . '='.$value) &&
                 $Where <> ($key . '="$value"')){
-				if($value === null || $value === 'NULL' || $value === 'null'){
+				if($value == null || $value === 'NULL' || $value === 'null'){
 					$sql .= $key . '=NULL, ';
 				}else{
 					$sql .= $key . "='".trim($value)."', ";
