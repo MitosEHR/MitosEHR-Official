@@ -14,8 +14,8 @@ Ext.define('App.store.administration.PreventiveCareMedications', {
 		type       : 'direct',
 		api        : {
 			read  : PreventiveCare.getGuideLineMedications,
-			create: PreventiveCare.getGuideLineMedications,
-			update: PreventiveCare.getGuideLineMedications
+			create: PreventiveCare.addGuideLineMedications,
+			destroy: PreventiveCare.removeGuideLineMedications
 		}
 	},
 	remoteSort: false,

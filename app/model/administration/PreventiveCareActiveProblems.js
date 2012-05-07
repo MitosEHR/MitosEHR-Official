@@ -10,6 +10,7 @@
 Ext.define('App.model.administration.PreventiveCareActiveProblems', {
 	extend: 'Ext.data.Model',
 	fields: [
+		{name: 'preventive_id', type: 'int'},
 		{name: 'code', type: 'string'},
 		{name: 'code_text', type: 'string'}
 	]

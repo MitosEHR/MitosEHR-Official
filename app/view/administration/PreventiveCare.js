@@ -81,7 +81,10 @@ Ext.define('App.view.administration.PreventiveCare', {
 				clicksToEdit: 1,
                 listeners:{
                     scope:me,
-	                beforeedit:me.beforeServiceEdit
+	                beforeedit:me.beforeServiceEdit,
+                    edit:me.onServiceEdit,
+                    canceledit:me.onServiceCancelEdit
+
                 },
 				formItems   : [
 					{
@@ -114,8 +117,8 @@ Ext.define('App.view.administration.PreventiveCare', {
 											{
 
 												xtype     : 'textfield',
-												fieldLabel: 'Immunization Name',
-												name      : 'code_text',
+												fieldLabel: 'Description',
+												name      : 'description',
 												labelWidth:130,
 												width:703
 											},
@@ -145,7 +148,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 												fieldLabel: 'Coding System',
 												labelWidth:130,
 												value     : 'CVX',
-												name      : 'code_type',
+												name      : 'coding_system',
 												readOnly:true
 
 											},
@@ -156,7 +159,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 												value     : 0,
 												minValue  : 0,
 												width:150,
-												name      : 'frequency_number'
+												name      : 'frequency'
 
 											},
 											{
@@ -199,7 +202,6 @@ Ext.define('App.view.administration.PreventiveCare', {
 												fieldLabel: 'Code',
 												name      : 'code',
 												labelWidth:130
-
 											},
 											{
 												xtype     : 'numberfield',
@@ -223,12 +225,10 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 
 											},
-
                                             {
                                                 fieldLabel: 'perform only once',
                                                 xtype   : 'checkboxfield',
                                                 labelWidth:105,
-                                                //margin  : '5 0 0 10',
                                                 name    : 'only_once'
                                             }
 
@@ -401,6 +401,15 @@ Ext.define('App.view.administration.PreventiveCare', {
 		me.callParent(arguments);
 	}, // end of initComponent
 
+
+    onServiceEdit:function(context, e){
+
+    },
+
+    onServiceCancelEdit:function(context, e){
+
+    },
+
     beforeServiceEdit:function(context, e){
 		var editor = context.editor,
 			grids = editor.query('grid');
@@ -408,7 +417,6 @@ Ext.define('App.view.administration.PreventiveCare', {
         Ext.each(grids,function(grid){
             grid.store.load({params:{id: e.record.data.id}});
         });
-
     },
 
 	onFormTapChange:function(panel, newCard, oldCard){
@@ -440,25 +448,21 @@ Ext.define('App.view.administration.PreventiveCare', {
 
 	addActiveProblem:function(field, model){
 
-		this.ImmuRelationStore.add({
+		this.activeProblemsStore.add({
 			code:model[0].data.code,
 			code_text:model[0].data.code_text,
-			code_type:'problems',
-			foreign_id:model[0].data.id,
-			immunization_id: this.getSelectId()
+            preventive_id: this.getSelectId()
 		});
-		say(this.ImmuRelationStore);
+		say(this.activeProblemsStore);
 		field.reset();
 	},
 	addMedications:function(field, model){
-		this.ImmuRelationStore.add({
+		this.immunizationsStore.add({
 			code:model[0].data.PRODUCTNDC,
 			code_text:model[0].data.PROPRIETARYNAME,
-			code_type:'medications',
-			foreign_id:model[0].data.id,
-			immunization_id: this.getSelectId()
+            preventive_id: this.getSelectId()
 		});
-		say(this.ImmuRelationStore);
+		say(this.immunizationsStore);
 		field.reset();
 
 	},

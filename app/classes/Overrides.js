@@ -14,10 +14,10 @@
 //		}, me);
 //	}
 //});
-//Ext.override(Ext.form.field.Checkbox, {
-//	inputValue    : '1',
-//	uncheckedValue: '0'
-//});
+Ext.override(Ext.form.field.Checkbox, {
+	inputValue    : '1',
+	uncheckedValue: '0'
+});
 
 Ext.override(Ext.grid.ViewDropZone, {
 

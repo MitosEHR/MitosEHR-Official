@@ -52,9 +52,24 @@ class PreventiveCare
 	 * @param stdClass $params
 	 * @return stdClass
 	 */
+	public function addGuideLine(stdClass $params){
+		$data = get_object_vars($params);
+		unset($data['id']);
+		$this->db->setSQL($this->db->sqlBind($data,'preventive_care_guidelines','I'));
+		$this->db->execLog();
+		$params->id = $this->db->lastInsertId;
+		return $params;
+	}
+	/**
+	 * update preventive care guideline by category id
+	 * @param stdClass $params
+	 * @return stdClass
+	 */
 	public function updateGuideLine(stdClass $params){
-
-
+		$data = get_object_vars($params);
+		unset($data['id']);
+		$this->db->setSQL($this->db->sqlBind($data, 'preventive_care_guidelines', 'U', "id='$params->id'"));
+		$this->db->execLog();
 		return $params;
 	}
 	/**
@@ -75,6 +90,16 @@ class PreventiveCare
 		}
 		return $active_problems;
 	}
+
+	public function addGuideLineActiveProblems(stdClass $params){
+
+		return $params;
+	}
+	public function removeGuideLineActiveProblems(stdClass $params){
+
+		return $params;
+	}
+
 	/**
 	 * get guideline medications by guideline id
 	 * @param stdClass $params
@@ -97,6 +122,16 @@ class PreventiveCare
 			}
 		}
 		return $medications;
+	}
+
+	public function addGuideLineMedications(stdClass $params){
+
+		return $params;
+	}
+
+	public function removeGuideLineMedications(stdClass $params){
+
+		return $params;
 	}
 
 
