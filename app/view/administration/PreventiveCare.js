@@ -451,7 +451,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 		this.activeProblemsStore.add({
 			code:model[0].data.code,
 			code_text:model[0].data.code_text,
-            preventive_id: this.getSelectId()
+            guideline_id: this.getSelectId()
 		});
 		say(this.activeProblemsStore);
 		field.reset();
@@ -460,7 +460,7 @@ Ext.define('App.view.administration.PreventiveCare', {
 		this.immunizationsStore.add({
 			code:model[0].data.PRODUCTNDC,
 			code_text:model[0].data.PROPRIETARYNAME,
-            preventive_id: this.getSelectId()
+            guideline_id: this.getSelectId()
 		});
 		say(this.immunizationsStore);
 		field.reset();

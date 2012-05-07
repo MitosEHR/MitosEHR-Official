@@ -78,12 +78,10 @@ class PreventiveCare
 	 * @return \stdClass
 	 */
 	public function getGuideLineActiveProblems(stdClass $params){
-		$this->db->setSQL("SELECT active_problems FROM preventive_care_guidelines WHERE id = '$params->id' AND active_problems IS NOT NULL");
-		$guidelines = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$active_problems = array();
-		foreach($guidelines as $guideline){
-			$foo = explode(';',$guideline->active_problems);
-			foreach($foo AS $fo){
+		$foo = explode(';',$this->getGuideLineActiveProblemsById($params->id));
+		if($foo[0]){
+			foreach($foo as $fo){
 				$this->db->setSQL("SELECT code, code_text FROM codes_icds WHERE code = '$fo' AND code IS NOT NULL");
 				$active_problems[] = $this->db->fetchRecord(PDO::FETCH_CLASS);
 			}
@@ -91,8 +89,22 @@ class PreventiveCare
 		return $active_problems;
 	}
 
-	public function addGuideLineActiveProblems(stdClass $params){
-
+	public function addGuideLineActiveProblems($params){
+		if(is_array($params)){
+			foreach($params as $p){
+				$problems = $this->getGuideLineActiveProblemsById($p->guideline_id);
+				$separator = ($problems == '') ? '' : ';';
+				$data['active_problems'] = $problems.$separator.$p->code;
+				$this->db->setSQL($this->db->sqlBind($data,'preventive_care_guidelines','U',"id='$p->guideline_id'"));
+				$this->db->execLog();
+			}
+		}else{
+			$problems = $this->getGuideLineActiveProblemsById($params->guideline_id);
+			$separator = ($problems == '') ? '' : ';';
+			$data['active_problems'] = $problems.$separator.$params->code;
+			$this->db->setSQL($this->db->sqlBind($data,'preventive_care_guidelines','U',"id='$params->guideline_id'"));
+			$this->db->execLog();
+		}
 		return $params;
 	}
 	public function removeGuideLineActiveProblems(stdClass $params){
@@ -106,11 +118,9 @@ class PreventiveCare
 	 * @return \stdClass
 	 */
 	public function getGuideLineMedications(stdClass $params){
-		$this->db->setSQL("SELECT medications FROM preventive_care_guidelines WHERE id = '$params->id' AND medications IS NOT NULL");
-		$guidelines = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$medications = array();
-		foreach($guidelines as $guideline){
-			$foo = explode(';',$guideline->medications);
+		$foo = explode(';',$this->getGuideLineMedicationsById($params->id));
+		if($foo[0]){
 			foreach($foo AS $fo){
 				$this->db->setSQL("SELECT PRODUCTNDC AS code,
 										  CONCAT(PROPRIETARYNAME,
@@ -125,7 +135,15 @@ class PreventiveCare
 	}
 
 	public function addGuideLineMedications(stdClass $params){
-
+		if(isset($params[0])){
+			$problems = $this->getGuideLineActiveProblemsById($params->id);
+			$data['active_problems'] = $problems.';'.$params->code;
+			$this->db->setSQL($this->db->sqlBind($data,'preventive_care_guidelines','I'));
+		}else{
+			$problems = $this->getGuideLineActiveProblemsById($params->id);
+			$data['active_problems'] = $problems.';'.$params->code;
+			$this->db->setSQL($this->db->sqlBind($data,'preventive_care_guidelines','I'));
+		}
 		return $params;
 	}
 
@@ -136,7 +154,21 @@ class PreventiveCare
 
 
 
+	private function getGuideLineActiveProblemsById($id){
+		$this->db->setSQL("SELECT active_problems FROM preventive_care_guidelines WHERE id = '$id' AND active_problems IS NOT NULL");
+		$guideLine = $this->db->fetchRecord(PDO::FETCH_CLASS);
+		return $guideLine['active_problems'];
+	}
+
+	private function getGuideLineMedicationsById($id){
+		$this->db->setSQL("SELECT medications FROM preventive_care_guidelines WHERE id = '$id' AND medications IS NOT NULL");
+		$guideLine = $this->db->fetchRecord(PDO::FETCH_CLASS);
+		return $guideLine['medications'];
+	}
+
 	/******************************************************************************************************************/
+
+
 
 
 
@@ -255,10 +287,10 @@ class PreventiveCare
     }
 
 }
-//
+
 //$params = new stdClass();
 //
-//$params->id = 15;
+//$params->id = 5;
 //$params->start = 0;
 //$params->limit = 25;
 //
