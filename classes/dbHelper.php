@@ -7,9 +7,9 @@ if(!isset($_SESSION)){
 set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
 require_once'PHPLinq/LinqToObjects.php';
 
-ini_set('memory_limit', '256M');
-ini_set('max_input_time', '120');
-ini_set('max_execution_time', '120');
+ini_set('memory_limit', '1024M');
+ini_set('max_input_time', '760000');
+ini_set('max_execution_time', '760000');
 
 /**
  * @brief       Database Helper Class.
@@ -193,10 +193,15 @@ class dbHelper {
          */
         $sql .= ' SET ';
 		foreach($BindFieldsArray as $key => $value){
-			if( $Where <> ($key . "='" . addslashes($value) . "'") &&
-                $Where <> ($key . "="  . addslashes($value)) &&
-                $Where <> ($key . '="' . addslashes($value) . '"')){
-				$sql .= $key . "='" . trim(addslashes($value)) . "', ";
+			$value = addslashes($value);
+			if( $Where <> ($key . "='$value'") &&
+                $Where <> ($key . '='.$value) &&
+                $Where <> ($key . '="$value"')){
+				if($value === null || $value === 'NULL' || $value === 'null'){
+					$sql .= $key . '=NULL, ';
+				}else{
+					$sql .= $key . "='".trim($value)."', ";
+				}
 			}else{
                 return array(
                     'success'=>false,

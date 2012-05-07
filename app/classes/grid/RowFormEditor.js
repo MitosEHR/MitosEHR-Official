@@ -184,75 +184,6 @@ Ext.define('App.classes.grid.RowFormEditor', {
         }
     },
 
-//    getFloatingButtons: function() {
-//        var me = this,
-//            cssPrefix = Ext.baseCSSPrefix,
-//            btnsCss = cssPrefix + 'grid-row-editor-buttons',
-//            plugin = me.editingPlugin,
-//            btns;
-//
-//        if (!me.floatingButtons) {
-//            btns = me.floatingButtons = new Ext.Container({
-//                renderTpl: [
-//                    '<div class="{baseCls}-ml"></div>',
-//                    '<div class="{baseCls}-mr"></div>',
-//                    '<div class="{baseCls}-bl"></div>',
-//                    '<div class="{baseCls}-br"></div>',
-//                    '<div class="{baseCls}-bc"></div>',
-//                    '{%this.renderContainer(out,values)%}'
-//                ],
-//                width: plugin.enableRemove ? 300 : 200,
-//                renderTo: me.el,
-//                baseCls: btnsCss,
-//                layout: {
-//                    type: 'hbox',
-//                    align: 'middle'
-//                },
-//                defaults: {
-//                    flex: 1,
-//                    margins: '0 1 0 1'
-//                },
-//                items: [{
-//                    itemId: 'update',
-//                    xtype: 'button',
-//                    handler: plugin.completeEdit,
-//                    scope: plugin,
-//                    text: me.saveBtnText,
-//                    disabled: !me.isValid,
-//                    minWidth: Ext.panel.Panel.prototype.minButtonWidth
-//                }, {
-//                    xtype: 'button',
-//                    handler: plugin.cancelEdit,
-//                    scope: plugin,
-//                    text: me.cancelBtnText,
-//                    minWidth: Ext.panel.Panel.prototype.minButtonWidth
-//                }]
-//            });
-//
-//            if(plugin.enableRemove){
-//                me.floatingButtons.add({
-//                    flex: 1,
-//                    xtype: 'button',
-//                    handler: plugin.completeRemove,
-//                    scope: plugin,
-//                    text: me.removeBtnText,
-//                    minWidth: Ext.panel.Panel.prototype.minButtonWidth
-//                });
-//            }
-//
-//
-//            // Prevent from bubbling click events to the grid view
-//            me.mon(btns.el, {
-//                // BrowserBug: Opera 11.01
-//                //   causes the view to scroll when a button is focused from mousedown
-//                mousedown: Ext.emptyFn,
-//                click: Ext.emptyFn,
-//                stopEvent: true
-//            });
-//        }
-//        return me.floatingButtons;
-//    },
-
     reposition: function(animateConfig) {
 
         say(animateConfig);
@@ -402,6 +333,32 @@ Ext.define('App.classes.grid.RowFormEditor', {
         }
     },
 
+    getGridStores:function(){
+        var me = this,
+            grids = me.query('grid'),
+            stores = [];
+        Ext.each(grids, function(grid){
+            stores.push(grid.store);
+        });
+        return stores;
+    },
+
+    syncChildStoresChanges:function(){
+        var me = this,
+            stores = me.getGridStores();
+        Ext.each(stores, function(store){
+            store.sync();
+        });
+    },
+
+    rejectChildStoresChanges:function(){
+        var me = this,
+            stores = me.getGridStores();
+        Ext.each(stores, function(store){
+            store.rejectChanges();
+        });
+    },
+
     getEditor: function(fieldInfo) {
         var me = this;
 
@@ -419,15 +376,15 @@ Ext.define('App.classes.grid.RowFormEditor', {
         var me = this,
             form = me.getForm(),
             fields = form.getFields().items,
-            grids = this.query('container');
+            containers = this.query('container');
 
 
         Ext.each(fields, function(field){
             me.mon(field, 'change', me.onFieldValueChange, me);
         });
 
-        Ext.each(grids, function(grid){
-            me.mon(grid, 'resize', me.resizeEditor, me);
+        Ext.each(containers, function(container){
+            me.mon(container, 'resize', me.resizeEditor, me);
         });
     },
 
@@ -460,6 +417,8 @@ Ext.define('App.classes.grid.RowFormEditor', {
 
     beforeEdit: function() {
         var me = this;
+
+        me.getGridStores();
 
         if (me.isVisible() && !me.autoCancel && me.isDirty()) {
             me.showToolTip();
@@ -509,7 +468,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
     cancelEdit: function() {
         var me = this,
             form = me.getForm();
-
+        me.rejectChildStoresChanges();
         me.hide();
         form.clearInvalid();
         form.reset();
@@ -522,7 +481,7 @@ Ext.define('App.classes.grid.RowFormEditor', {
         if (!form.isValid()) {
             return;
         }
-
+        me.syncChildStoresChanges();
         form.updateRecord(me.context.record);
         me.hide();
         return true;

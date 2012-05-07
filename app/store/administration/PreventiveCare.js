@@ -13,9 +13,9 @@ Ext.define('App.store.administration.PreventiveCare', {
 	proxy: {
 		type       : 'direct',
 		api        : {
-			read  : PreventiveCare.getServices,
-			create: PreventiveCare.addService,
-			update: PreventiveCare.updateService
+			read  : PreventiveCare.getGuideLinesByCategory,
+			create: PreventiveCare.addGuideLine,
+			update: PreventiveCare.updateGuideLine
 		},
 		reader     : {
 			totalProperty: 'totals',

@@ -38,7 +38,7 @@ class Services
 		if($params->code_type == 'CPT4') {
 			$tableX = 'cpt_codes';
 		} elseif($params->code_type == 'ICD9') {
-			$tableX = 'icd_codes';
+			$tableX = 'codes_icds';
 		} elseif($params->code_type == 'HCPCS'){
 			$tableX = 'hcpcs_codes';
 		}elseif($params->code_type == 'Immunizations') {
@@ -49,9 +49,9 @@ class Services
 
 		$sortX = $params->sort ? $params->sort[0]->property . ' ' . $params->sort[0]->direction : 'code ASC';
 		if($params->query == ''){
-			$this->db->setSQL("SELECT DISTINCT * FROM $tableX ORDER BY $sortX");
+			$this->db->setSQL("SELECT DISTINCT * FROM $tableX WHERE code IS NOT NULL ORDER BY $sortX");
 		}else{
-			$this->db->setSQL("SELECT DISTINCT * FROM $tableX WHERE code_text LIKE '%$params->query%' OR code LIKE '$params->query%' ORDER BY $sortX");
+			$this->db->setSQL("SELECT DISTINCT * FROM $tableX WHERE code IS NOT NULL AND code_text LIKE '%$params->query%' OR code LIKE '$params->query%' ORDER BY $sortX");
 		}
 		$records = $this->db->fetchRecords(PDO::FETCH_CLASS);
 		$records = $this->db->filterByQuery($records, 'active', $params->active);
@@ -75,7 +75,7 @@ class Services
 		if($params->code_type == 'CPT4') {
 			$tableX = 'cpt_codes';
 		} elseif($params->code_type == 'ICD9') {
-			$tableX = 'icd_codes';
+			$tableX = 'codes_icds';
 		} elseif($params->code_type == 'HCPCS'){
 			$tableX = 'hcpcs_codes';
 		}elseif($params->code_type == 'Immunizations') {
@@ -114,7 +114,7 @@ class Services
 		if($params->code_type == 'CPT4') {
 			$tableX = 'cpt_codes';
 		} elseif($params->code_type == 'ICD9') {
-			$tableX = 'icd_codes';
+			$tableX = 'codes_icds';
 		} elseif($params->code_type == 'HCPCS'){
 			$tableX = 'hcpcs_codes';
 		}elseif($params->code_type == 'Immunizations') {
@@ -142,7 +142,7 @@ class Services
 		if($params->code_type == 'cpt') {
 			$code_table = 'cpt_codes';
 		} elseif($params->code_type == 'icd') {
-			$code_table = 'icd_codes';
+			$code_table = 'codes_icds';
 		} else {
 			$code_table = 'hcpcs_codes';
 		}
@@ -253,7 +253,7 @@ class Services
 	{
 		$this->db->setSQL("SELECT eci.code, ic.code_text
                              FROM encounter_codes_icdx as eci
-                             LEFT JOIN icd_codes as ic ON ic.code = eci.code
+                             LEFT JOIN codes_icds as ic ON ic.code = eci.code
                             WHERE eci.eid = '$eid' ORDER BY eci.id ASC");
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
