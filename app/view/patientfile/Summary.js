@@ -201,36 +201,22 @@ Ext.define('App.view.patientfile.Summary', {
                 ]
             },
             {
-                xtype      : 'container',
+                xtype      : 'panel',
                 width      : 250,
                 bodyPadding: 0,
                 frame      : false,
-                border     : false,
+                border:false,
+                bodyBorder     : true,
+                margin     : '0 0 0 5',
                 defaults   : {
                     layout: 'fit',
-                    margin: '0 0 5 5'
+                    margin: '5 5 0 5'
                 },
                 listeners  : {
                     scope      : me,
                     afterrender: me.afterRightCol
                 },
                 items      : [
-                    {
-                        action  : 'patientImgs',
-                        layout  : 'hbox',
-                        defaults: {flex: 1},
-                        tbar    : [
-                            {
-                                text: 'Print'
-                            },
-                            '->',
-                            {
-                                text: 'Update'
-
-                            }
-
-                        ]
-                    },
                     {
                         title      : 'Active Medications',
                         itemId     : 'MedicationsPanel',
@@ -252,7 +238,6 @@ Ext.define('App.view.patientfile.Summary', {
                             }
 
                         ]
-
                     },
                     {
                         title      : 'Immunizations',
@@ -378,7 +363,24 @@ Ext.define('App.view.patientfile.Summary', {
                     },
                     {
                         title: 'Prescriptions',
+                        margin: 5,
                         html : 'Panel content!'
+                    }
+                ],
+                dockedItems:[
+                    {
+                        xtype:'toolbar',
+                        style:'background:none',
+                        items:[
+                            '->',
+                            {
+                                text:'Patient Picture'
+                            },
+                            '-',
+                            {
+                                text:'QRCode'
+                            }
+                        ]
                     }
                 ]
             }
@@ -391,17 +393,6 @@ Ext.define('App.view.patientfile.Summary', {
         };
 
         me.callParent(arguments);
-
-        me.query('panel[action="patientImgs"]')[0].add({
-            xtype : 'container',
-            margin: '5 5',
-            html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
-        }, {
-            xtype : 'container',
-            margin: '5 5',
-            html  : '<img src="ui_icons/patientDataQrCode.png" height="100" width="100" >'
-        });
-
     },
 
     disableFields: function(fields) {
@@ -454,18 +445,41 @@ Ext.define('App.view.patientfile.Summary', {
     },
 
     beforePanelRender: function() {
-        var me = this, demoFormPanel = me.query('[action="demoFormPanel"]')[0];
+        var me = this, demoFormPanel = me.query('[action="demoFormPanel"]')[0], who, imgCt;
 
         this.getFormItems(demoFormPanel, 'Demographics', function(success) {
             if(success) {
                 me.disableFields(demoFormPanel.getForm().getFields().items);
+                who = demoFormPanel.query('fieldset[title="Who"]')[0];
+
+                imgCt = Ext.create('Ext.container.Container',{
+                    action :'patientImgs',
+                    layout:'hbox',
+                    style:'float:right',
+                    height:100,
+                    width:220,
+                    items:[
+                        me.patientImg = Ext.create('Ext.Img', {
+                            src: 'ui_icons/user_100.png',
+                            height:100,
+                            width:100,
+                            margin:'0 5 0 0'
+                        }),
+                        me.patientQRcode = Ext.create('Ext.Img', {
+                            src: 'ui_icons/patientDataQrCode.png',
+                            height:100,
+                            width:100,
+                            margin:0
+                        })
+                    ]
+                });
+                who.insert(0,imgCt);
             }
         });
     },
 
     onQrCodeCreate: function() {
         this.qrCodeWindow.show();
-
     },
     afterRightCol : function(panel) {
         var me = this;
@@ -527,18 +541,9 @@ Ext.define('App.view.patientfile.Summary', {
     },
 
     getPatientImgs: function() {
-        var panel = this.query('panel[action="patientImgs"]')[0], idImg, qrImg;
-        panel.removeAll();
-
-        panel.add({
-            xtype : 'container',
-            margin: '5 10',
-            html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
-        }, {
-            xtype : 'container',
-            margin: '5 10',
-            html  : '<img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png" height="100" width="100" >'
-        });
+        var me = this;
+        me.patientImg.setSrc('ui_icons/user_100.png');
+        me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png');
     },
 
     /**
