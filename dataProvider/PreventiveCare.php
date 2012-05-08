@@ -235,7 +235,9 @@ class PreventiveCare
     public function checkAge($pid, $immu_id){
 
         $age = $this ->patient->getPatientAgeByDOB($this->patient->getPatientDOBByPid($pid));
-        $range = $this->getImmunizationAgeRangeById($immu_id);
+        $range = $this->getPreventiveCareAgeRangeById($immu_id);
+        print_r($age);
+        print_r($range);
         if( $age >= $range['age_start'] || $age <= $range['age_end']){
             return true;
         }
@@ -247,7 +249,7 @@ class PreventiveCare
 
         $pSex = $this->patient->getPatientSexByPid($pid);
 
-        $iSex = $this->getImmunizationSexById($immu_id);
+        $iSex = $this->getPreventiveCareSexById($immu_id);
         if($iSex == $pSex){
             return true;
         }
@@ -258,7 +260,7 @@ class PreventiveCare
     public function checkPregnant($pid, $immu_id){
 
         $ppreg =  $this->patient->getPatientPregnantStatusByPid($pid);
-        $ipreg =  $this->getImmunizationPregnantById($immu_id);
+        $ipreg =  $this->getPreventiveCarePregnantById($immu_id);
 
         if($ppreg == $ipreg){
             return true;
@@ -268,30 +270,35 @@ class PreventiveCare
         }
 
     }
-    public function getImmunizationPregnantById($id){
+    public function getPreventiveCareById($immu_id){
+
+
+
+    }
+    public function getPreventiveCarePregnantById($id){
         $this->db->setSQL("SELECT pregnant
-                           FROM immunizations
+                           FROM preventive_care_guidelines
                            WHERE id='$id'");
         $u = $this->db->fetchRecords(PDO::FETCH_ASSOC);
         return $u['pregnant'];
     }
-    public function getImmunizationSexById($id){
+    public function getPreventiveCareSexById($id){
         $this->db->setSQL("SELECT sex
-                           FROM immunizations
+                           FROM preventive_care_guidelines
                            WHERE id='$id'");
         $u = $this->db->fetchRecord(PDO::FETCH_ASSOC) ;
 
         return $u['sex'];
     }
-    public function getImmunizationAgeRangeById($id){
+    public function getPreventiveCareAgeRangeById($id){
         $this->db->setSQL("SELECT age_start,
                                   age_end
-                           FROM immunizations
+                           FROM preventive_care_guidelines
                            WHERE id='$id'");
         return $this->db->fetchRecord(PDO::FETCH_ASSOC);
     }
-    public function getImmunizationsCheck(stdClass $params){
-        $this->db->setSQL("SELECT * FROM immunizations");
+    public function getPreventiveCareCheck(stdClass $params){
+        $this->db->setSQL("SELECT * FROM preventive_care_guidelines");
         $records = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
             $rec['alert'] = ($this->checkAge($params->pid, $rec['id'])
@@ -312,7 +319,8 @@ class PreventiveCare
 //$params->limit = 25;
 //$params->guideline_id = 6;
 //$params->code = 371.9;
-//$t = new PreventiveCare();
-//print '<pre>';
-////print_r($t->getGuideLineActiveProblems($params));
-//print_r($t->removeCode(6,371.9,'active_problems'));
+$t = new PreventiveCare();
+print '<pre>';
+print_r($t->getPreventiveCareSexById(1));
+//print_r($t->checkAge(1,9));
+print '</pre>';

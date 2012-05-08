@@ -1,4 +1,4 @@
-/**
+ /**
  * summary.ejs.php
  * Description: Patient Summary
  * v0.0.1
@@ -577,6 +577,19 @@ Ext.define('App.view.patientfile.Summary', {
             callback(false);
             me.currPatientError();
         }
+
+	    Ext.Msg.show({
+		    title:'Oops!',
+		    msg:'Nothing to sign.',
+		    //buttons:Ext.Msg.OKCANCEL,
+		    buttons:Ext.Msg.OK,
+		    icon:Ext.Msg.ERROR,
+		    fn:function (btn) {
+			    if (btn == 'ok') {
+				    //me.onLabResultsSign();
+			    }
+		    }
+	    });
     }
 
 });
