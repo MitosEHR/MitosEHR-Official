@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `patient_pools` (
   `time_out` datetime DEFAULT NULL COMMENT 'checkout time',
   `area_id` int(11) DEFAULT NULL COMMENT 'pool area id',
   `priority` int(11) DEFAULT NULL COMMENT 'priority 1 is the highest',
-  `in_queue` tinyint(1) DEFAULT '1' COMMENT 'true = patient is in queue, fasle = the patient it been treated by someone',
+  `in_queue` tinyint(1) DEFAULT '1' COMMENT 'true = patient is in queue, false = the patient it been treated by someone',
   `checkout_timer` time DEFAULT NULL COMMENT 'timer user to automatically checkout from the pool area, and return to the previous pool area ',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
