@@ -490,8 +490,9 @@ $API = array(
             'getImmunizationsCheck'=>array(
                 'len'=>1
             ),
-
-
+            'getPreventiveCareCheck'=>array(
+                'len'=>1
+            ),
             'getGuideLinesByCategory'=>array(
                 'len'=>1
             ),

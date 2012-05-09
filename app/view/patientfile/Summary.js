@@ -22,7 +22,7 @@ Ext.define('App.view.patientfile.Summary', {
         var me = this;
 
         me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
-        me.qrCodeWindow = Ext.create('App.view.patientfile.QrCodeWindow');
+        me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
 
         me.immuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
 
@@ -478,9 +478,7 @@ Ext.define('App.view.patientfile.Summary', {
         });
     },
 
-    onQrCodeCreate: function() {
-        this.qrCodeWindow.show();
-    },
+
     afterRightCol : function(panel) {
         var me = this;
         panel.getComponent('ImmuPanel').header.add({
@@ -583,18 +581,9 @@ Ext.define('App.view.patientfile.Summary', {
             me.currPatientError();
         }
 
-	    Ext.Msg.show({
-		    title:'Oops!',
-		    msg:'Nothing to sign.',
-		    //buttons:Ext.Msg.OKCANCEL,
-		    buttons:Ext.Msg.OK,
-		    icon:Ext.Msg.ERROR,
-		    fn:function (btn) {
-			    if (btn == 'ok') {
-				    //me.onLabResultsSign();
-			    }
-		    }
-	    });
+
+		   this.PreventiveCareWindow.show();
+
     }
 
 });

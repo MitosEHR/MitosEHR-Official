@@ -227,22 +227,18 @@ class PreventiveCare
 	}
 
 
-	/******************************************************************************************************************/
-	/* OLD ***** OLD ***** OLD ****************************************************************************************/
-	/******************************************************************************************************************/
-
 
     public function checkAge($pid, $immu_id){
 
-        $age = $this ->patient->getPatientAgeByDOB($this->patient->getPatientDOBByPid($pid));
+        $DOB= $this->patient->getPatientDOBByPid($pid);
+        $age = $this ->patient->getPatientAgeByDOB($DOB);
         $range = $this->getPreventiveCareAgeRangeById($immu_id);
-        print_r($age);
-        print_r($range);
-        if( $age >= $range['age_start'] || $age <= $range['age_end']){
-            return true;
+
+        if( $age['years'] >= $range['age_start'] && $age['years'] <= $range['age_end']){
+           return true;
         }
         else{
-            return false;
+           return false;
         }
     }
     public function checkSex($pid, $immu_id){
@@ -251,6 +247,8 @@ class PreventiveCare
 
         $iSex = $this->getPreventiveCareSexById($immu_id);
         if($iSex == $pSex){
+            return true;
+        }else if($iSex=='Both'){
             return true;
         }
         else{
@@ -270,16 +268,59 @@ class PreventiveCare
         }
 
     }
-    public function getPreventiveCareById($immu_id){
+    public function checkProblem($pid,$preventiveId){
 
+       $check= $this->checkMedicationProblemLabs($pid,$preventiveId,'patient_issues','active_problems');
+        if($check){
+            return true;
 
+        }else{
+            return false;
+        }
 
     }
+    public function checkMedications($pid,$preventiveId){
+
+       $check= $this->checkMedicationProblemLabs($pid,$preventiveId,'patient_medications','medications');
+        if($check){
+            return true;
+
+        }else{
+            return false;
+        }
+
+    }
+
+    public function checkMedicationProblemLabs($pid,$preventiveId,$tablexx,$column){
+
+        $preventiveProblems = $this->getPreventiveCareActiveProblemsById($preventiveId);
+        $preventiveProblems = explode(';',$preventiveProblems[$column]);
+        $patientProblems = $this->patient->getPatientActiveProblemsById($pid,$tablexx);
+        $checking = array();
+        $size = sizeof($preventiveProblems);
+        foreach($preventiveProblems as $prob){
+            foreach($patientProblems as $patient){
+                if ($prob==$patient['title']){
+                    $checking[$patient['title']]=true;
+
+                }
+            }
+        }
+        if($size == sizeof($checking) || $preventiveProblems[0] == '' ){
+            return true;
+        }
+        else{
+
+            return false;
+        }
+
+    }
+
     public function getPreventiveCarePregnantById($id){
         $this->db->setSQL("SELECT pregnant
                            FROM preventive_care_guidelines
                            WHERE id='$id'");
-        $u = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $u = $this->db->fetchRecord(PDO::FETCH_ASSOC);
         return $u['pregnant'];
     }
     public function getPreventiveCareSexById($id){
@@ -288,7 +329,22 @@ class PreventiveCare
                            WHERE id='$id'");
         $u = $this->db->fetchRecord(PDO::FETCH_ASSOC) ;
 
-        return $u['sex'];
+        if($u['sex']==1){
+            $sex='Male';
+        }else if($u['sex']==2){
+            $sex='Female';
+        }else{
+            $sex='Both';
+        }
+
+        return $sex;
+    }
+    public function getPreventiveCareActiveProblemsById($id){
+        $this->db->setSQL("SELECT *
+                           FROM preventive_care_guidelines
+                           WHERE id='$id'");
+        return $this->db->fetchRecord(PDO::FETCH_ASSOC);
+
     }
     public function getPreventiveCareAgeRangeById($id){
         $this->db->setSQL("SELECT age_start,
@@ -302,7 +358,10 @@ class PreventiveCare
         $records = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
             $rec['alert'] = ($this->checkAge($params->pid, $rec['id'])
-                          && $this->checkSex($params->pid, $rec['id'])) ? true : false ;
+                          && $this->checkSex($params->pid, $rec['id'])
+                          && $this->checkProblem($params->pid, $rec['id'])
+                          && $this->checkMedications($params->pid, $rec['id'])) ? true : false ;
+
 //            && $this->checkPregnant($params->pid, $rec['id'])
             if($rec['alert']){
                 $records[]= $rec;
@@ -314,13 +373,12 @@ class PreventiveCare
 }
 //
 //$params = new stdClass();
-//$params->id = 6;
 //$params->start = 0;
 //$params->limit = 25;
-//$params->guideline_id = 6;
-//$params->code = 371.9;
-$t = new PreventiveCare();
-print '<pre>';
-print_r($t->getPreventiveCareSexById(1));
-//print_r($t->checkAge(1,9));
-print '</pre>';
+//$params->pid = 1;
+//$t = new PreventiveCare();
+//print '<pre>';
+//print_r($t->getPreventiveCareCheck($params));
+//
+////print_r($t->checkAge(1,9));
+//print '</pre>';
