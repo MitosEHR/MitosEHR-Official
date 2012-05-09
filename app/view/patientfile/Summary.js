@@ -569,20 +569,15 @@ Ext.define('App.view.patientfile.Summary', {
         if(this.checkIfCurrPatient()) {
             var patient = me.getCurrPatient();
             this.updateTitle(patient.name + ' - #' + patient.pid + ' (Patient Summary)');
-
             var demoFormPanel = me.query('[action="demoFormPanel"]')[0];
-
             me.getFormData(demoFormPanel);
             me.getPatientImgs();
-
         } else {
-
             callback(false);
             me.currPatientError();
         }
 
-
-		   this.PreventiveCareWindow.show();
+        this.PreventiveCareWindow.show();
 
     }
 

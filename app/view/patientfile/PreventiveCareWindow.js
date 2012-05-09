@@ -17,6 +17,7 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 	width        : 500,
 	bodyStyle    : 'background-color:#fff',
 	modal        : true,
+    layout:'fit',
 	defaults     : {
 		margin: 5
 	},
@@ -26,31 +27,29 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 		me.patientPreventiveCare = Ext.create('App.store.patientfile.PreventiveCare',{
 			autoSync : true
 		});
+
 		me.grid  = Ext.create('App.classes.GridPanel', {
-			region : 'center',
-			 title      : 'Active Medications',
-					itemId     : 'MedicationsPanel',
-					hideHeaders: true,
-					xtype      : 'grid',
-					store      : me.patientPreventiveCare,
-					columns    : [
-						{
+			title      : 'Active Medications',
+            hideHeaders: true,
+            store      : me.patientPreventiveCare,
+            columns    : [
+                {
 
-							header   : 'id',
-							dataIndex: 'id',
-							flex     : 1
-						},
-						{
-							text     : 'description',
-							dataIndex: 'description'
-						}
+                    header   : 'id',
+                    dataIndex: 'id',
+                    flex     : 1
+                },
+                {
+                    text     : 'description',
+                    dataIndex: 'description'
+                }
 
-					]
+            ]
 
 
 		});
 
-		me.pageBody =[me.grid];
+		me.items = [ me.grid ];
 
 		me.listeners = {
 			scope: me,
@@ -63,9 +62,9 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 	},
 
 	onPreventiveCareWindowShow: function() {
+        say(this.patientPreventiveCare);
+	    this.patientPreventiveCare.load({params: {pid: app.currPatient.pid}});
 
-	this.patientPreventiveCare.load({params: {pid: app.currPatient.pid}});
-
-}
+    }
 
 });
