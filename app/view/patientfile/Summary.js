@@ -551,24 +551,25 @@ Ext.define('App.view.patientfile.Summary', {
      * to call every this panel becomes active
      */
     onActive: function(callback) {
-        var billingPanel = this.query('[action="balance"]')[0];
+        var me = this,
+	        billingPanel = me.query('[action="balance"]')[0];
 
         Fees.getPatientBalance({pid:app.currPatient.pid},function(balance){
             billingPanel.body.update('Account Balance: $' + balance);
         });
-        this.patientNotesStore.load({params: {pid: app.currPatient.pid}});
-        this.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
-        this.immuCheckListStore.load({params: {pid: app.currPatient.pid}});
-        this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
-        this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
-        this.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
-        this.patientDentalStore.load({params: {pid: app.currPatient.pid}});
-        this.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
-        this.patientDocumentsStore.load({params: {pid: app.currPatient.pid}});
-        var me = this;
-        if(this.checkIfCurrPatient()) {
+	    me.patientNotesStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
+	    me.immuCheckListStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientDentalStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientDocumentsStore.load({params: {pid: app.currPatient.pid}});
+
+        if(me.checkIfCurrPatient()) {
             var patient = me.getCurrPatient();
-            this.updateTitle(patient.name + ' - #' + patient.pid + ' (Patient Summary)');
+	        me.updateTitle(patient.name + ' - #' + patient.pid + ' (Patient Summary)');
             var demoFormPanel = me.query('[action="demoFormPanel"]')[0];
             me.getFormData(demoFormPanel);
             me.getPatientImgs();
@@ -576,9 +577,15 @@ Ext.define('App.view.patientfile.Summary', {
             callback(false);
             me.currPatientError();
         }
+	    PreventiveCare.activePreventiveCareAlert({pid:app.currPatient.pid},function(provider,response){
+	       if(response.result.success){
 
-        this.PreventiveCareWindow.show();
+		       me.PreventiveCareWindow.show();
 
+	       }
+		say(response);
+
+        });
     }
 
 });

@@ -10,11 +10,15 @@ Ext.define('App.model.patientfile.PreventiveCare', {
 	fields: [
 		{name: 'id', type: 'int'},
 		{name: 'description'},
+		{name: 'type'},
+		{name: 'dismiss'},
+		{name: 'reason'},
 		{name: 'alert', type: 'bool'}
 	],
 	proxy : {
 		type: 'direct',
 		api : {
+			update: PreventiveCare.addPreventivePatientDismiss,
 			read  : PreventiveCare.getPreventiveCareCheck
 		}
 	}

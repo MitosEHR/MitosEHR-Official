@@ -233,7 +233,6 @@ class PreventiveCare
         $DOB= $this->patient->getPatientDOBByPid($pid);
         $age = $this ->patient->getPatientAgeByDOB($DOB);
         $range = $this->getPreventiveCareAgeRangeById($immu_id);
-
         if( $age['years'] >= $range['age_start'] && $age['years'] <= $range['age_end']){
            return true;
         }
@@ -353,6 +352,16 @@ class PreventiveCare
                            WHERE id='$id'");
         return $this->db->fetchRecord(PDO::FETCH_ASSOC);
     }
+
+    public function activePreventiveCareAlert($params){
+        $alerts=$this->getPreventiveCareCheck($params);
+        if(sizeof($alerts)>='0' && $alerts[0]!=''){
+            return array('success' => true);
+        }else{
+            return array('success' => false);
+        }
+    }
+
     public function getPreventiveCareCheck(stdClass $params){
         $this->db->setSQL("SELECT * FROM preventive_care_guidelines");
         $records = array();
@@ -361,24 +370,57 @@ class PreventiveCare
                           && $this->checkSex($params->pid, $rec['id'])
                           && $this->checkProblem($params->pid, $rec['id'])
                           && $this->checkMedications($params->pid, $rec['id'])) ? true : false ;
+            if($rec['category_id']==3){
+                $rec['type']='Immunizations';
+            }else if($rec['category_id']==4){
+                $rec['type']='Laboratory Test';
+            }else if($rec['category_id']==1516){
+                $rec['type']='Diagnostic Test';
+            }else if($rec['category_id']==1517){
+                $rec['type']='Disease Management';
+            }else if($rec['category_id']==1518){
+                $rec['type']='Pedriatic Vaccines';
+            }else{
+                $rec['type']='Uncategorized';
+            }
+
 
 //            && $this->checkPregnant($params->pid, $rec['id'])
-            if($rec['alert']){
+            if($rec['alert'] && $rec['active'] ){
                 $records[]= $rec;
+
             }
 
         }
         return $records;
     }
+
+    public function addPreventivePatientDismiss(stdClass $params){
+
+        $data = get_object_vars($params);
+        unset($data['description'],$data['type'],$data['alert']);
+        foreach($data as $dat){
+            $data['pid'] = $data['id'];
+        }
+        unset($data['id']);
+
+        $this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'I'));
+        $this->db->execLog();
+        $params->id = $this->db->lastInsertId;
+        return array('totals'=> 1, 'rows'  => $params);
+
+
+    }
+
 }
-//
+////
 //$params = new stdClass();
 //$params->start = 0;
 //$params->limit = 25;
 //$params->pid = 1;
 //$t = new PreventiveCare();
 //print '<pre>';
-//print_r($t->getPreventiveCareCheck($params));
+//print_r($t->activePreventiveCareAlert($params));
 //
 ////print_r($t->checkAge(1,9));
 //print '</pre>';
