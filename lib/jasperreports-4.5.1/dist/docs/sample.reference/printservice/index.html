@@ -1,0 +1,457 @@
+<html xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 4.5.1 - Print Service Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td colspan="2" align="right"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - Print Service Sample (version 4.5.1)</span></td><td align="right"><img src="../../resources/jasperreports.png" border="0"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how the Java Print Service API could be used to print reports.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%204.5.1/jasperreports-4.5.1-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://jasperforge.org/scm/viewvc.php/tags/jr-4-5-1/jasperreports/demo/samples/printservice/?root=jasperreports" target="_blank">Browse Sample Source Files on SVN</a></span>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#printservice">Printing Reports Using the Java Print Service API</a></span></td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="6" align="right"><a name="printservice"></a><a href="#top" class="toc">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img src="../../resources/jr-16x16.png" border="0"></td><td colspan="4"><span class="name">Printing Reports Using the Java Print Service API</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:shertage@users.sourceforge.net" class="copy">Sanda Zaharia</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+How to print reports to network printers looked-up for based on their name, properties or printing capabilities. 
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">0.4.3</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+<b>Printing Reports</b>
+
+<br>
+
+<br>
+The output of the report-filling process is always a pixel-perfect document, ready for 
+viewing, printing, or exporting to other formats. These documents come in the form of 
+serializable <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperPrint.html" target="_blank">JasperPrint</a></span> objects. 
+This allows the parent application to store them or transfer them over the network if needed. 
+<br>
+One of the main purposes in report generation is to get documents accurately printed on paper. 
+This can be accomplished either by exporting first the document to some other output format (
+such as PDF) and then printing it, or directly, using a built-in facility. 
+In this case, a dedicated service able to handle all the printing work is needed. This service 
+should perform the following tasks:
+<ul>
+
+<li>To find an available printer either locally or through network.</li>
+
+<li>To communicate to the printer all necessary printing attributes (page and print job settings).</li>
+
+<li>To send the serialized document to the printer</li>
+
+</ul>
+Initially, the report printing process was managed by the 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperPrintManager.html" target="_blank">JasperPrintManager</a></span> class 
+based on the former Java 2 Printing API released with JDK 1.2.
+In the present all report printing work is done through an exporting-like mechanism handled by the 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporter.html" target="_blank">JRPrintServiceExporter</a></span> 
+class. Because the <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporter.html" target="_blank">JRPrintServiceExporter</a></span> 
+is based on the modern Java Print Service API, with better control over printer selection and entire 
+printing process, we strongly encourage people to use this exporter instead of the 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperPrintManager.html" target="_blank">JasperPrintManager</a></span> class.
+<br>
+
+<br>
+
+<b>The Java Print Service Exporter</b>
+
+<br>
+
+<br>
+The printing functionality in the <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporter.html" target="_blank">JRPrintServiceExporter</a></span> 
+exporter is based on the printing 2D graphics mechanism using the <span class="code"><code>java.awt.print.PrinterJob</code></span> class. 
+<br>
+First of all, this exporter tries to find a print service that supports the necessary print service attributes. 
+To communicate these attributes to the print service one can use the special 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#PRINT_SERVICE_ATTRIBUTE_SET" target="_blank">PRINT_SERVICE_ATTRIBUTE_SET</a></span> 
+exporter parameter which can hold a <span class="code"><code>javax.print.attribute.PrintServiceAttributeSet</code></span> object.
+<br>
+If the lookup procedure returns more than one print service able to handle the 
+specified attributes, the exporter uses the first one in the list. If no 
+suitable print service is found, an exception is thrown. 
+<br>
+The print service lookup mechanism can be bypassed when the print service is well known and there are no more needs to search for it. 
+In this case, a <span class="code"><code>javax.print.PrintService</code></span> instance can be passed in using the 
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#PRINT_SERVICE" target="_blank">PRINT_SERVICE</a></span> 
+exporter parameter. 
+<br>
+Once located a print service, it is associated with a <span class="code"><code>java.awt.print.PrinterJob</code></span> instance which can be further customized 
+taking into account the following export parameters:
+<ul>
+
+<li>
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#PRINT_REQUEST_ATTRIBUTE_SET" target="_blank">PRINT_REQUEST_ATTRIBUTE_SET</a></span> - 
+a <span class="code"><code>javax.print.attribute.PrintRequestAttributeSet</code></span> instance containing a set of specific print request settings.</li>
+
+<li>
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#DISPLAY_PAGE_DIALOG" target="_blank">DISPLAY_PAGE_DIALOG</a></span> - 
+flag that specifies if a page dialog will open before the print job is submitted in order to modify some document settings such as 
+page size or layout.</li>
+
+<li>
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#DISPLAY_PRINT_DIALOG" target="_blank">DISPLAY_PRINT_DIALOG</a></span> - 
+flag that specifies if a print dialog will open before the print job is submitted in order to modify settings for some print request attributes.</li>
+
+<li>
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#DISPLAY_PAGE_DIALOG_ONLY_ONCE" target="_blank">DISPLAY_PAGE_DIALOG_ONLY_ONCE</a></span> - 
+when printing in batch mode this parameter indicates whether the page dialog will popup globally for all documents in the list, or once per 
+document. If it's <span class="code"><code>true</code></span>, then the page dialog will open only first time before submitting the batch job, and the page settings will be 
+inherited by all the documents in the list.</li>
+
+<li>
+<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/export/JRPrintServiceExporterParameter.html#DISPLAY_PRINT_DIALOG_ONLY_ONCE" target="_blank">DISPLAY_PRINT_DIALOG_ONLY_ONCE</a></span> - 
+when printing in batch mode this parameter indicates whether the print dialog will popup globally for all documents in the list, or once per 
+document. If it's <span class="code"><code>true</code></span>, then the print dialog will open only first time before submitting the batch job, and the print request settings will be 
+inherited by all the documents in the list.</li>
+
+</ul>
+
+<br>
+
+<br>
+
+<b>The Java Print Service Sample</b>
+
+<br>
+
+<br>
+This sample shows how to use the Java print service exporter to print a generated report. One can see there is no <span class="code"><code>.JRXML</code></span> file, 
+because the report is generated at fill time using report generation APIs (see the <span class="code"><code>fill()</code></span> and <span class="code"><code>getJasperPrint()</code></span> 
+methods in the <span class="code"><code>src/PrintServiceApp.java</code></span> class file):
+<pre>
+  public void fill() throws JRException
+  {
+    long start = System.currentTimeMillis();
+    JasperPrint jasperPrint = getJasperPrint();
+    JRSaver.saveObject(jasperPrint, "build/reports/PrintServiceReport.jrprint");
+    System.err.println("Filling time : " + (System.currentTimeMillis() - start));
+  }
+
+  private static JasperPrint getJasperPrint() throws JRException
+  {
+    //JasperPrint
+    JasperPrint jasperPrint = new JasperPrint();
+    jasperPrint.setName("NoReport");
+    jasperPrint.setPageWidth(595);
+    jasperPrint.setPageHeight(842);
+    
+    //Fonts
+    JRDesignStyle normalStyle = new JRDesignStyle();
+    normalStyle.setName("Sans_Normal");
+    normalStyle.setDefault(true);
+    normalStyle.setFontName("DejaVu Sans");
+    normalStyle.setFontSize(8);
+    normalStyle.setPdfFontName("Helvetica");
+    normalStyle.setPdfEncoding("Cp1252");
+    normalStyle.setPdfEmbedded(false);
+    jasperPrint.addStyle(normalStyle);
+
+    JRDesignStyle boldStyle = new JRDesignStyle();
+    boldStyle.setName("Sans_Bold");
+    boldStyle.setFontName("DejaVu Sans");
+    boldStyle.setFontSize(8);
+    boldStyle.setBold(true);
+    boldStyle.setPdfFontName("Helvetica-Bold");
+    boldStyle.setPdfEncoding("Cp1252");
+    boldStyle.setPdfEmbedded(false);
+    jasperPrint.addStyle(boldStyle);
+
+    JRDesignStyle italicStyle = new JRDesignStyle();
+    italicStyle.setName("Sans_Italic");
+    italicStyle.setFontName("DejaVu Sans");
+    italicStyle.setFontSize(8);
+    italicStyle.setItalic(true);
+    italicStyle.setPdfFontName("Helvetica-Oblique");
+    italicStyle.setPdfEncoding("Cp1252");
+    italicStyle.setPdfEmbedded(false);
+    jasperPrint.addStyle(italicStyle);
+    
+    JRPrintPage page = new JRBasePrintPage();
+
+    JRPrintLine line = new JRBasePrintLine(jasperPrint.getDefaultStyleProvider());
+    line.setX(40);
+    line.setY(50);
+    line.setWidth(515);
+    line.setHeight(0);
+    page.addElement(line);
+    
+    JRPrintImage image = new JRBasePrintImage(jasperPrint.getDefaultStyleProvider());
+    image.setX(45);
+    image.setY(55);
+    image.setWidth(165);
+    image.setHeight(40);
+    image.setScaleImage(ScaleImageEnum.CLIP);
+    image.setRenderer(
+      JRImageRenderer.getInstance(
+        JRLoader.loadBytesFromResource("jasperreports.png")
+        )
+      );
+    page.addElement(image);
+
+    JRPrintText text = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
+    text.setX(210);
+    text.setY(55);
+    text.setWidth(345);
+    text.setHeight(30);
+    text.setTextHeight(text.getHeight());
+    text.setHorizontalAlignment(HorizontalAlignEnum.RIGHT);
+    text.setLineSpacingFactor(1.3133681f);
+    text.setLeadingOffset(-4.955078f);
+    text.setStyle(boldStyle);
+    text.setFontSize(18);
+    text.setText("JasperReports Project Description");
+    page.addElement(text);
+
+    text = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
+    text.setX(210);
+    text.setY(85);
+    text.setWidth(325);
+    text.setHeight(15);
+    text.setTextHeight(text.getHeight());
+    text.setHorizontalAlignment(HorizontalAlignEnum.RIGHT);
+    text.setLineSpacingFactor(1.329241f);
+    text.setLeadingOffset(-4.076172f);
+    text.setStyle(italicStyle);
+    text.setFontSize(12);
+    text.setText((new SimpleDateFormat("EEE, MMM d, yyyy")).format(new Date()));
+    page.addElement(text);
+
+    text = new JRBasePrintText(jasperPrint.getDefaultStyleProvider());
+    text.setX(40);
+    text.setY(150);
+    text.setWidth(515);
+    text.setHeight(200);
+    text.setTextHeight(text.getHeight());
+    text.setHorizontalAlignment(HorizontalAlignEnum.JUSTIFIED);
+    text.setLineSpacingFactor(1.329241f);
+    text.setLeadingOffset(-4.076172f);
+    text.setStyle(normalStyle);
+    text.setFontSize(14);
+    text.setText(
+      "JasperReports is a powerful report-generating tool that has the ability to deliver "+
+      "rich content onto the screen, to the printer or into PDF, HTML, XLS, CSV or XML files.\n\n" +
+      "It is entirely written in Java and can be used in a variety of Java enabled applications, " +
+      "including J2EE or Web applications, to generate dynamic content.\n\n" +
+      "Its main purpose is to help creating page oriented, ready to print documents in a simple and flexible manner."
+      );
+    page.addElement(text);
+
+    jasperPrint.addPage(page);
+
+    return jasperPrint;
+  }</pre>
+Once saved the <span class="code"><code>PrintServiceReport.jrprint</code></span> file, it will be loaded and sent to the available 
+printer when calling the <span class="code"><code>print()</code></span> method. A print dialog will popup before sending the print job:
+<pre>
+  public void print() throws JRException
+  {
+    long start = System.currentTimeMillis();
+    PrintRequestAttributeSet printRequestAttributeSet = new HashPrintRequestAttributeSet();
+    printRequestAttributeSet.add(MediaSizeName.ISO_A4);
+
+    PrintServiceAttributeSet printServiceAttributeSet = new HashPrintServiceAttributeSet();
+    //printServiceAttributeSet.add(new PrinterName("Epson Stylus 820 ESC/P 2", null));
+    //printServiceAttributeSet.add(new PrinterName("hp LaserJet 1320 PCL 6", null));
+    //printServiceAttributeSet.add(new PrinterName("PDFCreator", null));
+    
+    JRPrintServiceExporter exporter = new JRPrintServiceExporter();
+    
+    exporter.setParameter(JRExporterParameter.INPUT_FILE_NAME, "build/reports/PrintServiceReport.jrprint");
+    exporter.setParameter(JRPrintServiceExporterParameter.PRINT_REQUEST_ATTRIBUTE_SET, printRequestAttributeSet);
+    exporter.setParameter(JRPrintServiceExporterParameter.PRINT_SERVICE_ATTRIBUTE_SET, printServiceAttributeSet);
+    exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PAGE_DIALOG, Boolean.FALSE);
+    exporter.setParameter(JRPrintServiceExporterParameter.DISPLAY_PRINT_DIALOG, Boolean.TRUE);
+    
+    exporter.exportReport();
+
+    System.err.println("Printing time : " + (System.currentTimeMillis() - start));
+  }</pre>
+
+<b>Running the Sample</b>
+
+<br>
+
+<br>
+Running the sample requires the <a href="http://ant.apache.org/" target="_blank" class="element">Apache Ant</a> library. Make sure that <span class="code"><code>ant</code></span> is already installed on your system (version 1.5 or later).
+<br>
+In a command prompt/terminal window set the current folder to <span class="code"><code>demo/samples/printservice</code></span> within the JasperReports source project and run the <span class="code"><code>&gt; ant clean javac fill print</code></span> command.
+<br>
+It will generate the report first and then will ask for various printer settings in a print popup window. Finally the document will be printed on the selected printer. 
+    </span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-2011 Jaspersoft Corporation <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>

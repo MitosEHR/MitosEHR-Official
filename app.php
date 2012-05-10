@@ -112,7 +112,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/model/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/model/administration/Medications.js"></script>
-        <script type="text/javascript" src="app/model/administration/Immunization_Relations.js"></script>
+        <script type="text/javascript" src="app/model/administration/ImmunizationRelations.js"></script>
 
 
 
@@ -138,7 +138,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/store/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/store/administration/Medications.js"></script>
-        <script type="text/javascript" src="app/store/administration/Immunization_Relations.js"></script>
+        <script type="text/javascript" src="app/store/administration/ImmunizationRelations.js"></script>
 
 
         <!-- Classes -->
@@ -167,7 +167,14 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/MsgStatus.js"></script>
         <script type="text/javascript" src="app/classes/combo/posCodes.js"></script>
         <script type="text/javascript" src="app/classes/combo/Roles.js"></script>
-        <script type="text/javascript" src="app/classes/combo/AllergyTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesLocation.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesSystemic.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesSkin.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Allergies.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesSeverity.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesLocal.js"></script>
+        <script type="text/javascript" src="app/classes/combo/AllergiesAbdominal.js"></script>
         <script type="text/javascript" src="app/classes/combo/Sex.js"></script>
         <script type="text/javascript" src="app/classes/combo/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/classes/combo/TaxId.js"></script>
@@ -180,11 +187,13 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/Medications.js"></script>
         <script type="text/javascript" src="app/classes/combo/Occurrence.js"></script>
         <script type="text/javascript" src="app/classes/combo/Surgery.js"></script>
-        <script type="text/javascript" src="app/classes/combo/TransmitMedthod.js"></script>
+        <script type="text/javascript" src="app/classes/combo/TransmitMethod.js"></script>
         <script type="text/javascript" src="app/classes/combo/Types.js"></script>
         <script type="text/javascript" src="app/classes/combo/Users.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Units.js"></script>
         <script type="text/javascript" src="app/classes/combo/Providers.js"></script>
         <script type="text/javascript" src="app/classes/combo/Time.js"></script>
+        <script type="text/javascript" src="app/classes/combo/LabObservations.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Currency.js"></script>
@@ -198,6 +207,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/ProgressNote.js"></script>
         <script type="text/javascript" src="app/view/patientfile/ChartsWindow.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Vitals.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/LaboratoryResults.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Visits.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Summary.js"></script>
         <script type="text/javascript" src="app/view/patientfile/encounter/CurrentProceduralTerminology.js"></script>

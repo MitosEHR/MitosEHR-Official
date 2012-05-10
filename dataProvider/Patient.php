@@ -244,14 +244,10 @@ class Patient {
 		}else{
 			return array('success' => true);
 		}
-
-
-
 	}
 
 	public function getPatientNotes(stdClass $params)
 	{
-
 		$notes = array();
 		$this->db->setSQL("SELECT * FROM patient_notes WHERE pid = '$params->pid'");
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
@@ -263,9 +259,130 @@ class Patient {
 
 	public function getPatientReminders(stdClass $params)
 	{
-
 		$reminders = array();
 		$this->db->setSQL("SELECT * FROM patient_reminders WHERE pid = '$params->pid'");
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+			$row['user_name'] = $this->user->getUserNameById($row['uid']);
+			$reminders[] = $row;
+		}
+		return $reminders;
+	}
+///////////////////////////////////////////////////////
+
+    public function getPatientDOBByPid($pid){
+        $this->db->setSQL("SELECT DOB
+                           FROM form_data_demographics
+                           WHERE pid ='$pid'");
+        $patient = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+        return $patient['DOB'];
+    }
+
+
+
+    /**
+     * @param $birthday
+     * @return array
+     */
+
+    public function getPatientAgeByDOB($dob){
+        list($year,$month,$day) = explode("-",$dob);
+        $year_diff  = date("Y") - $year;
+        $month_diff = date("m") - $month;
+        $day_diff   = date("d") - $day;
+        if ($day_diff < 0 || $month_diff < 0)
+            $year_diff--;
+        return $year_diff;
+    }
+
+    /**
+     * @param $pid
+     * @return array
+     */
+
+    public function getPatientSexByPid($pid){
+        $this->db->setSQL("SELECT sex
+                           FROM form_data_demographics
+                           WHERE pid ='$pid'");
+        $p = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+        return $p['sex'];
+    }
+
+    public function getPatientPregnantStatusByPid($pid){
+
+        $this->db->setSQL("SELECT pregnant
+                           FROM form_data_demographics
+                           WHERE pid ='$pid'");
+        $p = $this->db->fetchRecord(PDO::FETCH_ASSOC);
+
+        return $p['pregnant'];
+
+    }
+
+
+    public function check_active_problems($pid, $immu_id){
+
+        $this->db->setSQL("SELECT foreign_id,
+                           FROM immunization_relations
+                           WHERE immunization_id ='$immu_id'
+                           AND   code_type = 'problems'");
+        $immu_problems = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+
+        //buscar los ICD9 del pasiente y comprar con los de la vacuna...
+        //arreglar como graban en el medical window
+//        $this->db->setSQL("SELECT foreign_id,
+//                           FROM immunization_relations
+//                           WHERE pid ='$pid'
+//                           AND   code_type = 'problems'");
+//        $immu_problems = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+
+    }
+
+    public function check_medications($pid, $immu_id){
+
+        $this->db->setSQL("SELECT foreign_id,
+                           FROM immunization_relations
+                           WHERE immunization_id ='$immu_id'
+                           AND   code_type = 'medications'");
+        $immu_problems = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+
+        //buscar los ICD9 del pasiente y comprar con los de la vacuna...
+        //arreglar como graban en el medical window
+//        $this->db->setSQL("SELECT foreign_id,
+//                           FROM immunization_relations
+//                           WHERE pid ='$pid'
+//                           AND   code_type = 'problems'");
+//        $immu_problems = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+
+    }
+
+    public function check_labs($pid, $immu_id){
+
+        $this->db->setSQL("SELECT foreign_id,
+                           FROM immunization_relations
+                           WHERE immunization_id ='$immu_id'
+                           AND   code_type = 'labs'");
+        $immu_problems = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+
+        //buscar los ICD9 del pasiente y comprar con los de la vacuna...
+        //arreglar como graban en el medical window
+//        $this->db->setSQL("SELECT foreign_id,
+//                           FROM immunization_relations
+//                           WHERE pid ='$pid'
+//                           AND   code_type = 'problems'");
+//        $immu_problems = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+
+    }
+
+	public function getPatientDocuments(stdClass $params)
+	{
+		$reminders = array();
+		$this->db->setSQL("SELECT * FROM patient_documents WHERE pid = '$params->pid'");
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
 			$row['user_name'] = $this->user->getUserNameById($row['uid']);
 			$reminders[] = $row;

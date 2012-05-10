@@ -1,0 +1,336 @@
+<html xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://jasperreports.sourceforge.net/jasperreports">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JasperReports 4.5.1 - Alter Design Sample</title>
+<style type="text/css">
+.title {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 28px;
+	font-weight: normal;
+}
+
+.toc {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.name {
+	font-family: Courier New, Courier, serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.label {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	font-style: italic;
+}
+
+.description {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.value {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.element {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.attribute {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.code {
+	font-family: Courier New, Courier, serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.copy {
+	font-decoration: none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	font-style: normal;
+	color: #000000;
+}
+
+.subtitle {
+	font-family: inherit;
+	font-size: inherit;
+	font-style: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	color: inherit;
+}
+
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<a name="top"></a>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td colspan="2" align="right"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Sample Reference</a> - <a href="../../schema.reference.html">Schema Reference</a> - <a href="../../config.reference.html">Configuration Reference</a> - <a href="http://jasperreports.sourceforge.net/api/index.html">API (Javadoc)</a></span>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+<tr valign="middle">
+<td nowrap="true"><span class="title">JasperReports - Alter Design Sample (version 4.5.1)</span></td><td align="right"><img src="../../resources/jasperreports.png" border="0"></td>
+</tr>
+<tr>
+<td colspan="2">
+<hr size="1">
+</td>
+</tr>
+</table>
+<br>
+<span class="description"><span class="description">Shows how compiled report templates can be modified on-the-fly without requiring recompilation.</span></span>
+<br>
+<br>
+<span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%204.5.1/jasperreports-4.5.1-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+<br>
+<span class="element"><a href="http://jasperforge.org/scm/viewvc.php/tags/jr-4-5-1/jasperreports/demo/samples/alterdesign/?root=jasperreports" target="_blank">Browse Sample Source Files on SVN</a></span>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td style="width: 20px;">
+<br>
+</td><td>
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="2"><span class="label">Main Features in This Sample</span></td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td><span class="element"><a href="#alterdesign">Altering Compiled Report Templates</a></span></td>
+</tr>
+</table>
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<tr>
+<td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td width="80%">
+<br>
+</td><td width="20%">
+<br>
+</td>
+</tr>
+<tr>
+<td colspan="6" align="right"><a name="alterdesign"></a><a href="#top" class="toc">top</a></td>
+</tr>
+<tr>
+<td colspan="6">
+<hr size="1">
+</td>
+</tr>
+<tr valign="top">
+<td><img src="../../resources/jr-16x16.png" border="0"></td><td colspan="4"><span class="name">Altering Compiled Report Templates</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:teodord@users.sourceforge.net" class="copy">Teodor Danciu</a></span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">
+Altering a compiled report template means making modifications on the report template prior to sending it for 
+filling with data and without the need to revalidate or recompile it.
+    </span></td>
+</tr>
+<tr valign="top">
+<td>
+<br>
+</td><td colspan="1"><span class="label">Since</span></td><td>
+<br>
+</td><td colspan="3"><span class="description">0.4.5</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+<tr>
+<td>
+<br>
+</td><td colspan="5"><span class="description">
+Not all runtime information can be passed to a report as a report fill-time parameter. 
+For instance, the background color of a rectangle element, cannot be provided at runtime as a parameter value.
+<br>
+While there is certainly a way to make a rectangle element change its background color depending 
+on some runtime condition, it can be done so only by using a conditional style and thus switch to one of 
+the predefined colors that are associated with the conditions in that conditional style. 
+For more information about the use of conditional report styles, see the <span class="element"><a href="../jasper/index.html">/demo/samples/jasper</a></span> sample.
+<br> 
+The background color cannot be completely dynamic, as the color code cannot be provided as a report 
+parameter or report field value. The background color property of the rectangle is not backed by an expression.
+<br>
+
+<br>
+In order to be able to set any runtime color code as the rectangle's background color, the report template 
+has to be created at runtime, or at least modified (altered) at runtime, using the JasperReports API. 
+Creating report templates using the API is demonstrated in the <span class="element"><a href="../noxmldesign/index.html">/demo/samples/noxmldesign</a></span> sample.
+<br>
+
+<br>
+Note that only compiled report template objects (<span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperReport.html" target="_blank">JasperReport</a></span> 
+objects) can be filled with data. If the report template is in the form of a source <span class="element"><a href="http://jasperreports.sourceforge.net/api/net/sf/jasperreports/engine/JasperDesign.html" target="_blank">JasperDesign</a></span> 
+object or in the form of a JRXML file, they need to be compiled into a <span class="code"><code>JasperReport</code></span> object or a <span class="code"><code>*.jasper</code></span> 
+file before being filled. This is explained in the <span class="element"><a href="../antcompile/index.html">/demo/samples/antcompile</a></span> sample.
+<br>
+
+<br>
+On an existing compiled report template object (<span class="code"><code>JasperReport</code></span> object), only certain 
+modifications/alterations are allowed using the API. This is because some modifications, 
+such as modifying an expression or a variable name, might require compiling/validating 
+the report template again. Only modifications that do not require the report template to be revalidated 
+or recompiled, are allowed on a compiled report template object. Changing the background color 
+of a rectangle element is one of the operations allowed. For a complete reference to all modifications 
+allowed, please consult the <a href="../../api/index.html" target="_blank" class="element">Javadoc</a> and look for setter methods. 
+For properties in the object model for which you only find getter methods, it means modifying the value 
+for that property is not allowed on a compiled report object model, and you should be working with 
+the report design object model instead (<span class="code"><code>JasperDesign</code></span> objects).
+<br>
+
+<br>
+If you open the <span class="code"><code>reports/AlterDesignReport.jrxml</code></span> source file in the current sample, you'll notice 
+it has 3 rectangle elements in its detail section.
+<br>
+
+<br>
+
+<pre>
+&lt;rectangle&gt;
+  &lt;reportElement key="first.rectangle" x="0" y="100" width="555" height="90"/&gt;
+  &lt;graphicElement&gt;
+    &lt;pen lineWidth="4"/&gt;
+  &lt;/graphicElement&gt;
+&lt;/rectangle&gt;
+&lt;rectangle&gt;
+  &lt;reportElement key="second.rectangle" x="0" y="200" width="555" height="90"/&gt;
+  &lt;graphicElement&gt;
+    &lt;pen lineWidth="4"/&gt;
+  &lt;/graphicElement&gt;
+&lt;/rectangle&gt;
+&lt;rectangle&gt;
+  &lt;reportElement key="third.rectangle" x="0" y="300" width="555" height="90"/&gt;
+  &lt;graphicElement&gt;
+    &lt;pen lineWidth="4"/&gt;
+  &lt;/graphicElement&gt;
+&lt;/rectangle&gt;
+
+</pre>
+Notice the <span class="code"><code>key</code></span> attribute in each rectangle <span class="element"><a href="../../schema.reference.html#reportElement">&lt;reportElement&gt;</a></span> tag. This attribute represents an user defined 
+value that will help us locate the rectangle element inside the reports section later on.
+<br>
+
+<br>
+Open the <span class="code"><code>src/AlterDesignApp.java</code></span> source file in the current sample and go to the <span class="code"><code>if</code></span> block corresponding 
+to the <span class="code"><code>TASK_FILL</code></span>, starting at line 75.
+<br>
+Notice how the compiled report template is first loaded from the <span class="code"><code>*.jasper</code></span> file.
+<br>
+
+<br>
+
+<pre>
+File sourceFile = new File(fileName);
+JasperReport jasperReport = (JasperReport)JRLoader.loadObject(sourceFile);
+
+</pre>
+Then for each of the three rectangles found in the title section of the report template, we change the forecolor and 
+the backcolor using runtime random color codes. Each rectangle is looked up for inside the parent section using its unique 
+user defined key value, as specified in the JRXML.
+<br>
+
+<br>
+
+<pre>
+JRRectangle rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("first.rectangle");
+rectangle.setForecolor(new Color((int)(16000000 * Math.random())));
+rectangle.setBackcolor(new Color((int)(16000000 * Math.random())));
+
+rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("second.rectangle");
+rectangle.setForecolor(new Color((int)(16000000 * Math.random())));
+rectangle.setBackcolor(new Color((int)(16000000 * Math.random())));
+
+rectangle = (JRRectangle)jasperReport.getTitle().getElementByKey("third.rectangle");
+rectangle.setForecolor(new Color((int)(16000000 * Math.random())));
+rectangle.setBackcolor(new Color((int)(16000000 * Math.random())));
+
+</pre>
+In addition to changing rectangle colors, we also change the font size and the font style to the first report style, 
+as defined in the JRXML.
+<br>
+
+<br>
+
+<pre>
+JRStyle style = jasperReport.getStyles()[0];
+style.setFontSize(16);
+style.setItalic(true);
+
+</pre>
+The in-memory report template is then passed to the report filling process, the result being a document which will have 
+the rectangle colors and style properties as specified above, different from the static values they had in the original 
+report template loaded from the file.
+<br>
+
+<br>
+
+<pre>
+JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, (JRDataSource)null);
+
+</pre>
+To test this sample, open a command prompt and go to the /demo/samples/alterdesign folder of the JR project source tree. 
+Type the following command:
+<br>
+
+<br>
+
+<pre>
+&gt;ant clean javac compile fill view
+
+</pre>
+Every time you run this command, you should be seeing the same result, but with different random colors for the 3 rectangles.
+	</span></td>
+</tr>
+<tr>
+<td colspan="6">
+<br>
+</td>
+</tr>
+</table>
+<br>
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td>
+<hr size="1">
+</td>
+</tr>
+<tr>
+<td align="center"><span class="copy">&copy; 2001-2011 Jaspersoft Corporation <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span></td>
+</tr>
+</table>
+</body>
+</html>

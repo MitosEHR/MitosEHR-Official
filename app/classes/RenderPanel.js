@@ -108,6 +108,15 @@ Ext.define('App.classes.RenderPanel', {
 		return val;
 	},
 
+	alertRenderer: function(val) {
+		if(val == '1' || val == true || val == 'true') {
+			return '<img style="padding-left: 13px" src="ui_icons/no.gif" />';
+		} else if(val == '0' || val == false || val == 'false') {
+			return '<img style="padding-left: 13px" src="ui_icons/yes.gif" />';
+		}
+		return val;
+	},
+
 	onExpandRemoveMask: function(cmb) {
 		cmb.picker.loadMask.destroy()
 	},
@@ -134,6 +143,7 @@ Ext.define('App.classes.RenderPanel', {
         });
         var f = msg.textField.getInputId();
         document.getElementById(f).type = 'password';
+        return msg;
     },
     getPageHeader:function(){
         return this.getComponent('RenderPanel-header');

@@ -149,6 +149,14 @@ $API = array(
         ),
 
     ),
+    'DocumentHandler'=>array(
+        'methods'=>array(
+            'uploadDocument'=>array(
+	            'formHandler'=>true,
+	            'len'=>1
+            )
+        )
+    ),
     /**
     * Medical Functions
     */
@@ -217,7 +225,19 @@ $API = array(
             'getMedicationLiveSearch'=>array(
                'len'=>1
             ),
-            'CheckImmunizations'=>array(
+            'getPatientLabsResults'=>array(
+               'len'=>1
+            ),
+            'addPatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'updatePatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'deletePatientLabsResult'=>array(
+               'len'=>1
+            ),
+            'signPatientLabsResultById'=>array(
                'len'=>1
             )
         ),
@@ -387,6 +407,24 @@ $API = array(
             ),
             'updateMedications'=>array(
                'len'=>1
+            ),
+            'getAllLabObservations'=>array(
+               'len'=>1
+            ),
+            'getLabObservations'=>array(
+               'len'=>1
+            ),
+            'addLabObservation'=>array(
+               'len'=>1
+            ),
+            'updateLabObservation'=>array(
+               'len'=>1
+            ),
+            'removeLabObservation'=>array(
+               'len'=>1
+            ),
+            'getActiveLaboratoryTypes'=>array(
+               'len'=>0
             )
         )
     ),
@@ -447,6 +485,9 @@ $API = array(
                 'len'=>1
             ),
             'removeRelations'=>array(
+                'len'=>1
+            ),
+            'getImmunizationsCheck'=>array(
                 'len'=>1
             )
         )
@@ -523,6 +564,9 @@ $API = array(
             	'len'=>1
             ),
             'getPatientNotes'=>array(
+            	'len'=>1
+            ),
+            'getPatientDocuments'=>array(
             	'len'=>1
             )
 
@@ -630,6 +674,12 @@ $API = array(
             'getPosCodes'=>array(
                 'len'=>0
             ),
+            'getAllergieTypes'=>array(
+                'len'=>0
+            ),
+            'getAllergiesByType'=>array(
+                'len'=>1
+            )
         )
     ),
     /**

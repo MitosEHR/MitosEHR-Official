@@ -13,6 +13,7 @@ if(!isset($_SESSION)) {
 }
 include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/classes/dbHelper.php');
 class Medical
 {
@@ -28,12 +29,14 @@ class Medical
 	 * @var Patient
 	 */
 	private $patient;
+	private $services;
 
 	function __construct()
 	{
 		$this->db      = new dbHelper();
 		$this->user    = new User();
 		$this->patient = new Patient();
+		$this->services = new Services();
 		return;
 	}
 
@@ -79,7 +82,6 @@ class Medical
 		$data['administered_date'] = $this->parseDate($data['administered_date']);
 		$data['education_date']    = $this->parseDate($data['education_date']);
 		$data['create_date']       = $this->parseDate($data['create_date']);
-		$data['vis_date']          = $this->parseDate($data['vis_date']);
 		$this->db->setSQL($this->db->sqlBind($data, "patient_immunizations", "U", "id='$id'"));
 		$this->db->execLog();
 		return $params;
@@ -115,6 +117,7 @@ class Medical
 		$data['create_date'] = $this->parseDate($data['create_date']);
 		$this->db->setSQL($this->db->sqlBind($data, "patient_allergies", "U", "id='$id'"));
 		$this->db->execLog();
+        $params->alert = ($params->end_date == null || $params->end_date == '0000-00-00 00:00:00'|| $params->end_date == '' ) ? 1 : 0 ;
 		return $params;
 
 	}
@@ -270,22 +273,123 @@ class Medical
 		             'rows'  => $records);
 	}
 	/*************************************************************************************************************/
-		public function getImmunizationLiveSearch(stdClass $params)
-		{
-			$this->db->setSQL("SELECT id,
-									  code,
-									  code_text,
-									  code_text_short
+	public function getImmunizationLiveSearch(stdClass $params)
+	{
+		$this->db->setSQL("SELECT id,
+								  code,
+								  code_text,
+								  code_text_short
 
-								FROM  immunizations
-								WHERE code_text LIKE '$params->query%'
-								   OR code      LIKE'$params->query%'");
- 			$records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
-			$total = count($records);
-			$records  = array_slice($records, $params->start, $params->limit);
-			return array('totals'=> $total,
-			             'rows'  => $records);
+							FROM  immunizations
+							WHERE code_text LIKE '$params->query%'
+							   OR code      LIKE'$params->query%'");
+        $records =$this->db->fetchRecords(PDO::FETCH_ASSOC);
+		$total = count($records);
+		$records  = array_slice($records, $params->start, $params->limit);
+		return array('totals'=> $total,
+		             'rows'  => $records);
+	}
+	/***************************************************************************************************************/
+
+	public function getPatientLabsResults(stdClass $params)
+	{
+		$records = array();
+		$this->db->setSQL("SELECT pLab.*, pDoc.url AS document_url
+							 FROM patient_labs AS pLab
+						LEFT JOIN patient_documents AS pDoc ON pLab.document_id = pDoc.id
+							WHERE pLab.parent_id = '$params->parent_id'
+						 ORDER BY date DESC");
+        $labs = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		foreach($labs as $lab){
+			$id = $lab['id'];
+			$this->db->setSQL("SELECT observation_loinc, observation_value, unit
+							     FROM patient_labs_results
+							    WHERE patient_lab_id = '$id'");
+			$lab['columns'] = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+			$lab['data'] = array();
+			foreach($lab['columns'] as $column){
+				$lab['data'][$column['observation_loinc']] = $column['observation_value'];
+				$lab['data'][$column['observation_loinc'].'_unit'] = $column['unit'];
+			}
+
+			$records[] = $lab;
 		}
+		return $records;
+	}
+
+
+	public function addPatientLabsResult(stdClass $params)
+	{
+		$lab['pid'] = (isset($params->pid)) ? $params->pid : $_SESSION['patient']['pid'];
+		$lab['uid'] = $_SESSION['user']['id'];
+		$lab['document_id'] = $params->document_id;
+		$lab['date'] = date('Y-m-d H:i:s');
+		$lab['parent_id'] = $params->parent_id;
+		$this->db->setSQL($this->db->sqlBind($lab,'patient_labs','I'));
+		$this->db->execLog();
+		$patient_lab_id = $this->db->lastInsertId;
+
+
+		foreach($this->services->getLabObservationFieldsByParentId($params->parent_id) as $result){
+			$foo = array();
+			$foo['patient_lab_id'] = $patient_lab_id;
+			$foo['observation_loinc'] = $result->loinc_number;
+			$foo['observation_value'] = null;
+			$foo['unit'] = $result->default_unit;
+			$this->db->setSQL($this->db->sqlBind($foo,'patient_labs_results','I'));
+			$this->db->execOnly();
+		}
+
+		return $params;
+	}
+
+
+	public function updatePatientLabsResult(stdClass $params)
+	{
+		$data = get_object_vars($params);
+		$id = $data['id'];
+		unset($data['id']);
+
+		$fo = array();
+		foreach($data as $key => $val){
+			$foo = explode('_', $key);
+			if(sizeof($foo) > 1){
+				$fo[0] = $val;
+			}else{
+				$this->db->setSQL("UPDATE patient_labs_results
+									  SET observation_value = '$val',
+									      unit = '$fo[0]'
+								    WHERE patient_lab_id = '$id'
+								      AND observation_loinc = '$foo[0]'");
+				$this->db->execLog();
+				$fo = array();
+			}
+
+
+
+		}
+
+
+		//unset($data['id'],$data['data'],$data['columns']);
+		//$this->db->setSQL($this->db->sqlBind($data,'patient_labs_results','U',"id = '$params->id'"));
+		return $params;
+	}
+
+
+	public function deletePatientLabsResult(stdClass $params)
+	{
+
+		return $params;
+	}
+
+	public function signPatientLabsResultById($id)
+	{
+		$foo['auth_uid'] = $_SESSION['user']['id'];
+		$this->db->setSQL($this->db->sqlBind($foo,'patient_labs','U', "id = '$id'"));
+		$this->db->execLog();
+		return array('success' => true);
+	}
+
 
 	/*********************************************
 	 * METHODS USED BY PHP                       *
@@ -302,90 +406,8 @@ class Medical
 	}
 
 
-    private function CheckImmunizations(stdClass $params)
-	{
-		$this->db->setSQL("SELECT * FROM immunizations WHERE code_type='100'");
-
-		$records = array();
-		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($this->check_age($params->pid, $rec['id']) == true && $this->check_sex($params->pid, $rec['id']) == true  ) ? 1 : 0 ;
-			if($rec['alert'] == false){
-            $records[]= $rec;
-            }
-
-		}
-
-		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
-	}
-    private function check_age($pid, $immu_id){
-
-        $this->db->setSQL("SELECT DOB
-                           FROM patient_data
-                           WHERE pid ='$pid'");
-        $DOB = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
-        $age = $this ->ages($DOB['DOB']);
-
-        $this->db->setSQL("SELECT age_start,
-                                  age_end
-                           FROM immunizations
-                           WHERE id='$immu_id'");
-        $immu = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
-            if( $age >= $immu['age_start']){
-                return false;
-            }
-            elseif( $age <= $immu['age_end']){
-                return false;
-            }
-            else{
-
-                return true;
-            }
 
 
-
-    }
-    /**
-     * @param $birthday
-     * @return array
-     */
-
-    private function ages ($birthday){
-        list($year,$month,$day) = explode("-",$birthday);
-        $year_diff  = date("Y") - $year;
-        $month_diff = date("m") - $month;
-        $day_diff   = date("d") - $day;
-        if ($day_diff < 0 || $month_diff < 0)
-            $year_diff--;
-        return $year_diff;
-    }
-
-    /**
-     * @param $pid
-     * @return array
-     */
-    private function check_sex($pid, $immu_id){
-
-        $this->db->setSQL("SELECT sex
-                           FROM patient_data
-                           WHERE pid ='$pid'");
-        $sex = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-
-
-        $this->db->setSQL("SELECT sex
-                           FROM immunizations
-                           WHERE id='$immu_id'");
-        $immu = $this->db->fetchRecords(PDO::FETCH_ASSOC) ;
-
-            if($immu['sex'] == $sex){
-                return false;
-            }
-            else{
-
-                return true;
-            }
-    }
 	/**
 	 * @param $eid
 	 * @return array
@@ -405,7 +427,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_allergies WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 		return $records;
@@ -430,7 +452,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_issues WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -456,7 +478,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_surgery WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -482,7 +504,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_dental WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -508,7 +530,7 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_medications WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
-			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 0 : 1 ;
+			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
 			$records[]= $rec;
 		}
 
@@ -525,6 +547,10 @@ class Medical
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
 
+	//******************************************************************************************************************
+
+
+
 	/**
 	 * @param $date
 	 * @return mixed
@@ -535,7 +561,11 @@ class Medical
 	}
 
 }
-//
+
+
+
+
 //$e = new Medical();
 //echo '<pre>';
-//print_r($e->getProgressNoteByEid(7));
+//print_r($e->CheckImmunizations());
+

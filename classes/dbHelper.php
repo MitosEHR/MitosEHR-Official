@@ -8,8 +8,8 @@ set_include_path($_SESSION['site']['root'].'/lib/LINQ_040/Classes/');
 require_once'PHPLinq/LinqToObjects.php';
 
 ini_set('memory_limit', '256M');
-ini_set('max_input_time', '60');
-ini_set('max_execution_time', '60');
+ini_set('max_input_time', '120');
+ini_set('max_execution_time', '120');
 
 /**
  * @brief       Database Helper Class.
@@ -25,7 +25,7 @@ ini_set('max_execution_time', '60');
  *
  *              PDO provides a data-access abstraction layer, which means that,
  *              regardless of which database you're using, you use the same functions to issue queries
- *              and fetch data. PDO does not provide a database abstraction; it doesn't rewrite
+ *              and fetch data. PDO does not provide a database abstraction; it does not rewrite
  *              SQL or emulate missing features.
  *              You should use a full-blown abstraction layer if you need that facility.
  *
@@ -59,9 +59,9 @@ class dbHelper {
     private $err;
 
     /**
-     * @brief       dbHelper contructor.
+     * @brief       dbHelper constructor.
      * @details     This method starts the connection with mysql server using $_SESSION values
-     *              during the login proccess.
+     *              during the login process.
      *
      * @author      Gino Rivera (Certun) <grivera@certun.com>
      * @version     Vega 1.0
@@ -72,11 +72,11 @@ class dbHelper {
 		error_reporting(0);
         $host   = (string)$_SESSION['site']['db']['host'];
         $port   = (int)$_SESSION['site']['db']['port'];
-        $dbname = (string)$_SESSION['site']['db']['database'];
-        $dbuser = (string)$_SESSION['site']['db']['username'];
-        $dbpass = (string)$_SESSION['site']['db']['password'];
+        $dbName = (string)$_SESSION['site']['db']['database'];
+        $dbUser = (string)$_SESSION['site']['db']['username'];
+        $dbPass = (string)$_SESSION['site']['db']['password'];
 		try {
-    		$this->conn = new PDO( 'mysql:host='.$host.';port='.$port.';dbname='.$dbname,$dbuser,$dbpass,
+    		$this->conn = new PDO( 'mysql:host='.$host.';port='.$port.';dbname='.$dbName,$dbUser,$dbPass,
                 array(PDO::ATTR_PERSISTENT => true)
             );
 		} catch (PDOException $e) {
@@ -85,19 +85,19 @@ class dbHelper {
 	}
 
     /**
-     * @brief       Filter Records By Sart and Limit.
-     * @details     This Function will filter the $records by a start and Limit usin LinQ.
+     * @brief       Filter Records By Start and Limit.
+     * @details     This Function will filter the $records by a start and Limit using LinQ.
      *              The main reason to use LinQ is to avoid multiples SQl queries to get
-     *              the record totals and filter resutls.
+     *              the record totals and filter results.
      *
      * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
      * @version     Vega 1.0
      *
-     * @warning     This method requires stdClass arguments. Use PDO::FETCH_CLASS to sexecute the SQL queries.
+     * @warning     This method requires stdClass arguments. Use PDO::FETCH_CLASS to execute the SQL queries.
      *
      * @see         Logs::getLogs() for basic example and Patient::patientLiveSearch() for advance example.
      *
-     * @param       array $records SQL recordes to filter
+     * @param       array $records SQL records to filter
      * @param       stdClass $params Params used to filter the results, $params->start and $params->limit are required
      * @return      mixed Records filtered
      */
@@ -125,8 +125,8 @@ class dbHelper {
      *
      * @see         Services::getServices() for example.
      *
-     * @param       array $records SQL recordes to filter
-     * @param       string $column databe column to filter
+     * @param       array $records SQL records to filter
+     * @param       string $column database column to filter
      * @param       string $query value you are looking for
      * @return      mixed Records filtered
      */
@@ -141,7 +141,7 @@ class dbHelper {
     /**
      * @brief       Set the SQL Statement.
      * @details     This method set the SQL statement in
-     *              $this->sql_statement for othe methods to use it
+     *              $this->sql_statement for other methods to use it
      *
      * @author      Gino Rivera (Certun) <grivera@certun.com>
      * @version     Vega 1.0
@@ -172,7 +172,7 @@ class dbHelper {
      * @param       string $Table  A valid database table to make the SQL statement
      * @param       string $InsertOrUpdate Insert or Update parameter. This has to options I = Insert, U = Update
      * @param       string $Where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
-     * @return      string cunstructed SQL string
+     * @return      string constructed SQL string
      */
     public function sqlBind($BindFieldsArray, $Table, $InsertOrUpdate='I', $Where)
     {
@@ -215,44 +215,47 @@ class dbHelper {
 		return $sql;
 	}
 
-    /**
-     * @brief SQL Select Builder.
-     * @details This method is used to build Select statements for MySQL.
-     *
-     * @author Gino Rivera (Certun) <grivera@certun.com>
-     * @version Vega 1.0
-     *
-     * @param $Table
-     * @param (array)$Fields
-     * @param (array)$Order
-     * @param (array)$Where
-     * @return string
-     */
-    public function sqlSelectBuilder($Table, $Fields = array("*"), $Where = null, $Order = null){
+	/**
+	 * @brief    SQL Select Builder.
+	 * @details  This method is used to build Select statements for MySQL.
+	 *
+	 * @author   Gino Rivera (Certun) <grivera@certun.com>
+	 * @version  Vega 1.0
+	 *
+	 * @param       $Table
+	 * @param array $Fields
+	 * @param null  $Where
+	 * @param null  $Order
+	 * @internal param $ (array)$Fields
+	 * @internal param $ (array)$Order
+	 * @internal param $ (array)$Where
+	 * @return string
+	 */
+    public function sqlSelectBuilder($Table, $Fields = array('*'), $Where = null, $Order = null){
 
         // Step 1 - Select clause and wrote down the fields
         $sqlReturn = 'SELECT ';
-        foreach($Fields as $key => $value) $sqlReturn .= $value . ", ";
+        foreach($Fields as $key => $value) $sqlReturn .= $value . ', ';
         $sqlReturn = substr($sqlReturn, 0, -2);
 
         // Step 2 - From clause, table
-        $sqlReturn .= " FROM " . $Table . " ";
+        $sqlReturn .= ' FROM ' . $Table . ' ';
 
         // Step 3 - Having clause, filter the records
         if($Where != null){
-            $sqlReturn .= " HAVING ";
+            $sqlReturn .= ' HAVING ';
             foreach($Where as $key => $value) {
-                $sqlReturn .= "(" . $value . ")";
-                $sqlReturn .= (is_int($key)) ? " AND " : " " . $key . " ";
+                $sqlReturn .= '(' . $value . ')';
+                $sqlReturn .= (is_int($key)) ? ' AND ' : ' ' . $key . ' ';
              }
             $sqlReturn = substr($sqlReturn, 0, -5);
         }
 
         // Step 4 - Order clause, sort the results
         if($Order != null){
-            $sqlReturn .= " ORDER BY ";
+            $sqlReturn .= ' ORDER BY ';
             foreach($Order as $key => $value) {
-                $sqlReturn .= (!is_int($key)) ? $value . " " . $key . ", " : $value . ", ";
+                $sqlReturn .= (!is_int($key)) ? $value . ' ' . $key . ', ' : $value . ', ';
             }
             $sqlReturn = substr($sqlReturn, 0, -2);
         }
@@ -300,23 +303,23 @@ class dbHelper {
 		 */
 		$this->conn->query( $this->sql_statement );
 
-		if (stristr($this->sql_statement, "INSERT") ||
-			stristr($this->sql_statement, "DELETE") ||
-			stristr($this->sql_statement, "UPDATE") ||
-			stristr($this->sql_statement, "ALTER")){
+		if (stristr($this->sql_statement, 'INSERT') ||
+			stristr($this->sql_statement, 'DELETE') ||
+			stristr($this->sql_statement, 'UPDATE') ||
+			stristr($this->sql_statement, 'ALTER')){
 
             $this->lastInsertId = $this->conn->lastInsertId();
 
             $eventLog = "Event triggered but never defined.";
-			if (stristr($this->sql_statement, "INSERT")) $eventLog = "Record insertion";
-			if (stristr($this->sql_statement, "DELETE")) $eventLog = "Record deletion";
-			if (stristr($this->sql_statement, "UPDATE")) $eventLog = "Record update";
-			if (stristr($this->sql_statement, "ALTER")) $eventLog = "Table alteration";
+			if (stristr($this->sql_statement, 'INSERT')) $eventLog = 'Record insertion';
+			if (stristr($this->sql_statement, 'DELETE')) $eventLog = 'Record deletion';
+			if (stristr($this->sql_statement, 'UPDATE')) $eventLog = 'Record update';
+			if (stristr($this->sql_statement, 'ALTER')) $eventLog = 'Table alteration';
 
 			/**
              * Using the same, internal functions.
              */
-            $data['date']       = date('Y-m-d H:i:s');
+            $data['date']      = date('Y-m-d H:i:s');
             $data['event']      = $eventLog;
             $data['comments']   = $this->sql_statement;
             $data['user']       = $_SESSION['user']['name'];
@@ -324,7 +327,7 @@ class dbHelper {
             $data['facility']   = $_SESSION['site']['facility'];
             $data['patient_id'] = $_SESSION['patient']['id'];
 
-            $sqlStatement = $this->sqlBind($data, "log", "I");
+            $sqlStatement = $this->sqlBind($data, 'log', 'I');
             $this->setSQL($sqlStatement);
             $this->fetchRecords();
 
@@ -334,7 +337,7 @@ class dbHelper {
 
     /**
      * @brief       Execute Event
-     * @details     This method is used to Inject directly to the evente log
+     * @details     This method is used to Inject directly to the event log
      *
      * @author      Gino Rivera (Certun) <grivera@certun.com>
      * @version     Vega 1.0
@@ -344,13 +347,13 @@ class dbHelper {
      */
 	function execEvent($eventLog)
     {
-        $data["date"] = date('Y-m-d H:i:s');
-        $data["event"] = $eventLog;
-        $data["comments"] = $this->sql_statement;
-        $data["user"] = $_SESSION['user']['name'];
-        $data["patient_id"] = $_SESSION['patient']['id'];
+        $data['date'] = date('Y-m-d H:i:s');
+        $data['event'] = $eventLog;
+        $data['comments'] = $this->sql_statement;
+        $data['user'] = $_SESSION['user']['name'];
+        $data['patient_id'] = $_SESSION['patient']['id'];
 
-        $sqlStatement = $this->sqlBind($data, "log", "I");
+        $sqlStatement = $this->sqlBind($data, 'log', 'I');
         $this->setSQL($sqlStatement);
         $this->fetchRecords();
 
@@ -369,10 +372,10 @@ class dbHelper {
 	function fetchRecord()
     {
 		// Get all the records
-		$recordset = $this->conn->query( $this->sql_statement );
+		$recordSet = $this->conn->query( $this->sql_statement );
         $err = $this->conn->errorInfo();
         if(!$err[2]){
-            return $recordset->fetch(PDO::FETCH_ASSOC);
+            return $recordSet->fetch(PDO::FETCH_ASSOC);
         } else {
             return $err;
         }
@@ -394,13 +397,13 @@ class dbHelper {
      */
     public function fetchRecords($fetchStyle = PDO::FETCH_BOTH)
     {
-		$recordset = $this->conn->query($this->sql_statement);
+		$recordSet = $this->conn->query($this->sql_statement);
 		if (stristr($this->sql_statement, 'SELECT')){
 			$this->lastInsertId = $this->conn->lastInsertId();
 		}
 		$err = $this->conn->errorInfo();
 		if(!$err[2]){
-			return $recordset->fetchAll($fetchStyle);
+			return $recordSet->fetchAll($fetchStyle);
 		} else {
 			return $err;
 		}
@@ -428,12 +431,12 @@ class dbHelper {
 	
     /**
      * @brief       Row Count
-     * @details     This methos is used to query an statement and return the rows coount using PDO
+     * @details     This methods is used to query an statement and return the rows coount using PDO
      *
      * @author      Ernesto J. Rodriguez (Certun) <erodriguez@certun.com>
      * @version     Vega 1.0
      *
-     * @note        count($sql) should be use insted of this method.
+     * @note        count($sql) should be use instead of this method.
      *              please refer to @ref Logs::getLogs() to see an example
      *              of how to use count();
      *
@@ -441,7 +444,7 @@ class dbHelper {
      */
 	function rowCount()
     {
-		$recordset = $this->conn->query( $this->sql_statement );
-		return $recordset->rowCount();
+		$recordSet = $this->conn->query( $this->sql_statement );
+		return $recordSet->rowCount();
 	}
 }

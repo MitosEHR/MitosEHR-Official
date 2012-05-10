@@ -14,16 +14,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     title        : 'Medical Window',
     layout       : 'card',
     closeAction  : 'hide',
-    height       : 700,
-    width        : 1000,
+    height       : 800,
+    width        : 1200,
     bodyStyle    : 'background-color:#fff',
     modal        : true,
     defaults     : {
         margin: 5
     },
+    mixins: ['App.classes.RenderPanel'],
+
     initComponent: function() {
 
         var me = this;
+
 
         me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
             groupField: 'immunization_name',
@@ -70,6 +73,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             },
             autoSync : true
         });
+        me.labPanelsStore = Ext.create('App.store.patientfile.LaboratoryTypes',{
+            autoSync : true
+        });
 
         me.items = [
             {
@@ -88,35 +94,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         dataIndex: 'immunization_name'
                     },
                     {
-                        header   : 'Code Type',
-                        width    : 100,
-                        dataIndex: 'immunization_id'
-                    },
-                    {
                         header   : 'Date',
                         width    : 100,
                         dataIndex: 'administered_date'
                     },
                     {
-                        header   : 'Manufacturer',
-                        width    : 100,
-                        dataIndex: 'manufacturer'
-                    },
-                    {
                         header   : 'Lot Number',
                         width    : 100,
                         dataIndex: 'lot_number'
-                    },
-                    {
-                        header   : 'Date Immunization',
-                        flex     : 1,
-                        dataIndex: 'education_date'
-                    },
-                    {
-                        header   : 'Date VIS Statement',
-                        flex     : 1,
-                        dataIndex: 'vis_date'
-
                     },
                     {
                         header   : 'Notes',
@@ -150,15 +135,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             xtype          : 'immunizationlivesearch',
                                             fieldLabel     : 'Name',
                                             hideLabel      : false,
-                                            itemId         : 'immunization',
+                                            itemId         : 'immunization_name',
+	                                        name           : 'immunization_name',
                                             enableKeyEvents: true,
+                                            action         : 'immunizations',
                                             width          : 300,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
-
+	                                    {
+		                                    xtype:'textfield',
+		                                    hidden:true,
+		                                    name:'immunization_id',
+		                                    action:'idField'
+	                                    },
                                         {
                                             fieldLabel: 'Administrator',
                                             name      : 'administered_by',
@@ -186,20 +178,18 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 3 0', xtype: 'textfield' },
                                     items   : [
+	                                    {
+		                                    fieldLabel: 'Lot Number',
+		                                    xtype     : 'textfield',
+		                                    width     : 300,
+		                                    name      : 'lot_number'
 
-                                        {
-                                            fieldLabel     : 'Code',
-                                            name           : 'immunization_id',
-                                            width          : 300,
-                                            itemId         : 'immuCode',
-                                            action         : 'immuCode',
-                                            enableKeyEvents: true
-
-                                        },
-                                        {
+	                                    },
+	                                    {
 
                                             xtype     : 'numberfield',
                                             fieldLabel: 'Dosis Number',
+		                                    width     : 260,
                                             name      : 'dosis'
                                         },
 
@@ -238,14 +228,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
                                             name: 'manufacturer'
 
-                                        },
-                                        {
-                                            fieldLabel: 'Lot Number',
-                                            xtype     : 'textfield',
-                                            width     : 295,
-                                            labelWidth: 180,
-                                            name      : 'lot_number'
-
                                         }
 
                                     ]
@@ -259,11 +241,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     ]
                 })
             },
+
             {
                 /**
                  * Allergies Card panel
                  */
-
                 xtype  : 'grid',
                 action : 'patientAllergiesListGrid',
                 store  : me.patientAllergiesListStore,
@@ -271,55 +253,31 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     {
                         header   : 'Type',
                         width    : 100,
-                        dataIndex: 'type'
+                        dataIndex: 'allergy_type'
                     },
                     {
-                        header   : 'Title',
+                        header   : 'Name',
                         width    : 100,
-                        dataIndex: 'title'
+                        dataIndex: 'allergy'
                     },
                     {
-                        header   : 'Diagnosis Code',
-                        width    : 100,
-                        dataIndex: 'diagnosis_code'
+                        header   : 'Location',
+	                    width    : 100,
+                        dataIndex: 'location'
                     },
                     {
-                        header   : 'Begin Date',
-                        width    : 100,
-                        dataIndex: 'begin_date'
-                    },
-                    {
-                        header   : 'End Date',
+                        header   : 'Severity',
                         flex     : 1,
-                        dataIndex: 'end_date'
+                        dataIndex: 'severity'
                     },
-                    {
-                        header   : 'Ocurrence',
-                        flex     : 1,
-                        dataIndex: 'ocurrence'
-                    },
-                    {
-                        header   : 'Reaction',
-                        flex     : 1,
-                        dataIndex: 'reaction'
-                    },
-                    {
-                        header   : 'Referred by',
-                        flex     : 1,
-                        dataIndex: 'referred_by'
-                    },
-                    {
-                        header   : 'Outcome',
-                        flex     : 1,
-                        dataIndex: 'outcome'
-                    },
-                    {
-                        header   : 'Destination',
-                        flex     : 1,
-                        dataIndex: 'destination'
-                    }
+	                {
+		                text     : 'Active?',
+		                width    : 55,
+		                dataIndex: 'alert',
+		                renderer : me.boolRenderer
+	                }
                 ],
-                plugins: Ext.create('App.classes.grid.RowFormEditing', {
+                plugins: me.rowEditingAllergies = Ext.create('App.classes.grid.RowFormEditing', {
                     autoCancel  : false,
                     errorSummary: false,
                     clicksToEdit: 1,
@@ -341,32 +299,37 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
                                         {
-                                            xtype          : 'textfield',
+                                            xtype          : 'mitos.allergiestypescombo',
                                             fieldLabel     : 'Type',
-                                            hideLabel      : false,
-                                            itemId         : 'allergies',
+	                                        name           : 'allergy_type',
                                             enableKeyEvents: true,
+
                                             width          : 225,
                                             labelWidth     : 70,
-                                            listeners      : {
-                                                scope   : me,
-                                                'select': me.onOptionType
-                                            }
+	                                        listeners      : {
+		                                        scope   : me,
+		                                        'select': me.onAllergyTypeSelect
+	                                        }
                                         },
+	                                    {
+		                                    xtype          : 'mitos.allergieslocationcombo',
+		                                    fieldLabel     : 'Location',
+		                                    name           : 'location',
+		                                    width          : 225,
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    'select': me.onLocationSelect
+		                                    }
 
-                                        {
-                                            fieldLabel: 'Begin Date',
-                                            xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
-                                            name      : 'begin_date'
+	                                    },
+	                                    {
+		                                    fieldLabel: 'Begin Date',
+		                                    xtype     : 'datefield',
+		                                    format    : 'Y-m-d H:i:s',
+		                                    name      : 'begin_date'
 
-                                        },
-                                        {
-                                            fieldLabel: 'Outcome',
-                                            xtype     : 'mitos.outcome2combo',
-                                            name      : 'outcome'
-
-                                        }
+	                                    }
 
                                     ]
 
@@ -379,27 +342,89 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
+	                                    {
+		                                    xtype          : 'mitos.allergiescombo',
+		                                    fieldLabel     : 'Allergy',
+		                                    id         : 'allergie_name',
+		                                    action         : 'allergie_name',
+		                                    name           : 'allergy',
+		                                    enableKeyEvents: true,
+		                                    disabled        : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    'select': me.onLiveSearchSelect
+		                                    }
+	                                    },
+	                                    {
+		                                    xtype          : 'medicationlivetsearch',
+		                                    fieldLabel     : 'Allergy',
+		                                    hideLabel      : false,
+		                                    id         : 'drug_name',
+		                                    action         : 'drug_name',
+		                                    name           : 'allergy',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    enableKeyEvents: true,
+		                                    width          : 225,
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    'select': me.onLiveSearchSelect
+		                                    }
+	                                    },
+                                        {
+   		                                    xtype:'textfield',
+   		                                    hidden:true,
+   		                                    name:'allergy_id',
+   		                                    action:'idField'
+   	                                    },
+	                                    {
+		                                    xtype          : 'mitos.allergiesabdominalcombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'abdominalreaction',
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
 
-                                        {   xtype     : 'textfield',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            fieldLabel: 'Title',
-                                            action    : 'title',
-                                            name      : 'title'
-                                        },
+	                                    },{
+		                                    xtype          : 'mitos.allergieslocalcombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'localreaction',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
+
+	                                    },{
+		                                    xtype          : 'mitos.allergiesskincombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'skinreaction',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
+
+	                                    },{
+		                                    xtype          : 'mitos.allergiessystemiccombo',
+		                                    fieldLabel     : 'Reaction',
+		                                    name           : 'reaction',
+		                                    id         : 'systemicreaction',
+		                                    hidden         : true,
+		                                    disabled       : true,
+		                                    width          : 225,
+		                                    labelWidth     : 70
+
+	                                    },
                                         {
                                             fieldLabel: 'End Date',
                                             xtype     : 'datefield',
                                             format    : 'Y-m-d H:i:s',
                                             name      : 'end_date'
-
-                                        },
-
-                                        {
-                                            xtype     : 'textfield',
-                                            width     : 260,
-                                            fieldLabel: 'Referred by',
-                                            name      : 'referred_by'
                                         }
 
                                     ]
@@ -413,21 +438,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
+	                                    {
+		                                    xtype          : 'mitos.allergiesseveritycombo',
+		                                    fieldLabel     : 'Severity',
+		                                    name           : 'severity',
+		                                    width          : 225,
+		                                    labelWidth     : 70
 
-                                        {
-                                            fieldLabel: 'Ocurrence',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            xtype     : 'mitos.occurrencecombo',
-                                            name      : 'ocurrence'
-
-                                        },
-                                        {
-                                            xtype     : 'textfield',
-                                            width     : 260,
-                                            fieldLabel: 'Reaction',
-                                            name      : 'reaction'
-                                        }
+	                                    }
 
                                     ]
                                 }
@@ -517,14 +535,22 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             name           : 'type',
                                             hideLabel      : false,
                                             itemId         : 'medicalissues',
+                                            action         : 'medicalissues',
                                             enableKeyEvents: true,
                                             width          : 225,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
+
 
                                         {
                                             fieldLabel: 'Begin Date',
@@ -679,13 +705,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             labelWidth     : 70,
                                             xtype          : 'mitos.surgerycombo',
                                             itemId         : 'surgery',
+                                            action         : 'surgery',
                                             enableKeyEvents: true,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
-
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
@@ -837,10 +869,15 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             width     : 225,
                                             labelWidth: 70,
                                             fieldLabel: 'Title',
-                                            action    : 'title',
+                                            action    : 'dental',
                                             name      : 'title'
                                         },
-
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
@@ -973,14 +1010,21 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             fieldLabel     : 'Type',
                                             hideLabel      : false,
                                             itemId         : 'medication',
+                                            action         : 'medication',
                                             enableKeyEvents: true,
                                             width          : 225,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
-                                                'select': me.onOptionType
+                                                'select': me.onLiveSearchSelect
                                             }
                                         },
+//                                        {
+//   		                                    xtype:'textfield',
+//   		                                    hidden:true,
+//   		                                    name:'immunization_id',
+//   		                                    action:'idField'
+//   	                                    },
 
                                         {
                                             fieldLabel: 'Begin Date',
@@ -1062,10 +1106,154 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 /**
                  * Lab panel
                  */
-
                 xtype : 'container',
                 action: 'patientLabs',
-                html  : 'Lab Placeholder'
+                layout:'border',
+                items:[
+                    {
+                        xtype:'panel',
+                        region:'north',
+                        layout:'border',
+                        bodyBorder:false,
+                        border:false,
+                        height:400,
+                        split:true,
+                        items:[
+                            {
+                                xtype:'grid',
+                                region:'west',
+                                width:290,
+                                split:true,
+                                store:me.labPanelsStore,
+                                columns:[
+                                    {
+                                        header:'Laboratories',
+                                        dataIndex:'label',
+                                        flex:1
+                                    }
+                                ],
+                                listeners:{
+                                    scope:me,
+                                    itemclick:me.onLabPanelSelected,
+                                    selectionchange:me.onLabPanelSelectionChange
+                                }
+                            },
+                            {
+                                xtype:'panel',
+                                action:'labPreviewPanel',
+                                title:'Laboratory Preview',
+                                region:'center',
+                                items:[
+                                    me.uploadWin = Ext.create('Ext.window.Window',{
+                                        draggable :false,
+                                        closable:false,
+                                        closeAction:'hide',
+                                        items:[
+                                            {
+                                                xtype:'form',
+                                                bodyPadding:10,
+                                                width:400,
+                                                items:[
+                                                    {
+                                                        xtype: 'filefield',
+                                                        name: 'filePath',
+                                                        buttonText: 'Select a file...',
+                                                        anchor:'100%'
+                                                    }
+                                                ],
+                                             //   url: 'dataProvider/DocumentHandler.php'
+                                                api: {
+                                                    submit: DocumentHandler.uploadDocument
+                                                }
+                                            }
+                                        ],
+                                        buttons:[
+                                            {
+                                                text:'Cancel',
+                                                handler:function(){
+                                                    me.uploadWin.close();
+                                                }
+                                            },
+                                            {
+                                                text:'Upload',
+                                                scope:me,
+                                                handler:me.onLabUpload
+                                            }
+                                        ]
+                                    })
+                                ]
+                            }
+                        ],
+                        tbar:[
+                            '->',
+                            {
+                                text:'Scan'
+                            },
+                            '-',
+                            {
+                                text:'Upload',
+                                disabled:true,
+                                action:'uploadBtn',
+                                scope:me,
+                                handler:me.onLabUploadWind
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'container',
+                        region:'center',
+                        layout:'border',
+                        split:true,
+                        items:[
+                            {
+                                xtype:'form',
+                                title:'Laboratory Entry Form',
+                                region:'west',
+                                width:290,
+                                split:true,
+                                bodyPadding:5,
+                                autoScroll:true,
+                                bbar:[
+                                    '->',
+                                    {
+                                        text:'Reset',
+                                        scope:me,
+                                        handler:me.onLabResultsReset
+                                    },
+                                    '-',
+                                    {
+                                        text:'Sign',
+                                        scope:me,
+                                        handler:me.onLabResultsSign
+                                    },
+                                    '-',
+                                    {
+                                        text:'Save',
+                                        scope:me,
+                                        handler:me.onLabResultsSave
+                                    }
+                                ]
+                            },
+                            {
+                                xtype:'panel',
+                                region:'center',
+                                height:300,
+                                split:true,
+                                items:[
+                                    {
+                                        xtype:'lalboratoryresultsdataview',
+                                        action:'lalboratoryresultsdataview',
+                                        store: Ext.create('App.store.patientfile.PatientLabsResults'),
+                                        listeners:{
+                                            scope:me,
+                                            itemclick:me.onLabResultClick
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ];
 
@@ -1154,25 +1342,258 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 ]
             }
         ];
-
         me.listeners = {
             scope: me,
-
             show: me.onMedicalWinShow
         };
-
         me.callParent(arguments);
     },
 
+    //*******************************************************
 
-    onOptionType: function(val, model) {
-        var value = model[0].data.code, titlefield = val.up('form').query('textfield[action="immuCode"]');
+    onLabPanelSelected:function(grid, model){
+        var me = this,
+            formPanel = me.query('[action="patientLabs"]')[0].down('form'),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            fields = [];
 
-        titlefield[0].setValue(value);
+        me.currLabPanelId = model.data.id;
+        me.removeLabDocument();
+        formPanel.removeAll();
 
-	    this.patientImmuListStore.add({
-		    immunization_id:model[0].data.id
-	    });
+        formPanel.add({
+            xtype:'textfield',
+            name:'id',
+            hidden:true
+        });
+        Ext.each(model.data.fields, function(field){
+            formPanel.add({
+                xtype:'fieldcontainer',
+                layout:'hbox',
+                margin:0,
+                anchor:'100%',
+                items:[
+                    {
+                        xtype:'textfield',
+                        fieldLabel:field.code_text_short || field.loinc_name,
+                        name:field.loinc_number,
+                        labelWidth:130,
+                        flex:1,
+                        allowBlank: field.required_in_panel != 'R'
+                    },
+                    {
+                        xtype:'mitos.unitscombo',
+                        value: field.default_unit,
+                        name:field.loinc_number+'_unit',
+                        width:90
+                    }
+                ]
+            });
+        });
+
+        store.load({params:{parent_id:model.data.id}});
+    },
+
+    onLabPanelSelectionChange:function(model, record){
+        this.query('[action="uploadBtn"]')[0].setDisabled(record.length == 0);
+    },
+
+    onLabUploadWind:function(){
+        var me = this,
+            previewPanel = me.query('[action="labPreviewPanel"]')[0], win;
+        me.uploadWin.show();
+        me.uploadWin.alignTo(previewPanel.el.dom,'tr-tr',[-5,30])
+    },
+
+    onLabUpload:function(btn){
+        var me = this,
+            form = me.uploadWin.down('form').getForm(),
+            win = btn.up('window');
+
+        if(form.isValid()){
+            form.submit({
+                waitMsg: 'Uploading Laboratory...',
+                params:{
+                    pid:app.currPatient.pid,
+                    docType:'laboratory'
+                },
+                success: function(fp, o) {
+                    win.close();
+                    say(o.result);
+                    me.getLabDocument(o.result.doc.url);
+                    me.addNewLabResults(o.result.doc.id);
+                },
+                failure:function(fp, o){
+                    say(o.result.error);
+
+                }
+            });
+        }
+    },
+
+    onLabResultClick:function(view, model){
+        var me = this,
+            form = me.query('[action="patientLabs"]')[0].down('form').getForm();
+
+        if(me.currDocUrl != model.data.document_url){
+            form.reset();
+            model.data.data.id = model.data.id;
+            form.setValues(model.data.data);
+            me.getLabDocument(model.data.document_url);
+            me.currDocUrl = model.data.document_url;
+        }
+
+    },
+
+    onLabResultsSign:function(){
+        var me = this,
+            form = me.query('[action="patientLabs"]')[0].down('form').getForm(),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            values = form.getValues(),
+            record  = dataView.getSelectionModel().getLastSelected();
+
+        if (form.isValid()) {
+            if(values.id){
+                me.passwordVerificationWin(function (btn, password) {
+                    if (btn == 'ok') {
+                        User.verifyUserPass(password, function (provider, response) {
+                            if (response.result) {
+                                say(record);
+                                Medical.signPatientLabsResultById(record.data.id,function(provider, response){
+                                    store.load({params:{parent_id:me.currLabPanelId}});
+                                });
+                            } else {
+                                Ext.Msg.show({
+                                    title:'Oops!',
+                                    msg:'Incorrect password',
+                                    //buttons:Ext.Msg.OKCANCEL,
+                                    buttons:Ext.Msg.OK,
+                                    icon:Ext.Msg.ERROR,
+                                    fn:function (btn) {
+                                        if (btn == 'ok') {
+                                            //me.onLabResultsSign();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }else{
+                Ext.Msg.show({
+                    title:'Oops!',
+                    msg:'Nothing to sign.',
+                    //buttons:Ext.Msg.OKCANCEL,
+                    buttons:Ext.Msg.OK,
+                    icon:Ext.Msg.ERROR,
+                    fn:function (btn) {
+                        if (btn == 'ok') {
+                            //me.onLabResultsSign();
+                        }
+                    }
+                });
+            }
+
+        }
+    },
+
+    onLabResultsSave:function(btn){
+        var me = this,
+            form = btn.up('form').getForm(),
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            values = form.getValues(),
+            record  = dataView.getSelectionModel().getLastSelected();
+
+        if(form.isValid()){
+            Medical.updatePatientLabsResult(values,function(){
+                store.load({params:{parent_id:record.data.parent_id}});
+                form.reset();
+            });
+        }
+    },
+
+    addNewLabResults:function(docId){
+        var me = this,
+            dataView = me.query('[action="lalboratoryresultsdataview"]')[0],
+            store = dataView.store,
+            params = {
+                parent_id:me.currLabPanelId,
+                document_id:docId
+            };
+        Medical.addPatientLabsResult(params, function(provider, response){
+            store.load({params:{parent_id:me.currLabPanelId}});
+            say(response.result);
+        });
+    },
+
+    onLabResultsReset:function(btn){
+        var form = btn.up('form').getForm();
+        form.reset();
+    },
+
+    getLabDocument:function(src){
+        var panel = this.query('[action="labPreviewPanel"]')[0];
+        panel.remove(this.doc);
+        panel.add(this.doc = Ext.create('App.classes.ManagedIframe', {src: src}));
+    },
+
+    removeLabDocument:function(src){
+        var panel = this.query('[action="labPreviewPanel"]')[0];
+        panel.remove(this.doc);
+    },
+
+    //*********************************************************
+
+
+
+
+    onLiveSearchSelect: function(combo, model) {
+
+	    var me = this,
+		    field, id;
+		if(combo.action == 'immunizations'){
+		    id = model[0].data.id;
+		    field =  combo.up('container').query('[action="idField"]')[0];
+		    field.setValue(id);
+		}
+	    else if(combo.id == 'allergie_name' || combo.id == 'drug_name'){
+			id = model[0].data.id;
+			field =  combo.up('fieldcontainer').query('[action="idField"]')[0];
+			field.setValue(id);
+
+	    }
+		else if(combo.action == 'medicalissues'){
+
+	    }
+		else if(combo.action == 'surgery'){
+
+	    }
+		else if(combo.action == 'medication'){
+
+	    }
+
+//	    this.patientImmuListStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientAllergiesListStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientMedicalIssuesStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientSurgeryStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientDentalStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+//	    this.patientMedicationsStore.add({
+//		    immunization_id:model[0].data.id
+//	    });
+
     },
 
     onAddItem: function() {
@@ -1191,9 +1612,80 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         grid.editingPlugin.startEdit(0, 0);
 
     },
+	hideall: function(combo,skinCombo,localCombo,abdominalCombo,systemicCombo){
 
+		skinCombo.hide(true);
+		skinCombo.setDisabled(true);
+		skinCombo.reset();
+		localCombo.hide(true);
+		localCombo.setDisabled(true);
+		localCombo.reset();
+		abdominalCombo.hide(true);
+		abdominalCombo.setDisabled(true);
+		abdominalCombo.reset();
+		systemicCombo.hide(true);
+		systemicCombo.setDisabled(true);
+		systemicCombo.reset();
+
+	},
+	onLocationSelect: function(combo,record){
+		var me          = this,
+		skinCombo       = combo.up('form').getForm().findField('skinreaction'),
+		localCombo      = combo.up('form').getForm().findField('localreaction'),
+		abdominalCombo  = combo.up('form').getForm().findField('abdominalreaction'),
+		systemicCombo   = combo.up('form').getForm().findField('systemicreaction'),
+		value           = combo.getValue();
+
+		me.hideall(combo,skinCombo,localCombo,abdominalCombo,systemicCombo);
+		if(value == 'Skin'){
+			skinCombo.show(true);
+			skinCombo.setDisabled(false);
+		}else if(value == 'Local'){
+			localCombo.show(true);
+			localCombo.setDisabled(false);
+		}else if(value == 'Abdominal'){
+			abdominalCombo.show(true);
+			abdominalCombo.setDisabled(false);
+		}else if(value == 'Systemic / Anaphylactic'){
+			systemicCombo.show(true);
+			systemicCombo.setDisabled(false);
+
+		}
+	},
+
+	onAllergyTypeSelect: function(combo,record) {
+		var me         = this,
+		allergyCombo   = combo.up('form').getForm().findField('allergie_name'),
+		drugLiveSearch = combo.up('form').getForm().findField('drug_name');
+
+
+        if(record[0].data.allergy_type == 'Drug'){
+        allergyCombo.hide(true);
+        allergyCombo.setDisabled(true);
+        allergyCombo.reset();
+	    drugLiveSearch.show(true);
+	    drugLiveSearch.setDisabled(false);
+
+        }
+        else if(record[0].data.allergy_type == '' || record[0].data.allergy_type == null){
+        allergyCombo.setDisabled(true);
+	    drugLiveSearch.hide(true);
+	    drugLiveSearch.setDisabled(true);
+        allergyCombo.show(true);
+        }
+		else{
+        drugLiveSearch.hide(true);
+        drugLiveSearch.setDisabled(true);
+	    allergyCombo.show(true);
+        allergyCombo.setDisabled(false);
+        allergyCombo.reset();
+        allergyCombo.store.load({params:{allergy_type:record[0].data.allergy_type}})
+        }
+
+
+
+    },
     setDefaults: function(options) {
-
         var data;
 
         if(options.update) {
@@ -1202,12 +1694,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(options.create) {
 
         }
-
     },
 
     cardSwitch: function(btn) {
-        var layout = this.getLayout(), title;
+        var layout = this.getLayout(),
+            addBtn = this.down('toolbar').query('[action="AddRecord"]')[0],
+            title;
 
+        addBtn.show();
         if(btn.action == 'immunization') {
             layout.setActiveItem(0);
             title = 'Immunizations';
@@ -1235,7 +1729,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         } else if(btn.action == 'laboratories') {
             layout.setActiveItem(6);
             title = 'Laboratories';
-
+            addBtn.hide();
         }
 
         this.setTitle(app.currPatient.name + ' - Medical Window ( ' + title + ' )');
@@ -1243,6 +1737,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
     },
 
     onMedicalWinShow: function() {
+        this.labPanelsStore.load();
         this.patientImmuListStore.load({params: {pid: app.currPatient.pid}});
         this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
         this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});

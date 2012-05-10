@@ -23,7 +23,7 @@ Ext.define('App.view.administration.Practice', {
 	uses         : [
 		'App.classes.GridPanel',
 		'App.classes.combo.Titles',
-		'App.classes.combo.TransmitMedthod',
+		'App.classes.combo.TransmitMethod',
 		'App.classes.combo.InsurancePayerType',
 		'App.classes.form.FormPanel',
 		'App.classes.window.Window'
