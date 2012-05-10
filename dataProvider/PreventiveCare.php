@@ -362,6 +362,15 @@ class PreventiveCare
         }
     }
 
+    public function checkForDismiss($pid){
+
+        $this->db->setSQL("SELECT *
+                           FROM preventive_care_inactive_patient
+                           WHERE pid='$pid'");
+        return $this->db->fetchRecord(PDO::FETCH_ASSOC);
+
+    }
+
     public function getPreventiveCareCheck(stdClass $params){
         $this->db->setSQL("SELECT * FROM preventive_care_guidelines");
         $records = array();
@@ -399,12 +408,11 @@ class PreventiveCare
 
         $data = get_object_vars($params);
         unset($data['description'],$data['type'],$data['alert']);
-        foreach($data as $dat){
-            $data['pid'] = $data['id'];
-        }
+        $data['preventive_care_id'] = $data['id'];
+        $data['pid'] = $_SESSION['patient']['pid'];
+        $data['uid'] = $_SESSION['user']['id'];
         unset($data['id']);
-
-        $this->db->setSQL($this->db->sqlBind($data, 'encounter_codes_cpt', 'I'));
+        $this->db->setSQL($this->db->sqlBind($data, 'preventive_care_inactive_patient', 'I'));
         $this->db->execLog();
         $params->id = $this->db->lastInsertId;
         return array('totals'=> 1, 'rows'  => $params);
@@ -417,10 +425,10 @@ class PreventiveCare
 //$params = new stdClass();
 //$params->start = 0;
 //$params->limit = 25;
-//$params->pid = 1;
+////$params->pid = 1;
 //$t = new PreventiveCare();
 //print '<pre>';
-//print_r($t->activePreventiveCareAlert($params));
+//print_r($t->checkForDismiss(1));
 //
 ////print_r($t->checkAge(1,9));
 //print '</pre>';
