@@ -1420,7 +1420,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 },
                 success: function(fp, o) {
                     win.close();
-                    say(o.result);
                     me.getLabDocument(o.result.doc.url);
                     me.addNewLabResults(o.result.doc.id);
                 },

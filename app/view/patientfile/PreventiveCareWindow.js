@@ -129,7 +129,7 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 	},
 
 	onPreventiveCareWindowShow: function() {
-	    this.patientPreventiveCare.load({params: {pid: app.currPatient.pid}});
+	    this.patientPreventiveCare.load({params: {pid: app.currPatient.pid }});
 
     }
 
