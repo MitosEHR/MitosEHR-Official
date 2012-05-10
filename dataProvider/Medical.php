@@ -402,6 +402,7 @@ class Medical
 	{
 		$this->db->setSQL("SELECT * FROM patient_immunizations WHERE pid='$pid'");
 
+
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
 

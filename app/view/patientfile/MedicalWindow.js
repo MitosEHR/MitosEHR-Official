@@ -1284,7 +1284,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     },
                     '-',
                     {
-                        text        : 'Medical Issues',
+                        text        : 'Active Problems',
                         enableToggle: true,
                         toggleGroup : 'medicalWin',
                         itemId      : 'issues',

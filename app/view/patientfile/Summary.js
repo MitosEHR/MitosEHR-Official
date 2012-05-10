@@ -1,4 +1,4 @@
-/**
+ /**
  * summary.ejs.php
  * Description: Patient Summary
  * v0.0.1
@@ -22,7 +22,7 @@ Ext.define('App.view.patientfile.Summary', {
         var me = this;
 
         me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
-        me.qrCodeWindow = Ext.create('App.view.patientfile.QrCodeWindow');
+        me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
 
         me.immuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
 
@@ -201,36 +201,22 @@ Ext.define('App.view.patientfile.Summary', {
                 ]
             },
             {
-                xtype      : 'container',
+                xtype      : 'panel',
                 width      : 250,
                 bodyPadding: 0,
                 frame      : false,
-                border     : false,
+                border:false,
+                bodyBorder     : true,
+                margin     : '0 0 0 5',
                 defaults   : {
                     layout: 'fit',
-                    margin: '0 0 5 5'
+                    margin: '5 5 0 5'
                 },
                 listeners  : {
                     scope      : me,
                     afterrender: me.afterRightCol
                 },
                 items      : [
-                    {
-                        action  : 'patientImgs',
-                        layout  : 'hbox',
-                        defaults: {flex: 1},
-                        tbar    : [
-                            {
-                                text: 'Print'
-                            },
-                            '->',
-                            {
-                                text: 'Update'
-
-                            }
-
-                        ]
-                    },
                     {
                         title      : 'Active Medications',
                         itemId     : 'MedicationsPanel',
@@ -252,7 +238,6 @@ Ext.define('App.view.patientfile.Summary', {
                             }
 
                         ]
-
                     },
                     {
                         title      : 'Immunizations',
@@ -378,7 +363,24 @@ Ext.define('App.view.patientfile.Summary', {
                     },
                     {
                         title: 'Prescriptions',
+                        margin: 5,
                         html : 'Panel content!'
+                    }
+                ],
+                dockedItems:[
+                    {
+                        xtype:'toolbar',
+                        style:'background:none',
+                        items:[
+                            '->',
+                            {
+                                text:'Patient Picture'
+                            },
+                            '-',
+                            {
+                                text:'QRCode'
+                            }
+                        ]
                     }
                 ]
             }
@@ -391,17 +393,6 @@ Ext.define('App.view.patientfile.Summary', {
         };
 
         me.callParent(arguments);
-
-        me.query('panel[action="patientImgs"]')[0].add({
-            xtype : 'container',
-            margin: '5 5',
-            html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
-        }, {
-            xtype : 'container',
-            margin: '5 5',
-            html  : '<img src="ui_icons/patientDataQrCode.png" height="100" width="100" >'
-        });
-
     },
 
     disableFields: function(fields) {
@@ -454,19 +445,40 @@ Ext.define('App.view.patientfile.Summary', {
     },
 
     beforePanelRender: function() {
-        var me = this, demoFormPanel = me.query('[action="demoFormPanel"]')[0];
+        var me = this, demoFormPanel = me.query('[action="demoFormPanel"]')[0], who, imgCt;
 
         this.getFormItems(demoFormPanel, 'Demographics', function(success) {
             if(success) {
                 me.disableFields(demoFormPanel.getForm().getFields().items);
+                who = demoFormPanel.query('fieldset[title="Who"]')[0];
+
+                imgCt = Ext.create('Ext.container.Container',{
+                    action :'patientImgs',
+                    layout:'hbox',
+                    style:'float:right',
+                    height:100,
+                    width:220,
+                    items:[
+                        me.patientImg = Ext.create('Ext.Img', {
+                            src: 'ui_icons/user_100.png',
+                            height:100,
+                            width:100,
+                            margin:'0 5 0 0'
+                        }),
+                        me.patientQRcode = Ext.create('Ext.Img', {
+                            src: 'ui_icons/patientDataQrCode.png',
+                            height:100,
+                            width:100,
+                            margin:0
+                        })
+                    ]
+                });
+                who.insert(0,imgCt);
             }
         });
     },
 
-    onQrCodeCreate: function() {
-        this.qrCodeWindow.show();
 
-    },
     afterRightCol : function(panel) {
         var me = this;
         panel.getComponent('ImmuPanel').header.add({
@@ -527,18 +539,9 @@ Ext.define('App.view.patientfile.Summary', {
     },
 
     getPatientImgs: function() {
-        var panel = this.query('panel[action="patientImgs"]')[0], idImg, qrImg;
-        panel.removeAll();
-
-        panel.add({
-            xtype : 'container',
-            margin: '5 10',
-            html  : '<img src="ui_icons/user_100.png" height="100" width="100" >'
-        }, {
-            xtype : 'container',
-            margin: '5 10',
-            html  : '<img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png" height="100" width="100" >'
-        });
+        var me = this;
+        me.patientImg.setSrc('ui_icons/user_100.png');
+        me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png');
     },
 
     /**
@@ -548,35 +551,41 @@ Ext.define('App.view.patientfile.Summary', {
      * to call every this panel becomes active
      */
     onActive: function(callback) {
-        var billingPanel = this.query('[action="balance"]')[0];
+        var me = this,
+	        billingPanel = me.query('[action="balance"]')[0];
 
         Fees.getPatientBalance({pid:app.currPatient.pid},function(balance){
             billingPanel.body.update('Account Balance: $' + balance);
         });
-        this.patientNotesStore.load({params: {pid: app.currPatient.pid}});
-        this.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
-        this.immuCheckListStore.load({params: {pid: app.currPatient.pid}});
-        this.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
-        this.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
-        this.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
-        this.patientDentalStore.load({params: {pid: app.currPatient.pid}});
-        this.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
-        this.patientDocumentsStore.load({params: {pid: app.currPatient.pid}});
-        var me = this;
-        if(this.checkIfCurrPatient()) {
+	    me.patientNotesStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientRemindersStore.load({params: {pid: app.currPatient.pid}});
+	    me.immuCheckListStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientAllergiesListStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientMedicalIssuesStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientSurgeryStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientDentalStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
+	    me.patientDocumentsStore.load({params: {pid: app.currPatient.pid}});
+
+        if(me.checkIfCurrPatient()) {
             var patient = me.getCurrPatient();
-            this.updateTitle(patient.name + ' - #' + patient.pid + ' (Patient Summary)');
-
+	        me.updateTitle(patient.name + ' - #' + patient.pid + ' (Patient Summary)');
             var demoFormPanel = me.query('[action="demoFormPanel"]')[0];
-
             me.getFormData(demoFormPanel);
             me.getPatientImgs();
-
         } else {
-
             callback(false);
             me.currPatientError();
         }
+	    PreventiveCare.activePreventiveCareAlert({pid:app.currPatient.pid},function(provider,response){
+	       if(response.result.success){
+
+		       me.PreventiveCareWindow.show();
+
+	       }
+		say(response);
+
+        });
     }
 
 });

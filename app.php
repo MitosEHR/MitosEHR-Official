@@ -100,6 +100,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/Allergies.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Dental.js"></script>
         <script type="text/javascript" src="app/model/patientfile/MedicalIssues.js"></script>
+<!--        <script type="text/javascript" src="app/model/patientfile/PreventiveCare.js"></script>-->
         <script type="text/javascript" src="app/model/patientfile/Medications.js"></script>
         <script type="text/javascript" src="app/model/patientfile/Surgery.js"></script>
         <script type="text/javascript" src="app/model/patientfile/EventHistory.js"></script>
@@ -130,6 +131,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/MedicalIssues.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Medications.js"></script>
         <script type="text/javascript" src="app/store/patientfile/Surgery.js"></script>
+<!--        <script type="text/javascript" src="app/store/patientfile/PreventiveCare.js"></script>-->
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
         <script type="text/javascript" src="app/store/patientfile/QRCptCodes.js"></script>
         <script type="text/javascript" src="app/store/fees/Billing.js"></script>
@@ -213,10 +215,11 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/encounter/CurrentProceduralTerminology.js"></script>
         <script type="text/javascript" src="app/view/patientfile/encounter/ICDs.js"></script>
         <script type="text/javascript" src="app/view/patientfile/Encounter.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/PreventiveCareWindow.js"></script>
         <script type="text/javascript" src="app/view/patientfile/PatientCheckout.js"></script>
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
         <script type="text/javascript" src="app/view/patientfile/MedicalWindow.js"></script>
-        <script type="text/javascript" src="app/view/patientfile/QrCodeWindow.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/PreventiveCareWindow.js"></script>
         <script type="text/javascript" src="app/view/fees/PaymentEntryWindow.js"></script>
         <script type="text/javascript" src="app/view/administration/Facilities.js"></script>
         <script type="text/javascript" src="app/view/administration/Globals.js"></script>

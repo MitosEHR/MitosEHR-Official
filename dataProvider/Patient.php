@@ -285,14 +285,19 @@ class Patient {
      */
 
     public function getPatientAgeByDOB($dob){
-        list($year,$month,$day) = explode("-",$dob);
-        $year_diff  = date("Y") - $year;
-        $month_diff = date("m") - $month;
-        $day_diff   = date("d") - $day;
-        if ($day_diff < 0 || $month_diff < 0)
-            $year_diff--;
-        return $year_diff;
+        $today = new DateTime(date("Y-m-d"));
+        $appt  = new DateTime(date($dob));
+        $days_until_appt = $appt->diff($today)->d;
+        $months_until_appt = $appt->diff($today)->m;
+        $years_until_appt = $appt->diff($today)->y;
+        $age['days']=$days_until_appt;
+        $age['months']=$months_until_appt;
+        $age['years']=$years_until_appt;
+
+        return $age;
     }
+
+
 
     /**
      * @param $pid
@@ -315,6 +320,16 @@ class Patient {
         $p = $this->db->fetchRecord(PDO::FETCH_ASSOC);
 
         return $p['pregnant'];
+
+    }
+
+    public function getPatientActiveProblemsById($pid,$tablexx){
+
+        $this->db->setSQL("SELECT title
+                           FROM $tablexx
+                           WHERE pid ='$pid'");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
 
     }
 

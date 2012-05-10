@@ -489,6 +489,39 @@ $API = array(
             ),
             'getImmunizationsCheck'=>array(
                 'len'=>1
+            ),
+            'getPreventiveCareCheck'=>array(
+                'len'=>1
+            ),
+            'activePreventiveCareAlert'=>array(
+                'len'=>1
+            ),
+            'getGuideLinesByCategory'=>array(
+                'len'=>1
+            ),
+            'addGuideLine'=>array(
+                'len'=>1
+            ),
+            'updateGuideLine'=>array(
+                'len'=>1
+            ),
+            'getGuideLineActiveProblems'=>array(
+                'len'=>1
+            ),
+            'addGuideLineActiveProblems'=>array(
+                'len'=>1
+            ),
+            'removeGuideLineActiveProblems'=>array(
+                'len'=>1
+            ),
+            'getGuideLineMedications'=>array(
+                'len'=>1
+            ),
+            'addGuideLineMedications'=>array(
+                'len'=>1
+            ),
+            'removeGuideLineMedications'=>array(
+                'len'=>1
             )
         )
     ),
