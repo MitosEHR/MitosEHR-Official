@@ -532,6 +532,25 @@ $API = array(
             )
         )
     ),
+	/**
+     * Pool Area Functions
+     */
+    'PoolArea'=>array(
+        'methods'=>array(
+            'getPatientsArrivalLog'=>array(
+                'len'=>1
+            ),
+            'addPatientArrivalLog'=>array(
+                'len'=>1
+            ),
+            'updatePatientArrivalLog'=>array(
+                'len'=>1
+            ),
+            'removePatientArrivalLog'=>array(
+                'len'=>1
+            )
+        )
+    ),
     /**
      * Form layout Builder Functions
      */

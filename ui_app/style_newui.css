@@ -66,6 +66,15 @@
 .icoCheck{
     background-image: url(../ui_icons/icoCheck.png) !important;
 }
+.icoCheckIn{
+    background-image: url(../ui_icons/icoCheckIn.png) !important;
+}
+.icoCheckOut{
+    background-image: url(../ui_icons/icoCheckOut.png) !important;
+}
+.icoLog{
+    background-image: url(../ui_icons/icoLog.png) !important;
+}
 .icoClock{
     background-image: url(../ui_icons/icoClock.png) !important;
 }
