@@ -104,8 +104,3 @@ foreach($res as $num => $val){
 
 
 
-
-
-
-
-?>

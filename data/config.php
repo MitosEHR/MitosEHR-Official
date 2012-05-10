@@ -493,6 +493,12 @@ $API = array(
             'getPreventiveCareCheck'=>array(
                 'len'=>1
             ),
+            'activePreventiveCareAlert'=>array(
+                'len'=>1
+            ),
+            'addPreventivePatientDismiss'=>array(
+                'len'=>1
+            ),
             'getGuideLinesByCategory'=>array(
                 'len'=>1
             ),
