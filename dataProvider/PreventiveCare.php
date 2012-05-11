@@ -46,8 +46,17 @@ class PreventiveCare
 	 * @return array
 	 */
 	public function getGuideLinesByCategory(stdClass $params){
-		$this->db->setSQL("SELECT * FROM preventive_care_guidelines WHERE category_id = '$params->category_id'");
-		return $this->db->fetchRecords(PDO::FETCH_CLASS);
+        $records = array();
+        if($params->category_id == 'dismiss'){
+            $this->db->setSQL("SELECT *
+                           FROM preventive_care_inactive_patient");
+            $records =$this->db->fetchRecords(PDO::FETCH_CLASS);
+        }
+        else{
+                $this->db->setSQL("SELECT * FROM preventive_care_guidelines WHERE category_id = '$params->category_id'");
+              $records =$this->db->fetchRecords(PDO::FETCH_CLASS);
+        }
+      return $records ;
 	}
 	/**
 	 * update preventive care guideline by category id
@@ -367,13 +376,13 @@ class PreventiveCare
         $this->db->setSQL("SELECT *
                            FROM preventive_care_inactive_patient
                            WHERE pid='$pid'");
-        return $this->db->fetchRecord(PDO::FETCH_ASSOC);
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
     }
 
     public function getPreventiveCareCheck(stdClass $params){
         $this->db->setSQL("SELECT * FROM preventive_care_guidelines");
-        $records = array();
+        $patientAlerts = array();
         foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
             $rec['alert'] = ($this->checkAge($params->pid, $rec['id'])
                           && $this->checkSex($params->pid, $rec['id'])
@@ -396,12 +405,25 @@ class PreventiveCare
 
 //            && $this->checkPregnant($params->pid, $rec['id'])
             if($rec['alert'] && $rec['active'] ){
-                $records[]= $rec;
+                $patientAlerts[]= $rec;
 
             }
 
         }
-        return $records;
+
+        $patientDismissedAlerts = $this->checkForDismiss($params->pid);
+
+        $count = 0;
+        foreach($patientAlerts as $patientAlert){
+            foreach($patientDismissedAlerts as $patientDismissedAlert){
+                if($patientDismissedAlert['preventive_care_id'] == $patientAlert['id'] ){
+                    unset($patientAlerts[$count]);
+                }
+            }
+            $count++;
+        }
+
+        return array_values($patientAlerts);
     }
 
     public function addPreventivePatientDismiss(stdClass $params){
@@ -425,10 +447,9 @@ class PreventiveCare
 //$params = new stdClass();
 //$params->start = 0;
 //$params->limit = 25;
-////$params->pid = 1;
+//$params->pid = 1;
 //$t = new PreventiveCare();
 //print '<pre>';
-//print_r($t->checkForDismiss(1));
-//
-////print_r($t->checkAge(1,9));
-//print '</pre>';
+//print_r($t->getPreventiveCareCheck($params));
+
+//print_r($t->checkAge(1,9));
