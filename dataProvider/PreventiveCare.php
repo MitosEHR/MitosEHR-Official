@@ -51,8 +51,7 @@ class PreventiveCare
             $this->db->setSQL("SELECT *
                            FROM preventive_care_inactive_patient");
             $records =$this->db->fetchRecords(PDO::FETCH_CLASS);
-        }
-        else{
+        }else{
                 $this->db->setSQL("SELECT * FROM preventive_care_guidelines WHERE category_id = '$params->category_id'");
               $records =$this->db->fetchRecords(PDO::FETCH_CLASS);
         }

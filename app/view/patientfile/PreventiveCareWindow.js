@@ -40,77 +40,41 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 			}),
             columns    : [
 	            {
-		            text     : 'type',
+		            header     : 'type',
 		            dataIndex: 'type',
-		            flex:1
+		            width:200
 	            },
                 {
-                    text     : 'Description',
+	                header     : 'Description',
                     dataIndex: 'description',
 	                flex:1
                 },
                 {
-	                text     : 'Reason',
-	                dataIndex: 'reason'
+	                header     : 'Reason',
+	                dataIndex: 'reason',
+	                flex:1,
+	                editor:{
+		                xtype:'textfield'
+	                }
 
                 },
                 {
 
-	                text     : 'Dismiss',
-	                dataIndex: 'dismiss'
+	                header     : 'Dismiss',
+	                dataIndex: 'dismiss',
+	                editor:{
+		                xtype:'checkboxfield'
+
+	                }
                 }
 
 
             ],
-			plugins: Ext.create('App.classes.grid.RowFormEditing', {
+			plugins: Ext.create('Ext.grid.plugin.RowEditing', {
 				autoCancel  : true,
 				errorSummary: false,
-				clicksToEdit: 1,
-				formItems   : [
+				clicksToEdit: 1
 
-					{
-
-						title : 'general',
-						xtype : 'container',
-						layout: 'vbox',
-						items : [
-							{
-								/**
-								 * Line one
-								 */
-								xtype   : 'fieldcontainer',
-								layout  : 'hbox',
-								items   : [
-
-									{
-										xtype       : 'textfield',
-										fieldLabel  : 'Type',
-										readOnly    : true,
-										name        : 'type'
-
-									},{
-										xtype       : 'textfield',
-										fieldLabel  : 'Description',
-										readOnly    : true,
-										name        : 'description'
-
-									},{
-										xtype       : 'textfield',
-										fieldLabel  : 'Reason',
-										name        : 'reason'
-
-									},{
-										xtype       : 'checkboxfield',
-										fieldLabel  : 'Dismiss',
-										name        : 'dismiss'
-
-									}
-
-								]
-							}
-						]
-					}
-				]
 			})
 
 
@@ -127,7 +91,6 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 		this.callParent(arguments);
 
 	},
-
 	onPreventiveCareWindowShow: function() {
 	    this.patientPreventiveCare.load({params: {pid: app.currPatient.pid }});
 
