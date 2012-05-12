@@ -496,6 +496,9 @@ $API = array(
             'activePreventiveCareAlert'=>array(
                 'len'=>1
             ),
+            'addPreventivePatientDismiss'=>array(
+                'len'=>1
+            ),
             'getGuideLinesByCategory'=>array(
                 'len'=>1
             ),
@@ -531,6 +534,25 @@ $API = array(
     'FormLayoutEngine'=>array(
         'methods'=>array(
             'getFields'=>array(
+                'len'=>1
+            )
+        )
+    ),
+	/**
+     * Pool Area Functions
+     */
+    'PoolArea'=>array(
+        'methods'=>array(
+            'getPatientsArrivalLog'=>array(
+                'len'=>1
+            ),
+            'addPatientArrivalLog'=>array(
+                'len'=>1
+            ),
+            'updatePatientArrivalLog'=>array(
+                'len'=>1
+            ),
+            'removePatientArrivalLog'=>array(
                 'len'=>1
             )
         )

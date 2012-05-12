@@ -129,6 +129,12 @@ Ext.define('App.view.administration.PreventiveCare', {
 												width     : 100,
 												labelWidth: 30
 
+											},
+											{
+												fieldLabel: 'Active',
+												xtype   : 'checkboxfield',
+												labelWidth:75,
+												name    : 'active'
 											}
 
 
@@ -437,7 +443,11 @@ Ext.define('App.view.administration.PreventiveCare', {
 	onCodeTypeSelect: function(combo, record) {
 		var me = this;
 		me.category_id = record[0].data.option_value;
+		if(me.category_id=='dismiss'){
+
+		}else{
 		me.store.load({params:{category_id: me.category_id}});
+		}
 	},
 
 	onNew: function(form, model) {

@@ -243,7 +243,7 @@ Ext.define('App.view.MitosApp', {
 					cls    : 'headerLargeBtn',
 					padding: 0,
 					itemId : 'patientCheckOut',
-					iconCls: 'icoCheck',
+					iconCls: 'icoCheckOut',
 					scope  : me,
 					handler: me.chargePatient,
 					tooltip: 'Check Out Patient'
@@ -339,6 +339,19 @@ Ext.define('App.view.MitosApp', {
 							handler: me.appLogout
 						}
 					]
+				},
+                {
+					xtype  : 'button',
+					scale  : 'large',
+					style  : 'float:right',
+					margin : '0 0 0 3',
+					cls    : 'headerLargeBtn',
+					padding: 0,
+					itemId : 'patientCheckIn',
+					iconCls: 'icoLog',
+					scope  : me,
+					handler: me.onPatientLog,
+					tooltip: 'Arrival Log'
 				}
 			]
 		});
@@ -649,6 +662,14 @@ Ext.define('App.view.MitosApp', {
 	onChartsWin: function() {
 		this.ChartsWindow.show();
 	},
+
+    onPatientLog:function(){
+        if(this.patientArrivalLog){
+            this.patientArrivalLog.show();
+        }else{
+            this.patientArrivalLog = Ext.create('App.view.patientfile.ArrivalLogWindow').show();
+        }
+    },
 
     onPaymentEntryWindow: function() {
 		this.PaymentEntryWindow.show();

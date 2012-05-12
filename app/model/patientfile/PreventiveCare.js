@@ -9,6 +9,8 @@ Ext.define('App.model.patientfile.PreventiveCare', {
 	extend: 'Ext.data.Model',
 	fields: [
 		{name: 'id', type: 'int'},
+		{name: 'pid', type: 'int'},
+		{name: 'uid', type: 'int'},
 		{name: 'description'},
 		{name: 'type'},
 		{name: 'dismiss'},
