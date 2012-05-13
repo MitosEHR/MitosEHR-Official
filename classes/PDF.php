@@ -14,36 +14,66 @@ if(!isset($_SESSION)) {
 include_once($_SESSION['site']['root'] . '/lib/fpdf17/fpdf.php');
 class PDF extends FPDF
 {
-
+	private $clinic_name='Ernesto Clinic';
+	private $address_1='Parque de las Flores 3301';
+	private $address_2='Carolina, PR 00987';
+	private $tel_1='787-923-8880';
+	private $tel_2='787-923-8880';
+	private $fax='787-923-8880';
+	private $email='tecato@cojelotuyo.com';
 	function Header()
 	{
 		// Logo
-		$this->Image('MitosEHRLogo.png', 10, 6, 30);
+		//$this->Image('MitosEHRLogo.png', 10, 6, 30);
 		// Arial bold 15
-		$this->SetFont('Arial', 'B', 15);
-		// Move to the right
-		$this->Cell(80);
-		// Title
+
+		$this->Ln(10);
+		$this->SetFont('Arial','', 12);
+		$this->Ln(9);
+		$this->Cell(190, 0,'Tel: '.  $this->tel_1, 0, 2, 'R');
+		$this->Ln(5);
+		$this->Cell(190, 0,'Tel: '.  $this->tel_2, 0, 2, 'R');
+		$this->Ln(5);
+		$this->Cell(190, 0,'Fax: '.  $this->fax, 0, 2, 'R');
+		$this->SetY(20);
+
+
+		$this->SetFont('Arial', 'B', 25);
 		$this->SetFillColor(200, 220, 255);
-		$this->Cell(40, 10, 'Bill Statement', 1, 0, 'C');
+		$this->Cell(0, 0, $this->clinic_name, 0, 2, 'C');
+		$this->Ln(7);
+		$this->SetFont('Arial','', 14);
+		$this->Cell(0, 0,$this->address_1, 0, 2, 'C');
+		$this->Ln(6);
+		$this->Cell(0, 0, $this->address_2, 0, 2, 'C');
+
+		$this->SetFont('Arial','', 14);
+		$this->Ln(6);
+		$this->Cell(0, 0, $this->email, 0, 2, 'C');
 		// Line break
-		$this->Ln(30);
+		$this->Ln(35);
+		$this->SetDrawColor(150);
+		$this->SetLineWidth(0.5);
+		$this->Line(11, 58,199,58);
+		$this->SetLineWidth(0.1);
+		$this->Line(11,59,199,59);
 	}
 
 	// Page footer
 	function Footer()
 	{
-		// Position at 1.5 cm from bottom
-		$this->SetY(-15);
-		// Arial italic 8
-		$this->SetFont('Arial', 'I', 8);
-		// Page number
-		$this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 1, 'C');
-		// Arial Bold 6
+		$this->SetDrawColor(150);
+		$this->SetLineWidth(0.1);
+		$this->Line(11,259,199,259);
+		$this->SetLineWidth(0.5);
+		$this->Line(11,260,199,260);
+
+		$this->SetY(-35);
+
 		$this->SetFont('Arial', 'B', 6);
 		$this->SetTextColor(128);
 		//MitosEHR Signature
-		$this->Cell(0, 0, 'MitosEHR Bill Statement', 0, 1, 'C');
+		$this->Cell(0, 0, 'Created by MitosEHR (Electronic Health Record)', 0, 1, 'L');
 	}
 
 

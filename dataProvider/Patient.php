@@ -88,6 +88,29 @@ class Patient {
         return array("success" =>true, "patient"=> array( "pid"=> $pid , "fullname" => $patient['fullname']));
     }
 
+	public function createNewPatientOnlyName($name){
+		$patient = new stdClass();
+		$foo = explode(' ',$name);
+		$data['fname'] = $foo[0];
+		$data['mname'] = (isset($foo[1])) ? $foo[1] : '';
+		unset($foo[0],$foo[1]);
+		$data['lname'] = '';
+		foreach($foo as $fo){ $patient->lname .= $fo; }
+
+		$this->db->setSQL($this->db->sqlBind($data, "form_data_demographics", "I"));
+		$this->db->execLog();
+		$pid = $this->db->lastInsertId;
+
+		if(!$this->createPatientDir($pid)){
+		      return array("success" =>false, "error"=> 'Patient directory failed');
+		};
+
+        $this->createPatientQrCode($pid,$patient['fullname']);
+
+		return $pid;
+
+	}
+
     /**
      * @param $pid
      * @return string
@@ -151,6 +174,17 @@ class Patient {
         return $rows;
 
     }
+
+	/**
+	 * @param $pid
+	 * @return array
+	 */
+    public function getPatientDemographicDataByPid($pid){
+        $this->db->setSQL("SELECT * FROM form_data_demographics WHERE pid = '$pid'");
+        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+
+    }
+
 
 
     /**
@@ -408,4 +442,4 @@ class Patient {
 }
 //$p = new Patient();
 //echo '<pre>';
-//print_r($p->createPatientDir(2));
+//print_r($p->createNewPatientWithName('Ernesto J Rodriguez'));

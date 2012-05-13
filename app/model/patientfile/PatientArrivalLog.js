@@ -13,7 +13,9 @@ Ext.define('App.model.patientfile.PatientArrivalLog', {
 		{name: 'time', type: 'string'},
 		{name: 'name', type: 'string'},
 		{name: 'status', type: 'string'},
-		{name: 'area', type: 'string'}
+		{name: 'area', type: 'string'},
+		{name: 'warning', type: 'bool'},
+		{name: 'isNew', type: 'bool'}
 	],
 	proxy : {
 		type: 'direct',

@@ -15,6 +15,7 @@ include_once($_SESSION['site']['root'] . '/dataProvider/Patient.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/classes/dbHelper.php');
+include_once($_SESSION['site']['root'] . '/classes/Time.php');
 class PoolArea
 {
 	/**
@@ -46,10 +47,18 @@ class PoolArea
 
 	public function getPatientsArrivalLog(stdClass $params){
 
+
 	}
 
 	public function addPatientArrivalLog(stdClass $params){
 
+		if($params->isNew){
+			$params->pid = $this->patient->createNewPatientOnlyName($params->name);
+			$this->checkInPatient($params);
+		}else{
+			$this->checkInPatient($params);
+		}
+		return;
 	}
 
 	public function updatePatientArrivalLog(stdClass $params){
@@ -60,12 +69,30 @@ class PoolArea
 
 	}
 
+	public function getPatientsByPoolAreaId($pool_area_id){
+
+	}
+
+
+
+	/******************************************************************************************************************/
+	/******************************************************************************************************************/
+	/******************************************************************************************************************/
+
+	private function checkInPatient($params){
+
+		$data['pid'] = $params->pid;
+		$data['uid'] = $_SESSION['user']['id'];
+		$data['time_in'] = Time::getLocalTime();;
+		$data['area_id'] = 1;
+		$this->db->setSQL($this->db->sqlBind($data, 'patient_pools', 'I'));
+		$this->db->execLog();
+
+	}
+
+
 
 }
-
-
-
-
 //$e = new Medical();
 //echo '<pre>';
 //print_r($e->CheckImmunizations());

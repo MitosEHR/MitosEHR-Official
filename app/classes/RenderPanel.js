@@ -117,6 +117,12 @@ Ext.define('App.classes.RenderPanel', {
 		return val;
 	},
 
+    warnRenderer:function(val){
+        if(val == '1' || val == true || val == 'true') {
+            return '<img src="ui_icons/icoImportant.png" />';
+        }
+     },
+
 	onExpandRemoveMask: function(cmb) {
 		cmb.picker.loadMask.destroy()
 	},

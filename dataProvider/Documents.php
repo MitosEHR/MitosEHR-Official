@@ -61,17 +61,7 @@ class Documents
 	{
         //Header of the pdf document
         $this->pdf->AddPage();
-        $this->pdf->Image('MitosEHRLogo.png', 10, 6, 30);
-        $this->pdf->SetFont('Arial', 'B', 15);
-        $this->pdf->Cell(70);
-        $this->pdf->SetFillColor(200, 220, 255);
-        $this->pdf->Cell(40, 10, 'Bill Statement', 1, 0, 'C');
-        $this->pdf->SetFont('Arial', 'B', 10);
-        $this->pdf->Cell(30);
-        $this->pdf->SetFillColor(255, 255, 255);
-        //$this->pdf->multiCell(40, 5, $this->facility->getFacilityInfo($params->fid), 0, 0, 'C',true);
-        $this->pdf->Ln(20);
-        $this->pdf->AliasNbPages();
+
 
         //First Blue Row contains Facility information
 		//$this->pdf->AddPage();

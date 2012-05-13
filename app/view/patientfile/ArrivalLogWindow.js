@@ -14,11 +14,14 @@ Ext.define('App.view.patientfile.ArrivalLogWindow', {
 	width      : 900,
 	height     : 600,
 	maximizable: true,
+    mixins: ['App.classes.RenderPanel'],
 	initComponent: function() {
 		var me = this;
 
 
-        me.store = Ext.create('App.store.patientfile.PatientArrivalLog');
+        me.store = Ext.create('App.store.patientfile.PatientArrivalLog',{
+            autoSync:true
+        });
 
 		me.tbar = [
             {
@@ -38,11 +41,18 @@ Ext.define('App.view.patientfile.ArrivalLogWindow', {
             {
                 text:'Add New Patient',
                 iconCls:'icoAddRecord',
-                action:'newPatient',
+                action:'newPatientBtn',
                 disabled:true,
                 scope:me,
                 handler:me.onNewPatient
-		    }
+		    },
+            '->',
+            {
+                xtype:'tool',
+                type: 'refresh',
+                scope:me,
+                handler:me.onGridReload
+            }
         ];
 
 		me.items = [
@@ -57,9 +67,8 @@ Ext.define('App.view.patientfile.ArrivalLogWindow', {
                             {
                                 icon: 'ui_icons/delete.png',  // Use a URL in the icon config
                                 tooltip: 'Remove',
-                                handler: function(grid, rowIndex, colIndex){
-
-                                }
+                                scope:me,
+                                handler: me.onPatientRemove
                             }
                         ]
                     },
@@ -85,19 +94,15 @@ Ext.define('App.view.patientfile.ArrivalLogWindow', {
                         dataIndex:'area'
                     },
                     {
-                        xtype:'actioncolumn',
                         width:25,
-                        items: [
-                            {
-                                icon: 'ui_icons/icoImportant.png',
-                                tooltip: 'No Record Found',
-                                handler: function(grid, rowIndex, colIndex){
-
-                                }
-                            }
-                        ]
+                        dataIndex:'warning',
+                        renderer:me.warnRenderer
                     }
-                ]
+                ],
+                listeners:{
+                    scope:me,
+                    itemdblclick:me.onPatientDlbClick
+                }
 
             })
 		];
@@ -111,11 +116,21 @@ Ext.define('App.view.patientfile.ArrivalLogWindow', {
 	},
 
     onPatientSearchSelect:function(field, record){
-        say(record);
+        var me = this,
+            store = me.query('grid')[0].getStore(),
+            btn = me.query('button[action="newPatientBtn"]')[0];
+        store.add({
+            pid:record[0].data.pid,
+            name:record[0].data.fullname,
+            time: Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
+            isNew:false
+        });
+        field.reset();
+        btn.setDisabled(true);
     },
 
     onPatientSearchKeyUp:function(field){
-        this.query('button[action="newPatient"]')[0].setDisabled(field.getValue() == null);
+        this.query('button[action="newPatientBtn"]')[0].setDisabled(field.getValue() == null);
     },
 
     onNewPatient:function(btn){
@@ -124,13 +139,35 @@ Ext.define('App.view.patientfile.ArrivalLogWindow', {
             name = field.getValue(),
             store = me.query('grid')[0].getStore();
         field.reset();
-        btn =
-        store.add({name:name});
+        btn.disable();
+        store.add({
+            name:name,
+            time: Ext.Date.format(new Date(), 'Y-m-d H:i:s'),
+            isNew:true
+        });
+    },
+
+    onPatientRemove:function(grid, rowIndex){
+        var store = grid.getStore(),
+            record = store.getAt(rowIndex);
+        store.remove(record);
+    },
+
+    onPatientDlbClick:function(grid, record){
+        var me = this,
+            data = record.data;
+        app.setCurrPatient(data.pid, data.name, function(){
+            app.openPatientSummary();
+        });
+        me.close();
+    },
+
+    onGridReload:function(){
+        this.store.load();
     },
 
 	onWinShow:function(){
-        var me = this;
-
+        this.onGridReload();
 	}
 
 });

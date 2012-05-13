@@ -40,6 +40,7 @@ $_SESSION['site']['sites_conf'] = $confs;
 $_SESSION['site']['root']       = str_replace('\\','/',dirname(__FILE__));
 $_SESSION['site']['url']        = "http://" . $_SERVER['HTTP_HOST'] . str_replace("/index.php", "", $_SERVER['PHP_SELF']);
 $_SESSION['site']['facility']   = 'default'; // THIS IS A TEMP VARIABLE
+
 /**
  * Directory related variables
  */
