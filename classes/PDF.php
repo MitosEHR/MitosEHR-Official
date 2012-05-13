@@ -17,17 +17,18 @@ class PDF extends FPDF
 	private $clinic_name='Ernesto Clinic';
 	private $address_1='Parque de las Flores 3301';
 	private $address_2='Carolina, PR 00987';
-	private $tel_1='787-923-8880';
-	private $tel_2='787-923-8880';
-	private $fax='787-923-8880';
-	private $email='tecato@cojelotuyo.com';
+	private $tel_1='787-787-7878';
+	private $tel_2='787-767-7676';
+	private $fax='787-777-7777';
+	private $email='test@test.com';
+    private $logo='C:\wamp\www\MitosEHR\ui_app\logo_medium.png';
 	function Header()
 	{
-		// Logo
-		//$this->Image('MitosEHRLogo.png', 10, 6, 30);
-		// Arial bold 15
+//		 Logo
+		$this->Image($this->logo, 20, 10, 35,35);
+//		 Arial bold 15
 
-		$this->Ln(10);
+		$this->Ln(11);
 		$this->SetFont('Arial','', 12);
 		$this->Ln(9);
 		$this->Cell(190, 0,'Tel: '.  $this->tel_1, 0, 2, 'R');
@@ -51,12 +52,12 @@ class PDF extends FPDF
 		$this->Ln(6);
 		$this->Cell(0, 0, $this->email, 0, 2, 'C');
 		// Line break
-		$this->Ln(35);
+		$this->Ln(18);
 		$this->SetDrawColor(150);
 		$this->SetLineWidth(0.5);
-		$this->Line(11, 58,199,58);
+		$this->Line(11, 48,199,48);
 		$this->SetLineWidth(0.1);
-		$this->Line(11,59,199,59);
+		$this->Line(11,49,199,49);
 	}
 
 	// Page footer
@@ -64,13 +65,13 @@ class PDF extends FPDF
 	{
 		$this->SetDrawColor(150);
 		$this->SetLineWidth(0.1);
-		$this->Line(11,259,199,259);
+		$this->Line(11,274,199,274);
 		$this->SetLineWidth(0.5);
-		$this->Line(11,260,199,260);
+		$this->Line(11,275,199,275);
 
-		$this->SetY(-35);
+		$this->SetY(-19);
 
-		$this->SetFont('Arial', 'B', 6);
+		$this->SetFont('Arial', 'B', 10);
 		$this->SetTextColor(128);
 		//MitosEHR Signature
 		$this->Cell(0, 0, 'Created by MitosEHR (Electronic Health Record)', 0, 1, 'L');

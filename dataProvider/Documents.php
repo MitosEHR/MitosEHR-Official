@@ -57,100 +57,91 @@ class Documents
 		return;
 	}
 
+    private $patient_name='Julio Alisea Acosta';
+    private $edad='23';
+    private $direccion='Villas de Quintana APT 1324, Hato Rey, PR 00987';
+    private $fecha='12/01/2012';
+    private $doctor='Dr.Rodriguez';
+    private $work = 'Yes';
+    private $symptons = 'Headache';
+    private $comment_number = '2';
+    private $paragraph ='Has been under care of ';
+    private $from ='12/01/2012';
+    private $to ='12/01/2012';
+    private $return ='12/01/2012';
+    private $num ='787-787-8787';
+    private $first='___';
+    private $second='___';
+    private $third='___';
+    private $fourth='___';
+
 	public function createSuperBillDoc(stdClass $params)
 	{
         //Header of the pdf document
         $this->pdf->AddPage();
 
-
+// patient          age
+// adress    zipcode  fecha
         //First Blue Row contains Facility information
 		//$this->pdf->AddPage();
+        $this->pdf->SetFont('Arial', 'B', 16);
+        $this->pdf->Cell(0, 6, 'CERTIFICATE TO RETURN TO WORK', 0, 1, 'C');
+        $this->pdf->Ln(8);
 		$this->pdf->SetFont('Arial', 'B', 16);
-		$this->pdf->SetFont('Arial', '', 12);
-		$this->pdf->SetFillColor(100, 220, 255);
-		$this->pdf->Cell(0, 6, 'Patient Information:', 0, 1, 'L', true);
-		$this->pdf->Ln(4);
+        $this->pdf->Cell(0, 6, 'Patient Information: ', 0, 1, 'L');
+        $this->pdf->Ln(1);
+		$this->pdf->SetFont('Arial', '', 14);
+		$this->pdf->Cell(0, 6, 'Name: '.$this->patient_name.'    Age: '.$this->edad.'   Date: '.$this->fecha, 0, 1, 'L');
+		$this->pdf->Cell(0, 6, 'Address: '.$this->direccion, 0, 1, 'L');
 
-		//Patient Information
-        $this->pdf->SetFont('Times', '', 8);
+        $this->pdf->Ln(4);
+        $this->pdf->Cell(0,6, $this->paragraph.$this->doctor,0,1,'L');
+        $this->pdf->Cell(0,6, 'From: '.$this->from.' To:'.$this->to,0,1,'L');
+
+        $this->pdf->Ln(4);
+        $this->pdf->Cell(0,6,'Return to work on: '. $this->return,0,1,'L');
+
+        $this->pdf->Ln(4);
+
+        $this->pdf->Cell(0,6, 'Nature of illness or injury: '.$this->symptons,0,1,'L');
+
 		//$this->pdf->MultiCell(0, 5, $this->patient->getPatientNameById($params->pid));
         //$this->pdf->MultiCell(0, 5, $this->patient->getPatientAdditionalInfoById($params->pid));
-        $this->pdf->MultiCell(0, 5, 'Full Name: ');
-        $this->pdf->MultiCell(0, 5, 'Social Security: ');
-        $this->pdf->MultiCell(0, 5, 'Sex: ');
-        $this->pdf->MultiCell(0, 5, 'Birthday: ');
-        $this->pdf->MultiCell(0, 5, 'Marital Status: ');
-        $this->pdf->MultiCell(0, 5, 'Occupation: ');
-        //$this->pdf->MultiCell(0, 5, 'Address: '.$this->patient->getPatientAddressById($params->pid));
-        $this->pdf->MultiCell(0, 5, 'Home Phone: ');
-        $this->pdf->MultiCell(0, 5, 'Mobile Phone: ');
-        $this->pdf->Ln(4);
-
-        //Second blue row contains insured person information
+        $this->pdf->Ln(5);
         $this->pdf->SetFont('Arial', 'B', 16);
-        $this->pdf->SetFont('Arial', '', 12);
-        $this->pdf->SetFillColor(100, 220, 255);
-        $this->pdf->Cell(0, 6, 'Insured Person:', 0, 1, 'L', true);
-        $this->pdf->Ln(4);
+        $this->pdf->Cell(0,6, 'Physical activities: ',0,1,'L');
+        $this->pdf->Ln(5);
 
-        //Information of the insured Patient
-        $this->pdf->SetFont('Times', '', 8);
-        $this->pdf->MultiCell(0, 5, 'Full Name: ');
-        $this->pdf->MultiCell(0, 5, 'Social Security: ');
-        $this->pdf->MultiCell(0, 5, 'Birthday/Sex: ');
-        $this->pdf->MultiCell(0, 5, 'Address: ');
-		//$this->pdf->MultiCell(0, 5, $this->patient->getPatientNameById($params->pid));
-        //$this->pdf->MultiCell(0, 5, $this->patient->getPatientAdditionalInfoById($params->pid));
-        $this->pdf->Ln(4);
+        if($this->comment_number == 1){
+            $this->first ='_X_';
+        }else if($this->comment_number == 2){
 
-        //Thrid Blue Row contains insurance plan information
-        $this->pdf->SetFont('Arial', 'B', 16);
-        $this->pdf->SetFont('Arial', '', 12);
-        $this->pdf->SetFillColor(100, 220, 255);
-        $this->pdf->Cell(0, 6, 'Insurance Information', 0, 1, 'L', true);
-        $this->pdf->Ln(8);
+            $this->second ='_X_';
+        }else if($this->comment_number == 3){
 
-        //It needs SQL extraction of data for insurance plans
-        $this->pdf->SetFont('Times', '', 8);
-        $this->pdf->MultiCell(0, 5, 'Medical Plan Name: ');
-        $this->pdf->MultiCell(0, 5, 'Policy Number: ');
-        $this->pdf->MultiCell(0, 5, 'Effective Date: ');
-        $this->pdf->MultiCell(0, 5, 'Expiration Date: ');
-        $this->pdf->Ln(8);
+            $this->third ='_X_';
+        }else if($this->comment_number == 4){
 
-
-        //Fourth Blue Row for extracion of Services Included's Data
-        $this->pdf->SetFont('Arial', 'B', 16);
-        $this->pdf->SetFont('Arial', '', 12);
-        $this->pdf->SetFillColor(100, 220, 255);
-        $this->pdf->Cell(0, 6, 'Services Included', 0, 1, 'L', true);
-        $this->pdf->Ln(4);
-
-        $this->pdf->SetFont('Arial', 'U', 9);
-        $header = array('Services Number', 'Service', 'Date Of Service', 'Other Code');
-        $data = 'Testing';
-        $w = array(40, 35, 40, 45);
-        for($i=0;$i<count($header);$i++){
-            $this->pdf->Cell($w[$i],7,$header[$i],1,0,'C');
+            $this->fourth ='_X_';
         }
 
-        //Aqui se implementara un FOREACH
-        $this->pdf->Ln();
-        $this->pdf->SetFont('Arial', '', 7);
-        $this->pdf->Cell($w[0],6,'testing','LR');
-        $this->pdf->Cell($w[1],6,'testing','LR');
-        $this->pdf->Cell($w[2],6,'testing','LR',0,'R');
-        $this->pdf->Cell($w[3],6,'testing','LR',0,'R');
-        $this->pdf->Ln();
+        $this->pdf->SetFont('Arial', '', 14);
+        $this->pdf->Cell(0, 6,$this->first.' Patient can not drive.', 0, 1, 'L');
+        $this->pdf->Cell(0, 6,$this->second.' Patient can not lift heavy objects.', 0, 1, 'L');
+        $this->pdf->Cell(0, 6,$this->third.' Patient can not use stairs.', 0, 1, 'L');
+        $this->pdf->Cell(0, 6,$this->fourth.' Other.', 0, 1, 'L');
+        $this->pdf->Ln(5);
 
-            // Closing line
-        $this->pdf->Cell(array_sum($w),0,'','T');
+        $this->pdf->SetFont('Arial', '', 16);
+        $this->pdf->Cell(0,6, 'For more information, please call ',0,1,'L');
+        $this->pdf->Cell(0,6, $this->num,0,1,'L');
+        $this->pdf->Ln(15);
+
+        $this->pdf->SetFont('Arial', '', 14);
+        $this->pdf->Cell(0, 6,' Physician:______________________________', 0, 1, 'L');
 
 
 
-		$this->pdf->Ln();
-		$this->pdf->SetFont('', 'I');
-		$this->pdf->Cell(0, 5, 'End of bill statement');
 		//$this->pdf->Output('hello.pdf', 'F');
         $this->pdf->Output();
 
