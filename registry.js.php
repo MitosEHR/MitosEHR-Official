@@ -45,7 +45,8 @@ perm = {
     access_roles            : <?php print ($ACL->hasPermission('access_roles')              ? 'true':'false') ?>,
     access_layouts          : <?php print ($ACL->hasPermission('access_layouts')            ? 'true':'false') ?>,
     access_lists            : <?php print ($ACL->hasPermission('access_lists')              ? 'true':'false') ?>,
-    access_event_log        : <?php print ($ACL->hasPermission('access_event_log')          ? 'true':'false') ?>
+    access_event_log        : <?php print ($ACL->hasPermission('access_event_log')          ? 'true':'false') ?>,
+    access_documents        : <?php print ($ACL->hasPermission('access_documents')          ? 'true':'false') ?>
 
 };
 

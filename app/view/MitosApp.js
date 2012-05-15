@@ -68,6 +68,7 @@ Ext.define('App.view.MitosApp', {
 		'App.view.administration.PreventiveCare',
 		'App.view.administration.Medications',
 		'App.view.administration.Users',
+		'App.view.administration.Documents',
 
 		'App.view.miscellaneous.Addressbook',
 		'App.view.miscellaneous.MyAccount',
@@ -553,6 +554,9 @@ Ext.define('App.view.MitosApp', {
 		}
 		if(perm.access_event_log) {
 			me.MainPanel.add(Ext.create('App.view.administration.Log'));
+		}
+		if(perm.access_documents) {
+			me.MainPanel.add(Ext.create('App.view.administration.Documents'));
 		}
 
 

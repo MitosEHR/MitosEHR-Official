@@ -154,7 +154,17 @@ $API = array(
             'uploadDocument'=>array(
 	            'formHandler'=>true,
 	            'len'=>1
+            ),
+            'getDocumentsTemplates'=>array(
+	            'len'=>1
+            ),
+            'addDocumentsTemplates'=>array(
+	            'len'=>1
+            ),
+            'updateDocumentsTemplates'=>array(
+	            'len'=>1
             )
+
         )
     ),
     /**

@@ -232,6 +232,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/view/administration/Medications.js"></script>
         <script type="text/javascript" src="app/view/administration/Users.js"></script>
+        <script type="text/javascript" src="app/view/administration/Documents.js"></script>
         <script type="text/javascript" src="app/view/messages/Messages.js"></script>
         <script type="text/javascript" src="app/view/search/PatientSearch.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/Addressbook.js"></script>
@@ -252,6 +253,14 @@ Globals::setGlobals();
             Ext.onReady(function(){
                 app = Ext.create('App.view.MitosApp');
             });
+
+            function copyToClipBoard(token) {
+                if(window.clipboardData){
+                    window.clipboardData.setData('text', token);
+                }else{
+	                return (token);
+                }
+            }
         </script>
     </body>
 </html>

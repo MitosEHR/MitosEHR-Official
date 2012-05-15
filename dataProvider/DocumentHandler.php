@@ -90,6 +90,33 @@ class DocumentHandler
 		}
 		return $this->workingDir = $path;
 	}
+
+
+	public function getDocumentsTemplates(){
+		$this->db->setSQL("SELECT * FROM documents_templates");
+		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+	}
+
+	public function addDocumentsTemplates(stdClass $params){
+		$data = get_object_vars($params);
+		$data['created_by_uid'] = $_SESSION['user']['id'];
+		$this->db->setSQL($this->db->sqlBind($data, 'documents_templates', 'I'));
+		$this->db->execLog();
+		$params->id = $this->db->lastInsertId;
+		return $params;
+	}
+
+	public function updateDocumentsTemplates(stdClass $params){
+		$data = get_object_vars($params);
+		$data['update_by_uid'] = $_SESSION['user']['id'];
+		$id = $data['id'];
+		unset($data['id']);
+		$this->db->setSQL($this->db->sqlBind($data, "documents_templates", "U", "id='$id'"));
+		$this->db->execLog();
+		return $params;
+
+	}
+
 }
 
 

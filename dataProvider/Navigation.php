@@ -85,7 +85,8 @@ class Navigation {
                 array( 'text' => 'Roles',           'disabled'=> ($this->ACL->hasPermission('access_roles')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelRoles' ),
                 array( 'text' => 'Layouts',         'disabled'=> ($this->ACL->hasPermission('access_layouts')         ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLayout' ),
                 array( 'text' => 'Lists',           'disabled'=> ($this->ACL->hasPermission('access_lists')           ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLists' ),
-                array( 'text' => 'Event Log',       'disabled'=> ($this->ACL->hasPermission('access_event_log')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' )
+                array( 'text' => 'Event Log',       'disabled'=> ($this->ACL->hasPermission('access_event_log')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelLog' ),
+                array( 'text' => 'Documents',       'disabled'=> ($this->ACL->hasPermission('access_documents')       ? false:true), 'leaf' => true, 'cls' => 'file', 'id' => 'panelDocuments' )
             )
         ));
         // *************************************************************************************
