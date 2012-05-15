@@ -653,6 +653,9 @@ Ext.define('App.view.MitosApp', {
 			]
 		});
 
+
+
+
 		me.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow');
 		me.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
         me.PaymentEntryWindow = Ext.create('App.view.patientfile.PaymentEntryWindow');
@@ -667,6 +670,8 @@ Ext.define('App.view.MitosApp', {
 		};
 
 		me.callParent(arguments);
+
+		me.signature = Ext.create('App.view.signature.SignatureWindow').show();
 
 	},
 
