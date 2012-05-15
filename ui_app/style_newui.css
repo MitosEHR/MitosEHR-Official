@@ -60,6 +60,12 @@
 .icoChart{
     background-image: url(../ui_icons/icoChart.png) !important;
 }
+.icoPoolArea{
+    background-image: url(../ui_icons/icoPoolArea.png) !important;
+}
+.icoPoolArea16{
+    background-image: url(../ui_icons/icoPoolArea16.png) !important;
+}
 .icoEmer{
     background-image: url(../ui_icons/icoEmer.png) !important;
 }

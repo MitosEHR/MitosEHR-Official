@@ -69,10 +69,14 @@ class PoolArea
 
 	}
 
-	public function getPatientsByPoolAreaId($pool_area_id){
+
+	public function sendPatientTo(stdClass $params){
 
 	}
 
+	public function getPoolAreaPatients(stdClass $params){
+		return $this->getPatientsByPoolAreaId($params->area_id, 1);
+	}
 
 
 	/******************************************************************************************************************/
@@ -91,6 +95,20 @@ class PoolArea
 	}
 
 
+	public function getPatientsByPoolAreaId($area_id, $in_queue){
+		$this->db->setSQL("SELECT *
+							 FROM patient_pools
+							WHERE area_id = $area_id
+							  AND time_out IS NULL
+							  AND in_queue = '$in_queue'");
+		$records = array();
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $patient){
+			$patient['name'] = $this->patient->getPatientFullNameByPid($patient['pid']);
+			$records[] = $patient;
+		}
+
+		return $records;
+	}
 
 }
 //$e = new Medical();

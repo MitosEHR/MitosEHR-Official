@@ -101,7 +101,7 @@ Ext.define('App.view.MitosApp', {
 				me.checkSession();
 				me.getPatientesInPoolArea();
 			},
-			interval: 50000
+			interval: 10000
 		});
 
 		me.storeTree = Ext.create('App.store.navigation.Navigation', {
@@ -353,6 +353,19 @@ Ext.define('App.view.MitosApp', {
 					scope  : me,
 					handler: me.onPatientLog,
 					tooltip: 'Arrival Log'
+				},
+                {
+					xtype  : 'button',
+					scale  : 'large',
+					style  : 'float:right',
+					margin : '0 0 0 3',
+					cls    : 'headerLargeBtn',
+					padding: 0,
+					itemId : 'patientPoolArea',
+					iconCls: 'icoPoolArea',
+					scope  : me,
+					handler: me.goToPoolAreas,
+					tooltip: 'Pool Areas'
 				}
 			]
 		});
@@ -640,6 +653,9 @@ Ext.define('App.view.MitosApp', {
 			]
 		});
 
+
+
+
 		me.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow');
 		me.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
         me.PaymentEntryWindow = Ext.create('App.view.patientfile.PaymentEntryWindow');
@@ -654,6 +670,8 @@ Ext.define('App.view.MitosApp', {
 		};
 
 		me.callParent(arguments);
+
+		me.signature = Ext.create('App.view.signature.SignatureWindow').show();
 
 	},
 
@@ -754,6 +772,11 @@ Ext.define('App.view.MitosApp', {
 	openPatientVisits: function() {
 		this.navigateTo('panelVisits');
 	},
+
+
+    goToPoolAreas:function(){
+        this.navigateTo('panelPoolArea');
+    },
 
 	navigateTo: function(id, callback) {
 		var tree = this.navColumn.down('treepanel'),
@@ -989,7 +1012,6 @@ Ext.define('App.view.MitosApp', {
                 var sourceEl = app.Header.getComponent('patientButton').el.dom, d;
                 app.MainPanel.getLayout().setActiveItem(app.ppdz);
                 app.navColumn.down('treepanel').getSelectionModel().deselectAll();
-
 
                 if(sourceEl) {
                     d = sourceEl.cloneNode(true);

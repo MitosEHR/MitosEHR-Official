@@ -13,10 +13,4 @@ Ext.define('App.model.poolarea.PoolDropAreas', {
 		{name: 'pid', type: 'int'},
 		{name: 'pic', type: 'string'}
 	]
-//	proxy    : {
-//		type       : 'direct',
-//		api        : {
-//			read: Patient.getPatientsByPoolArea
-//		}
-//	}
 });

@@ -564,6 +564,9 @@ $API = array(
             ),
             'removePatientArrivalLog'=>array(
                 'len'=>1
+            ),
+            'getPoolAreaPatients'=>array(
+                'len'=>1
             )
         )
     ),
