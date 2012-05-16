@@ -70,7 +70,10 @@ class PoolArea
 	}
 
 
-	public function sendPatientTo(stdClass $params){
+
+	public function sendPatientToPoolArea(stdClass $params){
+
+
 
 	}
 
@@ -78,6 +81,10 @@ class PoolArea
 		return $this->getPatientsByPoolAreaId($params->area_id, 1);
 	}
 
+	public function getActivePoolAreas(){
+		$this->db->setSQL("SELECT * FROM pool_areas	WHERE active = '1'");
+		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+	}
 
 	/******************************************************************************************************************/
 	/******************************************************************************************************************/

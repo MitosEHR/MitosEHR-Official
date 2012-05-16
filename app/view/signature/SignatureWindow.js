@@ -13,15 +13,15 @@ Ext.define('App.view.signature.SignatureWindow', {
 	extend       : 'Ext.window.Window',
 	title        : 'Please Sign',
 	closeAction  : 'hide',
-	height       : 150,
-	width        : 310,
+	height       : 250,
+	width        : 500,
 	bodyStyle    : 'background-color:#fff',
 	modal        : true,
     layout:'fit',
 	initComponent: function() {
 		var me = this;
 
-        me.html = me.signature = '<iframe id="svgSignature" src="app/view/signature/signature.svg" frameborder="0"></iframe>';
+        me.html = me.signature = '<iframe id="svgSignature" src="app/view/signature/signature.svg" height="100%" width="100%" scrolling="no" frameborder="0"></iframe>';
 
         me.buttons = [
             {
@@ -30,7 +30,7 @@ Ext.define('App.view.signature.SignatureWindow', {
                 handler:me.signatureSave
             },
             {
-                text:'Cancel',
+                text:'Reset',
                 scope:me,
                 handler:me.signatureCancel
             }
@@ -48,7 +48,7 @@ Ext.define('App.view.signature.SignatureWindow', {
     signatureCancel:function(){
         var svg = document.getElementById('svgSignature').contentWindow;
         svg.clearSignature();
-        this.close();
+        //this.close();
     }
 
 
