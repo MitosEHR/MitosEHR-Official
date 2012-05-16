@@ -567,6 +567,12 @@ $API = array(
             ),
             'getPoolAreaPatients'=>array(
                 'len'=>1
+            ),
+            'sendPatientToPoolArea'=>array(
+                'len'=>1
+            ),
+            'getActivePoolAreas'=>array(
+                'len'=>0
             )
         )
     ),
