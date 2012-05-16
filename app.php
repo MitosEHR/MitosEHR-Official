@@ -255,6 +255,7 @@ Globals::setGlobals();
             });
 
             function copyToClipBoard(token) {
+	            app.msg('Sweet!', token + ' copied to clipboard, Ctrl-V or Paste where need it.');
                 if(window.clipboardData){
                     window.clipboardData.setData('text', token);
                 }else{

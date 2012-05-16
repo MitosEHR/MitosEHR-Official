@@ -573,16 +573,16 @@ Ext.define('App.view.administration.Documents', {
                     width: 30,
                     xtype: "templatecolumn",
                     tpl: new Ext.XTemplate(
-                                "<object id='clipboard{token}' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0' width='16' height='16' align='middle'>",
-                                "<param name='allowScriptAccess' value='always' />",
-                                "<param name='allowFullScreen' value='false' />",
-                                "<param name='movie' value='lib/ClipBoard/clipboard.swf' />",
-                                "<param name='quality' value='high' />",
-                                "<param name='bgcolor' value='#ffffff' />",
-                                "<param name='flashvars' value='callback=copyToClipBoard&callbackArg={token}' />",
-                                "<embed src='lib/ClipBoard/clipboard.swf' flashvars='callback=copyToClipBoard&callbackArg={token}' quality='high' bgcolor='#ffffff' width='16' height='16' name='clipboard{token}' align='middle' allowscriptaccess='always' allowfullscreen='false' type='application/x-shockwave-flash' pluginspage='http://www.adobe.com/go/getflashplayer' />",
-                                "</object>",
-                        null)
+                        "<object id='clipboard{token}' codebase='http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,0,0' width='16' height='16' align='middle'>",
+                        "<param name='allowScriptAccess' value='always' />",
+                        "<param name='allowFullScreen' value='false' />",
+                        "<param name='movie' value='lib/ClipBoard/clipboard.swf' />",
+                        "<param name='quality' value='high' />",
+                        "<param name='bgcolor' value='#ffffff' />",
+                        "<param name='flashvars' value='callback=copyToClipBoard&callbackArg={token}' />",
+                        "<embed src='lib/ClipBoard/clipboard.swf' flashvars='callback=copyToClipBoard&callbackArg={token}' quality='high' bgcolor='#ffffff' width='16' height='16' name='clipboard{token}' align='middle' allowscriptaccess='always' allowfullscreen='false' type='application/x-shockwave-flash' pluginspage='http://www.adobe.com/go/getflashplayer' />",
+                        "</object>",
+                    null)
                 }
             ]
         });
