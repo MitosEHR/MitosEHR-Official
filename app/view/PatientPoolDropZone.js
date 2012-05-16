@@ -33,22 +33,17 @@ Ext.define('App.view.PatientPoolDropZone', {
     },
 
     onPatientDrop:function (node, data, overModel, dropPosition, eOpts) {
-        var pName = (data.records[0].data) ? data.records[0].data.name : data.records[0].name,
+        var name = (data.records[0].data) ? data.records[0].data.name : data.records[0].name,
+            pid = (data.records[0].data) ? data.records[0].data.pid : data.records[0].pid,
             params;
-        app.msg('Sweet!', pName + ' sent to ' + data.view.panel.title);
-
-        say(node);
-        say(data);
-        say(overModel);
-        say(dropPosition);
-        say(eOpts);
+        app.msg('Sweet!', name + ' sent to ' + this.panel.title);
 
         params = {
-            pid: data.records[0].data.pid,
+            pid: pid,
             sendTo: this.panel.action
         };
 
-        PoolArea.sendPatientToPoolArea(params,function(){
+        PoolArea.sendPatientToPoolArea(params, function(){
             Ext.getCmp('panelPoolArea').reloadStores();
         });
 

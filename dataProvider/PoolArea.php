@@ -73,8 +73,19 @@ class PoolArea
 
 	public function sendPatientToPoolArea(stdClass $params){
 
+		$fo = $this->getCurrentPatientPoolAreaByPid($params->pid);
+		$id = $fo['id'];
+		$data['time_out'] = Time::getLocalTime();
+		$this->db->setSQL($this->db->sqlBind($data, 'patient_pools', 'U', "id='$id'"));
+		$this->db->execLog();
 
-
+		$data = array();
+		$data['pid'] = $params->pid;
+		$data['uid'] = $_SESSION['user']['id'];
+		$data['time_in'] = Time::getLocalTime();
+		$data['area_id'] = $params->sendTo;
+		$this->db->setSQL($this->db->sqlBind($data, 'patient_pools', 'I'));
+		$this->db->execLog();
 	}
 
 	public function getPoolAreaPatients(stdClass $params){
@@ -91,18 +102,25 @@ class PoolArea
 	/******************************************************************************************************************/
 
 	private function checkInPatient($params){
-
 		$data['pid'] = $params->pid;
 		$data['uid'] = $_SESSION['user']['id'];
-		$data['time_in'] = Time::getLocalTime();;
+		$data['time_in'] = Time::getLocalTime();
 		$data['area_id'] = 1;
 		$this->db->setSQL($this->db->sqlBind($data, 'patient_pools', 'I'));
 		$this->db->execLog();
-
 	}
 
 
-	public function getPatientsByPoolAreaId($area_id, $in_queue){
+	public function getCurrentPatientPoolAreaByPid($pid){
+		$this->db->setSQL("SELECT *
+							 FROM patient_pools
+							WHERE pid = $pid
+							  AND time_out IS NULL
+						 ORDER BY id DESC");
+		return $this->db->fetchRecord(PDO::FETCH_ASSOC);
+	}
+
+	private function getPatientsByPoolAreaId($area_id, $in_queue){
 		$this->db->setSQL("SELECT *
 							 FROM patient_pools
 							WHERE area_id = $area_id
@@ -118,7 +136,7 @@ class PoolArea
 	}
 
 }
-//$e = new Medical();
+//$e = new PoolArea();
 //echo '<pre>';
-//print_r($e->CheckImmunizations());
+//print_r($e->getCurrentPatientPoolAreaByPid(1));
 
