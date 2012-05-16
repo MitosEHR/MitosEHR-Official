@@ -85,8 +85,8 @@ Ext.define('App.view.administration.Documents', {
                      token: '[PATIENT_AGE]'
                  },
 	             {
-                     title: 'Patient Town',
-                     token: '[PATIENT_TOWN]'
+                     title: 'Patient City',
+                     token: '[PATIENT_CITY]'
                  },
 	             {
                      title: 'Patient State',
