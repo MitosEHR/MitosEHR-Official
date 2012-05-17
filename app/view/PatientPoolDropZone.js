@@ -59,8 +59,6 @@ Ext.define('App.view.PatientPoolDropZone', {
         PoolArea.getActivePoolAreas(function(provider, response){
 
             Ext.each(response.result, function(area){
-                say(area);
-
                 var store = Ext.create('Ext.data.Store', {
                     model:'App.model.poolarea.PoolDropAreas',
                     proxy    : {
