@@ -374,7 +374,8 @@ class PreventiveCare
 
         $this->db->setSQL("SELECT *
                            FROM preventive_care_inactive_patient
-                           WHERE pid='$pid'");
+                           WHERE pid='$pid'
+                           AND dismiss='1'");
         return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 
     }
@@ -427,27 +428,46 @@ class PreventiveCare
     public function addPreventivePatientDismiss(stdClass $params){
 
         $data = get_object_vars($params);
-        unset($data['description'],$data['type'],$data['alert']);
-        $data['preventive_care_id'] = $data['id'];
-        $data['pid'] = $_SESSION['patient']['pid'];
-        $data['uid'] = $_SESSION['user']['id'];
-        unset($data['id']);
-        $this->db->setSQL($this->db->sqlBind($data, 'preventive_care_inactive_patient', 'I'));
-        $this->db->execLog();
-        $params->id = $this->db->lastInsertId;
-        return array('totals'=> 1, 'rows'  => $params);
+        $preventivecareid=$data['id'];
+        $pid=$_SESSION['patient']['pid'];
+        $this->db->setSQL("SELECT *
+                           FROM preventive_care_inactive_patient
+                           WHERE pid='$pid'
+                           AND preventive_care_id ='$preventivecareid' ");
+        $u = $this->db->fetchRecord(PDO::FETCH_ASSOC);
 
+        if($u[0] ==' ' || $u == null){
 
+                unset($data['description'],$data['type'],$data['alert']);
+                $data['preventive_care_id'] = $data['id'];
+                $data['pid'] = $_SESSION['patient']['pid'];
+                $data['uid'] = $_SESSION['user']['id'];
+                unset($data['id']);
+                $this->db->setSQL($this->db->sqlBind($data, 'preventive_care_inactive_patient', 'I'));
+                $this->db->execLog();
+                $params->id = $this->db->lastInsertId;
+                return array('totals'=> 1, 'rows'  => $params);
+        }else{
+
+            $id=$u['id'];
+            unset($data['description'],$data['type'],$data['alert']);
+            $data['preventive_care_id'] = $data['id'];
+            $data['pid'] = $_SESSION['patient']['pid'];
+            $data['uid'] = $_SESSION['user']['id'];
+            unset($data['id']);
+            $this->db->setSQL($this->db->sqlBind($data, 'preventive_care_inactive_patient', 'U', "id='$id'"));
+            $this->db->execLog();
+            return array('totals'=> 1, 'rows'  => $params);
+        }
     }
-
 }
 ////
 //$params = new stdClass();
 //$params->start = 0;
 //$params->limit = 25;
-//$params->pid = 1;
+//$params->id = 74;
+//$params->reason = 'sorry';
 //$t = new PreventiveCare();
 //print '<pre>';
-//print_r($t->getPreventiveCareCheck($params));
-//
-//print_r($t->checkAge(1,9));
+//print_r($t->addPreventivePatientDismiss($params));
+
