@@ -54,7 +54,9 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 	                dataIndex: 'reason',
 	                flex:1,
 	                editor:{
-		                xtype:'textfield'
+		                xtype:'textfield',
+		                disabled:true,
+		                action:'reason'
 	                }
 
                 },
@@ -63,7 +65,13 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 	                header     : 'Dismiss',
 	                dataIndex: 'dismiss',
 	                editor:{
-		                xtype:'checkboxfield'
+		                xtype:'checkboxfield',
+		                enableKeyEvents: true,
+		                listeners:{
+			                scope:me,
+			                change:me.onChangeOption
+
+		                }
 
 	                }
                 }
@@ -89,6 +97,20 @@ Ext.define('App.view.patientfile.PreventiveCareWindow', {
 
 
 		this.callParent(arguments);
+
+	},
+	onChangeOption: function(field,newValue){
+		var me=this,
+			fieldLabel=field.up('form').query('[action="reason"]')[0];
+
+		if(newValue){
+			fieldLabel.setDisabled(false);
+		}else if(!newValue){
+			fieldLabel.setDisabled(true);
+
+		}else{
+			fieldLabel.setDisabled(true);
+		}
 
 	},
 	onPreventiveCareWindowShow: function() {

@@ -407,7 +407,6 @@ class PreventiveCare
                 $patientAlerts[]= $rec;
 
             }
-
         }
 
         $patientDismissedAlerts = $this->checkForDismiss($params->pid);
@@ -450,5 +449,5 @@ class PreventiveCare
 //$t = new PreventiveCare();
 //print '<pre>';
 //print_r($t->getPreventiveCareCheck($params));
-
+//
 //print_r($t->checkAge(1,9));

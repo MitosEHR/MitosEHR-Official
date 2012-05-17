@@ -237,7 +237,7 @@ class Documents
     }
 
 }
-
-$e = new Documents();
-echo '<pre>';
-$e->findAndReplaceTokens(1);
+//
+//$e = new Documents();
+//echo '<pre>';
+//$e->findAndReplaceTokens(1);
