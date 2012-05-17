@@ -19,7 +19,9 @@ Ext.override(Ext.form.field.Checkbox, {
 	uncheckedValue: '0'
 });
 
-
+Ext.override(Ext.form.field.Date, {
+    format : 'Y-m-d'
+});
 
 Ext.override(Ext.grid.ViewDropZone, {
 
