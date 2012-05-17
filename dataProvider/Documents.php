@@ -25,7 +25,7 @@ class Documents
 	 */
 	private $db;
 	/**
-	 * @var User
+	 * @var user
 	 */
 	private $user;
 	/**
@@ -105,12 +105,7 @@ class Documents
                                   body
                            	 FROM documents_templates
                             WHERE id = '$id' ");
-        $record =$this->db->fetchRecord(PDO::FETCH_ASSOC);
-
-
-
-
-        return $record;
+        return $this->db->fetchRecord(PDO::FETCH_ASSOC);
     }
 
     public function getAllPatientData($pid){
@@ -124,6 +119,8 @@ class Documents
     public function findAndReplaceTokens($pid){
 
         $patientData = $this->getAllPatientData($pid);
+
+
         $patienInformation = array
         (
             '[PATIENT_NAME]' => $patientData['fname'],
@@ -137,7 +134,7 @@ class Documents
             '[PATIENT_EMAIL]'=>$patientData['email'],
             '[PATIENT_SOCIAL_SECURITY]'=>$patientData['SS'],
             '[PATIENT_SEX]'=>$patientData['sex'],
-            '[PATIENT_AGE]'=>$patientData['age'],
+            '[PATIENT_AGE]'=>$this->patient->getPatientAgeByDOB($patientData['DOB']['years']),
             '[PATIENT_CITY]'=>$patientData['city'],
             '[PATIENT_STATE]'=>$patientData['state'],
             '[PATIENT_COUNTRY]'=>$patientData['country'],
@@ -151,8 +148,8 @@ class Documents
             '[PATIENT_EMERGENCY_PHONE]'=>$patientData['emer_phone'],
             '[PATIENT_REFERRAL]'=>$patientData['referral'],/////////////////////////////////////
             '[PATIENT_REFERRAL_DATE]'=>$patientData['referral_date'],////////////////////////////////
-            '[PATIENT_BALANCE]'=>'working on it',
-            '[PATIENT_PICTURE]'=>'working on it',
+            '[PATIENT_BALANCE]'=>'working on it',//////////////////////////////////////////////////
+            '[PATIENT_PICTURE]'=>'working on it',/////////////////////////////////////////////////
             '[PATIENT_PRIMARY_PLAN]'=>$patientData['primary_plan_name'],
             '[PATIENT_PRIMARY_INSUANCE_PROVIDER]'=>$patientData['primary_insurance_provider'],
             '[PATIENT_PRIMARY_INSURED_PERSON]'=>$patientData['primary_subscriber_fname'].' '.$patientData['primary_subscriber_mname'].' '.$patientData['primary_subscriber_lname'],
@@ -188,21 +185,7 @@ class Documents
             '[PATIENT_INACTIVE_SURGERY_LIST]'
 
         );
-        $tokens=$this->getTemplateBodyById(6);
-        print_r($tokens[0]);
-        $newarray=array();
-        $body=$this->getBodyById(6);
 
-        foreach($tokens[0] as $tok){
-
-            array_push($newarray,$patienInformation[$tok]);
-
-        }
-
-        $newphrase = str_replace($tokens[0], $newarray, $body);
-
-        print_r($body);
-        print_r($newphrase);
         $encounterInformation = array
         (
             '[ENCOUNTER_DATE]',
@@ -241,8 +224,15 @@ class Documents
             '[CURRENT_USER_NPI_LICENSE_NUMBER]'
         );
 
+        $tokens=$this->getTemplateBodyById(6);
+        $newarray=array();
+        $body=$this->getBodyById(6);
 
-        $newphrase = str_replace('$find', '$replace', 'asdf');
+        foreach($tokens[0] as $tok){
+            array_push($newarray,$patienInformation[$tok]);
+        }
+        $newphrase = str_replace($tokens[0], $newarray, $body);
+        print_r($newphrase);
 
     }
 
@@ -250,6 +240,4 @@ class Documents
 
 $e = new Documents();
 echo '<pre>';
-print_r($e->findAndReplaceTokens(1));
-
-
+$e->findAndReplaceTokens(1);
