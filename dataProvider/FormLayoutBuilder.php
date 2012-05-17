@@ -474,7 +474,11 @@ class FormLayoutBuilder {
             }
 
 	        if($option == 'allowBlank'){
-		        $val = ($val) ? false : true;
+		        if($val){
+			        $data[$option] = false;
+		        }else{
+			        unset($data[$option]);
+		        }
 	        }
 
             if($val == 'on'){
@@ -613,7 +617,6 @@ class FormLayoutBuilder {
         $options = json_decode($options['options'],true);
         foreach($options as $option => $value){
 
-
 	        if($option == 'allowBlank'){
 		        $value = ($value) ? false : true;
 	        }
@@ -623,4 +626,22 @@ class FormLayoutBuilder {
         return $foo;
     }
 
+	/* for manually remove all allowBlank form any table */
+	public function removeAllowBlank($table){
+		$this->db->setSQL("Select id, options FROM $table");
+		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row){
+			$options = json_decode($row['options'],true);
+			if(isset($options['allowBlank'])){
+				unset($options['allowBlank']);
+				$id = $row['id'];
+				$data['options'] = json_encode($options);
+				$this->db->setSQL($this->db->sqlBind($data, $table, 'U', "id='$id'"));
+				$this->db->execOnly();
+			}
+		}
+	}
+
 }
+
+//$p = new FormLayoutBuilder();
+//echo '<pre>';
