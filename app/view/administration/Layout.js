@@ -417,6 +417,8 @@ Ext.define('App.view.administration.Layout', {
 							xtype     : 'checkbox',
 							name      : 'allowBlank',
 							itemId    : 'allowBlank',
+                            inputValue: false,
+                            uncheckedValue:true,
 							hidden    : true
 						},
 						{

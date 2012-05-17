@@ -473,6 +473,10 @@ class FormLayoutBuilder {
 
             }
 
+	        if($option == 'allowBlank'){
+		        $val = ($val) ? false : true;
+	        }
+
             if($val == 'on'){
                 $data[$option] = 'true';
             }elseif($val == 'off'){
@@ -530,6 +534,8 @@ class FormLayoutBuilder {
             $this->db->setSQL("SELECT options FROM forms_field_options WHERE field_id = '$id'");
             $fo = $this->db->fetchRecord();
             $foo = json_decode($fo['options'],true);
+
+
             $row['name']  =  $foo['title'].$foo['fieldLabel'].' ('.$parentField['xtype'].')';
             $row['value'] =  $parentField['id'];
             array_push($parentFields, $row);
@@ -606,6 +612,12 @@ class FormLayoutBuilder {
         $options = $this->db->fetchRecord();
         $options = json_decode($options['options'],true);
         foreach($options as $option => $value){
+
+
+	        if($option == 'allowBlank'){
+		        $value = ($value) ? false : true;
+	        }
+
             $foo[$option] = $value;
         }
         return $foo;
