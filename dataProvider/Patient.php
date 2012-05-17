@@ -439,6 +439,15 @@ class Patient {
 		return $reminders;
 	}
 
+	/**
+	 * @param $date
+	 * @return mixed
+	 */
+	private function parseDate($date)
+	{
+	    return str_replace('T', ' ', $date);
+	}
+
 }
 //$p = new Patient();
 //echo '<pre>';

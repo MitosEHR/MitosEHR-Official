@@ -19,6 +19,8 @@ Ext.override(Ext.form.field.Checkbox, {
 	uncheckedValue: '0'
 });
 
+
+
 Ext.override(Ext.grid.ViewDropZone, {
 
     handleNodeDrop : function(data, record, position) {
@@ -28,10 +30,7 @@ Ext.override(Ext.grid.ViewDropZone, {
         /**
          * fixed to handle the patient button data
          */
-        if(data.patient){
-            data.records = data.patient;
-            delete data.patient;
-        }else{
+        if(!data.patient){
             if (data.copy) {
                 records = data.records;
                 data.records = [];
@@ -52,7 +51,6 @@ Ext.override(Ext.grid.ViewDropZone, {
         store.insert(index, data.records);
         view.getSelectionModel().select(data.records);
     }
-
 });
 
 Ext.override(Ext.layout.ContextItem, {

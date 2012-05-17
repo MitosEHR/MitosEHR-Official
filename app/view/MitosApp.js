@@ -1021,7 +1021,8 @@ Ext.define('App.view.MitosApp', {
                         sourceEl   : sourceEl,
                         repairXY   : Ext.fly(sourceEl).getXY(),
                         ddel       : d,
-                        patient    : [ panel.data ]
+                        records    : [ panel.data ],
+                        patient    : true
                     };
                 }
             },
