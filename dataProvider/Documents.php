@@ -120,6 +120,7 @@ class Documents
 
         $patientData = $this->getAllPatientData($pid);
 
+        $age =$this->patient->getPatientAgeByDOB($patientData['DOB']);
 
         $patienInformation = array
         (
@@ -134,7 +135,7 @@ class Documents
             '[PATIENT_EMAIL]'=>$patientData['email'],
             '[PATIENT_SOCIAL_SECURITY]'=>$patientData['SS'],
             '[PATIENT_SEX]'=>$patientData['sex'],
-            '[PATIENT_AGE]'=>$this->patient->getPatientAgeByDOB($patientData['DOB']['years']),
+            '[PATIENT_AGE]'=>$age['years'],
             '[PATIENT_CITY]'=>$patientData['city'],
             '[PATIENT_STATE]'=>$patientData['state'],
             '[PATIENT_COUNTRY]'=>$patientData['country'],
@@ -224,7 +225,8 @@ class Documents
             '[CURRENT_USER_NPI_LICENSE_NUMBER]'
         );
 
-        $tokens=$this->getTemplateBodyById(6);
+
+        $tokens=$this->getTemplateBodyById(5);
         $newarray=array();
         $body=$this->getBodyById(6);
 
@@ -237,7 +239,7 @@ class Documents
     }
 
 }
-//
-//$e = new Documents();
-//echo '<pre>';
-//$e->findAndReplaceTokens(1);
+
+$e = new Documents();
+echo '<pre>';
+$e->findAndReplaceTokens(39);

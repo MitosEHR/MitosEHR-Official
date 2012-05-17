@@ -583,8 +583,6 @@ Ext.define('App.view.patientfile.Summary', {
 		       me.PreventiveCareWindow.show();
 
 	       }
-		say(response);
-
         });
     }
 
