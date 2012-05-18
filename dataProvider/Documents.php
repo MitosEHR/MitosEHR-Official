@@ -215,28 +215,74 @@ class Documents
             '[ORDERS_OTHER]'
         );
         $currentInformation= array(
-            '[CURRENT_DATE]',
-            '[CURRENT_TIME]',
-            '[CURRENT_USER_NAME]',
-            '[CURRENT_USER_FULL_NAME]',
+            '[CURRENT_DATE]'=>date('d-m-Y'),
+            '[CURRENT_USER_NAME]'=>$_SESSION['user']['name'],
             '[CURRENT_USER_LICENSE_NUMBER]',
             '[CURRENT_USER_DEA_LICENSE_NUMBER]',
             '[CURRENT_USER_DM_LICENSE_NUMBER]',
             '[CURRENT_USER_NPI_LICENSE_NUMBER]'
         );
+        $clinicInformation=array(
 
 
-        $tokens=$this->getTemplateBodyById(5);
+        );
+        print_r('');
+
+        $tokens=$this->getTemplateBodyById(1);
         $newarray=array();
-        $body=$this->getBodyById(6);
-
+        $body=$this->getBodyById(1);
+        $pos=0;
         foreach($tokens[0] as $tok){
+
             array_push($newarray,$patienInformation[$tok]);
+            $pos=$pos+1;
+
         }
+
+        $pos=0;
+        foreach($tokens[0] as $tok){
+
+            if($newarray[$pos]=='' || $newarray[$pos]== null){
+                $newarray[$pos]=$currentInformation[$tok];
+            };
+
+            $pos=$pos+1;
+        }
+        $pos=0;
+        foreach($tokens[0] as $tok){
+
+            if($newarray[$pos]=='' || $newarray[$pos]== null){
+                $newarray[$pos]=$ordersInformation[$tok];
+            };
+
+            $pos=$pos+1;
+        }
+        $pos=0;
+        foreach($tokens[0] as $tok){
+
+            if($newarray[$pos]=='' || $newarray[$pos]== null){
+                $newarray[$pos]=$encounterInformation[$tok];
+            };
+
+            $pos=$pos+1;
+        }
+        $pos=0;
+        foreach($tokens[0] as $tok){
+
+            if($newarray[$pos]=='' || $newarray[$pos]== null){
+                $newarray[$pos]=$clinicInformation[$tok];
+            };
+
+            $pos=$pos+1;
+        }
+
+
+
         $newphrase = str_replace($tokens[0], $newarray, $body);
         print_r($newphrase);
 
     }
+
 
 }
 //
