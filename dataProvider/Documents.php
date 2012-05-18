@@ -17,7 +17,7 @@ include_once($_SESSION['site']['root'] . '/dataProvider/User.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Encounter.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Facilities.php');
-//include_once($_SESSION['site']['root'] . '/lib/dompdf_0-6-0_beta3/dompdf.php');
+include_once($_SESSION['site']['root'] . '/lib/dompdf_0-6-0_beta3/dompdf_config.inc.php');
 class Documents
 {
 	/**
@@ -41,6 +41,8 @@ class Documents
 	 */
 	private $facility;
 
+    private $dompdf;
+
 	function __construct()
 	{
 		$this->db       = new dbHelper();
@@ -48,6 +50,7 @@ class Documents
 		$this->patient  = new Patient();
 		$this->services = new Services();
 		$this->facility = new Facilities();
+        $this->dompdf   = new DOMPDF();
 		return;
 	}
 
@@ -85,7 +88,7 @@ class Documents
 
     public function getDocumentWithTokens(){}
 
-    public function getTemplateBodyById($id){
+    public function getArrayWithTokensNeededByDocumentID($id){
         $this->db->setSQL("SELECT title,
                                   body
                            	 FROM documents_templates
@@ -100,7 +103,7 @@ class Documents
 
         return $tokensfound;
     }
-    public function getBodyById($id){
+    public function getTemplateBodyById($id){
         $this->db->setSQL("SELECT title,
                                   body
                            	 FROM documents_templates
@@ -152,15 +155,11 @@ class Documents
             '[PATIENT_BALANCE]'=>'working on it',//////////////////////////////////////////////////
             '[PATIENT_PICTURE]'=>'working on it',/////////////////////////////////////////////////
             '[PATIENT_PRIMARY_PLAN]'=>$patientData['primary_plan_name'],
-            '[PATIENT_PRIMARY_INSUANCE_PROVIDER]'=>$patientData['primary_insurance_provider'],
+            '[PATIENT_PRIMARY_INSURANCE_PROVIDER]'=>$patientData['primary_insurance_provider'],
             '[PATIENT_PRIMARY_INSURED_PERSON]'=>$patientData['primary_subscriber_fname'].' '.$patientData['primary_subscriber_mname'].' '.$patientData['primary_subscriber_lname'],
             '[PATIENT_PRIMARY_POLICY_NUMBER]'=>$patientData['primary_policy_number'],
             '[PATIENT_PRIMARY_GROUP_NUMBER]'=>$patientData['primary_group_number'],
             '[PATIENT_PRIMARY_EXPIRATION_DATE]'=>$patientData['primary_effective_date'],
-            '[PATIENT_SECONDARY_PLAN]',
-            '[PATIENT_SECONDARY_INSURED_PERSON]',
-            '[PATIENT_SECONDARY_CONTRACT_NUMBER]',
-            '[PATIENT_SECONDARY_EXPIRATION_DATE]',
             '[PATIENT_REFERRAL_DETAILS]',
             '[PATIENT_REFERRAL_REASON]',
             '[PATIENT_HEAD_CIRCUMFERENCE]',
@@ -220,21 +219,34 @@ class Documents
             '[CURRENT_USER_LICENSE_NUMBER]',
             '[CURRENT_USER_DEA_LICENSE_NUMBER]',
             '[CURRENT_USER_DM_LICENSE_NUMBER]',
-            '[CURRENT_USER_NPI_LICENSE_NUMBER]'
+            '[CURRENT_USER_NPI_LICENSE_NUMBER]',
+            '[LINE]'=>'<hr>',
         );
         $clinicInformation=array(
 
 
         );
-        print_r('');
 
-        $tokens=$this->getTemplateBodyById(1);
-        $newarray=array();
-        $body=$this->getBodyById(1);
+        $tokens=$this->getArrayWithTokensNeededByDocumentID(1);//getting the template
+
+        $body=$this->getTemplateBodyById(1);
         $pos=0;
+
+        $givingValuesToTokens=array();
+        //Creating a empty array to assign values to the tokens
         foreach($tokens[0] as $tok){
 
-            array_push($newarray,$patienInformation[$tok]);
+            array_push($givingValuesToTokens,'');
+
+
+        }
+
+        foreach($tokens[0] as $tok){
+
+            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
+                $givingValuesToTokens[$pos]=$patienInformation[$tok];
+            };
+
             $pos=$pos+1;
 
         }
@@ -242,8 +254,8 @@ class Documents
         $pos=0;
         foreach($tokens[0] as $tok){
 
-            if($newarray[$pos]=='' || $newarray[$pos]== null){
-                $newarray[$pos]=$currentInformation[$tok];
+            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
+                $givingValuesToTokens[$pos]=$currentInformation[$tok];
             };
 
             $pos=$pos+1;
@@ -251,8 +263,8 @@ class Documents
         $pos=0;
         foreach($tokens[0] as $tok){
 
-            if($newarray[$pos]=='' || $newarray[$pos]== null){
-                $newarray[$pos]=$ordersInformation[$tok];
+            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
+                $givingValuesToTokens[$pos]=$ordersInformation[$tok];
             };
 
             $pos=$pos+1;
@@ -260,8 +272,8 @@ class Documents
         $pos=0;
         foreach($tokens[0] as $tok){
 
-            if($newarray[$pos]=='' || $newarray[$pos]== null){
-                $newarray[$pos]=$encounterInformation[$tok];
+            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
+                $givingValuesToTokens[$pos]=$encounterInformation[$tok];
             };
 
             $pos=$pos+1;
@@ -269,8 +281,8 @@ class Documents
         $pos=0;
         foreach($tokens[0] as $tok){
 
-            if($newarray[$pos]=='' || $newarray[$pos]== null){
-                $newarray[$pos]=$clinicInformation[$tok];
+            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
+                $givingValuesToTokens[$pos]=$clinicInformation[$tok];
             };
 
             $pos=$pos+1;
@@ -278,14 +290,25 @@ class Documents
 
 
 
-        $newphrase = str_replace($tokens[0], $newarray, $body);
+        $newphrase = str_replace($tokens[0], $givingValuesToTokens, $body);
         print_r($newphrase);
+//Crear html to PDF y grabarlo/////////////////////////////////////////////////////////////////////////
+//        $this->dompdf->load_html($newphrase['body']);
+//        $this->dompdf->set_paper('letter', 'portrait');
+//        $this->dompdf->render();
+//
+//        $pdf=$this->dompdf->output();
+//        $fp = fopen('data.pdf', 'w');
+//        fwrite($fp, $pdf);
+//        fclose($fp);
+
+
 
     }
 
 
 }
-//
-//$e = new Documents();
-//echo '<pre>';
-//$e->findAndReplaceTokens(39);
+
+$e = new Documents();
+echo '<pre>';
+$e->findAndReplaceTokens(39);
