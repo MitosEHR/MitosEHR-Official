@@ -239,7 +239,7 @@ class Documents
     }
 
 }
-
-$e = new Documents();
-echo '<pre>';
-$e->findAndReplaceTokens(39);
+//
+//$e = new Documents();
+//echo '<pre>';
+//$e->findAndReplaceTokens(39);
