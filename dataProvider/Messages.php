@@ -23,16 +23,16 @@ class Messages extends dbHelper {
         $currUser = $_SESSION['user']['id'];
 
         if($params->get == 'inbox'){
-            $wherex = "pnotes.to_deleted = '0' AND users.id = '".$currUser."'";
+            $wherex = "messages.to_deleted = '0' AND users.id = '".$currUser."'";
         }elseif($params->get == 'sent'){
-            $wherex = "pnotes.from_deleted = '0' AND pnotes.from_id = '".$currUser."'";
+            $wherex = "messages.from_deleted = '0' AND messages.from_id = '".$currUser."'";
         }elseif($params->get == 'trash'){
-            $wherex = "pnotes.to_deleted = '1' OR pnotes.from_deleted = '1' AND users.id = '".$currUser."'";
+            $wherex = "messages.to_deleted = '1' OR messages.from_deleted = '1' AND users.id = '".$currUser."'";
         }else{
-            $wherex = "pnotes.to_deleted = '0' AND users.id = '".$currUser."'";
+            $wherex = "messages.to_deleted = '0' AND users.id = '".$currUser."'";
         }
 
-        $this->setSQL("SELECT pnotes.* ,
+        $this->setSQL("SELECT messages.* ,
                               users.title AS user_title,
                               users.fname AS user_fname,
                               users.mname AS user_mname,
@@ -40,11 +40,11 @@ class Messages extends dbHelper {
                               form_data_demographics.fname AS patient_fname,
                               form_data_demographics.mname AS patient_mname,
                               form_data_demographics.lname AS patient_lname
-                         FROM pnotes
-              LEFT OUTER JOIN form_data_demographics ON pnotes.pid = form_data_demographics.pid
-              LEFT OUTER JOIN users ON pnotes.to_id = users.id
+                         FROM messages
+              LEFT OUTER JOIN form_data_demographics ON messages.pid = form_data_demographics.pid
+              LEFT OUTER JOIN users ON messages.to_id = users.id
                         WHERE $wherex
-                     ORDER BY pnotes.date
+                     ORDER BY messages.date
                         LIMIT $params->start, $params->limit");
         $messages = array();
         foreach($this->fetchRecords(PDO::FETCH_ASSOC) as $row){
@@ -78,7 +78,7 @@ class Messages extends dbHelper {
         $row['message_status']  = $params->message_status;
         $row['subject']         = $params->subject;
         $row['note_type']       = $params->note_type;
-        $sql = $this->sqlBind($row, "pnotes", "I");
+        $sql = $this->sqlBind($row, "messages", "I");
         $this->setSQL($sql);
         $ret = $this->execLog();
         if($ret[2]){
@@ -106,7 +106,7 @@ class Messages extends dbHelper {
             $row['to_deleted']      = 0;
             $row['from_deleted']    = 0;
 
-            $sql = $this->sqlBind($row, "pnotes", "U", "id='" . $params->id . "'");
+            $sql = $this->sqlBind($row, "messages", "U", "id='" . $params->id . "'");
             $this->setSQL($sql);
             $ret = $this->execLog();
 
@@ -128,13 +128,13 @@ class Messages extends dbHelper {
         $id         = $params->id;
         $currUser   = $_SESSION['user']['id'];
 
-        $this->setSQL("SELECT to_id, from_id FROM pnotes WHERE id = '$id'");
+        $this->setSQL("SELECT to_id, from_id FROM messages WHERE id = '$id'");
         $record = $this->fetchRecord();
 
         if($record['to_id'] == $currUser ){
-            $sql = "UPDATE pnotes SET to_deleted = '1' WHERE id='$id'";
+            $sql = "UPDATE messages SET to_deleted = '1' WHERE id='$id'";
         }elseif($record['from_id'] == $currUser){
-            $sql = "UPDATE pnotes SET from_deleted = '1' WHERE id='$id'";
+            $sql = "UPDATE messages SET from_deleted = '1' WHERE id='$id'";
         }
 
         $this->setSQL($sql);
@@ -155,7 +155,7 @@ class Messages extends dbHelper {
 
         $row[$params->col] = $params->val;
 
-        $sql = $this->sqlBind($row, "pnotes", "U", "id='" . $params->id . "'");
+        $sql = $this->sqlBind($row, "messages", "U", "id='" . $params->id . "'");
         $this->setSQL($sql);
         $ret = $this->execLog();
         if ( $ret[2] ){
