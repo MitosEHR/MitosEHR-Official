@@ -71,6 +71,7 @@ Ext.define('App.view.patientfile.Encounter', {
             closeAction:'hide',
             modal:true,
             closable:false,
+	        width:700,
             items:[
                 {
                     xtype:'form',

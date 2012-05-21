@@ -101,7 +101,7 @@ Ext.define('App.view.MitosApp', {
 				me.checkSession();
 				me.getPatientesInPoolArea();
 			},
-			interval: 10000
+			interval: 100000000
 		});
 
 		me.storeTree = Ext.create('App.store.navigation.Navigation', {
