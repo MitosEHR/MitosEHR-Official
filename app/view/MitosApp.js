@@ -671,7 +671,7 @@ Ext.define('App.view.MitosApp', {
 
 		me.callParent(arguments);
 
-		me.signature = Ext.create('App.view.signature.SignatureWindow').show();
+		me.signature = Ext.create('App.view.signature.SignatureWindow');
 
 	},
 

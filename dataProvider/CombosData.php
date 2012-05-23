@@ -32,15 +32,35 @@ class CombosData {
      * @return array
      */
     public function getOptionsByListId(stdClass $params){
-        $params->list_id = (isset($params->list_id)) ? $params->list_id : 1;
-        $this->db->setSQL("SELECT o.option_name,
-                              o.option_value
-                         FROM combo_lists_options AS o
-                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
-                        WHERE l.id = '$params->list_id'
-                     ORDER BY o.seq");
-        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		if(!is_numeric($params->list_id)){
+			if($params->list_id == 'activePharmacies'){
+				return $this->getActivePharmacies();
+			}elseif($params->list_id == 'activeProviders'){
+				return $this->getActiveProviders();
+			}
+		}else{
+	        $this->db->setSQL("SELECT o.option_name,
+	                              o.option_value
+	                         FROM combo_lists_options AS o
+	                    LEFT JOIN combo_lists AS l ON l.id = o.list_id
+	                        WHERE l.id = '$params->list_id'
+	                     ORDER BY o.seq");
+	        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+		}
     }
+
+	public function getActivePharmacies(){
+		$this->db->setSQL("SELECT pharmacies.id as option_value, pharmacies.name as option_name FROM pharmacies WHERE active = '1' ORDER BY pharmacies.name DESC");
+		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+	}
+
+	public function getActiveProviders(){
+		$this->db->setSQL("SELECT users.id as option_value, CONCAT_WS(' ', users.title, users.lname) as option_name
+							 FROM users
+							WHERE active = '1' AND authorized = '1' AND (npi IS NOT NULL AND npi != '')
+					     ORDER BY option_name ASC");
+		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+	}
 
     public function getUsers(){
         include_once('Person.php');
@@ -60,7 +80,13 @@ class CombosData {
 
     public function getLists(){
         $this->db->setSQL("SELECT id, title  FROM combo_lists ORDER BY title");
-        return $this->db->fetchRecords(PDO::FETCH_ASSOC);
+	    $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+	    /**
+	     * manually add all system combos that are not stored combo_lists table
+	     */
+		$records[] = array('id'=>'activePharmacies','title'=>'Pharmacies');
+		$records[] = array('id'=>'activeProviders','title'=>'Providers');
+        return $records;
     }
 
     public function getFacilities(){
