@@ -216,12 +216,17 @@ class Patient {
         $root =  $_SESSION['site']['root'];
         $site = $_SESSION['site']['site'];
         $path = $root.'/sites/'.$site.'/patients/'.$pid;
-        if(mkdir($path, 0777,true )){
-            chmod($path,0777);
-            return true;
-        }else{
-            return false;
-        }
+
+	    if(!file_exists($path)){
+		    if(mkdir($path, 0777,true )){
+		        chmod($path,0777);
+		        return true;
+		    }else{
+		        return false;
+		    }
+	    }else{
+		    return true;
+	    }
     }
 
     public function createPatientQrCode($pid, $fullname){

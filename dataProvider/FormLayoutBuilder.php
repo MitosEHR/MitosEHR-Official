@@ -249,6 +249,7 @@ class FormLayoutBuilder {
         /**
          * remove field and field options
          */
+
         $id = $data['id'];
         $this->db->setSQL("DELETE FROM forms_fields WHERE id='$id'");
         $ret = $this->db->execOnly();
@@ -256,7 +257,6 @@ class FormLayoutBuilder {
         $this->db->setSQL("DELETE FROM forms_field_options WHERE field_id='$id'");
         $ret = $this->db->execOnly();
         $this->checkError($ret);
-
         return array('success' => true);
     }
 
@@ -298,7 +298,6 @@ class FormLayoutBuilder {
             $this->checkError($ret);
             $pos = $pos + 10;
         }
-
         return array('success' => true);
     }
 
@@ -434,7 +433,7 @@ class FormLayoutBuilder {
      * @return bool
      */
     private function fieldHasBrother(){
-        $this->db->setSQL("SELECT id FROM forms_field_options WHERE oname = 'name' AND ovalue ='$this->col'");
+        $this->db->setSQL("SELECT id FROM forms_field_options WHERE options LIKE '%\"name\":\"$this->col%\"'");
         $this->db->fetchRecords(PDO::FETCH_ASSOC);
         $count = $this->db->rowCount();
         if($count >= 2 ) {
@@ -642,6 +641,12 @@ class FormLayoutBuilder {
 	}
 
 }
-
+//$params = new stdClass();
+//$params->id         = '129';
+//$params->form_id    = '1';
+//$params->name       = 'allow_voice_msg';
+//$params->xtype      = 'mitos.checkbox';
+//
 //$p = new FormLayoutBuilder();
 //echo '<pre>';
+//$p->deleteField($params);

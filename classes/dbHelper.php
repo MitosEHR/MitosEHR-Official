@@ -199,7 +199,8 @@ class dbHelper {
 					if($value == null || $value === 'NULL' || $value === 'null'){
 						$sql .= $key. '=NULL, ';
 					}else{
-						$sql .= $key. "='".trim($value)."', ";
+						$value =  preg_replace('/([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2})/i', '${1} ${2}', trim($value));
+						$sql .= $key. "='$value', ";
 					}
 				}else{
 					return array(
@@ -214,7 +215,8 @@ class dbHelper {
 					if($value == null || $value === 'NULL' || $value === 'null'){
 						$sql .= $key. '=NULL, ';
 					}else{
-						$sql .= $key. "='".trim($value)."', ";
+						$value =  preg_replace('/([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2})/i', '${1} ${2}', trim($value));
+						$sql .= $key. "='$value', ";
 					}
 				}else{
 	                return array(

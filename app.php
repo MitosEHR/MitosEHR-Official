@@ -221,6 +221,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/patientfile/NewPatient.js"></script>
         <script type="text/javascript" src="app/view/patientfile/MedicalWindow.js"></script>
         <script type="text/javascript" src="app/view/patientfile/PreventiveCareWindow.js"></script>
+        <script type="text/javascript" src="app/view/patientfile/NewDocumentsWindow.js"></script>
         <script type="text/javascript" src="app/view/fees/PaymentEntryWindow.js"></script>
         <script type="text/javascript" src="app/view/administration/Facilities.js"></script>
         <script type="text/javascript" src="app/view/administration/Globals.js"></script>
