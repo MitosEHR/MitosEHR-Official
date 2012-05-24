@@ -31,6 +31,10 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         me.patientImmuListStore = Ext.create('App.store.patientfile.PatientImmunization', {
             groupField: 'immunization_name',
             sorters   : ['immunization_name', 'administered_date'],
+	        listeners: {
+		        scope     : me,
+		        beforesync: me.setDefaults
+	        },
             autoSync  : true
         });
         me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies', {
@@ -163,7 +167,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             width     : 295,
                                             labelWidth: 180,
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+                                            format    : 'Y-m-d',
                                             name      : 'education_date'
                                         }
 
@@ -281,8 +285,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                     autoCancel  : false,
                     errorSummary: false,
                     clicksToEdit: 1,
-
-                    formItems: [
+	                formItems: [
 
                         {
                             title  : 'general',
@@ -302,6 +305,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             xtype          : 'mitos.allergiestypescombo',
                                             fieldLabel     : 'Type',
 	                                        name           : 'allergy_type',
+	                                        action           : 'allergy_type',
+	                                        allowBlank: false,
                                             enableKeyEvents: true,
 
                                             width          : 225,
@@ -315,6 +320,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    xtype          : 'mitos.allergieslocationcombo',
 		                                    fieldLabel     : 'Location',
 		                                    name           : 'location',
+		                                    action           : 'location',
 		                                    width          : 225,
 		                                    labelWidth     : 70,
 		                                    listeners      : {
@@ -354,7 +360,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    labelWidth     : 70,
 		                                    listeners      : {
 			                                    scope   : me,
-			                                    'select': me.onLiveSearchSelect
+			                                    'select': me.onLiveSearchSelect,
+			                                    change  : me.disableFieldLogic
 		                                    }
 	                                    },
 	                                    {
@@ -371,7 +378,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    labelWidth     : 70,
 		                                    listeners      : {
 			                                    scope   : me,
-			                                    'select': me.onLiveSearchSelect
+			                                    'select': me.onLiveSearchSelect,
+			                                    change  : me.disableFieldLogic
 		                                    }
 	                                    },
                                         {
@@ -387,7 +395,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    id         : 'abdominalreaction',
 		                                    disabled       : true,
 		                                    width          : 225,
-		                                    labelWidth     : 70
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    change  : me.disableFieldLogic
+		                                    }
 
 	                                    },{
 		                                    xtype          : 'mitos.allergieslocalcombo',
@@ -397,7 +409,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    hidden         : true,
 		                                    disabled       : true,
 		                                    width          : 225,
-		                                    labelWidth     : 70
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    change  : me.disableFieldLogic
+		                                    }
 
 	                                    },{
 		                                    xtype          : 'mitos.allergiesskincombo',
@@ -407,7 +423,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    hidden         : true,
 		                                    disabled       : true,
 		                                    width          : 225,
-		                                    labelWidth     : 70
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    change  : me.disableFieldLogic
+		                                    }
 
 	                                    },{
 		                                    xtype          : 'mitos.allergiessystemiccombo',
@@ -417,7 +437,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 		                                    hidden         : true,
 		                                    disabled       : true,
 		                                    width          : 225,
-		                                    labelWidth     : 70
+		                                    labelWidth     : 70,
+		                                    listeners      : {
+			                                    scope   : me,
+			                                    change  : me.disableFieldLogic
+		                                    }
 
 	                                    },
                                         {
@@ -1610,6 +1634,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         });
         grid.editingPlugin.startEdit(0, 0);
 
+
+
     },
 	hideall: function(combo,skinCombo,localCombo,abdominalCombo,systemicCombo){
 
@@ -1684,6 +1710,13 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 
     },
+
+	disableFieldLogic: function(field,newValue){
+		field.setDisabled(newValue == ''|| newValue == null);
+
+
+	},
+
     setDefaults: function(options) {
         var data;
 
@@ -1745,6 +1778,5 @@ Ext.define('App.view.patientfile.MedicalWindow', {
         this.patientMedicationsStore.load({params: {pid: app.currPatient.pid}});
 
     }
-
 
 });

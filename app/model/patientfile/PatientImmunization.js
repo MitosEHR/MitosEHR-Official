@@ -18,9 +18,9 @@ Ext.define('App.model.patientfile.PatientImmunization', {
 		{name: 'administered_date', type: 'date', dateFormat: 'c'},
 		{name: 'manufacturer', type: 'string'},
 		{name: 'lot_number', type: 'string'},
-		{name: 'administered_uid', type: 'string'},
+		{name: 'administered_by', type: 'string'},
 		{name: 'education_date', type: 'date', dateFormat: 'c'},
-		{name: 'vis_date', type: 'date', dateFormat: 'c'},
+		{name: 'dosis'},
 		{name: 'create_date', type: 'date', dateFormat: 'c'},
 		{name: 'note', type: 'string'},
         {name: 'alert', type: 'bool'}

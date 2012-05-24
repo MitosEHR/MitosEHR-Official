@@ -22,7 +22,7 @@ Ext.define('App.view.patientfile.Summary', {
         var me = this;
 
         me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
-        me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
+
 
         me.immuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
 
@@ -580,7 +580,7 @@ Ext.define('App.view.patientfile.Summary', {
 	    PreventiveCare.activePreventiveCareAlert({pid:app.currPatient.pid},function(provider,response){
 	       if(response.result.success){
 
-		       me.PreventiveCareWindow.show();
+		       app.PreventiveCareWindow.show();
 
 	       }
         });

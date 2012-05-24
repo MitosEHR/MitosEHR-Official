@@ -659,7 +659,7 @@ Ext.define('App.view.MitosApp', {
 		me.MedicalWindow = Ext.create('App.view.patientfile.MedicalWindow');
 		me.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
         me.PaymentEntryWindow = Ext.create('App.view.patientfile.PaymentEntryWindow');
-
+		me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
 
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
