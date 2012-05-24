@@ -661,6 +661,9 @@ Ext.define('App.view.MitosApp', {
         me.PaymentEntryWindow = Ext.create('App.view.patientfile.PaymentEntryWindow');
 		me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
 
+		me.NewDocumentsWindow = Ext.create('App.view.patientfile.NewDocumentsWindow');
+
+
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
 		me.items = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];
@@ -671,7 +674,7 @@ Ext.define('App.view.MitosApp', {
 
 		me.callParent(arguments);
 
-		me.signature = Ext.create('App.view.signature.SignatureWindow').show();
+		me.signature = Ext.create('App.view.signature.SignatureWindow');
 
 	},
 
@@ -683,6 +686,11 @@ Ext.define('App.view.MitosApp', {
 
 	onChartsWin: function() {
 		this.ChartsWindow.show();
+	},
+
+	onNewDocumentsWin:function(action){
+        this.NewDocumentsWindow.show();
+		this.NewDocumentsWindow.cardSwitch(action);
 	},
 
     onPatientLog:function(){
