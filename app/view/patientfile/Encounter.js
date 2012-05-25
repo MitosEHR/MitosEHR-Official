@@ -67,12 +67,12 @@ Ext.define('App.view.patientfile.Encounter', {
          * the "New Encounter" button is pressed.
          */
         me.newEncounterWindow = Ext.create('Ext.window.Window', {
-            title:'New Encounter Form',
-            closeAction:'hide',
-            modal:true,
-            closable:false,
-	        width:700,
-            items:[
+            title      : 'New Encounter Form',
+            closeAction: 'hide',
+            modal      : true,
+            closable   : false,
+            width:660,
+            items  : [
                 {
                     xtype:'form',
                     border:false,
