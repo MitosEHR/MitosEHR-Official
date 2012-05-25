@@ -45,6 +45,7 @@ class Practice extends dbHelper {
         }
         return $rows;
     }
+
     /**
      * @param stdClass $params
      * @return stdClass
@@ -57,11 +58,12 @@ class Practice extends dbHelper {
         $row['transmit_method'] 		= $data['transmit_method'];
         $row['email'] 					= $data['email'];
         $row['active'] 				    = $data['active'];
-        $sql = $this->sqlBind($row, "pharmacies", "I");
+        $sql = $this->sqlBind($row, 'pharmacies', 'I');
         $this->setSQL($sql);
         $this->execLog();
-        $this->addAddress($data);
-        $this->addPhones($data);
+	    $params = $this->addAddress($params);
+	    $params = $this->addPhones($params);
+
         return $params;
     }
     /**
@@ -74,11 +76,11 @@ class Practice extends dbHelper {
         $row['transmit_method'] 		= $data['transmit_method'];
         $row['email'] 					= $data['email'];
         $row['active'] 				    = $data['active'];
-        $sql = $this->sqlBind($row, "pharmacies", "U", "id='" . $data['id'] . "'");
+        $sql = $this->sqlBind($row, 'pharmacies', 'U', array('id'=>$data['id']));
         $this->setSQL($sql);
         $this->execLog();
-        $this->updateAddress($data);
-        $this->updatePhones($data);
+	    $params = $this->updateAddress($params);
+	    $params = $this->updatePhones($params);
         return $params;
     }
 
@@ -133,11 +135,11 @@ class Practice extends dbHelper {
         $row['x12_default_partner_id'] 	= $data['x12_default_partner_id'];
         $row['alt_cms_id'] 				= $data['alt_cms_id'];
         $row['active'] 				    = $data['active'];
-        $sql = $this->sqlBind($row, "insurance_companies", "I");
+        $sql = $this->sqlBind($row, 'insurance_companies', 'I');
         $this->setSQL($sql);
         $this->execLog();
-        $this->addAddress($data);
-        $this->addPhones($data);
+	    $params = $this->addAddress($params);
+	    $params = $this->addPhones($params);
         return $params;
     }
     
@@ -151,11 +153,11 @@ class Practice extends dbHelper {
         $row['x12_default_partner_id'] 	= $data['x12_default_partner_id'];
         $row['alt_cms_id'] 				= $data['alt_cms_id'];
         $row['active'] 				    = $data['active'];
-        $sql = $this->sqlBind($row, "insurance_companies", "U", "id='" . $data['id'] . "'");
+        $sql = $this->sqlBind($row, 'insurance_companies', 'U', array('id'=>$data['id']));
         $this->setSQL($sql);
         $this->execLog();
-        $this->updateAddress($data);
-        $this->updatePhones($data);
+	    $params = $this->updateAddress($params);
+	    $params = $this->updatePhones($params);
         return $params;
     }
 
@@ -180,14 +182,13 @@ class Practice extends dbHelper {
         return $params;
     }
 
-
-
-
-    /**
-     * @param $data
-     * @return mixed
-     */
-    private function addAddress($data){
+	/**
+	 * @param $params
+	 * @internal param $data
+	 * @return mixed
+	 */
+    private function addAddress($params){
+	    $data = get_object_vars($params);
         $arow['line1'] 			= $data['line1'];
         $arow['line2'] 			= $data['line2'];
         $arow['city'] 			= $data['city'];
@@ -196,16 +197,20 @@ class Practice extends dbHelper {
         $arow['plus_four'] 		= $data['plus_four'];
         $arow['country'] 		= $data['country'];
         $arow['foreign_id'] 	= $data['id'];
-        $sql = $this->sqlBind($arow, "addresses", "I");
+        $sql = $this->sqlBind($arow, 'addresses', 'I');
         $this->setSQL($sql);
         $this->execOnly();
-        return;
+	    $params->address_full = $params->line1.' '.$params->line2.' '.$params->city.','.$params->state.' '.$params->zip.'-'.$params->plus_four.' '.$params->country;
+        return $params;
     }
-    /**
-     * @param $data
-     * @return mixed
-     */
-    private function updateAddress($data){
+
+	/**
+	 * @param $params
+	 * @internal param $data
+	 * @return mixed
+	 */
+    private function updateAddress($params){
+	    $data = get_object_vars($params);
         $arow['line1'] 			= $data['line1'];
         $arow['line2'] 			= $data['line2'];
         $arow['city'] 			= $data['city'];
@@ -213,10 +218,11 @@ class Practice extends dbHelper {
         $arow['zip'] 			= $data['zip'];
         $arow['plus_four'] 		= $data['plus_four'];
         $arow['country'] 		= $data['country'];
-        $sql = $this->sqlBind($arow, "addresses", "U", "id='" .$data['address_id'] . "'");
+        $sql = $this->sqlBind($arow, 'addresses', 'U', array('foreign_id'=>$data['id']));
         $this->setSQL($sql);
         $this->execLog();
-        return;
+	    $params->address_full = $params->line1.' '.$params->line2.' '.$params->city.','.$params->state.' '.$params->zip.'-'.$params->plus_four.' '.$params->country;
+        return $params;
     }
     /**
      * @param $row
@@ -246,11 +252,14 @@ class Practice extends dbHelper {
         }
         return $row;
     }
-    /**
-     * @param $data
-     * @return mixed
-     */
-    private function addPhones($data){
+
+	/**
+	 * @param $params
+	 * @internal param $data
+	 * @return mixed
+	 */
+    private function addPhones($params){
+	    $data = get_object_vars($params);
         $prow['country_code'] 	= $data['phone_country_code'];
         $prow['area_code'] 		= $data['phone_area_code'];
         $prow['prefix'] 		= $data['phone_prefix'];
@@ -263,16 +272,22 @@ class Practice extends dbHelper {
         $frow['number'] 		= $data['fax_number'];
         $frow['type'] 		    = 5;
         $frow['foreign_id'] 	= $data['id'];
-        $sql = $this->sqlBind($prow, "phone_numbers", "I");
+        $sql = $this->sqlBind($prow, 'phone_numbers', 'I');
         $this->setSQL($sql);
         $this->execOnly();
-        $sql = $this->sqlBind($frow, "phone_numbers", "I");
+        $sql = $this->sqlBind($frow, 'phone_numbers', 'I');
         $this->setSQL($sql);
         $this->execOnly();
-        return;
+
+	    $params->phone_full = $prow['country_code'].' '.$prow['area_code'].'-'.$prow['prefix'].'-'.$prow['number'];
+	    $params->fax_full = $frow['country_code'].' '.$frow['area_code'].'-'.$frow['prefix'].'-'.$frow['number'];
+
+        return $params;
     }
 
-    private function updatePhones($data){
+    private function updatePhones($params){
+	    $data = get_object_vars($params);
+
         $prow['country_code'] 		        = $data['phone_country_code'];
         $prow['area_code'] 		            = $data['phone_area_code'];
         $prow['prefix'] 			        = $data['phone_prefix'];
@@ -282,13 +297,17 @@ class Practice extends dbHelper {
         $frow['area_code'] 			        = $data['fax_area_code'];
         $frow['prefix'] 				    = $data['fax_prefix'];
         $frow['number'] 				    = $data['fax_number'];
-        $sql = $this->sqlBind($prow, "phone_numbers", "U", "id='" . $data['phone_id'] . "'");
+        $sql = $this->sqlBind($prow, 'phone_numbers', 'U', array('foreign_id'=> $data['id'], 'type' => 2));
         $this->setSQL($sql);
         $this->execLog();
-        $sql = $this->sqlBind($frow, "phone_numbers", "U", "id='" . $data['fax_id'] . "'");
+        $sql = $this->sqlBind($frow, 'phone_numbers', 'U', array('foreign_id'=> $data['id'], 'type' => 5));
         $this->setSQL($sql);
         $this->execLog();
-        return;
+
+	    $params->phone_full = $prow['country_code'].' '.$prow['area_code'].'-'.$prow['prefix'].'-'.$prow['number'];
+	    $params->fax_full = $frow['country_code'].' '.$frow['area_code'].'-'.$frow['prefix'].'-'.$frow['number'];
+
+        return $params;
     }
     /**
      * @return mixed
@@ -304,3 +323,11 @@ class Practice extends dbHelper {
     
 
 }
+
+//$params = new stdClass();
+//$params->name= 'test';
+//$params->transmit_method = 'test';
+//$params->email = 'test';
+//$params->active  = 'test';
+//$p = new Practice();
+//print $p->addPharmacy($params);

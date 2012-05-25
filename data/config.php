@@ -712,6 +712,9 @@ $API = array(
             'getOptionsByListId'=>array(
                 'len'=>1
             ),
+            'getActivePharmacies'=>array(
+                'len'=>0
+            ),
             'getUsers'=>array(
                 'len'=>0
             ),

@@ -9,7 +9,7 @@ Ext.define('App.classes.combo.Lists', {
 		Ext.define('ListComboModel', {
 			extend: 'Ext.data.Model',
 			fields: [
-				{name: 'id', type: 'int' },
+				{name: 'id'},
 				{name: 'title', type: 'string' }
 			],
 			proxy : {

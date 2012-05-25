@@ -25,8 +25,6 @@ Ext.define('App.view.patientfile.Summary', {
         me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
 
         me.immuCheckListStore = Ext.create('App.store.patientfile.ImmunizationCheck');
-
-
         me.patientAllergiesListStore = Ext.create('App.store.patientfile.Allergies');
         me.patientMedicalIssuesStore = Ext.create('App.store.patientfile.MedicalIssues');
         me.patientSurgeryStore = Ext.create('App.store.patientfile.Surgery');
@@ -196,7 +194,36 @@ Ext.define('App.view.patientfile.Summary', {
                                 header:'User',
                                 dataIndex:'user_name'
                             }
-                        ]
+                        ],
+	                    tbar:[
+		                    {
+			                    text:'New Lab Order',
+			                    action:'lab',
+			                    scope:me,
+			                    handler:me.newDoc
+		                    },
+		                    '-',
+		                    {
+			                    text:'New X-Ray Order',
+			                    action:'xRay',
+			                    scope:me,
+			                    handler:me.newDoc
+		                    },
+		                    '-',
+		                    {
+			                    text:'New Prescription',
+			                    action:'prescription',
+			                    scope:me,
+			                    handler:me.newDoc
+		                    },
+		                    '-',
+		                    {
+			                    text:'New Doctors Note',
+			                    action:'notes',
+			                    scope:me,
+			                    handler:me.newDoc
+		                    }
+	                    ]
                     }
                 ]
             },
@@ -394,6 +421,10 @@ Ext.define('App.view.patientfile.Summary', {
 
         me.callParent(arguments);
     },
+
+	newDoc:function(btn){
+		app.onNewDocumentsWin(btn.action)
+	},
 
     disableFields: function(fields) {
         Ext.each(fields, function(field) {

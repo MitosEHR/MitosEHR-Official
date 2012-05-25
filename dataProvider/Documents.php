@@ -85,9 +85,7 @@ class Documents
 	{
 		return;
 	}
-
-    public function getDocumentWithTokens(){}
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function getArrayWithTokensNeededByDocumentID($id){
         $this->db->setSQL("SELECT title,
                                   body
@@ -98,11 +96,9 @@ class Documents
         $regex ='(\[\w*?\])';
         $body = $record['body'];
         preg_match_all($regex,$body,$tokensfound);
-
-
-
         return $tokensfound;
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function getTemplateBodyById($id){
         $this->db->setSQL("SELECT title,
                                   body
@@ -110,7 +106,7 @@ class Documents
                             WHERE id = '$id' ");
         return $this->db->fetchRecord(PDO::FETCH_ASSOC);
     }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function getAllPatientData($pid){
         $this->db->setSQL("SELECT *
                            	 FROM form_data_demographics
@@ -118,16 +114,36 @@ class Documents
         $record =$this->db->fetchRecord(PDO::FETCH_ASSOC);
         return $record;
     }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public function findAndReplaceTokens($pid){
+    public function setArraySizeOfTokenArray($tokens){
+        $givingValuesToTokens=array();
+        foreach($tokens as $tok){
+            array_push($givingValuesToTokens,'');
+        }
+        return $givingValuesToTokens;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private function get_PatientTokensData($pid,$allNeededInfo,$tokens){
 
         $patientData = $this->getAllPatientData($pid);
-
         $age =$this->patient->getPatientAgeByDOB($patientData['DOB']);
-
+        $root =  $_SESSION['site']['root'];
+        $site = $_SESSION['site']['site'];
+        $path = $root.'/sites/'.$site.'/patients/'.$pid.'/'.'patient_picture.jpg';
+        $img = $img = '
+        <style type="text/css">
+        div.leftpane {
+                position: fixed;
+        }
+        </style>
+        <div class="leftpane">
+		        <img src="' . $path . '"width="120"style="margin: 1cm;";/>
+        </div>';
         $patienInformation = array
         (
             '[PATIENT_NAME]' => $patientData['fname'],
+            '[PATIENT_ID]' => $pid,
             '[PATIENT_FULL_NAME]'=>$this->patient->getPatientFullNameByPid($patientData['pid']),
             '[PATIENT_LAST_NAME]'=>$patientData['lname'],
             '[PATIENT_BIRTHDATE]'=>$patientData['DOB'],
@@ -153,7 +169,7 @@ class Documents
             '[PATIENT_REFERRAL]'=>$patientData['referral'],/////////////////////////////////////
             '[PATIENT_REFERRAL_DATE]'=>$patientData['referral_date'],////////////////////////////////
             '[PATIENT_BALANCE]'=>'working on it',//////////////////////////////////////////////////
-            '[PATIENT_PICTURE]'=>'working on it',/////////////////////////////////////////////////
+            '[PATIENT_PICTURE]'=> $img,/////////////////////////////////////////////////
             '[PATIENT_PRIMARY_PLAN]'=>$patientData['primary_plan_name'],
             '[PATIENT_PRIMARY_INSURANCE_PROVIDER]'=>$patientData['primary_insurance_provider'],
             '[PATIENT_PRIMARY_INSURED_PERSON]'=>$patientData['primary_subscriber_fname'].' '.$patientData['primary_subscriber_mname'].' '.$patientData['primary_subscriber_lname'],
@@ -185,7 +201,19 @@ class Documents
             '[PATIENT_INACTIVE_SURGERY_LIST]'
 
         );
+        $pos=0;
+        foreach($tokens[0] as $tok){
+            if($allNeededInfo[$pos]=='' || $allNeededInfo[$pos]== null){
+                $allNeededInfo[$pos]=$patienInformation[$tok];
+            };
+            $pos=$pos+1;
 
+        }
+        return $allNeededInfo;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private  function get_EncounterTokensData(/*$eid,*/$allNeededInfo,$tokens){
         $encounterInformation = array
         (
             '[ENCOUNTER_DATE]',
@@ -207,12 +235,18 @@ class Documents
             '[ENCOUNTER_CPT_CODES]',
             '[ENCOUNTER_SIGNATURE]'
         );
-        $ordersInformation = array(
-            '[ORDERS_LABORATORIES]',
-            '[ORDERS_XRAYS]',
-            '[ORDERS_REFERRAL]',
-            '[ORDERS_OTHER]'
-        );
+        $pos=0;
+        foreach($tokens[0] as $tok){
+            if($allNeededInfo[$pos]=='' || $allNeededInfo[$pos]== null){
+                $allNeededInfo[$pos]=$encounterInformation[$tok];
+            };
+            $pos=$pos+1;
+        }
+        return $allNeededInfo;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private function get_currentTokensData($allNeededInfo,$tokens){
+
         $currentInformation= array(
             '[CURRENT_DATE]'=>date('d-m-Y'),
             '[CURRENT_USER_NAME]'=>$_SESSION['user']['name'],
@@ -222,93 +256,72 @@ class Documents
             '[CURRENT_USER_NPI_LICENSE_NUMBER]',
             '[LINE]'=>'<hr>',
         );
+        $pos=0;
+        foreach($tokens[0] as $tok){
+
+            if($allNeededInfo[$pos]=='' || $allNeededInfo[$pos]== null){
+                $allNeededInfo[$pos]=$currentInformation[$tok];
+            };
+
+            $pos=$pos+1;
+        }
+        return $allNeededInfo;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private function get_ClinicTokensData($allNeededInfo,$tokens){
         $clinicInformation=array(
 
 
         );
-
-        $tokens=$this->getArrayWithTokensNeededByDocumentID(1);//getting the template
-
-        $body=$this->getTemplateBodyById(1);
-        $pos=0;
-
-        $givingValuesToTokens=array();
-        //Creating a empty array to assign values to the tokens
-        foreach($tokens[0] as $tok){
-
-            array_push($givingValuesToTokens,'');
-
-
-        }
-
-        foreach($tokens[0] as $tok){
-
-            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
-                $givingValuesToTokens[$pos]=$patienInformation[$tok];
-            };
-
-            $pos=$pos+1;
-
-        }
-
         $pos=0;
         foreach($tokens[0] as $tok){
 
-            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
-                $givingValuesToTokens[$pos]=$currentInformation[$tok];
+            if($allNeededInfo[$pos]=='' || $allNeededInfo[$pos]== null){
+                $allNeededInfo[$pos]=$clinicInformation[$tok];
             };
 
             $pos=$pos+1;
         }
-        $pos=0;
-        foreach($tokens[0] as $tok){
+        return $allNeededInfo;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
-                $givingValuesToTokens[$pos]=$ordersInformation[$tok];
-            };
+    public function createAndSaveHTMLToPDF($pid,$HTMLresolve){
+        $root =  $_SESSION['site']['root'];
+        $site = $_SESSION['site']['site'];
+        $path = $root.'/sites/'.$site.'/patients/'.$pid.'/';
 
-            $pos=$pos+1;
-        }
-        $pos=0;
-        foreach($tokens[0] as $tok){
+        $this->dompdf->load_html($HTMLresolve['body']);
+        $this->dompdf->set_paper('letter', 'portrait');
+        $this->dompdf->render();
+        $pdf=$this->dompdf->output();
+        $fp = fopen($path.$HTMLresolve['title'].'.pdf', 'w');
+        fwrite($fp, $pdf);
+        fclose($fp);
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
-                $givingValuesToTokens[$pos]=$encounterInformation[$tok];
-            };
+    public function findAndReplaceTokens($pid,$documentId){
 
-            $pos=$pos+1;
-        }
-        $pos=0;
-        foreach($tokens[0] as $tok){
+        $tokens=$this->getArrayWithTokensNeededByDocumentID($documentId);//getting the template
+        $body=$this->getTemplateBodyById($documentId);
+        $allNeededInfo = $this->setArraySizeOfTokenArray($tokens);
+        $allNeededInfo =$this->get_PatientTokensData($pid,$allNeededInfo,$tokens);
+        $allNeededInfo =$this->get_EncounterTokensData(/*$eid,*/$allNeededInfo,$tokens);
+        $allNeededInfo =$this->get_currentTokensData($allNeededInfo,$tokens);
+        $allNeededInfo =$this->get_ClinicTokensData($allNeededInfo,$tokens);
+        $HTMLresolve = str_replace($tokens[0], $allNeededInfo, $body);
+        $this->createAndSaveHTMLToPDF($pid,$HTMLresolve);
 
-            if($givingValuesToTokens[$pos]=='' || $givingValuesToTokens[$pos]== null){
-                $givingValuesToTokens[$pos]=$clinicInformation[$tok];
-            };
-
-            $pos=$pos+1;
-        }
-
-
-
-        $newphrase = str_replace($tokens[0], $givingValuesToTokens, $body);
-        print_r($newphrase);
-//Crear html to PDF y grabarlo/////////////////////////////////////////////////////////////////////////
-//        $this->dompdf->load_html($newphrase['body']);
-//        $this->dompdf->set_paper('letter', 'portrait');
-//        $this->dompdf->render();
-//
-//        $pdf=$this->dompdf->output();
-//        $fp = fopen('data.pdf', 'w');
-//        fwrite($fp, $pdf);
-//        fclose($fp);
-
-
-
+        return $HTMLresolve;
     }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 
-$e = new Documents();
-echo '<pre>';
-$e->findAndReplaceTokens(39);
+//$e = new Documents();
+//echo '<pre>';
+//$e->findAndReplaceTokens(1,3);
+

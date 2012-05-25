@@ -155,25 +155,25 @@ class dbHelper {
 		$this->sql_statement = $sql;
 	}
 
-    /**
-     * @brief       SQL Bind.
-     * @details     This method is used to INSERT and UPDATE the database.
-     *
-     * @author      Gino Rivera (Certun) <grivera@certun.com>
-     * @version     Vega 1.0
-     *
-     * @note        To eliminate fields that are not in the database you can use unset($b_array['field']);
-     * @warning     To UPDATE you can NOT pass the ID in the $b_array.
-     *              Make user to unset the ID before calling this method.
-     *
-     * @see         User::addUser() for Add example and  User::updateUser() for Update example.
-     *
-     * @param       array $BindFieldsArray  containing a key that has to be the exact field on the data base, and it's value
-     * @param       string $Table  A valid database table to make the SQL statement
-     * @param       string $InsertOrUpdate Insert or Update parameter. This has to options I = Insert, U = Update
-     * @param       string $Where If in $iu = U is used you must pass a WHERE clause in the last parameter. ie: id='1', list_id='patient'
-     * @return      string constructed SQL string
-     */
+	/**
+	 * @brief       SQL Bind.
+	 * @details     This method is used to INSERT and UPDATE the database.
+	 *
+	 * @author      Gino Rivera (Certun) <grivera@certun.com>
+	 * @version     Vega 1.0
+	 *
+	 * @note        To eliminate fields that are not in the database you can use unset($b_array['field']);
+	 * @warning     To UPDATE you can NOT pass the ID in the $b_array.
+	 *              Make user to unset the ID before calling this method.
+	 *
+	 * @see         User::addUser() for Add example and  User::updateUser() for Update example.
+	 *
+	 * @param       array  $BindFieldsArray  containing a key that has to be the exact field on the data base, and it's value
+	 * @param       string $Table            A valid database table to make the SQL statement
+	 * @param       string $InsertOrUpdate   Insert or Update parameter. This has to options I = Insert, U = Update
+	 * @param              $Where
+	 * @return      string constructed SQL string
+	 */
     public function sqlBind($BindFieldsArray, $Table, $InsertOrUpdate='I', $Where)
     {
         if(isset($BindFieldsArray['__utma']))   unset($BindFieldsArray['__utma']);
@@ -194,26 +194,56 @@ class dbHelper {
         $sql .= ' SET ';
 		foreach($BindFieldsArray as $key => $value){
 			$value = addslashes($value);
-			if( $Where <> ($key . "='$value'") &&
-                $Where <> ($key . '='.$value) &&
-                $Where <> ($key . '="$value"')){
-				if($value == null || $value === 'NULL' || $value === 'null'){
-					$sql .= $key . '=NULL, ';
+			if(isset($Where) && is_array($Where)){
+				if(!array_key_exists($key, $Where)){
+					if($value == null || $value === 'NULL' || $value === 'null'){
+						$sql .= $key. '=NULL, ';
+					}else{
+						$value =  preg_replace('/([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2})/i', '${1} ${2}', trim($value));
+						$sql .= $key. "='$value', ";
+					}
 				}else{
-					$sql .= $key . "='".trim($value)."', ";
+					return array(
+	                    'success'=>false,
+	                    'error'=>'Where value can not be updated. please make sure to unset it from the array'
+	                );
 				}
 			}else{
-                return array(
-                    'success'=>false,
-                    'error'=>'Where value can not be updated. please make sure to unset it from the array'
-                );
-            }
+				if( $Where <> ($key . "='$value'") &&
+	                $Where <> ($key . '='.$value) &&
+	                $Where <> ($key . '="'.$value.'"')){
+					if($value == null || $value === 'NULL' || $value === 'null'){
+						$sql .= $key. '=NULL, ';
+					}else{
+						$value =  preg_replace('/([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{2}:[0-9]{2}:[0-9]{2})/i', '${1} ${2}', trim($value));
+						$sql .= $key. "='$value', ";
+					}
+				}else{
+	                return array(
+	                    'success'=>false,
+	                    'error'=>'Where value can not be updated. please make sure to unset it from the array'
+	                );
+	            }
+			}
+
 		}
         $sql = substr($sql, 0, -2);
 		/**
          * Step 3 - Create the WHERE clause, if applicable
          */
-		if ($InsertOrUpdate == 'u'){ $sql .= ' WHERE ' . $Where; }
+		if ($InsertOrUpdate == 'u'){
+			$sql .= ' WHERE ';
+			if(is_array($Where)){
+				$count = 0;
+				foreach($Where as $key => $val){
+					$and = ($count == 0)? '' : ' AND ';
+					$sql .= $and . $key.'=\''.$val.'\'';
+					$count++;
+				}
+			}else{
+				$sql .= $Where;
+			}
+		}
         /**
          * Step 4 - return the sql statement
          */
