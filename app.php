@@ -107,6 +107,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/model/patientfile/QRCptCodes.js"></script>
 <!--    <script type="text/javascript" src="app/model/patientfile/VisitPayment.js"></script>-->
         <script type="text/javascript" src="app/model/patientfile/CptCodes.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/PatientsPrescription.js"></script>
         <script type="text/javascript" src="app/model/fees/Billing.js"></script>
         <script type="text/javascript" src="app/model/fees/EncountersPayments.js"></script>
         <script type="text/javascript" src="app/model/administration/Services.js"></script>
@@ -134,6 +135,7 @@ Globals::setGlobals();
 <!--        <script type="text/javascript" src="app/store/patientfile/PreventiveCare.js"></script>-->
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
         <script type="text/javascript" src="app/store/patientfile/QRCptCodes.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/PatientsPrescription.js"></script>
         <script type="text/javascript" src="app/store/fees/Billing.js"></script>
         <script type="text/javascript" src="app/store/fees/EncountersPayments.js"></script>
         <script type="text/javascript" src="app/store/administration/Services.js"></script>
@@ -196,6 +198,10 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/Units.js"></script>
         <script type="text/javascript" src="app/classes/combo/Providers.js"></script>
         <script type="text/javascript" src="app/classes/combo/Time.js"></script>
+        <script type="text/javascript" src="app/classes/combo/PrescrptionOften.js"></script>
+        <script type="text/javascript" src="app/classes/combo/PrescrptionWhen.js"></script>
+        <script type="text/javascript" src="app/classes/combo/PrescrptionTypes.js"></script>
+        <script type="text/javascript" src="app/classes/combo/PrescrptionHowTo.js"></script>
         <script type="text/javascript" src="app/classes/combo/LabObservations.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
