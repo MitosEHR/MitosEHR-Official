@@ -143,7 +143,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	                                        name           : 'immunization_name',
                                             enableKeyEvents: true,
                                             action         : 'immunizations',
-                                            width          : 300,
+                                            width          : 570,
                                             listeners      : {
                                                 scope   : me,
                                                 'select': me.onLiveSearchSelect
@@ -158,17 +158,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'Administrator',
                                             name      : 'administered_by',
-                                            width     : 260
+	                                        width     : 295,
+	                                        labelWidth: 160
 
-                                        },
-
-                                        {
-                                            fieldLabel: 'Info. Statement Given',
-                                            width     : 295,
-                                            labelWidth: 180,
-                                            xtype     : 'datefield',
-                                            format    : 'Y-m-d',
-                                            name      : 'education_date'
                                         }
 
                                     ]
@@ -197,14 +189,14 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                             name      : 'dosis'
                                         },
 
-                                        {
-                                            fieldLabel: 'Date Administered',
-                                            xtype     : 'datefield',
-                                            width     : 295,
-                                            labelWidth: 180,
-                                            format    : 'Y-m-d',
-                                            name      : 'administered_date'
-                                        }
+	                                    {
+		                                    fieldLabel: 'Info. Statement Given',
+		                                    width     : 295,
+		                                    labelWidth: 160,
+		                                    xtype     : 'datefield',
+		                                    format    : 'Y-m-d',
+		                                    name      : 'education_date'
+	                                    }
 
                                     ]
 
@@ -232,7 +224,16 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
                                             name: 'manufacturer'
 
-                                        }
+                                        },
+
+	                                    {
+		                                    fieldLabel: 'Date Administered',
+		                                    xtype     : 'datefield',
+		                                    width     : 295,
+		                                    labelWidth: 160,
+		                                    format    : 'Y-m-d',
+		                                    name      : 'administered_date'
+	                                    }
 
                                     ]
 
@@ -332,7 +333,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	                                    {
 		                                    fieldLabel: 'Begin Date',
 		                                    xtype     : 'datefield',
-		                                    format    : 'Y-m-d H:i:s',
+		                                    format    : 'Y-m-d',
 		                                    name      : 'begin_date'
 
 	                                    }
@@ -447,7 +448,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'End Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+                                            format    : 'Y-m-d',
                                             name      : 'end_date'
                                         }
 
@@ -487,20 +488,11 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 action : 'patientMedicalListGrid',
                 store  : me.patientMedicalIssuesStore,
                 columns: [
+
                     {
-                        header   : 'Type',
+                        header   : 'Problem',
                         width    : 100,
-                        dataIndex: 'type'
-                    },
-                    {
-                        header   : 'Title',
-                        width    : 100,
-                        dataIndex: 'title'
-                    },
-                    {
-                        header   : 'Diagnosis Code',
-                        width    : 100,
-                        dataIndex: 'diagnosis_code'
+                        dataIndex: 'code'
                     },
                     {
                         header   : 'Begin Date',
@@ -511,27 +503,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         header   : 'End Date',
                         flex     : 1,
                         dataIndex: 'end_date'
-                    },
-                    {
-                        header   : 'Ocurrence',
-                        flex     : 1,
-                        dataIndex: 'ocurrence'
-                    },
-                    {
-                        header   : 'Referred by',
-                        flex     : 1,
-                        dataIndex: 'referred_by'
-                    },
-                    {
-                        header   : 'Outcome',
-                        flex     : 1,
-                        dataIndex: 'outcome'
-                    },
-                    {
-                        header   : 'Destination',
-                        flex     : 1,
-                        dataIndex: 'destination'
                     }
+
                 ],
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
                     autoCancel  : false,
@@ -554,39 +527,35 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
                                         {
-                                            xtype          : 'textfield',
-                                            fieldLabel     : 'Type',
-                                            name           : 'type',
+                                            xtype          : 'liveicdxsearch',
+                                            fieldLabel     : 'Problem',
+                                            name           : 'code',
                                             hideLabel      : false,
                                             itemId         : 'medicalissues',
                                             action         : 'medicalissues',
                                             enableKeyEvents: true,
-                                            width          : 225,
+                                            width          : 510,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
                                                 'select': me.onLiveSearchSelect
                                             }
                                         },
-//                                        {
-//   		                                    xtype:'textfield',
-//   		                                    hidden:true,
-//   		                                    name:'immunization_id',
-//   		                                    action:'idField'
-//   	                                    },
+                                        {
+   		                                    xtype:'textfield',
+   		                                    hidden:true,
+   		                                    name:'code_text',
+   		                                    action:'idField'
+   	                                    },
 
 
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+	                                        width     : 200,
+	                                        labelWidth: 80,
+	                                        format    : 'Y-m-d',
                                             name      : 'begin_date'
-
-                                        },
-                                        {
-                                            fieldLabel: 'Outcome',
-                                            xtype     : 'mitos.outcome2combo',
-                                            name      : 'outcome'
 
                                         }
 
@@ -602,51 +571,55 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
 
-                                        {   xtype     : 'textfield',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            fieldLabel: 'Title',
-                                            action    : 'title',
-                                            name      : 'title'
-                                        },
-                                        {
-                                            fieldLabel: 'End Date',
-                                            xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
-                                            name      : 'end_date'
+	                                    {
+		                                    fieldLabel: 'Ocurrence',
+		                                    width     : 250,
+		                                    labelWidth: 70,
+		                                    xtype     : 'mitos.occurrencecombo',
+		                                    name      : 'ocurrence'
 
-                                        },
+	                                    },
 
-                                        {
-                                            xtype     : 'textfield',
-                                            width     : 260,
-                                            fieldLabel: 'Referred by',
-                                            name      : 'referred_by'
-                                        }
+	                                    {
+		                                    fieldLabel: 'Outcome',
+		                                    xtype     : 'mitos.outcome2combo',
+		                                    width     : 250,
+		                                    labelWidth: 70,
+		                                    name      : 'outcome'
+
+	                                    },
+	                                    {
+		                                    fieldLabel: 'End Date',
+		                                    xtype     : 'datefield',
+		                                    width     : 200,
+		                                    labelWidth: 80,
+		                                    format    : 'Y-m-d',
+		                                    name      : 'end_date'
+
+	                                    }
 
                                     ]
 
                                 },
-                                {
-                                    /**
-                                     * Line three
-                                     */
-                                    xtype   : 'fieldcontainer',
-                                    layout  : 'hbox',
-                                    defaults: { margin: '0 10 5 0' },
-                                    items   : [
+	                            {
+		                            /**
+		                             * Line three
+		                             */
+		                            xtype   : 'fieldcontainer',
+		                            layout  : 'hbox',
+		                            defaults: { margin: '0 10 5 0' },
+		                            items   : [
 
-                                        {
-                                            fieldLabel: 'Ocurrence',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            xtype     : 'mitos.occurrencecombo',
-                                            name      : 'ocurrence'
+			                            {
+				                            xtype     : 'textfield',
+				                            width     : 250,
+				                            labelWidth: 70,
+				                            fieldLabel: 'Referred by',
+				                            name      : 'referred_by'
+			                            }
 
-                                        }
-
-                                    ]
-                                }
+		                            ]
+	                            }
                             ]
                         }
 
@@ -668,11 +641,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         dataIndex: 'type'
                     },
                     {
-                        header   : 'Diagnosis Code',
-                        width    : 100,
-                        dataIndex: 'diagnosis_code'
-                    },
-                    {
                         header   : 'Begin Date',
                         width    : 100,
                         dataIndex: 'begin_date'
@@ -681,26 +649,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         header   : 'End Date',
                         flex     : 1,
                         dataIndex: 'end_date'
-                    },
-                    {
-                        header   : 'Ocurrence',
-                        flex     : 1,
-                        dataIndex: 'ocurrence'
-                    },
-                    {
-                        header   : 'Referred by',
-                        flex     : 1,
-                        dataIndex: 'referred_by'
-                    },
-                    {
-                        header   : 'Outcome',
-                        flex     : 1,
-                        dataIndex: 'outcome'
-                    },
-                    {
-                        header   : 'Destination',
-                        flex     : 1,
-                        dataIndex: 'destination'
                     }
                 ],
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
@@ -745,7 +693,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+	                                        width     : 200,
+	                                        labelWidth: 80,
+	                                        format    : 'Y-m-d',
                                             name      : 'begin_date'
 
                                         },
@@ -778,7 +728,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'End Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+	                                        width     : 200,
+	                                        labelWidth: 80,
+	                                        format    : 'Y-m-d',
                                             name      : 'end_date'
 
                                         },
@@ -834,11 +786,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         dataIndex: 'title'
                     },
                     {
-                        header   : 'Diagnosis Code',
-                        width    : 100,
-                        dataIndex: 'diagnosis_code'
-                    },
-                    {
                         header   : 'Begin Date',
                         width    : 100,
                         dataIndex: 'begin_date'
@@ -847,26 +794,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         header   : 'End Date',
                         flex     : 1,
                         dataIndex: 'end_date'
-                    },
-                    {
-                        header   : 'Ocurrence',
-                        flex     : 1,
-                        dataIndex: 'ocurrence'
-                    },
-                    {
-                        header   : 'Referred by',
-                        flex     : 1,
-                        dataIndex: 'referred_by'
-                    },
-                    {
-                        header   : 'Outcome',
-                        flex     : 1,
-                        dataIndex: 'outcome'
-                    },
-                    {
-                        header   : 'Destination',
-                        flex     : 1,
-                        dataIndex: 'destination'
                     }
                 ],
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
@@ -905,13 +832,17 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+	                                        width     : 200,
+	                                        labelWidth: 80,
+	                                        format    : 'Y-m-d',
                                             name      : 'begin_date'
 
                                         },
                                         {
                                             fieldLabel: 'Outcome',
                                             xtype     : 'mitos.outcome2combo',
+	                                        width     : 250,
+	                                        labelWidth: 70,
                                             name      : 'outcome'
 
                                         }
@@ -939,13 +870,17 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                         {
                                             fieldLabel: 'End Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+	                                        width     : 200,
+	                                        labelWidth: 80,
+	                                        format    : 'Y-m-d',
                                             name      : 'end_date'
 
                                         },
                                         {
                                             fieldLabel: 'Ocurrence',
                                             xtype     : 'mitos.occurrencecombo',
+	                                        width     : 250,
+	                                        labelWidth: 70,
                                             name      : 'ocurrence'
 
                                         }
@@ -969,14 +904,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                 store  : me.patientMedicationsStore,
                 columns: [
                     {
-                        header   : 'Title',
+                        header   : 'Medication',
                         width    : 100,
-                        dataIndex: 'title'
-                    },
-                    {
-                        header   : 'Diagnosis Code',
-                        width    : 100,
-                        dataIndex: 'diagnosis_code'
+                        dataIndex: 'medication'
                     },
                     {
                         header   : 'Begin Date',
@@ -987,26 +917,6 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                         header   : 'End Date',
                         flex     : 1,
                         dataIndex: 'end_date'
-                    },
-                    {
-                        header   : 'Ocurrence',
-                        flex     : 1,
-                        dataIndex: 'ocurrence'
-                    },
-                    {
-                        header   : 'Referred by',
-                        flex     : 1,
-                        dataIndex: 'referred_by'
-                    },
-                    {
-                        header   : 'Outcome',
-                        flex     : 1,
-                        dataIndex: 'outcome'
-                    },
-                    {
-                        header   : 'Destination',
-                        flex     : 1,
-                        dataIndex: 'destination'
                     }
                 ],
                 plugins: Ext.create('App.classes.grid.RowFormEditing', {
@@ -1031,36 +941,33 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     items   : [
                                         {
                                             xtype          : 'medicationlivetsearch',
-                                            fieldLabel     : 'Type',
+                                            fieldLabel     : 'Medication',
                                             hideLabel      : false,
                                             itemId         : 'medication',
+                                            name           : 'medication',
                                             action         : 'medication',
                                             enableKeyEvents: true,
-                                            width          : 225,
+                                            width          : 520,
                                             labelWidth     : 70,
                                             listeners      : {
                                                 scope   : me,
                                                 'select': me.onLiveSearchSelect
                                             }
                                         },
-//                                        {
-//   		                                    xtype:'textfield',
-//   		                                    hidden:true,
-//   		                                    name:'immunization_id',
-//   		                                    action:'idField'
-//   	                                    },
+                                        {
+   		                                    xtype:'textfield',
+   		                                    hidden:true,
+   		                                    name:'medication_id',
+   		                                    action:'idField'
+   	                                    },
 
                                         {
                                             fieldLabel: 'Begin Date',
                                             xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
+	                                        width     : 200,
+	                                        labelWidth: 80,
+	                                        format    : 'Y-m-d',
                                             name      : 'begin_date'
-
-                                        },
-                                        {
-                                            fieldLabel: 'Outcome',
-                                            xtype     : 'mitos.outcome2combo',
-                                            name      : 'outcome'
 
                                         }
 
@@ -1075,28 +982,27 @@ Ext.define('App.view.patientfile.MedicalWindow', {
                                     layout  : 'hbox',
                                     defaults: { margin: '0 10 5 0' },
                                     items   : [
-
-                                        {   xtype     : 'textfield',
-                                            width     : 225,
-                                            labelWidth: 70,
-                                            fieldLabel: 'Title',
-                                            action    : 'title',
-                                            name      : 'title'
-                                        },
-                                        {
-                                            fieldLabel: 'End Date',
-                                            xtype     : 'datefield',
-                                            format    : 'Y-m-d H:i:s',
-                                            name      : 'end_date'
-
-                                        },
-
+	                                    {
+		                                    fieldLabel: 'Outcome',
+		                                    xtype     : 'mitos.outcome2combo',
+		                                    width     : 250,
+		                                    labelWidth: 70,
+		                                    name      : 'outcome'
+	                                    },
                                         {
                                             xtype     : 'textfield',
                                             width     : 260,
                                             fieldLabel: 'Referred by',
                                             name      : 'referred_by'
-                                        }
+                                        },
+	                                    {
+		                                    fieldLabel: 'End Date',
+		                                    xtype     : 'datefield',
+		                                    width     : 200,
+		                                    labelWidth: 80,
+		                                    format    : 'Y-m-d',
+		                                    name      : 'end_date'
+	                                    }
 
                                     ]
 
@@ -1112,8 +1018,8 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
                                         {
                                             fieldLabel: 'Ocurrence',
-                                            width     : 225,
-                                            labelWidth: 70,
+	                                        width     : 250,
+	                                        labelWidth: 70,
                                             xtype     : 'mitos.occurrencecombo',
                                             name      : 'ocurrence'
 
@@ -1548,7 +1454,7 @@ Ext.define('App.view.patientfile.MedicalWindow', {
             };
         Medical.addPatientLabsResult(params, function(provider, response){
             store.load({params:{parent_id:me.currLabPanelId}});
-            say(response.result);
+
         });
     },
 
@@ -1588,34 +1494,19 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 			field.setValue(id);
 
 	    }
-		else if(combo.action == 'medicalissues'){
-
+		else if(combo.action == 'medicalissues'  ){
+			id = model[0].data.code_text;
+			field =  combo.up('fieldcontainer').query('[action="idField"]')[0];
+			field.setValue(id);
 	    }
 		else if(combo.action == 'surgery'){
 
 	    }
 		else if(combo.action == 'medication'){
-
+			id = model[0].data.id;
+			field =  combo.up('fieldcontainer').query('[action="idField"]')[0];
+			field.setValue(id);
 	    }
-
-//	    this.patientImmuListStore.add({
-//		    immunization_id:model[0].data.id
-//	    });
-//	    this.patientAllergiesListStore.add({
-//		    immunization_id:model[0].data.id
-//	    });
-//	    this.patientMedicalIssuesStore.add({
-//		    immunization_id:model[0].data.id
-//	    });
-//	    this.patientSurgeryStore.add({
-//		    immunization_id:model[0].data.id
-//	    });
-//	    this.patientDentalStore.add({
-//		    immunization_id:model[0].data.id
-//	    });
-//	    this.patientMedicationsStore.add({
-//		    immunization_id:model[0].data.id
-//	    });
 
     },
 

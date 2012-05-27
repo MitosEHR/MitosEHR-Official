@@ -10,15 +10,15 @@ Ext.define('App.model.patientfile.ImmunizationCheck', {
 	fields: [
         {name: 'id', type: 'int'},
         {name: 'pid', type: 'int'},
-        {name: 'code', type: 'int'},
-		{name: 'code_text', type: 'string'},
+        {name: 'immunization_id', type: 'int'},
+		{name: 'immunization_name', type: 'string'},
 		{name: 'alert', type: 'bool'}
 
 	],
 	proxy : {
 		type: 'direct',
 		api : {
-			read: PreventiveCare.getImmunizationsCheck
+			read: Medical.getPatientImmunizations
 		}
 	}
 });

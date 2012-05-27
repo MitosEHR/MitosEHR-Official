@@ -476,9 +476,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 		var grid = btn.up('grid');
 		grid.editingPlugin.cancelEdit();
 
-		this.patientPrescriptionStore.insert(0,{
-			date_created: new Date()
-		});
+		this.patientPrescriptionStore.insert(0,{});
 		grid.editingPlugin.startEdit(0, 0);
 	},
 	onRemove: function(grid, rowIndex){
@@ -508,13 +506,16 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	},
 	onCreate: function (){
 		var records =this.patientPrescriptionStore.data.items,
-			data = [];
-		say(records);
+			params = [];
 		Ext.each(records, function(record){
-			data.push(record.data);
+			params.push(record.data);
 
 		});
-		say(data);
+		params['pid']=app.currPatient.pid;
+		params['documentId']=5;
+		say(params);
+
+		Documents.findAndReplaceTokens(params, function(provider, response){});
 
 	},
 	addMedications: function(){

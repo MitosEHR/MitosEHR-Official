@@ -51,7 +51,7 @@ Ext.define('App.classes.LiveICDXSearch', {
 
 		Ext.apply(this, {
 			store       : me.store,
-			displayField: 'code',
+			displayField: 'code_text',
 			valueField  : 'code',
 			emptyText   : me.emptyText,
 			typeAhead   : false,

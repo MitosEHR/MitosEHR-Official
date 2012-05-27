@@ -277,7 +277,7 @@ Ext.define('App.view.patientfile.Summary', {
                             {
 
                                 header   : 'Name',
-                                dataIndex: 'code_text',
+                                dataIndex: 'immunization_name',
                                 flex     : 1
                             },
                             {
@@ -311,7 +311,7 @@ Ext.define('App.view.patientfile.Summary', {
                         ]
                     },
                     {
-                        title      : 'Medical Issues',
+                        title      : 'Active Problems',
                         itemId     : 'IssuesPanel',
                         hideHeaders: true,
                         xtype      : 'grid',

@@ -16,15 +16,13 @@ Ext.define('App.model.patientfile.Medications', {
 		{name: 'created_uid', type: 'int'},
 		{name: 'updated_uid', type: 'int'},
 		{name: 'create_date', type: 'date', dateFormat: 'c'},
-		{name: 'type', type: 'string'},
-		{name: 'title', type: 'string'},
-		{name: 'diagnosis_code', type: 'string'},
+		{name: 'medication', type: 'string'},
+		{name: 'medication_id', type: 'string'},
 		{name: 'begin_date', type: 'date', dateFormat: 'c'},
 		{name: 'end_date', type: 'date', dateFormat: 'c'},
 		{name: 'ocurrence', type: 'string'},
 		{name: 'referred_by', type: 'string'},
 		{name: 'outcome', type: 'string'},
-		{name: 'destination', type: 'string'},
         {name: 'alert', type: 'bool'}
 	],
 	proxy : {

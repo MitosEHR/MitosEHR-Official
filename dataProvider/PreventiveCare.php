@@ -277,7 +277,7 @@ class PreventiveCare
     }
     public function checkProblem($pid,$preventiveId){
 
-       $check= $this->checkMedicationProblemLabs($pid,$preventiveId,'patient_issues','active_problems');
+       $check= $this->checkMedicationProblemLabs($pid,$preventiveId,'patient_issues','active_problems','code');
         if($check){
             return true;
 
@@ -288,7 +288,7 @@ class PreventiveCare
     }
     public function checkMedications($pid,$preventiveId){
 
-       $check= $this->checkMedicationProblemLabs($pid,$preventiveId,'patient_medications','medications');
+       $check= $this->checkMedicationProblemLabs($pid,$preventiveId,'patient_medications','medications','medication_id');
         if($check){
             return true;
 
@@ -298,17 +298,17 @@ class PreventiveCare
 
     }
 
-    public function checkMedicationProblemLabs($pid,$preventiveId,$tablexx,$column){
+    public function checkMedicationProblemLabs($pid,$preventiveId,$tablexx,$column,$columnName){
 
         $preventiveProblems = $this->getPreventiveCareActiveProblemsById($preventiveId);
         $preventiveProblems = explode(';',$preventiveProblems[$column]);
-        $patientProblems = $this->patient->getPatientActiveProblemsById($pid,$tablexx);
+        $patientProblems = $this->patient->getPatientActiveProblemsById($pid,$tablexx,$columnName);
         $checking = array();
         $size = sizeof($preventiveProblems);
         foreach($preventiveProblems as $prob){
             foreach($patientProblems as $patient){
-                if ($prob==$patient['title']){
-                    $checking[$patient['title']]=true;
+                if ($prob==$patient[$columnName]){
+                    $checking[$patient[$columnName]]=true;
 
                 }
             }

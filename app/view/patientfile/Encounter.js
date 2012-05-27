@@ -549,7 +549,7 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 '-',
                 {
-                    text:'Medical Issues ',
+                    text:'Active Problems ',
                     action:'issues'
                 },
                 '-',

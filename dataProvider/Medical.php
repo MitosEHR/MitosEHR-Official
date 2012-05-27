@@ -56,7 +56,10 @@ class Medical
 
 	public function getPatientImmunizations(stdClass $params)
 	{
-		return $this->getImmunizationsByPatientID($params->pid);
+		 $immunizations = $this->getImmunizationsByPatientID($params->pid);
+
+
+        return $immunizations;
 	}
 
 	public function addPatientImmunization(stdClass $params)
@@ -65,7 +68,6 @@ class Medical
 		unset($data['id'],$data['alert']);
 		$data['administered_date'] = $this->parseDate($data['administered_date']);
 		$data['education_date']    = $this->parseDate($data['education_date']);
-		$data['vis_date']          = $this->parseDate($data['vis_date']);
 		$data['create_date']       = $this->parseDate($data['create_date']);
 		$this->db->setSQL($this->db->sqlBind($data, 'patient_immunizations', 'I'));
 		$this->db->execLog();
@@ -453,8 +455,12 @@ class Medical
 		$this->db->setSQL("SELECT * FROM patient_issues WHERE pid='$pid'");
 		$records = array();
 		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $rec){
+            $text=$rec['code_text'];
+            $code=$rec['code'];
 			$rec['alert'] = ($rec['end_date']== null || $rec['end_date'] == '0000-00-00 00:00:00') ? 1 : 0 ;
-			$records[]= $rec;
+            $rec['code_text']=$code;
+            $rec['code']=$text;
+            $records[]= $rec;
 		}
 
 		return $records;
