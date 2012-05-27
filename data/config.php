@@ -821,5 +821,13 @@ $API = array(
                 'len'=>1
             ),
         )
+    ),
+
+    'Documents'=>array(
+        'methods'=>array(
+            'findAndReplaceTokens'=>array(
+                'len'=>1
+            )
+        )
     )
 );
