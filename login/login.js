@@ -98,7 +98,7 @@ Ext.define('App.panel.login.Login',{
                 validationEvent : false,
                 allowBlank      : false,
                 minLength       : 4,
-                maxLength       : 10,
+                maxLength       : 50,
                 listeners:{
                     scope       : me,
                     specialkey  : me.onEnter

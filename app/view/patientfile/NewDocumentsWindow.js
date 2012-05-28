@@ -14,7 +14,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	title      : 'Document Window',
 	layout     : 'fit',
 	closeAction: 'hide',
-	height     : 550,
+	height     : 430,
 	width      : 700,
 	bodyStyle  : 'background-color:#fff',
 	modal      : true,
@@ -40,7 +40,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 								xtype  : 'grid',
 								margin : 10,
 								store  : me.patientPrescriptionStore,
-								height : 350,
+								height : 320,
 								columns: [
 
 									{
@@ -108,7 +108,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 								xtype  : 'grid',
 								margin : 10,
 								store  : me.patientPrescriptionStore,
-								height : 350,
+								height : 320,
 								columns: [
 
 									{
@@ -182,7 +182,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 								xtype  : 'grid',
 								margin : 10,
 								store  : me.patientPrescriptionStore,
-								height : 350,
+								height : 285,
 								columns: [
 
 									{
@@ -390,7 +390,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 								xtype  : 'grid',
 								margin : 10,
 								store  : me.patientPrescriptionStore,
-								height : 350,
+								height : 320,
 								columns: [
 
 									{
@@ -506,16 +506,16 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	},
 	onCreate: function (){
 		var records =this.patientPrescriptionStore.data.items,
-			params = [];
+			data = [];
 		Ext.each(records, function(record){
-			params.push(record.data);
+			data.push(record.data);
+		});
+
+		Documents.findAndReplaceTokens({medications:data, pid:app.currPatient.pid, documentId:5}, function(provider, response){
+
+			say(response.result);
 
 		});
-		params['pid']=app.currPatient.pid;
-		params['documentId']=5;
-		say(params);
-
-		Documents.findAndReplaceTokens(params, function(provider, response){});
 
 	},
 	addMedications: function(){

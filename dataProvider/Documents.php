@@ -200,6 +200,7 @@ class Documents
             '[PATIENT_ACTIVE_SURGERY_LIST]',
             '[PATIENT_INACTIVE_SURGERY_LIST]'
 
+
         );
         $pos=0;
         foreach($tokens[0] as $tok){
@@ -288,22 +289,23 @@ class Documents
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public function createAndSaveHTMLToPDF($pid,$HTMLresolve){
-        $root =  $_SESSION['site']['root'];
+        $root = $_SESSION['site']['root'];
         $site = $_SESSION['site']['site'];
         $path = $root.'/sites/'.$site.'/patients/'.$pid.'/';
 
         $this->dompdf->load_html($HTMLresolve['body']);
         $this->dompdf->set_paper('letter', 'portrait');
         $this->dompdf->render();
-        $pdf=$this->dompdf->output();
+        $pdf = $this->dompdf->output();
         $fp = fopen($path.$HTMLresolve['title'].'.pdf', 'w');
         fwrite($fp, $pdf);
         fclose($fp);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public function findAndReplaceTokens($pid,$documentId){
-
+    public function findAndReplaceTokens($params){
+        $pid = $params->pid;
+        $documentId = $params->documentId;
         $tokens=$this->getArrayWithTokensNeededByDocumentID($documentId);//getting the template
         $body=$this->getTemplateBodyById($documentId);
         $allNeededInfo = $this->setArraySizeOfTokenArray($tokens);
@@ -311,10 +313,46 @@ class Documents
         $allNeededInfo =$this->get_EncounterTokensData(/*$eid,*/$allNeededInfo,$tokens);
         $allNeededInfo =$this->get_currentTokensData($allNeededInfo,$tokens);
         $allNeededInfo =$this->get_ClinicTokensData($allNeededInfo,$tokens);
+
+
+        ///////////////////////RX PART Document #5/////////////////////////////////////
+        if($documentId==5){
+            $medicationList = array();
+            $instructionList = array();
+            $dispenseandrefill = array();
+            $size = count($params->medications);
+            $count=0;
+            foreach($params->medications as $med){
+                $medicationList[$count] = $med->medication.'       '.$med->dose.' '.$med->dose_mg;
+                $instructionList[$count] = 'Instructions: '.$med->take_pills.' '.$med->type.' '.$med->by.' '.$med->prescription_often.' '.$med->prescription_when;
+                $dispenseandrefill[$count] ='Dispense: '.$med->dispense.' '.'Refill: '.$med->refill;
+                $count=$count+1;
+            }
+
+            $pos=0;
+            $count=0;
+            foreach($tokens[0] as $tok){
+                if($allNeededInfo[$pos]=='' || $allNeededInfo[$pos]== null){
+
+                    if($tok=='[MEDICATIONS_LIST]'){
+
+                        while($count < $size){
+                            $allNeededInfo[$pos].='<br>'.$medicationList[$count].'<br>'.$instructionList[$count].'<br>'.$dispenseandrefill[$count].'<br>';
+                            $count=$count+1;
+                        }
+                    }
+                };
+                $pos=$pos+1;
+            }
+        }
+
+
+
+
+
         $HTMLresolve = str_replace($tokens[0], $allNeededInfo, $body);
         $this->createAndSaveHTMLToPDF($pid,$HTMLresolve);
-
-        return $HTMLresolve;
+        return array('success'=>$allNeededInfo);
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -324,4 +362,3 @@ class Documents
 //$e = new Documents();
 //echo '<pre>';
 //$e->findAndReplaceTokens(1,3);
-

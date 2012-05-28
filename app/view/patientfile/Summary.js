@@ -252,9 +252,8 @@ Ext.define('App.view.patientfile.Summary', {
                         store      : me.patientMedicationsStore,
                         columns    : [
                             {
-
                                 header   : 'Name',
-                                dataIndex: 'title',
+                                dataIndex: 'medication',
                                 flex     : 1
                             },
                             {
@@ -320,7 +319,7 @@ Ext.define('App.view.patientfile.Summary', {
                             {
 
                                 header   : 'Name',
-                                dataIndex: 'title',
+                                dataIndex: 'code_text',
                                 flex     : 1
                             },
                             {

@@ -8,7 +8,6 @@
 Ext.define('App.model.patientfile.PatientsPrescription', {
 	extend: 'Ext.data.Model',
 	fields: [
-        {name: 'date_created', type: 'int'},
         {name: 'medication', type: 'string'},
         {name: 'medication_id', type: 'string'},
         {name: 'dose', type: 'int'},
