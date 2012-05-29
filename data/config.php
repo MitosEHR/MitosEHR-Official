@@ -163,6 +163,9 @@ $API = array(
             ),
             'updateDocumentsTemplates'=>array(
 	            'len'=>1
+            ),
+            'createDocument'=>array(
+	            'len'=>1
             )
 
         )
@@ -823,11 +826,5 @@ $API = array(
         )
     ),
 
-    'Documents'=>array(
-        'methods'=>array(
-            'findAndReplaceTokens'=>array(
-                'len'=>1
-            )
-        )
-    )
+
 );

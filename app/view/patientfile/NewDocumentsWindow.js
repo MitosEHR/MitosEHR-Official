@@ -26,6 +26,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	initComponent: function() {
 		var me = this;
 		me.patientPrescriptionStore = Ext.create('App.store.patientfile.PatientsPrescription');
+		me.patientDoctorsNoteStore = Ext.create('App.store.patientfile.Patient');
 
 		me.items = [
 			me.tabPanel = Ext.create('Ext.tab.Panel', {
@@ -373,7 +374,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 							'->', {
 								text   : 'Create',
 								scope  : me,
-								handler: me.onCreate
+								handler: me.onCreatePrescription
 							}, {
 								text   : 'Cancel',
 								scope  : me,
@@ -389,7 +390,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 
 								xtype  : 'grid',
 								margin : 10,
-								store  : me.patientPrescriptionStore,
+								store  : me.patientDoctorsNoteStore,
 								height : 320,
 								columns: [
 
@@ -504,14 +505,14 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 		say(e.record.commit());
 
 	},
-	onCreate: function (){
+	onCreatePrescription: function (){
 		var records =this.patientPrescriptionStore.data.items,
 			data = [];
 		Ext.each(records, function(record){
 			data.push(record.data);
 		});
 
-		Documents.findAndReplaceTokens({medications:data, pid:app.currPatient.pid, documentId:5}, function(provider, response){
+		DocumentHandler.createDocument({medications:data, pid:app.currPatient.pid, docType:'Rx', documentId:5}, function(provider, response){
 
 			say(response.result);
 
