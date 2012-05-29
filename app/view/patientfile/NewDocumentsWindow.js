@@ -26,6 +26,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	initComponent: function() {
 		var me = this;
 		me.patientPrescriptionStore = Ext.create('App.store.patientfile.PatientsPrescription');
+		me.patientsDoctorNoteStore = Ext.create('App.store.patientfile.PatientsDoctorsNote');
 
 		me.items = [
 			me.tabPanel = Ext.create('Ext.tab.Panel', {
@@ -73,21 +74,21 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 
 								],
 
-								bbar:{
-									xtype:'textfield',
-									margin:5,
-									fieldLabel:'Add',
-									hideLabel:false,
-									listeners:{
-										scope:me,
-										select:me.addMedications
+								bbar: {
+									xtype     : 'textfield',
+									margin    : 5,
+									fieldLabel: 'Add',
+									hideLabel : false,
+									listeners : {
+										scope : me,
+										select: me.addMedications
 									}
 								}
 							}
 						],
 
 
-						bbar : [
+						bbar: [
 							'->', {
 								text   : 'Create',
 								scope  : me,
@@ -141,16 +142,16 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 
 								],
 
-								bbar:{
-								xtype:'textfield',
-								margin:5,
-								fieldLabel:'Add',
-								hideLabel:false,
-								listeners:{
-									scope:me,
-									select:me.addMedications
+								bbar: {
+									xtype     : 'textfield',
+									margin    : 5,
+									fieldLabel: 'Add',
+									hideLabel : false,
+									listeners : {
+										scope : me,
+										select: me.addMedications
+									}
 								}
-							}
 
 							}
 						],
@@ -219,9 +220,9 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 									autoCancel  : false,
 									errorSummary: false,
 									clicksToEdit: 1,
-									listeners   :{
-										scope   : me,
-										edit    : me.onEditPrescription
+									listeners   : {
+										scope: me,
+										edit : me.onEditPrescription
 
 									},
 									formItems   : [
@@ -255,7 +256,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 															xtype     : 'numberfield',
 															fieldLabel: 'Dose',
 															labelWidth: 40,
-															action    :'dose',
+															action    : 'dose',
 															name      : 'dose',
 															width     : 100,
 															value     : 0,
@@ -264,7 +265,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 														{
 															xtype     : 'textfield',
 															fieldLabel: 'Dose mg',
-															action    :'dose_mg',
+															action    : 'dose_mg',
 															name      : 'dose_mg',
 															hideLabel : true,
 															width     : 150
@@ -389,7 +390,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 
 								xtype  : 'grid',
 								margin : 10,
-								store  : me.patientPrescriptionStore,
+								store  : me.patientsDoctorNoteStore,
 								height : 320,
 								columns: [
 
@@ -406,33 +407,163 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 										]
 									},
 									{
-										header   : 'Medication',
+										header   : 'Note',
 										width    : 100,
-										dataIndex: 'medication'
+										dataIndex: 'note'
 									},
 									{
-										header   : 'Dispense',
-										width    : 100,
-										dataIndex: 'dispense'
-									},
-									{
-										header   : 'Refill',
+										header   : 'Advice',
 										flex     : 1,
-										dataIndex: 'refill'
+										dataIndex: 'advice'
 									}
 
 								],
-								bbar:{
-									xtype:'textfield',
-									margin:5,
-									fieldLabel:'Add',
-									hideLabel:false,
-									listeners:{
-										scope:me,
-										select:me.addMedications
-									}
-								}
 
+								plugins: Ext.create('App.classes.grid.RowFormEditing', {
+									autoCancel  : false,
+									errorSummary: false,
+									clicksToEdit: 1,
+									listeners   : {
+										scope: me,
+										edit : me.onEditPrescription
+
+									},
+									formItems   : [
+
+										{
+											title : 'general',
+											xtype : 'container',
+											layout: 'vbox',
+											items : [
+												{
+													/**
+													 * Line one
+													 */
+													xtype   : 'fieldcontainer',
+													layout  : 'hbox',
+													defaults: { margin: '5 0 5 5' },
+													items   : [
+														{
+															xtype     : 'medicationlivetsearch',
+															fieldLabel: 'Medication',
+															hideLabel : false,
+															name      : 'medication',
+															width     : 350,
+															labelWidth: 80,
+															listeners : {
+																scope : me,
+																select: me.addPrescription
+															}
+														},
+														{
+															xtype     : 'numberfield',
+															fieldLabel: 'Dose',
+															labelWidth: 40,
+															action    : 'dose',
+															name      : 'dose',
+															width     : 100,
+															value     : 0,
+															minValue  : 0
+														},
+														{
+															xtype     : 'textfield',
+															fieldLabel: 'Dose mg',
+															action    : 'dose_mg',
+															name      : 'dose_mg',
+															hideLabel : true,
+															width     : 150
+														}
+													]
+
+												},
+												{
+													/**
+													 * Line two
+													 */
+													xtype   : 'fieldcontainer',
+													layout  : 'hbox',
+													defaults: { margin: '5 0 5 3'},
+
+													items: [
+														{
+															xtype     : 'numberfield',
+															fieldLabel: 'Take',
+															margin    : '5 0 5 5',
+															name      : 'take_pills',
+															width     : 130,
+															labelWidth: 80,
+															value     : 0,
+															minValue  : 0
+														},
+														{
+															xtype     : 'mitos.prescriptiontypes',
+															fieldLabel: 'Type',
+															hideLabel : true,
+															name      : 'type',
+															width     : 120
+														},
+														{
+															xtype     : 'mitos.prescriptionhowto',
+															fieldLabel: 'By',
+															name      : 'by',
+															hideLabel : true,
+															width     : 100
+														},
+														{
+															xtype: 'mitos.prescriptionoften',
+															name : 'prescription_often',
+															width: 120
+														},
+														{
+															xtype: 'mitos.prescriptionwhen',
+															name : 'prescription_when',
+															width: 100
+														}
+													]
+
+												},
+												{
+													/**
+													 * Line three
+													 */
+													xtype   : 'fieldcontainer',
+													layout  : 'hbox',
+													defaults: { margin: '5 0 5 5'},
+													items   : [
+														{
+
+															fieldLabel: 'Dispense',
+															xtype     : 'numberfield',
+															name      : 'dispense',
+															width     : 130,
+															labelWidth: 80,
+															value     : 0,
+															minValue  : 0
+														},
+														{
+															fieldLabel: 'Refill',
+															xtype     : 'numberfield',
+															name      : 'refill',
+															labelWidth: 35,
+															width     : 140,
+															value     : 0,
+															minValue  : 0
+														}
+													]
+												}
+											]
+										}
+									]
+								}),
+								tbar   : [
+									'->',
+									{
+										text   : 'New Doctors Note',
+										scope  : me,
+										handler: me.onAddNewDoctorsNote
+
+									}
+								]
 							}
 						],
 						bbar : [
@@ -476,49 +607,49 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 		var grid = btn.up('grid');
 		grid.editingPlugin.cancelEdit();
 
-		this.patientPrescriptionStore.insert(0,{});
+		this.patientPrescriptionStore.insert(0, {});
 		grid.editingPlugin.startEdit(0, 0);
 	},
-	onRemove: function(grid, rowIndex){
+	onRemove            : function(grid, rowIndex) {
 		var me = this,
 			store = grid.getStore(),
 			record = store.getAt(rowIndex);
-			grid.editingPlugin.cancelEdit();
+		grid.editingPlugin.cancelEdit();
 
-			store.remove(record);
+		store.remove(record);
 	},
 	addPrescription     : function(combo, model) {
 		var me = this,
-			field,field2, dose, dose_mg;
+			field, field2, dose, dose_mg;
 		dose = model[0].data.ACTIVE_NUMERATOR_STRENGTH;
 		dose_mg = model[0].data.ACTIVE_INGRED_UNIT;
 
-		field =  combo.up('fieldcontainer').query('[action="dose"]')[0];
-		field2 =  combo.up('fieldcontainer').query('[action="dose_mg"]')[0];
+		field = combo.up('fieldcontainer').query('[action="dose"]')[0];
+		field2 = combo.up('fieldcontainer').query('[action="dose_mg"]')[0];
 		field.setValue(dose);
 		field2.setValue(dose_mg);
 
 	},
-	onEditPrescription: function(editor,e){
+	onEditPrescription  : function(editor, e) {
 		say(editor);
 		say(e.record.commit());
 
 	},
-	onCreate: function (){
-		var records =this.patientPrescriptionStore.data.items,
+	onCreate            : function() {
+		var records = this.patientPrescriptionStore.data.items,
 			data = [];
-		Ext.each(records, function(record){
+		Ext.each(records, function(record) {
 			data.push(record.data);
 		});
 
-		Documents.findAndReplaceTokens({medications:data, pid:app.currPatient.pid, documentId:5}, function(provider, response){
+		Documents.findAndReplaceTokens({medications: data, pid: app.currPatient.pid, documentId: 5}, function(provider, response) {
 
 			say(response.result);
 
 		});
 
 	},
-	addMedications: function(){
+	addMedications      : function() {
 
 	},
 	onDocumentsWinShow  : function() {
