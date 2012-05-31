@@ -71,7 +71,28 @@ Ext.define('App.view.patientfile.Summary', {
 		                            {
 		                                xtype: 'toolbar',
 		                                dock: 'bottom',
-		                                //defaults: { xtype: 'button'},
+		                                items: [
+			                                '->',
+			                                {
+				                                xtype: 'button',
+		                                        text:'Save',
+				                                minWidth: 75,
+		                                        scope:me,
+		                                        handler:me.formSave
+		                                    },
+		                                    '-',
+		                                    {
+		                                        xtype: 'button',
+		                                        text:'Cancel',
+		                                        minWidth: 75,
+		                                        scope:me,
+		                                        handler:me.formCancel
+		                                    }
+		                                ]
+		                            },
+		                            {
+		                                xtype: 'toolbar',
+		                                dock: 'top',
 		                                items: [
 			                                '->',
 			                                {
@@ -450,11 +471,17 @@ Ext.define('App.view.patientfile.Summary', {
 
 
 	formSave:function(btn){
-		var form = btn.up('form').getForm(),
+		var me = this,
+			form = btn.up('form').getForm(),
 			record = form.getRecord(),
 			values = form.getValues();
 		record.set(values);
-		record.store.sync();
+		record.store.save({
+			scope:me,
+			callback:function(){
+				me.getPatientImgs();
+			}
+		});
 	},
 
 	formCancel:function(btn){
@@ -469,7 +496,9 @@ Ext.define('App.view.patientfile.Summary', {
 
     disableFields: function(fields) {
         Ext.each(fields, function(field) {
-            field.setReadOnly(true);
+	        if(field.name == 'SS' || field.name == 'DOB' || field.name == 'sex'){
+		        field.setReadOnly(true);
+	        }
         }, this);
     },
 
@@ -482,7 +511,7 @@ Ext.define('App.view.patientfile.Summary', {
 	        uFn = Patient.updatePatientDemographicData;
         }
 
-        var formFields = formpanel.getForm().getFields(), modelFields = [];
+        var formFields = formpanel.getForm().getFields(), modelFields = [{name:'pid',type:'int'}];
 
         Ext.each(formFields.items, function(field) {
             modelFields.push({name: field.name, type: 'auto'});
@@ -523,7 +552,7 @@ Ext.define('App.view.patientfile.Summary', {
 
         this.getFormItems(demoFormPanel, 'Demographics', function(success) {
             if(success) {
-                //me.disableFields(demoFormPanel.getForm().getFields().items);
+                me.disableFields(demoFormPanel.getForm().getFields().items);
                 who = demoFormPanel.query('fieldset[title="Who"]')[0];
 
                 imgCt = Ext.create('Ext.container.Container',{
@@ -613,9 +642,11 @@ Ext.define('App.view.patientfile.Summary', {
     },
 
     getPatientImgs: function() {
-        var me = this;
-        me.patientImg.setSrc('ui_icons/user_100.png');
-        me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png');
+        var me = this,
+	        number = Ext.Number.randomInt(1,1000);
+
+        me.patientImg.setSrc('ui_icons/user_100.png?'+number);
+        me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png?'+number);
     },
 
     /**
