@@ -175,6 +175,16 @@ class Patient {
 
     }
 
+    /**
+     * @param stdClass $params
+     * @return array
+     */
+    public function updatePatientDemographicData(stdClass $params){
+
+        return $params;
+
+    }
+
 	/**
 	 * @param $pid
 	 * @return array

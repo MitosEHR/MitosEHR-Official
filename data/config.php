@@ -640,6 +640,9 @@ $API = array(
             'getPatientDemographicData'=>array(
             	'len'=>1
             ),
+            'updatePatientDemographicData'=>array(
+            	'len'=>1
+            ),
             'getPatientsByPoolArea'=>array(
             	'len'=>1
             ),

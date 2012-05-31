@@ -473,27 +473,29 @@ Ext.define('App.view.patientfile.Summary', {
         }, this);
     },
 
-    getFormData: function(fornpanel) {
+    getFormData: function(formpanel) {
 
-        var me = this, center = me.down('panel').getComponent('centerPanel'), fn;
+        var me = this, rFn, uFn;
 
-        if(fornpanel.itemId == 'demoFormPanel') {
-            fn = Patient.getPatientDemographicData;
+        if(formpanel.itemId == 'demoFormPanel') {
+	        rFn = Patient.getPatientDemographicData;
+	        uFn = Patient.updatePatientDemographicData;
         }
 
-        var formFields = fornpanel.getForm().getFields(), modelFields = [];
+        var formFields = formpanel.getForm().getFields(), modelFields = [];
 
         Ext.each(formFields.items, function(field) {
             modelFields.push({name: field.name, type: 'auto'});
         });
 
-        var model = Ext.define(fornpanel.itemId + 'Model', {
+        var model = Ext.define(formpanel.itemId + 'Model', {
             extend: 'Ext.data.Model',
             fields: modelFields,
             proxy : {
                 type: 'direct',
                 api : {
-                    read: fn
+                    read: rFn,
+	                update: uFn
                 }
             }
         });
@@ -505,7 +507,7 @@ Ext.define('App.view.patientfile.Summary', {
         store.load({
             scope   : me,
             callback: function(records, operation, success) {
-                fornpanel.getForm().loadRecord(records[0]);
+                formpanel.getForm().loadRecord(records[0]);
             }
         });
 
