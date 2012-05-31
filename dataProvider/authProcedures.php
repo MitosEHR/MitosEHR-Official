@@ -76,6 +76,11 @@ class authProcedures {
             return array('success'=>false, 'error'=>'No configuration file found on the selected site.<br>Please contact support.');
         }
         //-------------------------------------------
+		// remove empty space from username and password
+        //-------------------------------------------
+	    $params->authUser = str_replace(' ', '', $params->authUser);
+	    $params->authPass = str_replace(' ', '', $params->authPass);
+        //-------------------------------------------
         // Convert the password to AES and validate
         //-------------------------------------------
         $aes = new AES($_SESSION['site']['AESkey']);

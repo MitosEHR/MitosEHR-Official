@@ -21,6 +21,7 @@ Ext.define('App.view.administration.Documents', {
 		var me = this;
 
         me.templatesDocumentsStore = Ext.create('App.store.administration.DocumentsTemplates');
+		me.headersAndFooterStore   = Ext.create('App.store.administration.HeadersAndFooters');
 
         Ext.define('tokenModel', {
             extend: 'Ext.data.Model',
@@ -448,9 +449,10 @@ Ext.define('App.view.administration.Documents', {
 		me.HeaderFootergrid = Ext.create('Ext.grid.Panel', {
 			title      : 'Header / Footer Templates',
 			region     : 'north',
-            height     : 100,
+			height     : 250,
 			split      : true,
 			hideHeaders: true,
+			store      : me.headersAndFooterStore,
 			columns    : [
 				{
 					flex     : 1,
@@ -460,12 +462,32 @@ Ext.define('App.view.administration.Documents', {
                         xtype:'textfield',
                         allowBlank:false
                     }
+				},
+				{
+					icon: 'ui_icons/delete.png',
+					tooltip: 'Remove',
+					scope:me,
+					handler: me.onRemoveDocument
 				}
 			],
 			listeners  : {
 				scope    : me,
 				itemclick: me.onDocumentsGridItemClick
-			}
+			},
+			tbar       :[
+                '->',
+                {
+                    text : 'New',
+                    scope: me,
+                    handler: me.newHeaderOrFooterTemplate
+                }
+            ],
+            plugins:[
+                me.rowEditor2 = Ext.create('Ext.grid.plugin.RowEditing', {
+                    clicksToEdit: 2
+                })
+
+            ]
 		});
 
 		me.DocumentsGrid = Ext.create('Ext.grid.Panel', {
@@ -635,9 +657,23 @@ Ext.define('App.view.administration.Documents', {
         me.rowEditor.cancelEdit();
         store.insert(0,{
             title:'New Document',
-            date: new Date()
+            date: new Date(),
+	        type: 1
         });
         me.rowEditor.startEdit(0, 0);
+
+    },
+
+	newHeaderOrFooterTemplate:function(){
+        var me = this,
+            store = me.headersAndFooterStore;
+        me.rowEditor2.cancelEdit();
+        store.insert(0,{
+            title:'New Header Or Footer',
+            date: new Date(),
+	        type: 2
+        });
+        me.rowEditor2.startEdit(0, 0);
 
     },
 
@@ -660,6 +696,7 @@ Ext.define('App.view.administration.Documents', {
 	onActive            : function(callback) {
         var me = this;
         me.templatesDocumentsStore.load();
+        me.headersAndFooterStore.load();
 		callback(true);
 	}
 });

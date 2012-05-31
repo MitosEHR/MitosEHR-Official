@@ -270,7 +270,7 @@ class Services
 	}
 
 	/**
-	 * CPT CODES SECCION!!!
+	 * CPT CODES SECTION!!!
 	 */
 	/**
 	 * @param stdClass $params
@@ -533,7 +533,7 @@ class Services
 	public function getActiveLaboratoryTypes()
 	{
 		$records = array();
-		$this->db->setSQL("SELECT id, code_text_short, parent_name
+		$this->db->setSQL("SELECT id, code_text_short, parent_name, loinc_name
 						     FROM labs_panels
 						    WHERE id = parent_id
 						      AND active = '1'

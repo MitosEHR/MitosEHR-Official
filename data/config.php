@@ -164,6 +164,15 @@ $API = array(
             'updateDocumentsTemplates'=>array(
 	            'len'=>1
             ),
+            'getHeadersAndFootersTemplates'=>array(
+	            'len'=>1
+            ),
+            'addHeadersOrFootersTemplates'=>array(
+	            'len'=>1
+            ),
+            'updateHeadersOrFootersTemplates'=>array(
+	            'len'=>1
+            ),
             'createDocument'=>array(
 	            'len'=>1
             )

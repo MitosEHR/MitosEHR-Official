@@ -108,12 +108,14 @@ Globals::setGlobals();
 <!--    <script type="text/javascript" src="app/model/patientfile/VisitPayment.js"></script>-->
         <script type="text/javascript" src="app/model/patientfile/CptCodes.js"></script>
         <script type="text/javascript" src="app/model/patientfile/PatientsPrescription.js"></script>
+        <script type="text/javascript" src="app/model/patientfile/PatientsDoctorsNote.js"></script>
         <script type="text/javascript" src="app/model/fees/Billing.js"></script>
         <script type="text/javascript" src="app/model/fees/EncountersPayments.js"></script>
         <script type="text/javascript" src="app/model/administration/Services.js"></script>
         <script type="text/javascript" src="app/model/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/model/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/model/administration/Medications.js"></script>
+        <script type="text/javascript" src="app/model/administration/HeadersAndFooters.js"></script>
         <script type="text/javascript" src="app/model/administration/ImmunizationRelations.js"></script>
 
 
@@ -136,12 +138,14 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/store/patientfile/EncounterEventHistory.js"></script>
         <script type="text/javascript" src="app/store/patientfile/QRCptCodes.js"></script>
         <script type="text/javascript" src="app/store/patientfile/PatientsPrescription.js"></script>
+        <script type="text/javascript" src="app/store/patientfile/PatientsDoctorsNote.js"></script>
         <script type="text/javascript" src="app/store/fees/Billing.js"></script>
         <script type="text/javascript" src="app/store/fees/EncountersPayments.js"></script>
         <script type="text/javascript" src="app/store/administration/Services.js"></script>
         <script type="text/javascript" src="app/store/administration/PreventiveCare.js"></script>
         <script type="text/javascript" src="app/store/administration/ActiveProblems.js"></script>
         <script type="text/javascript" src="app/store/administration/Medications.js"></script>
+        <script type="text/javascript" src="app/store/administration/HeadersAndFooters.js"></script>
         <script type="text/javascript" src="app/store/administration/ImmunizationRelations.js"></script>
 
 
@@ -202,6 +206,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/PrescrptionWhen.js"></script>
         <script type="text/javascript" src="app/classes/combo/PrescrptionTypes.js"></script>
         <script type="text/javascript" src="app/classes/combo/PrescrptionHowTo.js"></script>
+        <script type="text/javascript" src="app/classes/combo/LabsTypes.js"></script>
         <script type="text/javascript" src="app/classes/combo/LabObservations.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
