@@ -21,6 +21,8 @@ Ext.define('App.view.patientfile.Summary', {
     initComponent: function() {
         var me = this;
 
+	    me.demographicsData = null;
+
         me.vitalsStore = Ext.create('App.store.patientfile.Vitals');
 
 
@@ -64,7 +66,32 @@ Ext.define('App.view.patientfile.Summary', {
                                 xtype : 'form',
                                 title : 'Demographics',
                                 action: 'demoFormPanel',
-                                itemId: 'demoFormPanel'
+                                itemId: 'demoFormPanel',
+	                            dockedItems: [
+		                            {
+		                                xtype: 'toolbar',
+		                                dock: 'bottom',
+		                                //defaults: { xtype: 'button'},
+		                                items: [
+			                                '->',
+			                                {
+				                                xtype: 'button',
+		                                        text:'Save',
+				                                minWidth: 75,
+		                                        scope:me,
+		                                        handler:me.formSave
+		                                    },
+		                                    '-',
+		                                    {
+		                                        xtype: 'button',
+		                                        text:'Cancel',
+		                                        minWidth: 75,
+		                                        scope:me,
+		                                        handler:me.formCancel
+		                                    }
+		                                ]
+		                            }
+	                            ]
                             },
                             {
                                 title      : 'Notes',
@@ -421,6 +448,21 @@ Ext.define('App.view.patientfile.Summary', {
         me.callParent(arguments);
     },
 
+
+	formSave:function(btn){
+		var form = btn.up('form').getForm(),
+			record = form.getRecord(),
+			values = form.getValues();
+		record.set(values);
+		record.store.sync();
+	},
+
+	formCancel:function(btn){
+		var form = btn.up('form').getForm(),
+			record = form.getRecord();
+		form.loadRecord(record);
+	},
+
 	newDoc:function(btn){
 		app.onNewDocumentsWin(btn.action)
 	},
@@ -479,7 +521,7 @@ Ext.define('App.view.patientfile.Summary', {
 
         this.getFormItems(demoFormPanel, 'Demographics', function(success) {
             if(success) {
-                me.disableFields(demoFormPanel.getForm().getFields().items);
+                //me.disableFields(demoFormPanel.getForm().getFields().items);
                 who = demoFormPanel.query('fieldset[title="Who"]')[0];
 
                 imgCt = Ext.create('Ext.container.Container',{
