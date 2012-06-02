@@ -35,17 +35,10 @@ Ext.define('App.view.patientfile.NewPatient', {
 				dock : 'top',
 				items: [
 					{
-						text   : 'Save new patient',
+						text   : 'Create New Patient',
 						iconCls: 'save',
 						scope  : me,
 						handler: me.onSave
-					},
-					'->',
-					{
-						text   : 'Take Patient Picture',
-						handler: function() {
-							me.getPhotoIdWindow();
-						}
 					}
 				]
 			}
@@ -97,30 +90,6 @@ Ext.define('App.view.patientfile.NewPatient', {
 		}
 
         me.form.remove(date);
-	},
-
-
-	/**
-	 * This will show the window to take a picture
-	 */
-
-	getPhotoIdWindow: function() {
-		Ext.create('App.classes.PhotoIdWindow', {
-			title      : 'Patient Photo Id',
-			loadMask   : true,
-			modal      : true,
-			dockedItems: {
-				xtype: 'toolbar',
-				dock : 'bottom',
-				items: [
-					{
-						text   : 'Capture Image',
-						iconCls: 'save',
-						handler: captureToCanvas()
-					}
-				]
-			}
-		}).show();
 	},
 
 	confirmationWin: function(callback) {

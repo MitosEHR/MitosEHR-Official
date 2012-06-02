@@ -448,11 +448,10 @@ Ext.define('App.view.patientfile.Summary', {
                         items:[
                             '->',
                             {
-                                text:'Patient Picture'
-                            },
-                            '-',
-                            {
-                                text:'QRCode'
+                                text:'Patient Picture',
+	                            handler: function() {
+                                    me.getPhotoIdWindow();
+                                }
                             }
                         ]
                     }
@@ -648,6 +647,33 @@ Ext.define('App.view.patientfile.Summary', {
         me.patientImg.setSrc('ui_icons/user_100.png?'+number);
         me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png?'+number);
     },
+
+
+	getPhotoIdWindow: function() {
+		var me = this;
+
+		Ext.create('App.classes.PhotoIdWindow', {
+			title      : 'Patient Photo Id',
+			loadMask   : true,
+			modal      : true,
+			dockedItems: {
+				xtype: 'toolbar',
+				dock : 'bottom',
+				items: [
+					{
+						text   : 'Capture Image',
+						iconCls: 'save',
+						scope:me,
+						handler: me.captureToCanvas
+					}
+				]
+			}
+		}).show();
+	},
+
+	captureToCanvas:function(){
+
+	},
 
     /**
      * This function is called from MitosAPP.js when
