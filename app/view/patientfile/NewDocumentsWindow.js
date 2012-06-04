@@ -658,6 +658,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 			say(response.result);
 
 		});
+		this.close();
 
 	},
 	onCancel: function(){
