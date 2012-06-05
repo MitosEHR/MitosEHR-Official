@@ -15,7 +15,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	layout     : 'fit',
 	closeAction: 'hide',
 	height     : 430,
-	width      : 700,
+	width      : 730,
 	bodyStyle  : 'background-color:#fff',
 	modal      : true,
 	defaults   : {
@@ -253,6 +253,12 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 															}
 														},
 														{
+															xtype:'textfield',
+															hidden:true,
+															name:'medication_id',
+															action:'idField'
+														},
+														{
 															xtype     : 'numberfield',
 															fieldLabel: 'Dose',
 															labelWidth: 40,
@@ -301,8 +307,8 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 														},
 														{
 															xtype     : 'mitos.prescriptionhowto',
-															fieldLabel: 'By',
-															name      : 'by',
+															fieldLabel: 'route',
+															name      : 'route',
 															hideLabel : true,
 															width     : 100
 														},
@@ -345,6 +351,23 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 															width     : 140,
 															value     : 0,
 															minValue  : 0
+														},
+														{
+															fieldLabel: 'Begin Date',
+															xtype     : 'datefield',
+															width     : 190,
+															labelWidth: 70,
+															format    : 'Y-m-d',
+															name      : 'begin_date'
+
+														},
+														{
+															fieldLabel: 'End Date',
+															xtype     : 'datefield',
+															width     : 180,
+															labelWidth: 60,
+															format    : 'Y-m-d',
+															name      : 'end_date'
 														}
 													]
 
@@ -386,15 +409,6 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 					{
 						title: 'New Doctors Note',
 						items: [
-
-							{
-								xtype     : 'combobox',
-								fieldLabel: 'Document Templates',
-								width     : 350,
-								labelWidth: 145,
-								margin    : '10 0 0 10'
-
-							},
 							{
 
 								xtype  : 'grid',
@@ -447,36 +461,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 													layout  : 'hbox',
 													defaults: { margin: '5 0 5 5' },
 													items   : [
-														{
-															xtype     : 'medicationlivetsearch',
-															fieldLabel: 'Medication',
-															hideLabel : false,
-															name      : 'medication',
-															width     : 350,
-															labelWidth: 80,
-															listeners : {
-																scope : me,
-																select: me.addPrescription
-															}
-														},
-														{
-															xtype     : 'numberfield',
-															fieldLabel: 'Dose',
-															labelWidth: 40,
-															action    : 'dose',
-															name      : 'dose',
-															width     : 100,
-															value     : 0,
-															minValue  : 0
-														},
-														{
-															xtype     : 'textfield',
-															fieldLabel: 'Dose mg',
-															action    : 'dose_mg',
-															name      : 'dose_mg',
-															hideLabel : true,
-															width     : 150
-														}
+
 													]
 
 												},
@@ -489,40 +474,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 													defaults: { margin: '5 0 5 3'},
 
 													items: [
-														{
-															xtype     : 'numberfield',
-															fieldLabel: 'Take',
-															margin    : '5 0 5 5',
-															name      : 'take_pills',
-															width     : 130,
-															labelWidth: 80,
-															value     : 0,
-															minValue  : 0
-														},
-														{
-															xtype     : 'mitos.prescriptiontypes',
-															fieldLabel: 'Type',
-															hideLabel : true,
-															name      : 'type',
-															width     : 120
-														},
-														{
-															xtype     : 'mitos.prescriptionhowto',
-															fieldLabel: 'By',
-															name      : 'by',
-															hideLabel : true,
-															width     : 100
-														},
-														{
-															xtype: 'mitos.prescriptionoften',
-															name : 'prescription_often',
-															width: 120
-														},
-														{
-															xtype: 'mitos.prescriptionwhen',
-															name : 'prescription_when',
-															width: 100
-														}
+
 													]
 
 												},
@@ -534,25 +486,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 													layout  : 'hbox',
 													defaults: { margin: '5 0 5 5'},
 													items   : [
-														{
 
-															fieldLabel: 'Dispense',
-															xtype     : 'numberfield',
-															name      : 'dispense',
-															width     : 130,
-															labelWidth: 80,
-															value     : 0,
-															minValue  : 0
-														},
-														{
-															fieldLabel: 'Refill',
-															xtype     : 'numberfield',
-															name      : 'refill',
-															labelWidth: 35,
-															width     : 140,
-															value     : 0,
-															minValue  : 0
-														}
 													]
 												}
 											]
@@ -630,16 +564,16 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 			store.remove(record);
 	},
 	addPrescription     : function(combo, model) {
-		var me = this,
-			field,field2, dose, dose_mg;
-		dose = model[0].data.ACTIVE_NUMERATOR_STRENGTH;
-		dose_mg = model[0].data.ACTIVE_INGRED_UNIT;
-
-		field =  combo.up('fieldcontainer').query('[action="dose"]')[0];
-		field2 =  combo.up('fieldcontainer').query('[action="dose_mg"]')[0];
+		var me      = this,
+			field   = combo.up('fieldcontainer').query('[action="dose"]')[0],
+			field2  = combo.up('fieldcontainer').query('[action="dose_mg"]')[0],
+			field3  = combo.up('fieldcontainer').query('[action="idField"]')[0],
+			dose    = model[0].data.ACTIVE_NUMERATOR_STRENGTH,
+			dose_mg = model[0].data.ACTIVE_INGRED_UNIT,
+			id      = model[0].data.id;
 		field.setValue(dose);
 		field2.setValue(dose_mg);
-
+		field3.setValue(id);
 	},
 	onEditPrescription: function(editor,e){
 		say(editor);
@@ -669,6 +603,10 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 
 	},
 	onDocumentsWinShow  : function() {
+
+		this.patientPrescriptionStore.removeAll();
+		this.patientsDoctorNoteStore.removeAll();
+
 
 	}
 });

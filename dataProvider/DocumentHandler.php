@@ -18,6 +18,7 @@ include_once($_SESSION['site']['root'] . '/dataProvider/Encounter.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Facilities.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Documents.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Prescriptions.php');
 class DocumentHandler
 {
 
@@ -41,6 +42,7 @@ class DocumentHandler
 		$this->services = new Services();
 		$this->facility = new Facilities();
 		$this->documents = new Documents();
+		$this->prescriptions = new Prescriptions();
 		return;
 	}
 
@@ -49,6 +51,7 @@ class DocumentHandler
 
 		$path =  $this->setWorkingDir($params) . $this->nameFile();
 		$this->saveDocument($this->documents->PDFDocumentBuilder($params),$path);
+
 
 
 
@@ -61,7 +64,9 @@ class DocumentHandler
 			$doc['date']    = date('Y-m-d H:i:s');
 			$this->db->setSQL($this->db->sqlBind($doc, 'patient_documents', 'I'));
 			$this->db->execLog();
-			$doc_id = $this->db->lastInsertId;
+			$params->document_id = $doc_id = $this->db->lastInsertId;
+
+            $this->prescriptions->addDocumentsPatientInfo($params);
 			return array('success'=> true,
 			             'doc'    => array('id'   => $doc_id,
 			                               'name' => $this->fileName,
@@ -141,7 +146,7 @@ class DocumentHandler
 
 
 	public function getDocumentsTemplates(){
-		$this->db->setSQL("SELECT * FROM documents_templates WHERE type = 1");
+		$this->db->setSQL("SELECT * FROM documents_templates WHERE template_type = 1");
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
 
@@ -165,7 +170,7 @@ class DocumentHandler
 
 	}
 	public function getHeadersAndFootersTemplates(){
-		$this->db->setSQL("SELECT * FROM documents_templates WHERE type = 2");
+		$this->db->setSQL("SELECT * FROM documents_templates WHERE template_type = 2");
 		return $this->db->fetchRecords(PDO::FETCH_ASSOC);
 	}
 
@@ -194,6 +199,8 @@ class DocumentHandler
 		fwrite($handle, $pdf);
 		fclose($handle);
 	}
+
+
 
 }
 
