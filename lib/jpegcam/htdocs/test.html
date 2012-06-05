@@ -48,7 +48,6 @@
 		
 		function my_completion_handler(msg) {
 			// extract URL out of PHP output
-            console.log(msg);
 			if (msg.match(/(http\:\/\/\S+)/)) {
 				var image_url = RegExp.$1;
 				// show JPEG image in page
