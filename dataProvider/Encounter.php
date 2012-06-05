@@ -298,7 +298,7 @@ class Encounter {
         $sql = $this->db->sqlBind($data, 'form_data_vitals', 'I');
         $this->db->setSQL($sql);
         $this->db->execLog();
-
+	    $params->administer_by = $this->user->getUserNameById($params->uid);
         $this->addEncounterHistoryEvent('Vitals added');
         return $params;
     }

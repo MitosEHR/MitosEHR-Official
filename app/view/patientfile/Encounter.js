@@ -705,45 +705,25 @@ Ext.define('App.view.patientfile.Encounter', {
             } else if (SaveBtn.action == 'vitals') {
                 ACL.hasPermission('add_vitals', function (provider, response) {
                     if (response.result) {
-                        me.passwordVerificationWin(function (btn, password) {
-                            if (btn == 'ok') {
-                                User.verifyUserPass(password, function (provider, response) {
-                                    if (response.result) {
-                                        //noinspection JSUnresolvedFunction
-                                        store = me.encounterStore.getAt(0).vitals();
-                                        record = form.getRecord();
-                                        values = me.addDefaultData(values);
-                                        storeIndex = store.indexOf(record);
+                        //noinspection JSUnresolvedFunction
+                        store = me.encounterStore.getAt(0).vitals();
+                        record = form.getRecord();
+                        values = me.addDefaultData(values);
+                        storeIndex = store.indexOf(record);
 
-                                        if(storeIndex == -1) {
-                                            store.insert(0,values);
-                                        } else {
-                                            record.set(values);
-                                        }
-                                        store.sync();
-                                        form.reset();
-
-                                        me.msg('Sweet!', 'Vitals Saved');
-                                        me.updateProgressNote();
-                                        me.vitalsPanel.down('vitalsdataview').refresh();
-
-                                        me.resetVitalsForm();
-
-                                    } else {
-                                        Ext.Msg.show({
-                                            title:'Oops!',
-                                            msg:'Incorrect password',
-                                            buttons:Ext.Msg.OKCANCEL,
-                                            icon:Ext.Msg.ERROR,
-                                            fn:function (btn) {
-                                                if (btn == 'ok') {
-                                                    me.onSave(SaveBtn);
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-                            }
+                        if(storeIndex == -1) {
+                            store.insert(0,values);
+                        } else {
+                            record.set(values);
+                        }
+                        store.sync({
+	                        scope:me,
+	                        success:function(){
+		                        me.msg('Sweet!', 'Vitals Saved');
+		                        me.updateProgressNote();
+		                        me.vitalsPanel.down('vitalsdataview').refresh();
+		                        me.resetVitalsForm();
+	                        }
                         });
                     } else {
                         app.accessDenied();
@@ -804,7 +784,7 @@ Ext.define('App.view.patientfile.Encounter', {
                             record.set({auth_uid: user.id});
                             store.sync();
                             form.reset();
-                            me.msg('Sweet!', 'Vitals Saved');
+                            me.msg('Sweet!', 'Vitals Signed');
                             me.vitalsPanel.down('vitalsdataview').refresh();
                             me.updateProgressNote();
                             me.resetVitalsForm();
