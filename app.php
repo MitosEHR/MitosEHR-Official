@@ -277,8 +277,7 @@ Globals::setGlobals();
                 }
             }
 	        function onWebCamComplete(msg){
-		        alert('hello');
-		        app.msg('Sweet!', 'Patient image saved');
+		        app.onWebCamComplete(msg);
 	        }
         </script>
     </body>

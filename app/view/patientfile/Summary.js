@@ -643,36 +643,23 @@ Ext.define('App.view.patientfile.Summary', {
     getPatientImgs: function() {
         var me = this,
 	        number = Ext.Number.randomInt(1,1000);
-
-        me.patientImg.setSrc('ui_icons/user_100.png?'+number);
+        me.patientImg.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientPhotoId.jpg?'+number);
         me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png?'+number);
     },
 
 
 	getPhotoIdWindow: function() {
 		var me = this;
-
-		Ext.create('App.classes.PhotoIdWindow', {
+		me.PhotoIdWindow = Ext.create('App.classes.PhotoIdWindow', {
 			title      : 'Patient Photo Id',
 			loadMask   : true,
-			modal      : true,
-			dockedItems: {
-				xtype: 'toolbar',
-				dock : 'bottom',
-				items: [
-					{
-						text   : 'Capture Image',
-						iconCls: 'save',
-						scope:me,
-						handler: me.captureToCanvas
-					}
-				]
-			}
+			modal      : true
 		}).show();
 	},
 
-	captureToCanvas:function(){
-
+	completePhotoId:function(){
+		this.PhotoIdWindow.close();
+		this.getPatientImgs();
 	},
 
     /**
@@ -710,9 +697,7 @@ Ext.define('App.view.patientfile.Summary', {
         }
 	    PreventiveCare.activePreventiveCareAlert({pid:app.currPatient.pid},function(provider,response){
 	       if(response.result.success){
-
 		       app.PreventiveCareWindow.show();
-
 	       }
         });
     }
