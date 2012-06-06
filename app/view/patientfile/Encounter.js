@@ -101,7 +101,7 @@ Ext.define('App.view.patientfile.Encounter', {
             closable:false,
             layout:'border',
             width:1000,
-            height:700,
+            height:650,
             bodyPadding:5,
             items:[
                 {
@@ -123,25 +123,20 @@ Ext.define('App.view.patientfile.Encounter', {
                 },
                 {
                     xtype:'grid',
-                    title:'Orders / Rx',
+                    title:'Documents / Orders / Rx',
                     region:'east',
                     split:true,
                     width:485,
                     columns:[
                         {
-                            header:'Order Type',
-                            width:40,
+                            header:'Type',
+                            width:100,
                             dataIndex:'code'
                         },
                         {
                             header:'Description',
                             flex:1,
                             dataIndex:'code_text'
-                        }
-                    ],
-                    bbar:[
-                        {
-                            text:'Add Order'
                         }
                     ]
                 },
@@ -150,92 +145,115 @@ Ext.define('App.view.patientfile.Encounter', {
                     title:'Additional Info',
                     region:'south',
                     split:true,
-                    height:300,
-                    frame:true,
+                    height:227,
+	                layout:'column',
+	                defaults:{
+                        xtype:'fieldset',
+                        padding:8
+                    },
                     items:[
                         {
-                            xtype:'fieldcontainer',
-                            layout:'column',
-                            defaults:{
+	                        xtype:'fieldcontainer',
+	                        columnWidth:.5,
+	                        defaults:{
                                 xtype:'fieldset',
                                 padding:8
                             },
-                            items:[
-                                {
-                                    title:'Meaningful Use Measures',
-                                    columnWidth:.5,
-                                    margin:'5 1 5 5',
-                                    items:[
-                                        {
-                                            xtype:'checkboxgroup',
-                                            defaults:{
-                                                xtype:'checkboxfield'
-                                            },
-                                            items:[
-                                                {
-                                                    boxLabel:'Clinical Summary Provided'
-                                                },
-                                                {
-                                                    boxLabel:'Elegibility Confirmed'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            xtype:'checkboxgroup',
-                                            defaults:{
-                                                xtype:'checkboxfield'
-                                            },
-                                            items:[
-                                                {
-                                                    boxLabel:'Medical Reconciliation'
-                                                },
-                                                {
-                                                    boxLabel:'Push to Exchange'
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    title:'Follow Up',
-                                    columnWidth:.5,
-                                    margin:'5 5 1 5',
-                                    //height:90,
-                                    defaults:{
-                                        anchor:'100%'
-                                    },
-                                    items:[
-                                        {
-                                            xtype:'textfield',
-                                            fieldLabel:'Time'
-                                        },
-                                        {
-                                            fieldLabel:'Facility',
-                                            xtype:'mitos.facilitiescombo'
-                                        }
-                                    ]
-                                }
-                            ]
+	                        items:[
+		                        {
+		                            title:'Meaningful Use Measures',
+		                            margin:'5 1 5 5',
+		                            items:[
+		                                {
+		                                    xtype:'checkboxgroup',
+		                                    defaults:{
+		                                        xtype:'checkboxfield'
+		                                    },
+		                                    items:[
+		                                        {
+		                                            boxLabel:'Clinical Summary Provided'
+		                                        },
+		                                        {
+		                                            boxLabel:'Elegibility Confirmed'
+		                                        }
+		                                    ]
+		                                },
+		                                {
+		                                    xtype:'checkboxgroup',
+		                                    defaults:{
+		                                        xtype:'checkboxfield'
+		                                    },
+		                                    items:[
+		                                        {
+		                                            boxLabel:'Medical Reconciliation'
+		                                        },
+		                                        {
+		                                            boxLabel:'Push to Exchange'
+		                                        }
+		                                    ]
+		                                }
+		                            ]
+		                        },
+		                        {
+		                            title:'Follow Up',
+			                        margin:'5 1 5 5',
+		                            //height:90,
+		                            defaults:{
+		                                anchor:'100%'
+		                            },
+		                            items:[
+		                                {
+		                                    xtype:'textfield',
+		                                    fieldLabel:'Time'
+		                                },
+		                                {
+		                                    fieldLabel:'Facility',
+		                                    xtype:'mitos.facilitiescombo'
+		                                }
+		                            ]
+		                        }
+	                        ]
                         },
                         {
-                            xtype:'fieldset',
-                            margin:5,
-                            padding:8,
-                            title:'Patient Notes and Reminders',
-                            items:[
-                                {
-                                    xtype:'textfield',
-                                    name:'note',
-                                    fieldLabel:'Note',
-                                    anchor:'100%'
-                                },
-                                {
-                                    xtype:'textareafield',
-                                    grow:true,
-                                    name:'reminder',
-                                    fieldLabel:'Reminder',
-                                    anchor:'100%'
-                                }
+	                        xtype:'fieldcontainer',
+	                        columnWidth:.5,
+	                        defaults:{
+                                xtype:'fieldset',
+                                padding:8
+                            },
+	                        items:[
+		                        {
+		                            xtype:'fieldset',
+		                            margin:5,
+		                            padding:8,
+			                        columnWidth:.5,
+			                        height:96,
+		                            title:'Patient Notes and Reminders',
+		                            items:[
+		                                {
+		                                    xtype:'textfield',
+		                                    name:'reminder',
+		                                    fieldLabel:'Reminder',
+		                                    anchor:'100%'
+		                                },
+		                                {
+		                                    xtype:'textfield',
+		                                    grow:true,
+		                                    name:'note',
+		                                    fieldLabel:'Note',
+		                                    anchor:'100%'
+		                                }
+		                            ]
+		                        },
+		                        {
+			                        xtype:'fieldset',
+                                    margin:5,
+                                    padding:8,
+                                    columnWidth:.5,
+			                        height:88,
+                                    title:'Alert Area',
+			                        html:'<span style="color:green">Sweet! No Alerts Found</span>'
+		                        }
                             ]
                         }
                     ]
