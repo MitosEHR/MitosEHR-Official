@@ -311,7 +311,7 @@ class CombosData {
                            	 WHERE template_type ='1'");
 
         $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
-        $records[] = array('title' => 'Template');
+        $records[] = array('title' => 'Empty');
         return $records;
     }
 }
