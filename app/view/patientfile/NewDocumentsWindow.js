@@ -528,7 +528,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 			data.push(record.data);
 		});
 
-		DocumentHandler.createDocument({labs:data, pid:app.currPatient.pid, docType:'Labs', documentId:4}, function(provider, response){
+		DocumentHandler.createDocument({labs:data, pid:app.currPatient.pid, docType:'Orders', documentId:4}, function(provider, response){
 			say(response.result);
 		});
 		this.close();
@@ -538,7 +538,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 		var me = this,
 			htmlEditor  = bbar.up('toolbar').up('panel').getComponent('body'),
 			value = htmlEditor.getValue();
-		DocumentHandler.createDocumentDoctorsNote({DoctorsNote:value, pid:app.currPatient.pid, docType:'Doctors Notes'}, function(provider, response){
+		DocumentHandler.createDocumentDoctorsNote({DoctorsNote:value, pid:app.currPatient.pid, docType:'DoctorsNotes'}, function(provider, response){
 			say(response.result);
 		});
 		this.close();

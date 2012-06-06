@@ -396,14 +396,15 @@ class Documents
         $regex = '(\[\w*?\])';
         $body  = $params->DoctorsNote;
         preg_match_all($regex, $body, $tokensfound);
-        $tokens = $tokensfound;
+        $tokens= $tokensfound;
+
 		$allNeededInfo = $this->setArraySizeOfTokenArray($tokens);
 		$allNeededInfo = $this->get_PatientTokensData($pid, $allNeededInfo, $tokens);
 		$allNeededInfo = $this->get_EncounterTokensData( /*$eid,*/$allNeededInfo, $tokens);
 		$allNeededInfo = $this->get_currentTokensData($allNeededInfo, $tokens);
 		$allNeededInfo = $this->get_ClinicTokensData($allNeededInfo, $tokens);
 		$rawHTML = str_replace($tokens[0], $allNeededInfo, $body);
-		$this->dompdf->load_html($rawHTML['body']);
+		$this->dompdf->load_html($rawHTML);
 		$this->dompdf->set_paper('letter', 'portrait');
 		$this->dompdf->render();
 		$pdf = $this->dompdf->output();

@@ -85,7 +85,9 @@ class DocumentHandler
     public function createDocumentDoctorsNote($params){
 
 		$path =  $this->setWorkingDir($params) . $this->nameFile();
-		$this->saveDocument($this->documents->PDFDocumentBuilderDoctors($params),$path);
+
+
+            $this->saveDocument($this->documents->PDFDocumentBuilderDoctors($params),$path);
 
 		if(file_exists($path)) {
 			$doc['pid']     = $this->pid;

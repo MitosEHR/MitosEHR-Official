@@ -471,12 +471,25 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 
 	                                    }
 
+
                                     ]
                                 }
                             ]
                         }
                     ]
-                })
+                }),
+	            bbar : [
+		            '->', {
+			            text   : 'Reviewed and Close',
+			            scope  : me,
+			            handler: me.onReviewedAllergies
+		            },
+		            {
+			            text   : 'Cancel',
+			            scope  : me,
+			            handler: me.onCancelAllergies
+		            }
+	            ]
             },
             {
                 /**
