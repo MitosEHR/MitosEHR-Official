@@ -688,6 +688,15 @@ Ext.define('App.view.MitosApp', {
 		this.NewDocumentsWindow.show();
 		this.NewDocumentsWindow.cardSwitch(action);
 	},
+
+	onWebCamComplete:function(msg){
+		var panel = this.getActivePanel();
+		if(panel.id == 'panelSummary'){
+			panel.completePhotoId();
+		}
+		this.msg('Sweet!', 'Patient image saved');
+	},
+
     onPatientLog:function(){
         if(this.patientArrivalLog){
             this.patientArrivalLog.show();
@@ -848,6 +857,10 @@ Ext.define('App.view.MitosApp', {
 		navView.show();
 		foot.setHeight(30);
 		footView.hide();
+	},
+
+	getActivePanel:function(){
+		return this.MainPanel.getLayout().getActiveItem();
 	},
 
 	liveSearchSelect: function(combo, selection) {

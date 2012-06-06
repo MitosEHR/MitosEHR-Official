@@ -83,6 +83,7 @@ class Patient
 		}
 		;
 		$this->createPatientQrCode($pid, $patient['fullname']);
+		$this->createDefaultPhotoId($pid);
 		return array('success' => true, 'patient'=> array('pid'=> $pid, 'fullname' => $patient['fullname']));
 	}
 
@@ -264,6 +265,14 @@ class Patient
 		include($root . "/lib/phpqrcode/qrlib.php");
 		$filename = $PNG_TEMP_DIR . '/patientDataQrCode.png';
 		QRcode::png($data, $filename, 'Q', 2, 2);
+	}
+
+	public function createDefaultPhotoId($pid){
+		$root = $_SESSION['site']['root'];
+		$site = $_SESSION['site']['site'];
+		$newImg = $root . '/sites/' . $site . '/patients/' . $pid .'/patientPhotoId.jpg';
+		copy($root.'/ui_icons/patientPhotoId.jpg', $newImg);
+		return;
 	}
 
 	public function getPatientAddressById($pid)
