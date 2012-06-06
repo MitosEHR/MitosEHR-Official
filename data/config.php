@@ -175,6 +175,9 @@ $API = array(
             ),
             'createDocument'=>array(
 	            'len'=>1
+            ),
+            'createDocumentDoctorsNote'=>array(
+	            'len'=>1
             )
 
         )

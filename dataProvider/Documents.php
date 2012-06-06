@@ -137,7 +137,7 @@ class Documents
 		$age               = $this->patient->getPatientAgeByDOB($patientData['DOB']);
 		$root              = $_SESSION['site']['root'];
 		$site              = $_SESSION['site']['site'];
-		$path              = $root . '/sites/' . $site . '/patients/' . $pid . '/' . 'patient_picture.jpg';
+		$path              = $root . '/sites/' . $site . '/patients/' . $pid . '/' . 'patientPhotoId.jpg';
 		$img               = $img = '
         <style type="text/css">
         div.leftpane {
@@ -316,6 +316,46 @@ class Documents
         }
         return $allNeededInfo;
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private function tokensForLabs($params,$tokens,$allNeededInfo){
+        $html = '';
+        foreach($params->labs as $lab) {
+            $html .= "
+                    <p>
+                    $lab->laboratories
+                    </p>";
+        }
+        foreach($tokens[0] as $index=>$tok) {
+            if($allNeededInfo[$index] == '' || $allNeededInfo[$index] == null) {
+                if($tok == '[LABS_LIST]') {
+                    $allNeededInfo[$index] = $html;
+                }
+            }
+        }
+        return $allNeededInfo;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private function tokensForXrays($params,$tokens,$allNeededInfo){
+        $html = '';
+        foreach($params->labs as $lab) {
+            $html .= "
+                    <p>
+                    $lab->xrays
+                    </p>";
+        }
+        foreach($tokens[0] as $index=>$tok) {
+            if($allNeededInfo[$index] == '' || $allNeededInfo[$index] == null) {
+                if($tok == '[XRAYS_LIST]') {
+                    $allNeededInfo[$index] = $html;
+                }
+            }
+        }
+        return $allNeededInfo;
+    }
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public function PDFDocumentBuilder($params)
 	{
@@ -333,6 +373,14 @@ class Documents
 		if(isset($params->medications)) {
              $allNeededInfo =  $this->tokensForPrescriptions($params,$tokens,$allNeededInfo);
 		}
+        ///////////////////////LABS PART /////////////////////////////////////
+        elseif(isset($params->labs)) {
+             $allNeededInfo =  $this->tokensForLabs($params,$tokens,$allNeededInfo);
+        }
+        ///////////////////////XRAYS PART /////////////////////////////////////
+        elseif(isset($params->xrays)) {
+             $allNeededInfo =  $this->tokensForXrays($params,$tokens,$allNeededInfo);
+        }
 
 		$rawHTML = str_replace($tokens[0], $allNeededInfo, $body);
 		$this->dompdf->load_html($rawHTML['body']);
@@ -341,10 +389,26 @@ class Documents
 		$pdf = $this->dompdf->output();
 		return $pdf;
 	}
-
-
-
-
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function PDFDocumentBuilderDoctors($params)
+	{
+		$pid           = $params->pid;
+        $regex = '(\[\w*?\])';
+        $body  = $params->DoctorsNote;
+        preg_match_all($regex, $body, $tokensfound);
+        $tokens = $tokensfound;
+		$allNeededInfo = $this->setArraySizeOfTokenArray($tokens);
+		$allNeededInfo = $this->get_PatientTokensData($pid, $allNeededInfo, $tokens);
+		$allNeededInfo = $this->get_EncounterTokensData( /*$eid,*/$allNeededInfo, $tokens);
+		$allNeededInfo = $this->get_currentTokensData($allNeededInfo, $tokens);
+		$allNeededInfo = $this->get_ClinicTokensData($allNeededInfo, $tokens);
+		$rawHTML = str_replace($tokens[0], $allNeededInfo, $body);
+		$this->dompdf->load_html($rawHTML['body']);
+		$this->dompdf->set_paper('letter', 'portrait');
+		$this->dompdf->render();
+		$pdf = $this->dompdf->output();
+		return $pdf;
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 

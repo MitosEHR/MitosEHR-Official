@@ -26,7 +26,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	initComponent: function() {
 		var me = this;
 		me.patientPrescriptionStore = Ext.create('App.store.patientfile.PatientsPrescription');
-		me.patientsDoctorNoteStore = Ext.create('App.store.patientfile.PatientsDoctorsNote');
+		me.patientsLabsOrdersStore = Ext.create('App.store.patientfile.PatientsLabsOrders');
 		
 		me.items = [
 			me.tabPanel = Ext.create('Ext.tab.Panel', {
@@ -40,7 +40,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 
 								xtype  : 'grid',
 								margin : 10,
-								store  : me.patientPrescriptionStore,
+								store  : me.patientsLabsOrdersStore,
 								height : 320,
 								columns: [
 
@@ -52,24 +52,14 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 												icon   : 'ui_icons/delete.png',
 												tooltip: 'Remove',
 												scope  : me,
-												handler: me.onRemove
+												handler: me.onRemoveLabs
 											}
 										]
 									},
 									{
-										header   : 'Medication',
-										width    : 100,
-										dataIndex: 'medication'
-									},
-									{
-										header   : 'Dispense',
-										width    : 100,
-										dataIndex: 'dispense'
-									},
-									{
-										header   : 'Refill',
-										flex     : 1,
-										dataIndex: 'refill'
+										header   : 'Lab',
+										flex    : 1,
+										dataIndex: 'laboratories'
 									}
 
 								],
@@ -81,7 +71,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 									hideLabel:false,
 									listeners:{
 										scope:me,
-										select:me.addMedications
+										select:me.onAddLabs
 									}
 								}
 							}
@@ -92,11 +82,11 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 							'->', {
 								text   : 'Create',
 								scope  : me,
-								handler: me.Create
+								handler: me.onCreateLabs
 							}, {
 								text   : 'Cancel',
 								scope  : me,
-								handler: me.Create
+								handler: me.onCancel
 							}
 						]
 					},
@@ -436,7 +426,7 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 							'->', {
 								text   : 'Create',
 								scope  : me,
-								handler: me.Create
+								handler: me.onCreateDoctorsNote
 							}, {
 								text   : 'Cancel',
 								scope  : me,
@@ -487,19 +477,18 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 		this.patientPrescriptionStore.insert(0,{});
 		grid.editingPlugin.startEdit(0, 0);
 	},
-	onAddNewDoctorsNote: function(btn) {
-		var grid = btn.up('grid');
-		grid.editingPlugin.cancelEdit();
 
-		this.patientsDoctorNoteStore.insert(0,{});
-		grid.editingPlugin.startEdit(0, 0);
-	},
 	onRemove: function(grid, rowIndex){
 		var me = this,
 			store = grid.getStore(),
 			record = store.getAt(rowIndex);
 			grid.editingPlugin.cancelEdit();
-
+			store.remove(record);
+	},
+	onRemoveLabs: function(grid, rowIndex){
+		var me = this,
+			store = grid.getStore(),
+			record = store.getAt(rowIndex);
 			store.remove(record);
 	},
 	addPrescription     : function(combo, model) {
@@ -527,9 +516,30 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 		});
 
 		DocumentHandler.createDocument({medications:data, pid:app.currPatient.pid, docType:'Rx', documentId:5}, function(provider, response){
-
 			say(response.result);
+		});
+		this.close();
 
+	},
+	onCreateLabs: function (){
+		var records =this.patientsLabsOrdersStore.data.items,
+			data = [];
+		Ext.each(records, function(record){
+			data.push(record.data);
+		});
+
+		DocumentHandler.createDocument({labs:data, pid:app.currPatient.pid, docType:'Labs', documentId:4}, function(provider, response){
+			say(response.result);
+		});
+		this.close();
+
+	},
+	onCreateDoctorsNote: function (bbar){
+		var me = this,
+			htmlEditor  = bbar.up('toolbar').up('panel').getComponent('body'),
+			value = htmlEditor.getValue();
+		DocumentHandler.createDocumentDoctorsNote({DoctorsNote:value, pid:app.currPatient.pid, docType:'Doctors Notes'}, function(provider, response){
+			say(response.result);
 		});
 		this.close();
 
@@ -541,10 +551,17 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 	addMedications: function(){
 
 	},
+	onAddLabs: function(field, model){
+
+		this.patientsLabsOrdersStore.add({
+			laboratories:model[0].data.loinc_name
+		});
+		field.reset();
+	},
 	onDocumentsWinShow  : function() {
 
 		this.patientPrescriptionStore.removeAll();
-		this.patientsDoctorNoteStore.removeAll();
+		this.patientsLabsOrdersStore.removeAll();
 
 
 	}

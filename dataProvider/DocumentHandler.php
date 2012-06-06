@@ -19,6 +19,8 @@ include_once($_SESSION['site']['root'] . '/dataProvider/Services.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Facilities.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Documents.php');
 include_once($_SESSION['site']['root'] . '/dataProvider/Prescriptions.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/Orders.php');
+include_once($_SESSION['site']['root'] . '/dataProvider/DoctorsNotes.php');
 class DocumentHandler
 {
 
@@ -43,6 +45,8 @@ class DocumentHandler
 		$this->facility = new Facilities();
 		$this->documents = new Documents();
 		$this->prescriptions = new Prescriptions();
+		$this->orders = new Orders();
+		$this->doctorsnotes = new DoctorsNotes();
 		return;
 	}
 
@@ -52,8 +56,36 @@ class DocumentHandler
 		$path =  $this->setWorkingDir($params) . $this->nameFile();
 		$this->saveDocument($this->documents->PDFDocumentBuilder($params),$path);
 
+		if(file_exists($path)) {
+			$doc['pid']     = $this->pid;
+			$doc['uid']     = $_SESSION['user']['id'];
+			$doc['docType'] = $this->docType;
+			$doc['name']    = $this->fileName;
+			$doc['url']     = $this->getDocumentUrl();
+			$doc['date']    = date('Y-m-d H:i:s');
+			$this->db->setSQL($this->db->sqlBind($doc, 'patient_documents', 'I'));
+			$this->db->execLog();
+			$params->document_id = $doc_id = $this->db->lastInsertId;
+            if(isset($params->medications)) {
+                $this->prescriptions->addDocumentsPatientInfo($params);
+            }
+            elseif(isset($params->labs)) {
+                $this->orders->addOrdersLabs($params);
+            }
 
+			return array('success'=> true,
+			             'doc'    => array('id'   => $doc_id,
+			                               'name' => $this->fileName,
+			                               'url'  => $this->getDocumentUrl()));
+		}else{
+			return array('success'=> false,
+			             'error'  => 'Document could not be created');
+		}
+	}
+    public function createDocumentDoctorsNote($params){
 
+		$path =  $this->setWorkingDir($params) . $this->nameFile();
+		$this->saveDocument($this->documents->PDFDocumentBuilderDoctors($params),$path);
 
 		if(file_exists($path)) {
 			$doc['pid']     = $this->pid;
@@ -66,7 +98,8 @@ class DocumentHandler
 			$this->db->execLog();
 			$params->document_id = $doc_id = $this->db->lastInsertId;
 
-            $this->prescriptions->addDocumentsPatientInfo($params);
+            $this->doctorsnotes->addDoctorsNotes($params);
+
 			return array('success'=> true,
 			             'doc'    => array('id'   => $doc_id,
 			                               'name' => $this->fileName,
