@@ -78,6 +78,8 @@ Globals::setGlobals();
         <script type="text/javascript" src="registry.js.php"></script>
         <!-- form validation vtypes -->
         <script type="text/javascript" src="repo/formValidation/formValidation.js"></script>
+        <!-- webcam -->
+        <script type="text/javascript" src="lib/jpegcam/htdocs/webcam.js"></script>
 
 
         <script type="text/javascript" src="lib/<?php echo $_SESSION['dir']['ext']; ?>/examples/ux/LiveSearchGridPanel.js"></script>
@@ -254,8 +256,6 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/view/miscellaneous/OfficeNotes.js"></script>
         <script type="text/javascript" src="app/view/miscellaneous/Websearch.js"></script>
 
-
-
         <!-- Application Viewport -->
         <script type="text/javascript" src="app/view/MitosApp.js"></script>
         <script type="text/javascript">
@@ -275,6 +275,10 @@ Globals::setGlobals();
 	                return (token);
                 }
             }
+	        function onWebCamComplete(msg){
+		        alert('hello');
+		        app.msg('Sweet!', 'Patient image saved');
+	        }
         </script>
     </body>
 </html>

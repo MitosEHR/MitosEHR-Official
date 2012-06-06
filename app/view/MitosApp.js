@@ -221,7 +221,7 @@ Ext.define('App.view.MitosApp', {
 					iconCls: 'icoClock',
 					scope  : me,
 					handler: me.createNewEncounter,
-					tooltip: 'Crate New Encounter'
+					tooltip: 'Create New Encounter'
 				},
 				{
 					xtype  : 'button',
