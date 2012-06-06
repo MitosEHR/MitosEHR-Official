@@ -410,98 +410,26 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 						title: 'New Doctors Note',
 						items: [
 							{
+								xtype     : 'mitos.templatescombo',
+								fieldLabel: 'Template',
+								width     : 250,
+								labelWidth: 75,
+								margin    : '10 0 0 10',
+								enableKeyEvents: true,
+								listeners      : {
+									scope   : me,
+									select: me.onTemplateTypeSelect
+								}
+							},
+							{
 
-								xtype  : 'grid',
-								margin : 10,
-								store  : me.patientsDoctorNoteStore,
-								height : 320,
-								columns: [
+								xtype: 'htmleditor',
+								name:'body',
+								itemId:'body',
+								height : 285,
+								width  : 700,
+								margin:5
 
-									{
-										xtype: 'actioncolumn',
-										width: 20,
-										items: [
-											{
-												icon   : 'ui_icons/delete.png',
-												tooltip: 'Remove',
-												scope  : me,
-												handler: me.onRemove
-											}
-										]
-									},
-									{
-										header   : 'Note',
-										width    : 100,
-										dataIndex: 'note'
-									},
-									{
-										header   : 'Advice',
-										flex     : 1,
-										dataIndex: 'advice'
-									}
-
-								],
-
-								plugins: Ext.create('App.classes.grid.RowFormEditing', {
-									autoCancel  : false,
-									errorSummary: false,
-									clicksToEdit: 1,
-									formItems   : [
-
-										{
-											title : 'general',
-											xtype : 'container',
-											layout: 'vbox',
-											items : [
-												{
-													/**
-													 * Line one
-													 */
-													xtype   : 'fieldcontainer',
-													layout  : 'hbox',
-													defaults: { margin: '5 0 5 5' },
-													items   : [
-
-													]
-
-												},
-												{
-													/**
-													 * Line two
-													 */
-													xtype   : 'fieldcontainer',
-													layout  : 'hbox',
-													defaults: { margin: '5 0 5 3'},
-
-													items: [
-
-													]
-
-												},
-												{
-													/**
-													 * Line three
-													 */
-													xtype   : 'fieldcontainer',
-													layout  : 'hbox',
-													defaults: { margin: '5 0 5 5'},
-													items   : [
-
-													]
-												}
-											]
-										}
-									]
-								}),
-								tbar   : [
-									'->',
-									{
-										text   : 'New Doctors Note',
-										scope  : me,
-										handler: me.onAddNewDoctorsNote
-
-									}
-								]
 							}
 						],
 						bbar : [
@@ -525,6 +453,17 @@ Ext.define('App.view.patientfile.NewDocumentsWindow', {
 			show : me.onDocumentsWinShow
 		};
 		me.callParent(arguments);
+	},
+
+	onTemplateTypeSelect:function(combo,record){
+		var me          = this,
+			htmlEditor  = combo.up('panel').getComponent('body'),
+			value       = record[0].data.body;
+
+
+		htmlEditor.setValue(value);
+
+
 	},
 
 	cardSwitch          : function(action) {
