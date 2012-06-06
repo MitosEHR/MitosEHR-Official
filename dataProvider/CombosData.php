@@ -304,6 +304,16 @@ class CombosData {
         $records[] = array('allergy_type' => 'Drug');
         return $records;
     }
+
+    public function getTemplatesTypes(){
+        $this->db->setSQL("SELECT DISTINCT title, body
+                           	 FROM documents_templates
+                           	 WHERE template_type ='1'");
+
+        $records = $this->db->fetchRecords(PDO::FETCH_ASSOC);
+        $records[] = array('title' => 'Empty');
+        return $records;
+    }
 }
 //$c = new CombosData();
 //print '<pre>';

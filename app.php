@@ -210,6 +210,7 @@ Globals::setGlobals();
         <script type="text/javascript" src="app/classes/combo/PrescrptionHowTo.js"></script>
         <script type="text/javascript" src="app/classes/combo/LabsTypes.js"></script>
         <script type="text/javascript" src="app/classes/combo/LabObservations.js"></script>
+        <script type="text/javascript" src="app/classes/combo/Templates.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Checkbox.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/DateTime.js"></script>
         <script type="text/javascript" src="app/classes/form/fields/Currency.js"></script>

@@ -308,10 +308,9 @@ Ext.define('App.view.patientfile.MedicalWindow', {
 	                                        name           : 'allergy_type',
 	                                        action           : 'allergy_type',
 	                                        allowBlank: false,
+	                                        width          : 225,
+	                                        labelWidth     : 70,
                                             enableKeyEvents: true,
-
-                                            width          : 225,
-                                            labelWidth     : 70,
 	                                        listeners      : {
 		                                        scope   : me,
 		                                        'select': me.onAllergyTypeSelect

@@ -771,6 +771,9 @@ $API = array(
             ),
             'getAllergiesByType'=>array(
                 'len'=>1
+            ),
+            'getTemplatesTypes'=>array(
+                'len'=>1
             )
         )
     ),
