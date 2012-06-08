@@ -239,7 +239,7 @@ Ext.define('App.view.patientfile.Summary', {
                                 header:'User',
                                 dataIndex:'user_name'
                             }
-                        ],
+                        ]
 //	                    tbar:[
 //		                    {
 //			                    text:'New Lab Order',
@@ -516,7 +516,8 @@ Ext.define('App.view.patientfile.Summary', {
 
         Ext.each(formFields.items, function(field) {
 	        if(field.xtype == 'datefield'){
-		        modelFields.push({name: field.name, type: 'date', fateFormat:'Y-m-d'});
+		        say(field);
+		        modelFields.push({name: field.name, type: 'date', dateFormat:'Y-m-d H:i:s'});
 	        }else{
 		        modelFields.push({name: field.name});
 	        }
