@@ -240,35 +240,35 @@ Ext.define('App.view.patientfile.Summary', {
                                 dataIndex:'user_name'
                             }
                         ],
-	                    tbar:[
-		                    {
-			                    text:'New Lab Order',
-			                    action:'lab',
-			                    scope:me,
-			                    handler:me.newDoc
-		                    },
-		                    '-',
-		                    {
-			                    text:'New X-Ray Order',
-			                    action:'xRay',
-			                    scope:me,
-			                    handler:me.newDoc
-		                    },
-		                    '-',
-		                    {
-			                    text:'New Prescription',
-			                    action:'prescription',
-			                    scope:me,
-			                    handler:me.newDoc
-		                    },
-		                    '-',
-		                    {
-			                    text:'New Doctors Note',
-			                    action:'notes',
-			                    scope:me,
-			                    handler:me.newDoc
-		                    }
-	                    ]
+//	                    tbar:[
+//		                    {
+//			                    text:'New Lab Order',
+//			                    action:'lab',
+//			                    scope:me,
+//			                    handler:me.newDoc
+//		                    },
+//		                    '-',
+//		                    {
+//			                    text:'New X-Ray Order',
+//			                    action:'xRay',
+//			                    scope:me,
+//			                    handler:me.newDoc
+//		                    },
+//		                    '-',
+//		                    {
+//			                    text:'New Prescription',
+//			                    action:'prescription',
+//			                    scope:me,
+//			                    handler:me.newDoc
+//		                    },
+//		                    '-',
+//		                    {
+//			                    text:'New Doctors Note',
+//			                    action:'notes',
+//			                    scope:me,
+//			                    handler:me.newDoc
+//		                    }
+//	                    ]
                     }
                 ]
             },
