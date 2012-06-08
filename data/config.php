@@ -55,6 +55,9 @@ $API = array(
             ),
             'getEncounterEventHistory'=>array(
                'len'=>1
+            ),
+            'getEncounterCodes'=>array(
+               'len'=>1
             )
         )
     ),
@@ -659,6 +662,9 @@ $API = array(
             	'len'=>1
             ),
             'getPatientDocuments'=>array(
+            	'len'=>1
+            ),
+            'getPatientDocumentsByEid'=>array(
             	'len'=>1
             )
 

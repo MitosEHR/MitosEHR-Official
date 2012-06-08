@@ -93,7 +93,8 @@ Ext.define('App.view.patientfile.Encounter', {
                 }
             ]
         });
-
+	    me.EncounterOrdersStore = Ext.create('App.store.patientfile.EncounterCPTsICDs');
+	    me.patientDocumentsStore = Ext.create('App.store.patientfile.PatientDocuments');
         me.checkoutWindow = Ext.create('Ext.window.Window', {
             title:'Checkout and Signing',
             closeAction:'hide',
@@ -101,42 +102,58 @@ Ext.define('App.view.patientfile.Encounter', {
             closable:false,
             layout:'border',
             width:1000,
-            height:650,
+            height:660,
             bodyPadding:5,
             items:[
                 {
                     xtype:'grid',
                     title:'Services / Diagnostics',
                     region:'center',
+	                store: me.EncounterOrdersStore,
                     columns:[
                         {
                             header:'Code',
-                            width:40,
+                            width:60,
                             dataIndex:'code'
                         },
                         {
                             header:'Description',
                             flex:1,
                             dataIndex:'code_text'
+                        },
+                        {
+                            header:'Type',
+                            flex:1,
+                            dataIndex:'type'
                         }
                     ]
                 },
                 {
                     xtype:'grid',
-                    title:'Documents / Orders / Rx',
+                    title:'Documents',
                     region:'east',
+	                store: me.patientDocumentsStore,
                     split:true,
                     width:485,
                     columns:[
+	                    {
+		                    xtype: 'actioncolumn',
+		                    width:26,
+		                    items: [
+			                    {
+				                    icon: 'ui_icons/preview.png',
+				                    tooltip: 'View Document',
+				                    handler: me.onDocumentView,
+				                    getClass:function(){
+					                    return 'x-grid-icon-padding';
+				                    }
+			                    }
+		                    ]
+	                    },
                         {
                             header:'Type',
-                            width:100,
-                            dataIndex:'code'
-                        },
-                        {
-                            header:'Description',
                             flex:1,
-                            dataIndex:'code_text'
+                            dataIndex:'docType'
                         }
                     ]
                 },
@@ -277,7 +294,16 @@ Ext.define('App.view.patientfile.Encounter', {
                     handler:me.cancelCheckout
 
                 }
-            ]
+            ],
+	        listeners:{
+		        scope:me,
+		        show:function(){
+			        me.EncounterOrdersStore.load({params: {eid: app.currEncounterId}});
+			        me.patientDocumentsStore.load({params: {eid: app.currEncounterId}});
+		        }
+
+	        }
+	          
         });
 
 
@@ -587,7 +613,34 @@ Ext.define('App.view.patientfile.Encounter', {
                 {
                     text:'Laboratories ',
                     action:'laboratories'
-                },
+                },'-',
+	            {
+		            text:'New Lab Order',
+		            action:'lab',
+		            scope:me,
+		            handler:me.newDoc
+	            },
+	            '-',
+	            {
+		            text:'New X-Ray Order',
+		            action:'xRay',
+		            scope:me,
+		            handler:me.newDoc
+	            },
+	            '-',
+	            {
+		            text:'New Prescription',
+		            action:'prescription',
+		            scope:me,
+		            handler:me.newDoc
+	            },
+	            '-',
+	            {
+		            text:'New Doctors Note',
+		            action:'notes',
+		            scope:me,
+		            handler:me.newDoc
+	            },
                 '->',
                 {
                     text:'Checkout',
@@ -597,7 +650,9 @@ Ext.define('App.view.patientfile.Encounter', {
         });
 
     },
-
+	newDoc:function(btn){
+		app.onNewDocumentsWin(btn.action)
+	},
     /**
      * opens the Medical window
      * @param btn
@@ -667,6 +722,9 @@ Ext.define('App.view.patientfile.Encounter', {
 
     signEncounter:function () {
 
+
+	    this.closeEncounter();
+	    this.checkoutWindow.close();
     },
 
     cancelCheckout:function (btn) {
@@ -1272,6 +1330,12 @@ Ext.define('App.view.patientfile.Encounter', {
 
 
     },
+
+	onDocumentView:function(grid, rowIndex){
+		var rec = grid.getStore().getAt(rowIndex),
+			src = rec.data.url;
+		app.onDocumentView(src);
+	},
     /**
      * This function is called from MitosAPP.js when
      * this panel is selected in the navigation panel.

@@ -660,7 +660,8 @@ Ext.define('App.view.MitosApp', {
 		me.ChartsWindow = Ext.create('App.view.patientfile.ChartsWindow');
         me.PaymentEntryWindow = Ext.create('App.view.patientfile.PaymentEntryWindow');
 		me.PreventiveCareWindow= Ext.create('App.view.patientfile.PreventiveCareWindow');
-		me.NewDocumentsWindow = Ext.create('App.view.patientfile.NewDocumentsWindow')
+		me.NewDocumentsWindow = Ext.create('App.view.patientfile.NewDocumentsWindow');
+		me.DocumentViewerWindow = Ext.create('App.view.patientfile.DocumentViewerWindow')
 		me.layout = { type: 'border', padding: 3 };
 		me.defaults = { split: true };
 		me.items = [ me.Header, me.navColumn, me.MainPanel, me.Footer ];
@@ -1084,7 +1085,12 @@ Ext.define('App.view.MitosApp', {
 			}
 		});
 	},
-
+	onDocumentView: function(src) {
+		var me = this;
+		if(me.documentViewWindow) me.DocumentViewerWindow.remove(me.documentViewWindow);
+		me.DocumentViewerWindow.add(me.documentViewWindow = Ext.create('App.classes.ManagedIframe', {src: src}));
+		me.DocumentViewerWindow.show();
+	},
 	/**
 	 *
 	 * @param panel

@@ -400,14 +400,24 @@ class Patient
 
 	public function getPatientDocuments(stdClass $params)
 	{
-		$reminders = array();
-		$this->db->setSQL("SELECT * FROM patient_documents WHERE pid = '$params->pid'");
-		foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
-			$row['user_name'] = $this->user->getUserNameById($row['uid']);
-			$reminders[]      = $row;
-		}
-		return $reminders;
+        $records = array();
+        if(isset($params->eid)){
+            $this->db->setSQL("SELECT * FROM patient_documents WHERE eid = '$params->eid'");
+            foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
+                $row['user_name'] = $this->user->getUserNameById($row['uid']);
+                $records[]      = $row;
+            }
+        }elseif(isset($params->pid)){
+            $this->db->setSQL("SELECT * FROM patient_documents WHERE pid = '$params->pid'");
+            foreach($this->db->fetchRecords(PDO::FETCH_ASSOC) as $row) {
+                $row['user_name'] = $this->user->getUserNameById($row['uid']);
+                $records[]      = $row;
+            }
+        }
+
+        return $records;
 	}
+
 
 	/**
 	 * @param $date

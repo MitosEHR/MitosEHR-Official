@@ -215,10 +215,7 @@ Ext.define('App.view.patientfile.Summary', {
                                     {
                                         icon: 'ui_icons/preview.png',
                                         tooltip: 'View Document',
-                                        handler: function(grid, rowIndex, colIndex) {
-                                            var rec = grid.getStore().getAt(rowIndex);
-                                            alert("Edit " + rec.get('firstname'));
-                                        },
+	                                    handler: me.onDocumentView,
                                         getClass:function(){
                                             return 'x-grid-icon-padding';
                                         }
@@ -468,6 +465,11 @@ Ext.define('App.view.patientfile.Summary', {
         me.callParent(arguments);
     },
 
+	onDocumentView:function(grid, rowIndex){
+		var rec = grid.getStore().getAt(rowIndex),
+			src = rec.data.url;
+		app.onDocumentView(src);
+	},
 
 	formSave:function(btn){
 		var me = this,

@@ -58,6 +58,7 @@ class DocumentHandler
 
 		if(file_exists($path)) {
 			$doc['pid']     = $this->pid;
+			$doc['eid']     = $params->eid;
 			$doc['uid']     = $_SESSION['user']['id'];
 			$doc['docType'] = $this->docType;
 			$doc['name']    = $this->fileName;
@@ -91,6 +92,7 @@ class DocumentHandler
 
 		if(file_exists($path)) {
 			$doc['pid']     = $this->pid;
+            $doc['eid']     = $params->eid;
 			$doc['uid']     = $_SESSION['user']['id'];
 			$doc['docType'] = $this->docType;
 			$doc['name']    = $this->fileName;
