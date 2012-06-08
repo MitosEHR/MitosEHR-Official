@@ -515,7 +515,11 @@ Ext.define('App.view.patientfile.Summary', {
         var formFields = formpanel.getForm().getFields(), modelFields = [{name:'pid',type:'int'}];
 
         Ext.each(formFields.items, function(field) {
-            modelFields.push({name: field.name, type: 'auto'});
+	        if(field.xtype == 'datefield'){
+		        modelFields.push({name: field.name, type: 'date', fateFormat:'Y-m-d'});
+	        }else{
+		        modelFields.push({name: field.name});
+	        }
         });
 
         var model = Ext.define(formpanel.itemId + 'Model', {
