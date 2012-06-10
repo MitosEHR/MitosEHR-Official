@@ -280,6 +280,14 @@ Globals::setGlobals();
 	        function onWebCamComplete(msg){
 		        app.onWebCamComplete(msg);
 	        }
+            function printQRCode(pid){
+	            var src = settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png?';
+	            app.QRCodePrintWin = window.open(src,'QRCodePrintWin','left=20,top=20,width=10,height=10,toolbar=0,resizable=0,location=1,scrollbars=0,menubar=0,directories=0');
+				Ext.defer(function(){
+					app.QRCodePrintWin.print();
+	            }, 1000);
+	            //app.QRCodePrintWin.print();
+  	        }
         </script>
     </body>
 </html>

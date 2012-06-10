@@ -568,17 +568,13 @@ Ext.define('App.view.patientfile.Summary', {
                     height:100,
                     width:220,
                     items:[
-                        me.patientImg = Ext.create('Ext.Img', {
-                            src: 'ui_icons/user_100.png',
-                            height:100,
-                            width:100,
+                        me.patientImg = Ext.create('Ext.container.Container', {
+                            html: '<img src="ui_icons/patientPhotoId.jpg" height="100" width="100" />',
                             margin:'0 5 0 0'
                         }),
-                        me.patientQRcode = Ext.create('Ext.Img', {
-                            src: 'ui_icons/patientDataQrCode.png',
-                            height:100,
-                            width:100,
-                            margin:0
+                        me.patientQRcode = Ext.create('Ext.container.Container', {
+                            html: '<img src="ui_icons/patientDataQrCode.png" height="100" width="100" />',
+                            margin: 0
                         })
                     ]
                 });
@@ -650,10 +646,9 @@ Ext.define('App.view.patientfile.Summary', {
     getPatientImgs: function() {
         var me = this,
 	        number = Ext.Number.randomInt(1,1000);
-        me.patientImg.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientPhotoId.jpg?'+number);
-        me.patientQRcode.setSrc(settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png?'+number);
+        me.patientImg.update('<img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientPhotoId.jpg?' + number + '" height="100" width="100" />');
+        me.patientQRcode.update('<a ondblclick="printQRCode(app.currPatient.pid)"><img src="' + settings.site_url + '/patients/' + app.currPatient.pid + '/patientDataQrCode.png?' + number + '" height="100" width="100" title="Print QRCode" /></a>');
     },
-
 
 	getPhotoIdWindow: function() {
 		var me = this;
